@@ -35,6 +35,15 @@
             </intent-filter>
         </activity>
 
+        <!-- 登录页面 -->
+        <activity
+            android:name=".activity.LoginActivity"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <!-- 注册页面 -->
         <activity
             android:name=".activity.RegisterActivity"

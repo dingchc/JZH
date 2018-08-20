@@ -12,7 +12,7 @@ import com.jzh.parents.utils.AppLogger
  * @author ding
  * Created by Ding on 2018/8/15.
  */
-class RegisterViewModel(app: Application) : AndroidViewModel(app) {
+class RegisterViewModel(app: Application) : BaseViewModel(app) {
 
     /**
      * 学段
