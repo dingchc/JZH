@@ -71,7 +71,7 @@ class RegisterActivity : BaseActivity() {
 
         mDataBinding?.ilLearningSection?.error = "输入错误"
 
-        mViewMode?.leaningSection?.value = "" + Random().nextInt(100)
+        mViewMode?.learningSection?.value = "" + Random().nextInt(100)
 
         mViewMode?.print()
 

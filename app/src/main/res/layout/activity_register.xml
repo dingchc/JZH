@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/input_learning_section"
-                android:text="@={viewMode.leaningSection}"/>
+                android:text="@={viewMode.learningSection}"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -54,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/input_learning_year"
-                android:text="@={viewMode.leaningYear}"/>
+                android:text="@={viewMode.learningYear}"/>
 
         </android.support.design.widget.TextInputLayout>
 

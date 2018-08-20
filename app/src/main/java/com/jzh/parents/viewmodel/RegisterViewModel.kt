@@ -3,6 +3,7 @@ package com.jzh.parents.viewmodel
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
+import com.jzh.parents.datamodel.repo.RegisterRepository
 import com.jzh.parents.utils.AppLogger
 
 /**
@@ -16,12 +17,12 @@ class RegisterViewModel(app: Application) : AndroidViewModel(app) {
     /**
      * 学段
      */
-    val leaningSection: MutableLiveData<String> = MutableLiveData()
+    val learningSection: MutableLiveData<String> = MutableLiveData()
 
     /**
      * 入学年龄
      */
-    val leaningYear: MutableLiveData<String> = MutableLiveData()
+    val learningYear: MutableLiveData<String> = MutableLiveData()
 
     /**
      * 学生姓名
@@ -33,9 +34,31 @@ class RegisterViewModel(app: Application) : AndroidViewModel(app) {
      */
     val selectRole: MutableLiveData<String> = MutableLiveData()
 
+    /**
+     * 数据仓库
+     */
+    private var repo: RegisterRepository? = null
 
+    /**
+     * 初始化
+     */
+    init {
+        repo = RegisterRepository()
+    }
+
+    /**
+     * 注册
+     */
+    fun register() {
+        learningYear
+        repo?.register(learningSection.value.toString(), learningYear.value.toString(), studentName.value.toString(), selectRole.value.toString())
+    }
+
+    /**
+     * 打印信息
+     */
     fun print() {
 
-        AppLogger.i("" + leaningSection.value + ", " + leaningYear.value + ", " + studentName.value + ", " + selectRole.value)
+        AppLogger.i("" + learningSection.value + ", " + learningYear.value + ", " + studentName.value + ", " + selectRole.value)
     }
 }
