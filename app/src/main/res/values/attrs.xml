@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 圆角按钮 -->
+    <declare-styleable name="MsButton">
+        <!-- 圆角 -->
+        <attr name="corner" format="dimension" />
+        <!-- 默认颜色 -->
+        <attr name="normal_color" format="color" />
+        <!-- 按下颜色 -->
+        <attr name="pressed_color" format="color" />
+    </declare-styleable>
+</resources>

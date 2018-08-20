@@ -40,7 +40,7 @@
             android:textColor="@color/light_gray"
             android:textSize="14sp" />
 
-        <Button
+        <com.jzh.parents.widget.MsButton
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:layout_marginEnd="10dp"
@@ -48,6 +48,9 @@
             android:layout_marginTop="80dp"
             android:onClick="@{()->viewModel.wxAuthorizeClick()}"
             android:text="@string/login"
+            app:normal_color="@color/orange"
+            app:pressed_color="@color/orange_dark"
+            app:corner="6dp"
             android:textColor="@color/white" />
 
         <TextView
