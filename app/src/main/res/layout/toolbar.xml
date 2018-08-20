@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     app:elevation="0dp">
 
-    <com.online.meeting.widget.TSToolbar
+    <com.jzh.parents.widget.TSToolbar
         android:id="@+id/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -96,6 +96,6 @@
 
         </RelativeLayout>
 
-    </com.online.meeting.widget.TSToolbar>
+    </com.jzh.parents.widget.TSToolbar>
 
 </android.support.design.widget.AppBarLayout>

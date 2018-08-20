@@ -6,7 +6,7 @@
 
         <variable
             name="viewMode"
-            type="com.online.meeting.viewmodel.RegisterViewModel" />
+            type="com.jzh.parents.viewmodel.RegisterViewModel" />
     </data>
 
     <LinearLayout
