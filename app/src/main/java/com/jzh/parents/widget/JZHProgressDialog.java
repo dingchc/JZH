@@ -16,7 +16,7 @@ import com.jzh.parents.R;
  * @author ding
  * Created by Ding on 11/8/15.
  */
-public class TSProgressDialog extends AlertDialog {
+public class JZHProgressDialog extends AlertDialog {
 
     private Context mContext = null;
     private View mContentView = null;
@@ -27,7 +27,7 @@ public class TSProgressDialog extends AlertDialog {
     private CancelDialogListener cancelDialogListener;
 
 
-    public TSProgressDialog(Context context) {
+    public JZHProgressDialog(Context context) {
         super(context);
         mContext = context;
         mContentView = LayoutInflater.from(context).inflate(R.layout.bg_dialog_progress, null);

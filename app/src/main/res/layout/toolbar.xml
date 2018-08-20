@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     app:elevation="0dp">
 
-    <com.jzh.parents.widget.TSToolbar
+    <com.jzh.parents.widget.JZHToolbar
         android:id="@+id/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -96,6 +96,6 @@
 
         </RelativeLayout>
 
-    </com.jzh.parents.widget.TSToolbar>
+    </com.jzh.parents.widget.JZHToolbar>
 
 </android.support.design.widget.AppBarLayout>

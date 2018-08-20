@@ -8,17 +8,17 @@ import com.tunes.library.wrapper.network.TSHttpController
  * @author ding
  * Created by Ding on 2018/8/16.
  */
-class PMApplication : Application() {
+class JZHApplication : Application() {
 
     companion object {
 
-        var instance : PMApplication? = null
+        var instance : JZHApplication? = null
     }
 
     override fun onCreate() {
         super.onCreate()
 
-        instance = this@PMApplication
+        instance = this@JZHApplication
         TSHttpController.INSTANCE.setAppContext(this)
     }
 }

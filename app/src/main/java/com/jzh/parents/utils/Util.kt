@@ -8,7 +8,7 @@ import android.os.Environment
 import android.support.annotation.ColorRes
 import android.support.v4.content.ContextCompat
 import android.text.TextUtils
-import com.jzh.parents.app.PMApplication
+import com.jzh.parents.app.JZHApplication
 import com.jzh.parents.R
 import com.jzh.parents.listener.IDialogCallback
 import java.io.File
@@ -191,7 +191,7 @@ class Util {
          * @return 颜色Int值
          */
         fun getColorCompat(@ColorRes color: Int): Int {
-            return ContextCompat.getColor(PMApplication.instance!!, color)
+            return ContextCompat.getColor(JZHApplication.instance!!, color)
 
         }
     }

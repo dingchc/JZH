@@ -27,7 +27,7 @@ import com.jzh.parents.R;
  * @author ding
  *         Created by ding on 2/13/17.
  */
-public class TSToolbar extends Toolbar implements View.OnClickListener {
+public class JZHToolbar extends Toolbar implements View.OnClickListener {
 
     /**
      * 默认
@@ -54,15 +54,15 @@ public class TSToolbar extends Toolbar implements View.OnClickListener {
      */
     private Context mContext;
 
-    public TSToolbar(Context context) {
+    public JZHToolbar(Context context) {
         this(context, null);
     }
 
-    public TSToolbar(Context context, @Nullable AttributeSet attrs) {
+    public JZHToolbar(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public TSToolbar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public JZHToolbar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         init(context);

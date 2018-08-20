@@ -3,7 +3,7 @@ package com.jzh.parents.activity
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.view.View
-import com.jzh.parents.app.PMApplication
+import com.jzh.parents.app.JZHApplication
 import com.jzh.parents.R
 import com.jzh.parents.databinding.ActivityRegisterBinding
 import com.jzh.parents.utils.AppLogger
@@ -75,7 +75,7 @@ class RegisterActivity : BaseActivity() {
 
         mViewMode?.print()
 
-        AppLogger.i("PMApplication.instance = " + PMApplication.instance)
+        AppLogger.i("PMApplication.instance = " + JZHApplication.instance)
 
     }
 
