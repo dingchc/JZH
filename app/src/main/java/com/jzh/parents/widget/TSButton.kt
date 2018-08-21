@@ -3,8 +3,10 @@ package com.jzh.parents.widget
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.RippleDrawable
+import android.graphics.drawable.StateListDrawable
 import android.os.Build
 import android.util.AttributeSet
 import android.widget.Button
@@ -55,11 +57,11 @@ class TSButton : Button {
      */
     private fun init(attrs: AttributeSet?) {
 
-        val typedArray = resources.obtainAttributes(attrs, R.styleable.MsButton)
+        val typedArray = resources.obtainAttributes(attrs, R.styleable.TSButton)
 
-        mNormalColor = typedArray.getColor(R.styleable.MsButton_normal_color, Color.parseColor("#FF2B5CDC"))
-        mPressedColor = typedArray.getColor(R.styleable.MsButton_pressed_color, Color.parseColor("#FF173FB1"))
-        mCornerRadius = typedArray.getDimensionPixelSize(R.styleable.MsButton_corner, 10)
+        mNormalColor = typedArray.getColor(R.styleable.TSButton_normal_color, Color.parseColor("#FF2B5CDC"))
+        mPressedColor = typedArray.getColor(R.styleable.TSButton_pressed_color, Color.parseColor("#FF173FB1"))
+        mCornerRadius = typedArray.getDimensionPixelSize(R.styleable.TSButton_corner, 10)
 
         typedArray?.recycle()
 
@@ -77,6 +79,11 @@ class TSButton : Button {
             mRippleDrawable = RippleDrawable(colorStateList, contentDrawable, null)
 
             background = mRippleDrawable
+        } else {
+            val bgDrawable = StateListDrawable()
+            bgDrawable.addState(intArrayOf(android.R.attr.state_enabled, android.R.attr.state_pressed), ColorDrawable(mPressedColor))
+            bgDrawable.addState(intArrayOf(android.R.attr.state_enabled), ColorDrawable(mNormalColor))
+            background = bgDrawable
         }
 
     }

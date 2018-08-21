@@ -1,10 +1,12 @@
 package com.jzh.parents.activity
 
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.view.View
 import com.jzh.parents.R
 import com.jzh.parents.databinding.ActivityLoginBinding
+import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.LoginViewModel
 
 /**
@@ -59,6 +61,21 @@ class LoginActivity : BaseActivity() {
 
         mDataBinding = DataBindingUtil.inflate(layoutInflater, R.layout.activity_login, null, false)
         return mDataBinding!!.root
+    }
+
+    override fun isSupportTransitionAnimation(): Boolean {
+        return false
+    }
+
+    /**
+     * 微信授权等
+     */
+    fun wxAuthorizeClick(view : View?) {
+
+        AppLogger.i("wxAuthorizeClick")
+
+        startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
+        finish()
     }
 
 

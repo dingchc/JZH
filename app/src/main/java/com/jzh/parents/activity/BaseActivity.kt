@@ -327,7 +327,7 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
      *
      * @return 默认支持
      */
-    protected fun isSupportTransitionAnimation(): Boolean {
+    open fun isSupportTransitionAnimation(): Boolean {
         return true
     }
 

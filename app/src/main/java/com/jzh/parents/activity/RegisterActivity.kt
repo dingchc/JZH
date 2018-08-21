@@ -21,7 +21,7 @@ class RegisterActivity : BaseActivity() {
     /**
      * ViewMode
      */
-    var mViewMode: RegisterViewModel? = null
+    var mViewModel: RegisterViewModel? = null
 
     /**
      * 数据绑定
@@ -47,11 +47,11 @@ class RegisterActivity : BaseActivity() {
      */
     override fun initData() {
 
-        mViewMode = ViewModelProviders.of(this@RegisterActivity).get(RegisterViewModel::class.java)
+        mViewModel = ViewModelProviders.of(this@RegisterActivity).get(RegisterViewModel::class.java)
 
         mDataBinding?.setLifecycleOwner(this@RegisterActivity)
 
-        mDataBinding?.viewMode = mViewMode
+        mDataBinding?.viewModel = mViewModel
     }
 
 
@@ -71,12 +71,16 @@ class RegisterActivity : BaseActivity() {
 
         mDataBinding?.ilLearningSection?.error = "输入错误"
 
-        mViewMode?.learningSection?.value = "" + Random().nextInt(100)
+        mViewModel?.learningSection?.value = "" + Random().nextInt(100)
 
-        mViewMode?.print()
+        mViewModel?.print()
 
         AppLogger.i("PMApplication.instance = " + JZHApplication.instance)
 
+    }
+
+    override fun isSupportTransitionAnimation(): Boolean {
+        return false
     }
 
     /**

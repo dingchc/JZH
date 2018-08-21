@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="viewMode"
+            name="viewModel"
             type="com.jzh.parents.viewmodel.RegisterViewModel" />
     </data>
 
@@ -16,10 +16,12 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="50dp"
-            android:src="@mipmap/ic_register_head" />
+            android:contentDescription="@string/login"
+            android:src="@mipmap/ic_login" />
 
         <!-- 学段 -->
         <android.support.design.widget.TextInputLayout
@@ -35,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/input_learning_section"
-                android:text="@={viewMode.learningSection}"/>
+                android:text="@={viewModel.learningSection}"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -53,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/input_learning_year"
-                android:text="@={viewMode.learningYear}"/>
+                android:text="@={viewModel.learningYear}"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -71,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/input_student_name"
-                android:text="@={viewMode.studentName}"/>
+                android:text="@={viewModel.studentName}"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -89,7 +91,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/input_select_role"
-                android:text="@={viewMode.selectRole}"/>
+                android:text="@={viewModel.selectRole}"/>
 
         </android.support.design.widget.TextInputLayout>
 

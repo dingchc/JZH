@@ -11,11 +11,5 @@ import com.jzh.parents.utils.AppLogger
  */
 class LoginViewModel(app: Application) : BaseViewModel(app) {
 
-    /**
-     * 微信授权等
-     */
-    fun wxAuthorizeClick() {
 
-        AppLogger.i("wxAuthorizeClick")
-    }
 }
