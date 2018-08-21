@@ -15,7 +15,7 @@ import com.jzh.parents.R
  * @author ding
  * Created by ding on 30/03/2018.
  */
-class MsButton : Button {
+class TSButton : Button {
 
     /**
      * 默认颜色

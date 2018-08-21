@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- 圆角按钮 -->
-    <declare-styleable name="MsButton">
+    <declare-styleable name="TSButton">
         <!-- 圆角 -->
         <attr name="corner" format="dimension" />
         <!-- 默认颜色 -->

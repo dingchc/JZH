@@ -10,8 +10,8 @@ import android.widget.Toast;
 
 import com.jzh.parents.R;
 import com.jzh.parents.listener.IDialogCallback;
-import com.jzh.parents.widget.JZHCommonDialog;
-import com.jzh.parents.widget.JZHProgressDialog;
+import com.jzh.parents.widget.TSCommonDialog;
+import com.jzh.parents.widget.TSProgressDialog;
 
 
 /**
@@ -27,9 +27,9 @@ public class DialogUtil {
      * @param context 上下文
      * @return 对话框
      */
-    public static JZHProgressDialog createProgressDialog(Context context) {
+    public static TSProgressDialog createProgressDialog(Context context) {
 
-        JZHProgressDialog progDialog = new JZHProgressDialog(context);
+        TSProgressDialog progDialog = new TSProgressDialog(context);
 
         return progDialog;
     }
@@ -114,8 +114,8 @@ public class DialogUtil {
      * @param listener  回调
      * @return 对话框
      */
-    public static JZHCommonDialog createCommonDialog(Context context, String title, String content, String okStr, String cancelStr, IDialogCallback listener) {
-        JZHCommonDialog commonDialog = new JZHCommonDialog(context, listener, title, content, okStr, cancelStr);
+    public static TSCommonDialog createCommonDialog(Context context, String title, String content, String okStr, String cancelStr, IDialogCallback listener) {
+        TSCommonDialog commonDialog = new TSCommonDialog(context, listener, title, content, okStr, cancelStr);
         commonDialog.setCancelable(true);
         commonDialog.setCanceledOnTouchOutside(false);
         commonDialog.show();
@@ -133,8 +133,8 @@ public class DialogUtil {
      * @param listener  回调
      * @return 对话框
      */
-    public static JZHCommonDialog createCommonDialogNoCancel(Context context, String title, String content, String okStr, String cancelStr, IDialogCallback listener) {
-        JZHCommonDialog commonDialog = new JZHCommonDialog(context, listener, title, content, okStr, cancelStr);
+    public static TSCommonDialog createCommonDialogNoCancel(Context context, String title, String content, String okStr, String cancelStr, IDialogCallback listener) {
+        TSCommonDialog commonDialog = new TSCommonDialog(context, listener, title, content, okStr, cancelStr);
         commonDialog.setCancelable(false);
         commonDialog.setCanceledOnTouchOutside(false);
         commonDialog.show();
@@ -153,8 +153,8 @@ public class DialogUtil {
      * @param listener   回调
      * @return 对话框
      */
-    public static JZHCommonDialog createVersionUpdateDialog(Context context, boolean cancelable, String title, String content, String okStr, String cancelStr, IDialogCallback listener) {
-        JZHCommonDialog commonDialog = new JZHCommonDialog(context, listener, title, content, okStr, cancelStr);
+    public static TSCommonDialog createVersionUpdateDialog(Context context, boolean cancelable, String title, String content, String okStr, String cancelStr, IDialogCallback listener) {
+        TSCommonDialog commonDialog = new TSCommonDialog(context, listener, title, content, okStr, cancelStr);
         commonDialog.show();
         commonDialog.setCancelable(false);
         commonDialog.setCanceledOnTouchOutside(false);

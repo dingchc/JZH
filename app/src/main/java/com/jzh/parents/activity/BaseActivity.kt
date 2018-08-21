@@ -19,10 +19,10 @@ import android.widget.Toast
 import com.jzh.parents.R
 import com.jzh.parents.listener.IDialogCallback
 import com.jzh.parents.utils.*
-import com.jzh.parents.widget.JZHProgressDialog
-import com.jzh.parents.widget.JZHToolbar
+import com.jzh.parents.widget.TSProgressDialog
+import com.jzh.parents.widget.TSToolbar
 import com.jzh.parents.widget.swipe.PageSlidingPaneLayout
-import com.jzh.parents.widget.JZHToolbar.ToolbarClickListener
+import com.jzh.parents.widget.TSToolbar.ToolbarClickListener
 
 /**
  * Activity父类
@@ -55,9 +55,9 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
 
     protected var mToast: Toast? = null
 
-    protected var mProcessDialog: JZHProgressDialog? = null
+    protected var mProcessDialog: TSProgressDialog? = null
 
-    protected var mToolbar: JZHToolbar? = null
+    protected var mToolbar: TSToolbar? = null
 
     protected var photoPath: String? = null
 
@@ -111,13 +111,13 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
      * @param type 类型
      */
     override fun onToolbarClick(type: Int) {
-        if (JZHToolbar.ToolbarClickEnum.LEFT_ICON.ordinal == type) {
+        if (TSToolbar.ToolbarClickEnum.LEFT_ICON.ordinal == type) {
             onLeftIconClick()
-        } else if (JZHToolbar.ToolbarClickEnum.LEFT_TITLE.ordinal == type) {
+        } else if (TSToolbar.ToolbarClickEnum.LEFT_TITLE.ordinal == type) {
             onLeftTitleClick()
-        } else if (JZHToolbar.ToolbarClickEnum.RIGHT_ICON.ordinal == type) {
+        } else if (TSToolbar.ToolbarClickEnum.RIGHT_ICON.ordinal == type) {
             onRightIconClick()
-        } else if (JZHToolbar.ToolbarClickEnum.RIGHT_TITLE.ordinal == type) {
+        } else if (TSToolbar.ToolbarClickEnum.RIGHT_TITLE.ordinal == type) {
             onRightTitleClick()
         }
     }

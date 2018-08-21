@@ -40,7 +40,7 @@
             android:textColor="@color/light_gray"
             android:textSize="14sp" />
 
-        <com.jzh.parents.widget.MsButton
+        <com.jzh.parents.widget.TSButton
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:layout_marginEnd="10dp"
