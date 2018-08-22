@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <!-- 圆角按钮 -->
     <declare-styleable name="TSButton">
         <!-- 圆角 -->
@@ -9,4 +10,26 @@
         <!-- 按下颜色 -->
         <attr name="pressed_color" format="color" />
     </declare-styleable>
+
+
+    <!-- 注册页面Item -->
+    <declare-styleable name="RegisterContentItem">
+
+        <!-- 是否显示右侧点击箭头 -->
+        <attr name="rc_show_tap_arrow" format="boolean" />
+
+        <!-- 是否输入可编辑 -->
+        <attr name="rc_is_input_editable" format="boolean" />
+
+        <!-- 是否输入可选择 -->
+        <attr name="rc_is_optional" format="boolean" />
+
+        <!-- 图标 -->
+        <attr name="rc_icon_src" format="reference" />
+
+        <!-- 提示内容 -->
+        <attr name="rc_hint" format="string" />
+
+    </declare-styleable>
+
 </resources>

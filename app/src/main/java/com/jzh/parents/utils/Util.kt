@@ -190,7 +190,7 @@ class Util {
          * @param color 颜色资源值
          * @return 颜色Int值
          */
-        fun getColorCompat(@ColorRes color: Int): Int {
+        fun getColorCompat(color: Int): Int {
             return ContextCompat.getColor(JZHApplication.instance!!, color)
 
         }

@@ -69,7 +69,7 @@ class RegisterActivity : BaseActivity() {
      */
     fun onRegisterBtnClick(view : View) {
 
-        mDataBinding?.ilLearningSection?.error = "输入错误"
+//        mDataBinding?.ilLearningSection?.error = "输入错误"
 
         mViewModel?.learningSection?.value = "" + Random().nextInt(100)
 

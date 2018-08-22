@@ -17,4 +17,5 @@
     <color name="blue_dark">#FF173FB1</color>
     <color name="login_btn_green">#FF00DFAD</color>
     <color name="login_btn_green_dark">#FF00CC9E</color>
+    <color name="register_input_text_hint_color">#FF999999</color>
 </resources>
