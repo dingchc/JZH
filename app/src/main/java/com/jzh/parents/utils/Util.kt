@@ -4,8 +4,14 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.res.Resources
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Environment
 import android.support.annotation.ColorRes
+import android.support.annotation.DrawableRes
+import android.support.annotation.IdRes
 import android.support.v4.content.ContextCompat
 import android.text.TextUtils
 import com.jzh.parents.app.JZHApplication
@@ -26,9 +32,45 @@ class Util {
 
     companion object {
 
+        /**
+         * convert dp to its equivalent px
+         *
+         * 将px转换为与之相等的dp
+         */
         fun dp2px(context: Context, dpValue: Float): Int {
             val scale = context.resources.displayMetrics.density
             return (dpValue * scale + 0.5f).toInt()
+        }
+
+        /**
+         * convert px to its equivalent dp
+         *
+         * 将px转换为与之相等的dp
+         */
+        fun px2dp(context: Context, pxValue: Float): Int {
+            val scale = context.resources.displayMetrics.density
+            return (pxValue / scale + 0.5f).toInt()
+        }
+
+        /**
+         * convert px to its equivalent sp
+         *
+         * 将px转换为sp
+         */
+        fun px2sp(context: Context, pxValue: Float): Int {
+            val fontScale = context.resources.displayMetrics.scaledDensity
+            return (pxValue / fontScale + 0.5f).toInt()
+        }
+
+
+        /**
+         * convert sp to its equivalent px
+         *
+         * 将sp转换为px
+         */
+        fun sp2px(context: Context, spValue: Float): Int {
+            val fontScale = context.resources.displayMetrics.scaledDensity
+            return (spValue * fontScale + 0.5f).toInt()
         }
 
         /**
@@ -193,6 +235,45 @@ class Util {
         fun getColorCompat(color: Int): Int {
             return ContextCompat.getColor(JZHApplication.instance!!, color)
 
+        }
+
+        /**
+         * 根据图片资源id，返回Drawable
+         * @param resources 资源
+         * @param iconIdRes 资源id
+         * @return Drawable
+         */
+        fun getCompoundDrawable(resources: Resources, @DrawableRes iconIdRes: Int): Drawable? {
+
+            val iconBitmap = BitmapFactory.decodeResource(resources, iconIdRes)
+
+            var iconStarDrawable: BitmapDrawable? = null
+
+            if (iconBitmap != null) {
+
+                iconStarDrawable = BitmapDrawable(resources, iconBitmap)
+                iconStarDrawable.setBounds(0, 0, iconBitmap.width, iconBitmap.height)
+            }
+
+            return iconStarDrawable
+        }
+
+        /**
+         * 根据图片资源id，返回Drawable
+         *
+         * @param resources 资源
+         * @param iconIdRes 资源id
+         * @param targetWidth 目标宽度
+         * @param targetHeight 目标高度
+         * @return Drawable
+         */
+        fun getCompoundDrawable(context: Context, @DrawableRes iconIdRes: Int, targetWidth: Int, targetHeight: Int): Drawable? {
+
+            val drawable = ContextCompat.getDrawable(context, iconIdRes)
+
+            drawable!!.setBounds(0, 0, targetWidth, targetHeight)
+
+            return drawable
         }
     }
 

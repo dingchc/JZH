@@ -27,7 +27,7 @@
 
         <!-- 学段 -->
         <com.jzh.parents.widget.RegisterContentItem
-            android:id="@+id/content_item_learning_section"
+            android:id="@+id/item_learning_section"
             android:layout_width="match_parent"
             android:layout_height="@dimen/item_height"
             android:background="@drawable/round_white_bg"
@@ -40,68 +40,60 @@
             />
 
         <!-- 入学年份 -->
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/il_learning_year"
+        <com.jzh.parents.widget.RegisterContentItem
+            android:id="@+id/item_learning_year"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/ed_learning_year"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/input_learning_year"
-                android:text="@={viewModel.learningYear}"/>
-
-        </android.support.design.widget.TextInputLayout>
+            android:layout_height="@dimen/item_height"
+            android:background="@drawable/round_white_bg"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:layout_marginTop="4dp"
+            android:textSize="18sp"
+            app:rc_hint="@string/input_learning_year"
+            app:rc_icon_src="@mipmap/icon_register_learning_year"
+            />
 
         <!-- 名称 -->
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/il_student_name"
+        <com.jzh.parents.widget.RegisterContentItem
+            android:id="@+id/item_student_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/ed_student_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/input_student_name"
-                android:text="@={viewModel.studentName}"/>
-
-        </android.support.design.widget.TextInputLayout>
+            android:layout_height="@dimen/item_height"
+            android:background="@drawable/round_white_bg"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:layout_marginTop="4dp"
+            android:textSize="18sp"
+            app:rc_hint="@string/input_student_name"
+            app:rc_icon_src="@mipmap/icon_register_name"
+            app:rc_is_input_editable="true"
+            app:rc_show_tap_arrow="false"
+            />
 
         <!-- 身份 -->
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/il_select_role"
+        <com.jzh.parents.widget.RegisterContentItem
+            android:id="@+id/item_select_role"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin">
+            android:layout_height="@dimen/item_height"
+            android:background="@drawable/round_white_bg"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:layout_marginTop="4dp"
+            android:textSize="18sp"
+            app:rc_hint="@string/input_select_role"
+            app:rc_icon_src="@mipmap/icon_register_role"
+            app:rc_show_tap_arrow="false"
+            app:rc_is_optional="true"
+            />
 
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/ed_select_role"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/input_select_role"
-                android:text="@={viewModel.selectRole}"/>
-
-        </android.support.design.widget.TextInputLayout>
-
-        <Button
-            android:id="@+id/btn_login"
+        <com.jzh.parents.widget.TSButton
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:text="@string/login"
-            android:onClick="onRegisterBtnClick"/>
+            android:layout_height="@dimen/btn_height"
+            android:layout_marginTop="40dp"
+            android:text="@string/finish"
+            android:textColor="@color/white"
+            app:corner="8dp"
+            app:normal_color="@color/login_btn_green"
+            app:pressed_color="@color/login_btn_green_dark" />
 
     </LinearLayout>
 

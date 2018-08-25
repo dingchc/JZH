@@ -12,6 +12,7 @@ import android.view.Gravity
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.RadioGroup
 import com.jzh.parents.R
 import com.jzh.parents.utils.Util
 
@@ -69,7 +70,7 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
             val typedArray: TypedArray? = resources.obtainAttributes(attributeSet, R.styleable.RegisterContentItem)
 
             mIsInputEditable = typedArray?.getBoolean(R.styleable.RegisterContentItem_rc_is_input_editable, false)
-            mShowTapArrow = typedArray?.getBoolean(R.styleable.RegisterContentItem_rc_show_tap_arrow, false)
+            mShowTapArrow = typedArray?.getBoolean(R.styleable.RegisterContentItem_rc_show_tap_arrow, true)
             mIsOptional = typedArray?.getBoolean(R.styleable.RegisterContentItem_rc_is_optional, false)
 
             mIconResId = typedArray?.getDrawable(R.styleable.RegisterContentItem_rc_icon_src)
@@ -93,7 +94,15 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
         addInputEditText()
 
         // 添加箭头
-        addArrowIcon()
+        if (mShowTapArrow!!) {
+
+            addArrowIcon()
+        }
+
+        // 选择身份
+        if (mIsOptional!!) {
+            addOptionalRadioGroup()
+        }
     }
 
     /**
@@ -115,6 +124,7 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
         val inputEditText = EditText(context)
         inputEditText.hint = resources.getString(mHintStringResId!!)
         inputEditText.background = null
+        inputEditText.textSize = 14.0f
 
         // 设置是否可输入
         if (!mIsInputEditable!!) {
@@ -132,11 +142,10 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
         marginLayoutParam.leftMargin = Util.dp2px(context, 15.0f)
 
         // 星号
-        val iconBitmap = BitmapFactory.decodeResource(resources, R.mipmap.icon_register_star)
-        val iconStarDrawable = BitmapDrawable(resources, iconBitmap)
-        iconStarDrawable.setBounds(0, 0, iconBitmap.width, iconBitmap.height)
-        inputEditText.setCompoundDrawables(iconStarDrawable, null, null, null)
-        inputEditText.compoundDrawablePadding = Util.dp2px(context,4.0f)
+        val starDrawable = Util.getCompoundDrawable(resources, R.mipmap.icon_register_star)
+
+        inputEditText.setCompoundDrawables(starDrawable, null, null, null)
+        inputEditText.compoundDrawablePadding = Util.dp2px(context, 4.0f)
     }
 
     /**
@@ -148,6 +157,48 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
         imageView.setImageResource(R.mipmap.icon_register_arrow)
 
         addView(imageView)
+    }
+
+    /**
+     * 添加选择组
+     */
+    private fun addOptionalRadioGroup() {
+
+        val radioGroup = TSRegisterRadioGroup(context)
+        radioGroup.orientation = RadioGroup.HORIZONTAL
+        addView(radioGroup)
+
+        val childRadioBtnArray = arrayOf(TSRegisterRadioButton(context), TSRegisterRadioButton(context), TSRegisterRadioButton(context))
+
+        for ((index, radioBtn) in childRadioBtnArray.withIndex()) {
+
+            radioBtn.gravity = Gravity.CENTER
+            radioGroup.addView(radioBtn)
+            val lp = radioBtn.layoutParams
+            lp.width = Util.dp2px(context, TSRegisterRadioButton.WIDTH_DIMEN)
+            lp.height = Util.dp2px(context, TSRegisterRadioButton.HEIGHT_DIMEN)
+            radioBtn.isClickable = true
+
+            when (index) {
+            // 妈妈
+                0 -> {
+                    radioBtn.setText(R.string.role_mother)
+                }
+            // 爸爸
+                1 -> {
+                    radioBtn.setText(R.string.role_father)
+                    lp as MarginLayoutParams
+                    lp.leftMargin = Util.dp2px(context, TSRegisterRadioButton.MARGIN_DIMEN)
+                }
+            // 其他
+                2 -> {
+                    radioBtn.setText(R.string.role_other)
+                    lp as MarginLayoutParams
+                    lp.leftMargin = Util.dp2px(context, TSRegisterRadioButton.MARGIN_DIMEN)
+                }
+
+            }
+        }
     }
 
 }
