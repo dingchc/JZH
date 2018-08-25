@@ -2,7 +2,11 @@ package com.jzh.parents.widget
 
 import android.content.Context
 import android.content.res.TypedArray
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.Gravity
 import android.widget.EditText
@@ -126,6 +130,13 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
 
         val marginLayoutParam = inputEditText.layoutParams as MarginLayoutParams
         marginLayoutParam.leftMargin = Util.dp2px(context, 15.0f)
+
+        // 星号
+        val iconBitmap = BitmapFactory.decodeResource(resources, R.mipmap.icon_register_star)
+        val iconStarDrawable = BitmapDrawable(resources, iconBitmap)
+        iconStarDrawable.setBounds(0, 0, iconBitmap.width, iconBitmap.height)
+        inputEditText.setCompoundDrawables(iconStarDrawable, null, null, null)
+        inputEditText.compoundDrawablePadding = Util.dp2px(context,4.0f)
     }
 
     /**
