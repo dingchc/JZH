@@ -18,7 +18,7 @@ import com.jzh.parents.utils.Util
 class TSRegisterRadioButton(context: Context, attributeSet: AttributeSet?, defStyle: Int) : AppCompatRadioButton(context, attributeSet, defStyle) {
 
 
-    private var value : Int = 0
+    private var mValue: Int = 0
 
     companion object {
 
@@ -64,17 +64,19 @@ class TSRegisterRadioButton(context: Context, attributeSet: AttributeSet?, defSt
         setTextColor(Util.getColorCompat(R.color.white))
     }
 
-//    override fun toggle() {
-//        if (isChecked) {
-//            if (parent is RadioGroup) {
-//                // 点击选中的 RadioButton，可以取消选择
-//                (parent as RadioGroup).clearCheck()
-//            }
-//        } else {
-//            isChecked = true
-//        }
-//    }
+    /**
+     * 设置值
+     */
+    fun setValue(value: Int) {
 
+        mValue = value
+    }
 
+    /**
+     * 获取值
+     */
+    fun getValue(): Int {
 
+        return mValue
+    }
 }

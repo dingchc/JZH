@@ -32,7 +32,7 @@ class RegisterViewModel(app: Application) : BaseViewModel(app) {
     /**
      * 选择角色
      */
-    val selectRole: MutableLiveData<String> = MutableLiveData()
+    val selectRole: MutableLiveData<Int> = MutableLiveData()
 
     /**
      * 数据仓库

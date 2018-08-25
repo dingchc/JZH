@@ -26,7 +26,9 @@ import com.jzh.parents.utils.Util
  * @author ding
  * Created by Ding on 2018/8/21.
  */
-@InverseBindingMethods(InverseBindingMethod(type = RegisterContentItem::class, attribute = "contentText", event = "contentTextAttrChanged", method = "getContentText"))
+@InverseBindingMethods(value = *arrayOf(
+        InverseBindingMethod(type = RegisterContentItem::class, attribute = "contentText", event = "contentTextAttrChanged", method = "getContentText"),
+        InverseBindingMethod(type = RegisterContentItem::class, attribute = "checkedValue", event = "checkedValueAttrChanged", method = "getCheckedValue")))
 class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyle: Int) : LinearLayout(context, attributeSet, defStyle) {
 
     /**
@@ -60,14 +62,29 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
     private val mInputEditText = EditText(context)
 
     /**
+     * 单选按钮的组
+     */
+    private var mRadioGroup: TSRegisterRadioGroup? = null
+
+    /**
      * 输入的文本
      */
     private var mContent: String? = null
 
     /**
+     * RadioGroup选择的条目的值
+     */
+    private var mCheckedValue: Int? = null
+
+    /**
      * 文本变化监听
      */
     private var mContentTextListener: OnContentTextNotifyListener? = null
+
+    /**
+     * 单选按钮变化的监听
+     */
+    private var mCheckedValueListener: OnCheckedValueNotifyListener? = null
 
 
     constructor(context: Context) : this(context, null) {
@@ -78,8 +95,34 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
 
     }
 
+    /**
+     * 内容变化回调
+     */
+    interface OnContentTextNotifyListener {
+
+        /**
+         * 通知
+         */
+        fun onNotify()
+    }
+
+    /**
+     * 单选按钮变化,通知Model的
+     */
+    interface OnCheckedValueNotifyListener {
+
+        /**
+         * 通知
+         */
+        fun onNotify()
+    }
+
+    /**
+     * 初始化
+     */
     init {
 
+        // 读取属性
         if (attributeSet != null) {
 
             val typedArray: TypedArray? = resources.obtainAttributes(attributeSet, R.styleable.RegisterContentItem)
@@ -95,20 +138,6 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
             typedArray?.recycle()
         }
 
-        // 观察输入框
-        mInputEditText.addTextChangedListener(object : TextWatcher {
-
-            override fun afterTextChanged(s: Editable?) {
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-                setContentText(s!!.toString())
-            }
-        })
     }
 
     override fun onFinishInflate() {
@@ -135,6 +164,7 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
         }
     }
 
+
     /**
      * 获取内容
      */
@@ -146,8 +176,6 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
      * 设置输入内容
      */
     fun setContentText(input: String?) {
-
-        AppLogger.i("* setContentText = " + input)
 
         // 避免循环提示
         if (mContent == input) {
@@ -165,7 +193,33 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
         if (mContentTextListener != null) {
             mContentTextListener!!.onNotify()
         }
+    }
 
+    /**
+     * 返回RadioGroup已选中的值
+     */
+    fun getCheckedValue(): Int {
+
+        return mCheckedValue ?: 0
+    }
+
+    /**
+     * 设置RadioGroup选中的值
+     */
+    fun setCheckedValue(value: Int?) {
+
+        if (mCheckedValue == value) {
+            return
+        }
+
+        mCheckedValue = value
+
+        // 选中一个
+        if (mRadioGroup?.getCheckedValue() != value) {
+            mRadioGroup?.checkedItemByValue(value!!)
+        }
+
+        mCheckedValueListener?.onNotify()
     }
 
     /**
@@ -177,24 +231,21 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
     }
 
     /**
-     * 内容变化回调
+     * 设置内容变化监听器
      */
-    interface OnContentTextNotifyListener {
+    fun setCheckedValueListener(listener: OnCheckedValueNotifyListener?) {
 
-        /**
-         * 通知
-         */
-        fun onNotify()
+        mCheckedValueListener = listener
     }
 
     /**
-     * 静态函数
      *
+     * 静态函数， 用于双向绑定
      */
     companion object {
 
         /**
-         * 设置绑定监听
+         * 设置输入框的反向绑定监听
          *
          * @param view 控件
          * @param listener 监听
@@ -221,6 +272,36 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
             }
 
             view.setContentTextListener(newListener)
+        }
+
+        /**
+         * 设置单选按钮的反向绑定监听
+         *
+         * @param view 控件
+         * @param listener 监听
+         */
+        @BindingAdapter(value = *arrayOf("checkedValueAttrChanged"), requireAll = false)
+        fun setCheckedValueInverseBindingListener(view: RegisterContentItem, listener: InverseBindingListener?) {
+
+            val newListener = object : OnCheckedValueNotifyListener {
+
+                /**
+                 * 通知
+                 */
+                override fun onNotify() {
+
+                    listener?.onChange()
+                }
+
+            }
+
+            val oldListener = ListenerUtil.trackListener(view, newListener, view.id)
+
+            if (oldListener == null) {
+                view.setCheckedValueListener(null)
+            }
+
+            view.setCheckedValueListener(newListener)
         }
     }
 
@@ -265,6 +346,9 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
 
         mInputEditText.setCompoundDrawables(starDrawable, null, null, null)
         mInputEditText.compoundDrawablePadding = Util.dp2px(context, 4.0f)
+
+        // 添加事件
+        initInputEditTextEvent()
     }
 
     /**
@@ -283,16 +367,18 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
      */
     private fun addOptionalRadioGroup() {
 
-        val radioGroup = TSRegisterRadioGroup(context)
-        radioGroup.orientation = RadioGroup.HORIZONTAL
-        addView(radioGroup)
+        mRadioGroup = TSRegisterRadioGroup(context)
+        mRadioGroup!!.orientation = RadioGroup.HORIZONTAL
+        addView(mRadioGroup)
 
         val childRadioBtnArray = arrayOf(TSRegisterRadioButton(context), TSRegisterRadioButton(context), TSRegisterRadioButton(context))
 
         for ((index, radioBtn) in childRadioBtnArray.withIndex()) {
 
             radioBtn.gravity = Gravity.CENTER
-            radioGroup.addView(radioBtn)
+            // 设置Radio标记的值
+            radioBtn.setValue(index + 1)
+            mRadioGroup!!.addView(radioBtn)
             val lp = radioBtn.layoutParams
             lp.width = Util.dp2px(context, TSRegisterRadioButton.WIDTH_DIMEN)
             lp.height = Util.dp2px(context, TSRegisterRadioButton.HEIGHT_DIMEN)
@@ -318,6 +404,52 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
 
             }
         }
+
+        initRadioGroupEvent()
+    }
+
+    /**
+     * 输入框输入变化观察事件
+     */
+    private fun initInputEditTextEvent() {
+
+        // 观察输入框
+        mInputEditText.addTextChangedListener(object : TextWatcher {
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                setContentText(s!!.toString())
+            }
+        })
+    }
+    /**
+     * 选择组添加选中变化事件
+     */
+    private fun initRadioGroupEvent() {
+
+        // 单选按钮的变化监听
+        mRadioGroup?.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener {
+
+            override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
+
+                if (checkedId > 0) {
+
+                    val radioBtn = group?.findViewById<TSRegisterRadioButton>(checkedId)
+                    group as TSRegisterRadioGroup
+                    group.setCheckedValue(radioBtn?.getValue() ?: 0)
+
+                    setCheckedValue(group.getCheckedValue())
+                } else {
+                    setCheckedValue(null)
+                }
+            }
+        })
     }
 
 }

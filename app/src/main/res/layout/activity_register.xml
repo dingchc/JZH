@@ -50,7 +50,6 @@
             android:layout_marginTop="4dp"
             android:textSize="18sp"
             app:rc_hint="@string/input_learning_year"
-            app:rc_is_input_editable="true"
             app:rc_icon_src="@mipmap/icon_register_learning_year"
             />
 
@@ -85,6 +84,7 @@
             app:rc_icon_src="@mipmap/icon_register_role"
             app:rc_show_tap_arrow="false"
             app:rc_is_optional="true"
+            app:checkedValue="@={viewModel.selectRole}"
             />
 
         <com.jzh.parents.widget.TSButton

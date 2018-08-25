@@ -71,9 +71,9 @@ class RegisterActivity : BaseActivity() {
      */
     fun onRegisterBtnClick(view : View) {
 
-//        mDataBinding?.ilLearningSection?.error = "输入错误"
+        mViewModel?.studentName?.value = "" + Random().nextInt(10000)
 
-        mViewModel?.learningYear?.value = "" + Random().nextInt(100)
+        mViewModel?.selectRole?.value = 2
 
         mViewModel?.print()
 

@@ -12,7 +12,10 @@ import android.widget.RadioGroup
  */
 class TSRegisterRadioGroup(context: Context, attributeSet: AttributeSet?) : RadioGroup(context, attributeSet) {
 
-    private var checkedValue: Int = 0
+    /**
+     * 勾选的值
+     */
+    private var mCheckedValue: Int = 0
 
     constructor(context: Context) : this(context, null) {
 
@@ -20,6 +23,36 @@ class TSRegisterRadioGroup(context: Context, attributeSet: AttributeSet?) : Radi
 
     init {
 
+    }
+
+    /**
+     * 获取勾选的值
+     */
+    fun getCheckedValue(): Int {
+        return mCheckedValue
+    }
+
+    /**
+     * 设置勾选的值
+     */
+    fun setCheckedValue(value: Int) {
+        mCheckedValue = value
+    }
+
+    /**
+     * 选中一个RadioBtn
+     */
+    fun checkedItemByValue(value : Int) {
+
+        for (i in 0 .. childCount) {
+
+            val view  = getChildAt(i)
+
+            if (view is TSRegisterRadioButton && view.getValue() == value) {
+                view.isChecked = true
+                break
+            }
+        }
     }
 
 
