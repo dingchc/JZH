@@ -8,6 +8,8 @@ import com.jzh.parents.R
 import com.jzh.parents.databinding.ActivityRegisterBinding
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.RegisterViewModel
+import com.jzh.parents.viewmodel.bindadapter.TSDataBindingComponent
+import com.jzh.parents.widget.RegisterContentItem
 import java.util.*
 
 /**
@@ -77,6 +79,10 @@ class RegisterActivity : BaseActivity() {
 
         AppLogger.i("PMApplication.instance = " + JZHApplication.instance)
 
+        val item = RegisterContentItem(this@RegisterActivity)
+        item.getContentText()
+
+
     }
 
     override fun isSupportTransitionAnimation(): Boolean {
@@ -90,6 +96,7 @@ class RegisterActivity : BaseActivity() {
      */
     override fun getContentLayout(): View {
 
+        DataBindingUtil.setDefaultComponent(TSDataBindingComponent())
         mDataBinding = DataBindingUtil.inflate(layoutInflater, R.layout.activity_register, null, false)
         return mDataBinding!!.root
     }

@@ -1,11 +1,14 @@
 package com.jzh.parents.utils;
 
 
+import com.jzh.parents.widget.RegisterContentItem;
+
 public class AppLogger {
 
 	public static final String TAG = "Meeting";
 
 	private AppLogger() {
+
 	}
 
 	/**

@@ -2,11 +2,14 @@ package com.jzh.parents.widget
 
 import android.content.Context
 import android.content.res.TypedArray
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
+import android.databinding.BindingAdapter
+import android.databinding.InverseBindingListener
+import android.databinding.InverseBindingMethod
+import android.databinding.InverseBindingMethods
+import android.databinding.adapters.ListenerUtil
 import android.graphics.drawable.Drawable
-import android.support.v4.content.ContextCompat
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.Gravity
 import android.widget.EditText
@@ -14,6 +17,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RadioGroup
 import com.jzh.parents.R
+import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.Util
 
 /**
@@ -22,6 +26,7 @@ import com.jzh.parents.utils.Util
  * @author ding
  * Created by Ding on 2018/8/21.
  */
+@InverseBindingMethods(InverseBindingMethod(type = RegisterContentItem::class, attribute = "contentText", event = "contentTextAttrChanged", method = "getContentText"))
 class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyle: Int) : LinearLayout(context, attributeSet, defStyle) {
 
     /**
@@ -50,9 +55,19 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
     private var mHintStringResId: Int? = null
 
     /**
+     * 文本输入框
+     */
+    private val mInputEditText = EditText(context)
+
+    /**
      * 输入的文本
      */
-    private var mInputText: String? = null
+    private var mContent: String = ""
+
+    /**
+     * 文本变化监听
+     */
+    private var mContentTextListener: OnContentTextNotifyListener? = null
 
 
     constructor(context: Context) : this(context, null) {
@@ -79,6 +94,21 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
 
             typedArray?.recycle()
         }
+
+        mInputEditText.addTextChangedListener(object : TextWatcher{
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                setContentText(s!!.toString())
+            }
+        })
     }
 
     override fun onFinishInflate() {
@@ -106,6 +136,91 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
     }
 
     /**
+     * 获取内容
+     */
+    fun getContentText(): String {
+        AppLogger.i("* getContentText = " + mContent)
+        return mContent
+    }
+
+    /**
+     * 设置输入内容
+     */
+    fun setContentText(input: String) {
+
+        AppLogger.i("* setContentText = " + input)
+
+        if (mInputEditText.text.toString() == input) {
+
+            AppLogger.i("* setContentText input is equal so return ")
+            return
+        }
+
+        mContent = input
+
+        mInputEditText.setText(input)
+
+        if (mContentTextListener != null) {
+
+            mContentTextListener!!.onNofity()
+        }
+
+    }
+
+    /**
+     * 设置内容变化监听器
+     */
+    fun setContentTextListener(listener: OnContentTextNotifyListener?) {
+
+        mContentTextListener = listener
+    }
+
+    /**
+     * 内容变化回调
+     */
+    interface OnContentTextNotifyListener {
+
+        /**
+         * 通知
+         */
+        fun onNofity()
+    }
+
+    companion object {
+
+        /**
+         * 设置绑定监听
+         *
+         * @param view 控件
+         * @param listener 监听
+         */
+        @BindingAdapter(value = *arrayOf("contentTextAttrChanged"), requireAll = false)
+        fun setContentTextInverseBindingListener(view: RegisterContentItem, listener: InverseBindingListener?) {
+
+            val newListener = object : OnContentTextNotifyListener {
+
+                /**
+                 * 通知
+                 */
+                override fun onNofity() {
+
+                    listener?.onChange()
+                }
+
+            }
+
+            val oldListener = ListenerUtil.trackListener(view, newListener, view.id)
+
+            if (oldListener == null) {
+                view.setContentTextListener(null)
+            }
+
+            view.setContentTextListener(newListener)
+        }
+    }
+
+
+    /**
      * 添加图标
      */
     private fun addIcon() {
@@ -121,31 +236,30 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
      */
     private fun addInputEditText() {
 
-        val inputEditText = EditText(context)
-        inputEditText.hint = resources.getString(mHintStringResId!!)
-        inputEditText.background = null
-        inputEditText.textSize = 14.0f
+        mInputEditText.hint = resources.getString(mHintStringResId!!)
+        mInputEditText.background = null
+        mInputEditText.textSize = 14.0f
 
         // 设置是否可输入
         if (!mIsInputEditable!!) {
-            inputEditText.isEnabled = false
+            mInputEditText.isEnabled = false
         }
 
-        addView(inputEditText)
+        addView(mInputEditText)
 
-        val layoutParam = inputEditText.layoutParams as LinearLayout.LayoutParams
+        val layoutParam = mInputEditText.layoutParams as LinearLayout.LayoutParams
         layoutParam.weight = 1.0f
 
-        inputEditText.setHintTextColor(Util.getColorCompat(R.color.register_input_text_hint_color))
+        mInputEditText.setHintTextColor(Util.getColorCompat(R.color.register_input_text_hint_color))
 
-        val marginLayoutParam = inputEditText.layoutParams as MarginLayoutParams
+        val marginLayoutParam = mInputEditText.layoutParams as MarginLayoutParams
         marginLayoutParam.leftMargin = Util.dp2px(context, 15.0f)
 
         // 星号
         val starDrawable = Util.getCompoundDrawable(resources, R.mipmap.icon_register_star)
 
-        inputEditText.setCompoundDrawables(starDrawable, null, null, null)
-        inputEditText.compoundDrawablePadding = Util.dp2px(context, 4.0f)
+        mInputEditText.setCompoundDrawables(starDrawable, null, null, null)
+        mInputEditText.compoundDrawablePadding = Util.dp2px(context, 4.0f)
     }
 
     /**
