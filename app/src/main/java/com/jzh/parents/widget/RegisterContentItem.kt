@@ -62,7 +62,7 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
     /**
      * 输入的文本
      */
-    private var mContent: String = ""
+    private var mContent: String? = null
 
     /**
      * 文本变化监听
@@ -95,11 +95,11 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
             typedArray?.recycle()
         }
 
-        mInputEditText.addTextChangedListener(object : TextWatcher{
+        // 观察输入框
+        mInputEditText.addTextChangedListener(object : TextWatcher {
 
             override fun afterTextChanged(s: Editable?) {
             }
-
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -139,30 +139,31 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
      * 获取内容
      */
     fun getContentText(): String {
-        AppLogger.i("* getContentText = " + mContent)
-        return mContent
+        return Util.getEmptyString(mContent)
     }
 
     /**
      * 设置输入内容
      */
-    fun setContentText(input: String) {
+    fun setContentText(input: String?) {
 
         AppLogger.i("* setContentText = " + input)
 
-        if (mInputEditText.text.toString() == input) {
-
-            AppLogger.i("* setContentText input is equal so return ")
+        // 避免循环提示
+        if (mContent == input) {
             return
         }
 
         mContent = input
 
-        mInputEditText.setText(input)
+        // 如果输入框内容一致，不进行更新
+        if (mInputEditText.text.toString() != input) {
+            mInputEditText.setText(input)
+        }
 
+        // 通知Model更新
         if (mContentTextListener != null) {
-
-            mContentTextListener!!.onNofity()
+            mContentTextListener!!.onNotify()
         }
 
     }
@@ -183,9 +184,13 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
         /**
          * 通知
          */
-        fun onNofity()
+        fun onNotify()
     }
 
+    /**
+     * 静态函数
+     *
+     */
     companion object {
 
         /**
@@ -202,7 +207,7 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
                 /**
                  * 通知
                  */
-                override fun onNofity() {
+                override fun onNotify() {
 
                     listener?.onChange()
                 }

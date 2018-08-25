@@ -74,6 +74,14 @@ class Util {
         }
 
         /**
+         * 获取非空字符串
+         */
+        fun getEmptyString(input: String?): String {
+
+            return input ?: ""
+        }
+
+        /**
          * 是否为 MI UI
          *
          * @return true 是、 false 否

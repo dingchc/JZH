@@ -73,11 +73,11 @@ class RegisterActivity : BaseActivity() {
 
 //        mDataBinding?.ilLearningSection?.error = "输入错误"
 
-        mViewModel?.learningSection?.value = "" + Random().nextInt(100)
+        mViewModel?.learningYear?.value = "" + Random().nextInt(100)
 
         mViewModel?.print()
 
-        AppLogger.i("PMApplication.instance = " + JZHApplication.instance)
+        AppLogger.i("mViewModel?.studentName?.value = " + mViewModel?.studentName?.value)
 
         val item = RegisterContentItem(this@RegisterActivity)
         item.getContentText()
