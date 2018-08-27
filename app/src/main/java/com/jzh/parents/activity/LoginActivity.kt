@@ -32,6 +32,13 @@ class LoginActivity : BaseActivity() {
      */
     override fun initViews() {
 
+        setToolbarTitle(R.string.login)
+
+        mViewModel = ViewModelProviders.of(this@LoginActivity).get(LoginViewModel::class.java)
+
+        mDataBinding?.setLifecycleOwner(this@LoginActivity)
+
+        mDataBinding?.viewModel = mViewModel
     }
 
     /**
@@ -45,11 +52,6 @@ class LoginActivity : BaseActivity() {
      */
     override fun initData() {
 
-        mViewModel = ViewModelProviders.of(this@LoginActivity).get(LoginViewModel::class.java)
-
-        mDataBinding?.setLifecycleOwner(this@LoginActivity)
-
-        mDataBinding?.viewModel = mViewModel
     }
 
     /**

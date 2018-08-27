@@ -1,6 +1,7 @@
 package com.jzh.parents.activity
 
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.view.View
 import com.jzh.parents.app.JZHApplication
@@ -36,6 +37,12 @@ class RegisterActivity : BaseActivity() {
     override fun initViews() {
 
         setToolbarTitle(R.string.register)
+
+        mViewModel = ViewModelProviders.of(this@RegisterActivity).get(RegisterViewModel::class.java)
+
+        mDataBinding?.setLifecycleOwner(this@RegisterActivity)
+
+        mDataBinding?.viewModel = mViewModel
     }
 
     /**
@@ -49,11 +56,6 @@ class RegisterActivity : BaseActivity() {
      */
     override fun initData() {
 
-        mViewModel = ViewModelProviders.of(this@RegisterActivity).get(RegisterViewModel::class.java)
-
-        mDataBinding?.setLifecycleOwner(this@RegisterActivity)
-
-        mDataBinding?.viewModel = mViewModel
     }
 
 
@@ -79,10 +81,8 @@ class RegisterActivity : BaseActivity() {
 
         AppLogger.i("mViewModel?.studentName?.value = " + mViewModel?.studentName?.value)
 
-        val item = RegisterContentItem(this@RegisterActivity)
-        item.getContentText()
-
-
+        startActivity(Intent(this@RegisterActivity, HomePageActivity::class.java))
+        finishCompat()
     }
 
     override fun isSupportTransitionAnimation(): Boolean {
