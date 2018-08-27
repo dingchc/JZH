@@ -62,6 +62,8 @@ class TSRegisterRadioButton(context: Context, attributeSet: AttributeSet?, defSt
         background = stateListDrawable
 
         setTextColor(Util.getColorCompat(R.color.white))
+
+        textSize = 14.0f
     }
 
     /**

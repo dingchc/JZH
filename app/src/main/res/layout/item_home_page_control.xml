@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_login"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/iv_avatar"
+            android:layout_marginLeft="6dp"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/black"
+                android:text="@string/app_name"
+                android:drawablePadding="4dp"
+                android:drawableRight="@mipmap/icon_vip"/>
+
+            <TextView
+                android:id="@+id/tv_class_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:textColor="@color/gray"
+                android:text="@string/app_name"/>
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/iv_living"
+            android:layout_width="64dp"
+            android:layout_height="match_parent"
+            android:src="@mipmap/icon_home_living"
+            android:layout_toLeftOf="@id/tv_mine"/>
+
+        <TextView
+            android:id="@+id/tv_mine"
+            android:layout_width="47dp"
+            android:layout_height="wrap_content"
+            android:text="@string/home_mine"
+            android:drawableTop="@mipmap/icon_home_mine"
+            android:gravity="center_horizontal"
+            android:layout_centerVertical="true"
+            android:textSize="9sp"
+            android:drawablePadding="1dp"
+            android:layout_toLeftOf="@+id/tv_msg_center"/>
+
+        <TextView
+            android:id="@+id/tv_msg_center"
+            android:layout_width="47dp"
+            android:layout_height="wrap_content"
+            android:text="@string/home_msg_center"
+            android:drawableTop="@mipmap/icon_home_msg_center"
+            android:gravity="center_horizontal"
+            android:layout_centerVertical="true"
+            android:textSize="9sp"
+            android:drawablePadding="1dp"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+
+</layout>
+

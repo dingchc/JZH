@@ -40,7 +40,7 @@
             android:layout_marginTop="9dp"
             android:text="@string/login_desc"
             android:textColor="@color/light_gray"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
 
         <!-- @{()->viewModel.wxAuthorizeClick()} -->
         <com.jzh.parents.widget.TSButton
@@ -49,6 +49,7 @@
             android:layout_marginTop="80dp"
             android:onClick="wxAuthorizeClick"
             android:text="@string/login"
+            android:textSize="18sp"
             android:textColor="@color/white"
             app:corner="8dp"
             app:normal_color="@color/login_btn_green"
@@ -61,7 +62,7 @@
             android:layout_marginTop="10dp"
             android:text="@string/login_addition"
             android:textColor="@color/light_gray"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
 
     </LinearLayout>
 

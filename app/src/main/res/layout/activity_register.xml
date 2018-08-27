@@ -92,6 +92,7 @@
             android:layout_height="@dimen/btn_height"
             android:layout_marginTop="40dp"
             android:text="@string/finish"
+            android:textSize="18sp"
             android:textColor="@color/white"
             android:onClick="onRegisterBtnClick"
             app:corner="8dp"

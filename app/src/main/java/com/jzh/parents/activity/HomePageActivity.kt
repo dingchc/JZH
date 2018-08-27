@@ -2,9 +2,13 @@ package com.jzh.parents.activity
 
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
+import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.jzh.parents.R
+import com.jzh.parents.adapter.HomePageAdapter
 import com.jzh.parents.databinding.ActivityHomepageBinding
+import com.jzh.parents.datamodel.data.HomeItemData
+import com.jzh.parents.datamodel.data.HomeItemFuncData
 import com.jzh.parents.viewmodel.HomePageViewModel
 
 /**
@@ -35,6 +39,9 @@ class HomePageActivity : BaseActivity() {
         mViewModel = ViewModelProviders.of(this@HomePageActivity).get(HomePageViewModel::class.java)
         mDataBinding?.viewModel = mViewModel
         mDataBinding?.setLifecycleOwner(this@HomePageActivity)
+
+
+        mDataBinding?.rvData?.layoutManager = LinearLayoutManager(this@HomePageActivity, LinearLayoutManager.VERTICAL, false)
     }
 
     /**
@@ -48,6 +55,9 @@ class HomePageActivity : BaseActivity() {
      */
     override fun initData() {
 
+        val dataList : MutableList<HomeItemData> = mutableListOf(HomeItemFuncData())
+
+        mDataBinding?.rvData?.adapter = HomePageAdapter(this@HomePageActivity, dataList)
     }
 
     /**
