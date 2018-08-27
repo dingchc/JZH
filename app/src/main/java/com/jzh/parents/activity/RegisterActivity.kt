@@ -4,13 +4,11 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.view.View
-import com.jzh.parents.app.JZHApplication
 import com.jzh.parents.R
 import com.jzh.parents.databinding.ActivityRegisterBinding
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.RegisterViewModel
 import com.jzh.parents.viewmodel.bindadapter.TSDataBindingComponent
-import com.jzh.parents.widget.RegisterContentItem
 import java.util.*
 
 /**
@@ -81,7 +79,7 @@ class RegisterActivity : BaseActivity() {
 
         AppLogger.i("mViewModel?.studentName?.value = " + mViewModel?.studentName?.value)
 
-        startActivity(Intent(this@RegisterActivity, HomePageActivity::class.java))
+        startActivity(Intent(this@RegisterActivity, HomeActivity::class.java))
         finishCompat()
     }
 

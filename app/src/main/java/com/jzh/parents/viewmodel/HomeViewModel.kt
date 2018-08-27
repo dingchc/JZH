@@ -8,5 +8,5 @@ import android.app.Application
  * @author ding
  * Created by Ding on 2018/8/26.
  */
-class HomePageViewModel(app: Application) : BaseViewModel(app) {
+class HomeViewModel(app: Application) : BaseViewModel(app) {
 }

@@ -55,7 +55,7 @@
 
         <!-- 主页 -->
         <activity
-            android:name=".activity.HomePageActivity"
+            android:name=".activity.HomeActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />

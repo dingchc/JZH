@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jzh.parents.R
-import com.jzh.parents.databinding.ItemHomePageControlBinding
+import com.jzh.parents.databinding.ItemHomeControlBinding
 import com.jzh.parents.datamodel.data.HomeItemData
 
 /**
@@ -46,19 +46,19 @@ class HomePageAdapter(private var mContext: Context, var mDataList: MutableList<
         // 功能条目:
             HomeItemData.ItemTypeEnum.LIVE_FUNC.ordinal -> {
 
-                val binding: ItemHomePageControlBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_page_control, parent, false)
+                val binding: ItemHomeControlBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_control, parent, false)
                 return HomePageViewHolder(binding)
             }
 
         // 直播（或Banner）条目:
             HomeItemData.ItemTypeEnum.LIVE_NOW.ordinal -> {
 
-                val binding: ItemHomePageControlBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_page_control, parent, false)
+                val binding: ItemHomeControlBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_control, parent, false)
                 return HomePageViewHolder(binding)
             }
         // 其他
             else -> {
-                val binding: ItemHomePageControlBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_page_control, parent, false)
+                val binding: ItemHomeControlBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_control, parent, false)
                 return HomePageViewHolder(binding)
 //                return null
             }

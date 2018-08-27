@@ -6,10 +6,10 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.jzh.parents.R
 import com.jzh.parents.adapter.HomePageAdapter
-import com.jzh.parents.databinding.ActivityHomepageBinding
+import com.jzh.parents.databinding.ActivityHomeBinding
 import com.jzh.parents.datamodel.data.HomeItemData
 import com.jzh.parents.datamodel.data.HomeItemFuncData
-import com.jzh.parents.viewmodel.HomePageViewModel
+import com.jzh.parents.viewmodel.HomeViewModel
 
 /**
  * 主页
@@ -17,17 +17,17 @@ import com.jzh.parents.viewmodel.HomePageViewModel
  * @author ding
  * Created by Ding on 2018/8/26.
  */
-class HomePageActivity : BaseActivity() {
+class HomeActivity : BaseActivity() {
 
     /**
      * 数据绑定
      */
-    private var mDataBinding : ActivityHomepageBinding? = null
+    private var mDataBinding : ActivityHomeBinding? = null
 
     /**
      * ViewModel
      */
-    private var mViewModel : HomePageViewModel? = null
+    private var mViewModel : HomeViewModel? = null
 
     /**
      * 初始化组件
@@ -36,12 +36,12 @@ class HomePageActivity : BaseActivity() {
 
         setToolbarTitle(R.string.app_name)
 
-        mViewModel = ViewModelProviders.of(this@HomePageActivity).get(HomePageViewModel::class.java)
+        mViewModel = ViewModelProviders.of(this@HomeActivity).get(HomeViewModel::class.java)
         mDataBinding?.viewModel = mViewModel
-        mDataBinding?.setLifecycleOwner(this@HomePageActivity)
+        mDataBinding?.setLifecycleOwner(this@HomeActivity)
 
 
-        mDataBinding?.rvData?.layoutManager = LinearLayoutManager(this@HomePageActivity, LinearLayoutManager.VERTICAL, false)
+        mDataBinding?.rvData?.layoutManager = LinearLayoutManager(this@HomeActivity, LinearLayoutManager.VERTICAL, false)
     }
 
     /**
@@ -57,7 +57,7 @@ class HomePageActivity : BaseActivity() {
 
         val dataList : MutableList<HomeItemData> = mutableListOf(HomeItemFuncData())
 
-        mDataBinding?.rvData?.adapter = HomePageAdapter(this@HomePageActivity, dataList)
+        mDataBinding?.rvData?.adapter = HomePageAdapter(this@HomeActivity, dataList)
     }
 
     /**
@@ -67,7 +67,7 @@ class HomePageActivity : BaseActivity() {
      */
     override fun getContentLayout(): View {
 
-        mDataBinding = DataBindingUtil.inflate(layoutInflater, R.layout.activity_homepage, null, false)
+        mDataBinding = DataBindingUtil.inflate(layoutInflater, R.layout.activity_home, null, false)
         return mDataBinding!!.root
     }
 }
