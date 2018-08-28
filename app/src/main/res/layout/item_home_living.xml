@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -87,13 +88,80 @@
                 android:layout_toRightOf="@id/layout_left"
                 android:layout_weight="1">
 
+                <!-- 直播标题 -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:text="和教育五期项目，正在直播，请点击查看详情，抓紧时间享受吧"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
                 <View
+                    android:id="@+id/view_dash_line"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_centerVertical="true"
-                    android:layerType="software"
-                    android:background="@drawable/shape_horizontal_dash_line" />
+                    android:background="@drawable/shape_horizontal_dash_line"
+                    android:layerType="software" />
 
+                <!-- 直播人头像 -->
+                <ImageView
+                    android:id="@+id/iv_avatar"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_alignLeft="@id/view_dash_line"
+                    android:layout_below="@id/view_dash_line"
+                    android:layout_marginTop="8dp"
+                    android:src="@mipmap/ic_login" />
+
+                <!-- 直播人名称 -->
+                <TextView
+                    android:id="@+id/tv_author_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/view_dash_line"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_toRightOf="@id/iv_avatar"
+                    android:text="刘一凡"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <!-- 直播人描述1 -->
+                <TextView
+                    android:id="@+id/tv_author_desc1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/tv_author_name"
+                    android:layout_below="@id/tv_author_name"
+                    android:text="国家一级讲师"
+                    android:textColor="@color/white"
+                    android:textSize="8sp" />
+
+                <!-- 直播人描述2 -->
+                <TextView
+                    android:id="@+id/tv_author_desc2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/tv_author_name"
+                    android:layout_below="@id/tv_author_desc1"
+                    android:text="CCTV特约评论员"
+                    android:textColor="@color/white"
+                    android:textSize="8sp" />
+
+                <com.jzh.parents.widget.TSButton
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:textSize="8sp"
+                    android:textColor="#FF0076FF"
+                    android:layout_marginTop="12dp"
+                    android:layout_below="@id/view_dash_line"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/home_enter_live_room"
+                    app:corner="4dp"
+                    app:normal_color="@color/white"
+                    app:pressed_color="@color/light_green" />
             </RelativeLayout>
         </LinearLayout>
 
