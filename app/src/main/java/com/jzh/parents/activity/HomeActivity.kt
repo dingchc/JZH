@@ -9,6 +9,7 @@ import com.jzh.parents.adapter.HomePageAdapter
 import com.jzh.parents.databinding.ActivityHomeBinding
 import com.jzh.parents.datamodel.data.HomeItemData
 import com.jzh.parents.datamodel.data.HomeItemFuncData
+import com.jzh.parents.datamodel.data.HomeItemLiveData
 import com.jzh.parents.viewmodel.HomeViewModel
 
 /**
@@ -55,7 +56,7 @@ class HomeActivity : BaseActivity() {
      */
     override fun initData() {
 
-        val dataList : MutableList<HomeItemData> = mutableListOf(HomeItemFuncData())
+        val dataList : MutableList<HomeItemData> = mutableListOf(HomeItemFuncData(), HomeItemLiveData())
 
         mDataBinding?.rvData?.adapter = HomePageAdapter(this@HomeActivity, dataList)
     }

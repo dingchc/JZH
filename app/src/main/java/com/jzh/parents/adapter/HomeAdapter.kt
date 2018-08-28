@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jzh.parents.R
 import com.jzh.parents.databinding.ItemHomeControlBinding
+import com.jzh.parents.databinding.ItemHomeLivingBinding
 import com.jzh.parents.datamodel.data.HomeItemData
 
 /**
@@ -53,7 +54,7 @@ class HomePageAdapter(private var mContext: Context, var mDataList: MutableList<
         // 直播（或Banner）条目:
             HomeItemData.ItemTypeEnum.LIVE_NOW.ordinal -> {
 
-                val binding: ItemHomeControlBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_control, parent, false)
+                val binding: ItemHomeLivingBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_living, parent, false)
                 return HomePageViewHolder(binding)
             }
         // 其他
