@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import com.jzh.parents.R
 import com.jzh.parents.databinding.ItemHomeControlBinding
 import com.jzh.parents.databinding.ItemHomeLivingBinding
-import com.jzh.parents.datamodel.data.HomeItemData
+import com.jzh.parents.viewmodel.entity.HomeItemEntity
 
 /**
  * 首页的适配器
@@ -17,7 +17,7 @@ import com.jzh.parents.datamodel.data.HomeItemData
  * @author ding
  * Created by Ding on 2018/8/27.
  */
-class HomePageAdapter(private var mContext: Context, var mDataList: MutableList<HomeItemData>?) : RecyclerView.Adapter<HomePageViewHolder>() {
+class HomePageAdapter(private var mContext: Context, var mDataList: MutableList<HomeItemEntity>?) : RecyclerView.Adapter<HomePageViewHolder>() {
 
     /**
      * 布局加载器
@@ -45,14 +45,14 @@ class HomePageAdapter(private var mContext: Context, var mDataList: MutableList<
         when (viewType) {
 
         // 功能条目:
-            HomeItemData.ItemTypeEnum.LIVE_FUNC.ordinal -> {
+            HomeItemEntity.ItemTypeEnum.LIVE_FUNC.ordinal -> {
 
                 val binding: ItemHomeControlBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_control, parent, false)
                 return HomePageViewHolder(binding)
             }
 
         // 直播（或Banner）条目:
-            HomeItemData.ItemTypeEnum.LIVE_NOW.ordinal -> {
+            HomeItemEntity.ItemTypeEnum.LIVE_NOW.ordinal -> {
 
                 val binding: ItemHomeLivingBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_living, parent, false)
                 return HomePageViewHolder(binding)

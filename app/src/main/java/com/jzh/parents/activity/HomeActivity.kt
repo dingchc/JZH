@@ -7,9 +7,9 @@ import android.view.View
 import com.jzh.parents.R
 import com.jzh.parents.adapter.HomePageAdapter
 import com.jzh.parents.databinding.ActivityHomeBinding
-import com.jzh.parents.datamodel.data.HomeItemData
-import com.jzh.parents.datamodel.data.HomeItemFuncData
-import com.jzh.parents.datamodel.data.HomeItemLiveData
+import com.jzh.parents.viewmodel.entity.HomeItemEntity
+import com.jzh.parents.viewmodel.entity.HomeItemFuncEntity
+import com.jzh.parents.viewmodel.entity.HomeItemLiveEntity
 import com.jzh.parents.viewmodel.HomeViewModel
 
 /**
@@ -56,7 +56,7 @@ class HomeActivity : BaseActivity() {
      */
     override fun initData() {
 
-        val dataList : MutableList<HomeItemData> = mutableListOf(HomeItemFuncData(), HomeItemLiveData())
+        val dataList : MutableList<HomeItemEntity> = mutableListOf(HomeItemFuncEntity(), HomeItemLiveEntity())
 
         mDataBinding?.rvData?.adapter = HomePageAdapter(this@HomeActivity, dataList)
     }

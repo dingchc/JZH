@@ -1,11 +1,11 @@
-package com.jzh.parents.datamodel.data
+package com.jzh.parents.viewmodel.entity
 
 /**
  *
  * @author ding
  * Created by Ding on 2018/8/27.
  */
-abstract class HomeItemData(var itemType: ItemTypeEnum = ItemTypeEnum.LIVE_ITEM) {
+abstract class HomeItemEntity(var itemType: ItemTypeEnum = ItemTypeEnum.LIVE_ITEM) {
 
 
     /**
