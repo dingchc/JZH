@@ -21,16 +21,20 @@
         </RelativeLayout>
 
         <!-- 直播 -->
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/round_bg_blue">
+            android:background="@drawable/round_bg_blue"
+            android:orientation="horizontal">
 
             <!-- 左侧部门 -->
             <LinearLayout
+                android:id="@+id/layout_left"
                 android:layout_width="72dp"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="9dp"
                 android:layout_marginLeft="5dp"
+                android:layout_marginTop="11dp"
                 android:background="@drawable/shape_vertical_dash_line"
                 android:orientation="vertical">
 
@@ -64,7 +68,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="9dp"
                     android:gravity="center_horizontal"
                     android:text="@string/home_look_the_live"
                     android:textColor="@color/white"
@@ -72,12 +75,27 @@
 
             </LinearLayout>
 
+            <!-- 右侧区域 -->
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="9dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="11dp"
+                android:layout_toRightOf="@id/layout_left"
+                android:layout_weight="1">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_centerVertical="true"
+                    android:layerType="software"
+                    android:background="@drawable/shape_horizontal_dash_line" />
 
             </RelativeLayout>
-        </RelativeLayout>
+        </LinearLayout>
 
     </FrameLayout>
 </layout>
