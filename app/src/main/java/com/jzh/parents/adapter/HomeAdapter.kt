@@ -10,6 +10,7 @@ import com.jzh.parents.R
 import com.jzh.parents.databinding.ItemHomeControlBinding
 import com.jzh.parents.databinding.ItemHomeLivingBinding
 import com.jzh.parents.viewmodel.entity.HomeItemEntity
+import com.jzh.parents.viewmodel.entity.HomeItemFuncEntity
 
 /**
  * 首页的适配器
@@ -17,18 +18,42 @@ import com.jzh.parents.viewmodel.entity.HomeItemEntity
  * @author ding
  * Created by Ding on 2018/8/27.
  */
-class HomePageAdapter(private var mContext: Context, var mDataList: MutableList<HomeItemEntity>?) : RecyclerView.Adapter<HomePageViewHolder>() {
+class HomePageAdapter(var context: Context, private var dataList: MutableList<HomeItemEntity>?) : RecyclerView.Adapter<HomePageAdapter.HomePageViewHolder>() {
 
     /**
      * 布局加载器
      */
-    private var mInflater: LayoutInflater? = null
+    var mInflater: LayoutInflater? = null
+
+    var mDataList: MutableList<HomeItemEntity>? = dataList
 
     init {
-        mInflater = LayoutInflater.from(mContext)
+        mInflater = LayoutInflater.from(context)
     }
 
     override fun onBindViewHolder(holder: HomePageViewHolder, position: Int) {
+
+        val viewType = getItemViewType(position)
+
+        when (viewType) {
+
+        // 功能条目:
+            HomeItemEntity.ItemTypeEnum.LIVE_FUNC.ordinal -> {
+
+                holder.dataBinding as ItemHomeControlBinding
+                holder.dataBinding.itemEntity = mDataList?.get(position) as HomeItemFuncEntity
+            }
+
+        // 直播（或Banner）条目:
+            HomeItemEntity.ItemTypeEnum.LIVE_NOW.ordinal -> {
+
+
+            }
+        // 其他
+            else -> {
+
+            }
+        }
     }
 
 
@@ -66,12 +91,17 @@ class HomePageAdapter(private var mContext: Context, var mDataList: MutableList<
         }
     }
 
+    /**
+     * ViewHolder类
+     */
+    class HomePageViewHolder(binding: ViewDataBinding?) : RecyclerView.ViewHolder(binding!!.root) {
+
+        val dataBinding:ViewDataBinding? = binding
+
+
+    }
+
 }
 
-/**
- * ViewHolder类
- */
-class HomePageViewHolder(dataBinding: ViewDataBinding?) : RecyclerView.ViewHolder(dataBinding!!.root) {
 
-}
 

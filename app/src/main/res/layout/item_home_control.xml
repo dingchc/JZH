@@ -3,6 +3,9 @@
 
     <data>
 
+        <variable
+            name="itemEntity"
+            type="com.jzh.parents.viewmodel.entity.HomeItemFuncEntity" />
     </data>
 
     <RelativeLayout
@@ -35,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:textColor="@color/black"
-                android:text="@string/app_name"
+                android:text="@{itemEntity.name}"
                 android:drawablePadding="4dp"
                 android:drawableRight="@mipmap/icon_vip"/>
 
@@ -45,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
                 android:textColor="@color/gray"
-                android:text="@string/app_name"/>
+                android:text="@{itemEntity.className}"/>
         </LinearLayout>
 
 
