@@ -7,10 +7,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jzh.parents.R
-import com.jzh.parents.databinding.ItemHomeControlBinding
+import com.jzh.parents.databinding.ItemHomeFuncBinding
 import com.jzh.parents.databinding.ItemHomeLivingBinding
 import com.jzh.parents.viewmodel.entity.HomeItemEntity
 import com.jzh.parents.viewmodel.entity.HomeItemFuncEntity
+import com.jzh.parents.viewmodel.entity.HomeItemLiveEntity
 
 /**
  * 首页的适配器
@@ -40,14 +41,15 @@ class HomePageAdapter(var context: Context, private var dataList: MutableList<Ho
         // 功能条目:
             HomeItemEntity.ItemTypeEnum.LIVE_FUNC.ordinal -> {
 
-                holder.dataBinding as ItemHomeControlBinding
+                holder.dataBinding as ItemHomeFuncBinding
                 holder.dataBinding.itemEntity = mDataList?.get(position) as HomeItemFuncEntity
             }
 
         // 直播（或Banner）条目:
             HomeItemEntity.ItemTypeEnum.LIVE_NOW.ordinal -> {
 
-
+                holder.dataBinding as ItemHomeLivingBinding
+                holder.dataBinding.itemEntity = mDataList?.get(position) as HomeItemLiveEntity
             }
         // 其他
             else -> {
@@ -72,7 +74,7 @@ class HomePageAdapter(var context: Context, private var dataList: MutableList<Ho
         // 功能条目:
             HomeItemEntity.ItemTypeEnum.LIVE_FUNC.ordinal -> {
 
-                val binding: ItemHomeControlBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_control, parent, false)
+                val binding: ItemHomeFuncBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_func, parent, false)
                 return HomePageViewHolder(binding)
             }
 
@@ -84,9 +86,8 @@ class HomePageAdapter(var context: Context, private var dataList: MutableList<Ho
             }
         // 其他
             else -> {
-                val binding: ItemHomeControlBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_control, parent, false)
+                val binding: ItemHomeFuncBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_func, parent, false)
                 return HomePageViewHolder(binding)
-//                return null
             }
         }
     }
@@ -94,10 +95,7 @@ class HomePageAdapter(var context: Context, private var dataList: MutableList<Ho
     /**
      * ViewHolder类
      */
-    class HomePageViewHolder(binding: ViewDataBinding?) : RecyclerView.ViewHolder(binding!!.root) {
-
-        val dataBinding:ViewDataBinding? = binding
-
+    class HomePageViewHolder(val dataBinding: ViewDataBinding?) : RecyclerView.ViewHolder(dataBinding!!.root) {
 
     }
 

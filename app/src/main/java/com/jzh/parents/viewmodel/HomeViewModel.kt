@@ -7,6 +7,7 @@ import com.jzh.parents.datamodel.repo.HomeRepository
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.entity.HomeItemEntity
 import com.jzh.parents.viewmodel.entity.HomeItemFuncEntity
+import com.jzh.parents.viewmodel.entity.HomeItemLiveEntity
 
 /**
  * 主页的ViewModel
@@ -50,8 +51,13 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
 
         AppLogger.i("* loadItemEntities")
 
-        val itemEntity = HomeItemFuncEntity(name = "张大伟妈妈", className = "二年级")
-        val entities = mutableListOf<HomeItemEntity>(itemEntity)
+        // 功能条
+        val funcEntity = HomeItemFuncEntity(name = "张大伟妈妈", className = "二年级")
+
+        // 直播
+        val livingEntity = HomeItemLiveEntity(onlineCount = 1234, title = "热门直播", author = "MacTalk", authorDescription = "CCTV特约评论员1")
+
+        val entities = mutableListOf<HomeItemEntity>(funcEntity, livingEntity)
 
         itemEntities.value = entities
     }

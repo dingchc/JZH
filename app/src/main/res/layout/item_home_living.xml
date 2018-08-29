@@ -4,6 +4,10 @@
 
     <data>
 
+        <variable
+            name="itemEntity"
+            type="com.jzh.parents.viewmodel.entity.HomeItemLiveEntity" />
+
     </data>
 
     <FrameLayout
@@ -61,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_horizontal"
-                    android:text="94456"
+                    android:text="@{String.valueOf(itemEntity.onlineCount)}"
                     android:textColor="@color/white"
                     android:textSize="11sp" />
 
@@ -93,7 +97,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:text="和教育五期项目，正在直播，请点击查看详情，抓紧时间享受吧"
+                    android:text="@{itemEntity.title}"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
 
@@ -124,7 +128,7 @@
                     android:layout_marginLeft="7dp"
                     android:layout_marginTop="7dp"
                     android:layout_toRightOf="@id/iv_avatar"
-                    android:text="刘一凡"
+                    android:text="@{itemEntity.author}"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 

@@ -81,14 +81,7 @@ class HomeActivity : BaseActivity() {
         mDataBinding?.rvData?.adapter = mAdapter
 
         val handler: Handler = android.os.Handler()
-        handler.postDelayed(object : Runnable {
-            override fun run() {
-
-                mViewModel?.loadItemEntities()
-            }
-        }
-                , 5000L)
-
+        handler.postDelayed({ mViewModel?.loadItemEntities() }, 5000L)
     }
 
     /**
