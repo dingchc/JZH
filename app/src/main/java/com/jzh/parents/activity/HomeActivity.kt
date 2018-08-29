@@ -75,7 +75,11 @@ class HomeActivity : BaseActivity() {
      */
     override fun initData() {
 
-        val dataList: MutableList<HomeItemEntity> = mutableListOf(HomeItemFuncEntity(), HomeItemLiveEntity())
+        // 加载功能条
+        mViewModel?.loadFuncEntity()
+
+        // 加载列表
+        val dataList: MutableList<HomeItemEntity> = mutableListOf(HomeItemLiveEntity())
 
         mAdapter = HomePageAdapter(this@HomeActivity, dataList)
         mDataBinding?.rvData?.adapter = mAdapter

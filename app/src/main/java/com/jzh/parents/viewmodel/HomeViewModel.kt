@@ -18,6 +18,11 @@ import com.jzh.parents.viewmodel.entity.HomeItemLiveEntity
 class HomeViewModel(app: Application) : BaseViewModel(app) {
 
     /**
+     * 功能条数据实体
+     */
+    private var funcEntity: MutableLiveData<HomeItemFuncEntity> = MutableLiveData<HomeItemFuncEntity>()
+
+    /**
      * 主页的条目
      */
     private var itemEntities: MutableLiveData<MutableList<HomeItemEntity>> = MutableLiveData<MutableList<HomeItemEntity>>()
@@ -31,7 +36,7 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
     /**
      * 获取条目List
      */
-    fun getItemEntities() : LiveData<MutableList<HomeItemEntity>> {
+    fun getItemEntities(): LiveData<MutableList<HomeItemEntity>> {
 
         return itemEntities
     }
@@ -39,9 +44,25 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
     /**
      * 设置条目List
      */
-    fun setItemEntities(entities : MutableList<HomeItemEntity>) {
+    fun setItemEntities(entities: MutableList<HomeItemEntity>) {
 
         itemEntities.value = entities
+    }
+
+    /**
+     * 获取功能条数据
+     */
+    fun getFuncEntity(): MutableLiveData<HomeItemFuncEntity> {
+
+        return funcEntity
+    }
+
+    /**
+     * 加载功能条数据
+     */
+    fun loadFuncEntity() {
+
+        funcEntity.value = repo.loadFuncEntity()
     }
 
     /**
@@ -51,13 +72,10 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
 
         AppLogger.i("* loadItemEntities")
 
-        // 功能条
-        val funcEntity = HomeItemFuncEntity(name = "张大伟妈妈", className = "二年级")
-
         // 直播
         val livingEntity = HomeItemLiveEntity(onlineCount = 1234, title = "热门直播", author = "MacTalk", authorDescription = "CCTV特约评论员1")
 
-        val entities = mutableListOf<HomeItemEntity>(funcEntity, livingEntity)
+        val entities = mutableListOf<HomeItemEntity>(livingEntity)
 
         itemEntities.value = entities
     }

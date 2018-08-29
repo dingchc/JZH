@@ -38,13 +38,6 @@ class HomePageAdapter(var context: Context, private var dataList: MutableList<Ho
 
         when (viewType) {
 
-        // 功能条目:
-            HomeItemEntity.ItemTypeEnum.LIVE_FUNC.ordinal -> {
-
-                holder.dataBinding as ItemHomeFuncBinding
-                holder.dataBinding.itemEntity = mDataList?.get(position) as HomeItemFuncEntity
-            }
-
         // 直播（或Banner）条目:
             HomeItemEntity.ItemTypeEnum.LIVE_NOW.ordinal -> {
 
@@ -71,13 +64,6 @@ class HomePageAdapter(var context: Context, private var dataList: MutableList<Ho
 
         when (viewType) {
 
-        // 功能条目:
-            HomeItemEntity.ItemTypeEnum.LIVE_FUNC.ordinal -> {
-
-                val binding: ItemHomeFuncBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_func, parent, false)
-                return HomePageViewHolder(binding)
-            }
-
         // 直播（或Banner）条目:
             HomeItemEntity.ItemTypeEnum.LIVE_NOW.ordinal -> {
 
@@ -86,7 +72,7 @@ class HomePageAdapter(var context: Context, private var dataList: MutableList<Ho
             }
         // 其他
             else -> {
-                val binding: ItemHomeFuncBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_func, parent, false)
+                val binding: ItemHomeLivingBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_living, parent, false)
                 return HomePageViewHolder(binding)
             }
         }

@@ -1,5 +1,7 @@
 package com.jzh.parents.datamodel.local
 
+import com.jzh.parents.viewmodel.entity.HomeItemFuncEntity
+
 /**
  * 主页获取本地数据
  *
@@ -7,4 +9,13 @@ package com.jzh.parents.datamodel.local
  * Created by Ding on 2018/8/28.
  */
 class HomeLocalDataSource {
+
+    /**
+     * 返回功能栏数据
+     */
+    fun loadFuncEntity() : HomeItemFuncEntity {
+
+        // 功能条
+        return HomeItemFuncEntity(name = "张大伟妈妈", className = "二年级")
+    }
 }

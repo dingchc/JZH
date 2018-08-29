@@ -4,7 +4,7 @@
     <data>
 
         <variable
-            name="itemEntity"
+            name="funcEntity"
             type="com.jzh.parents.viewmodel.entity.HomeItemFuncEntity" />
     </data>
 
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:textColor="@color/black"
-                android:text="@{itemEntity.name}"
+                android:text="@{funcEntity.name}"
                 android:drawablePadding="4dp"
                 android:drawableRight="@mipmap/icon_vip"/>
 
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
                 android:textColor="@color/gray"
-                android:text="@{itemEntity.className}"/>
+                android:text="@{funcEntity.className}"/>
         </LinearLayout>
 
 
