@@ -8,81 +8,87 @@
             type="com.jzh.parents.viewmodel.entity.HomeFuncEntity" />
     </data>
 
-    <RelativeLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:paddingStart="@dimen/activity_horizontal_margin"
-        android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:background="@color/white">
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/iv_avatar"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/ic_login"
-            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingStart="@dimen/activity_horizontal_margin">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/iv_avatar"
-            android:layout_marginLeft="6dp"
-            android:layout_centerVertical="true"
-            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/iv_avatar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/ic_login" />
 
-            <TextView
-                android:id="@+id/tv_name"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:textColor="@color/black"
-                android:text="@{funcEntity.name}"
-                android:drawablePadding="4dp"
-                android:drawableRight="@mipmap/icon_vip"/>
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="6dp"
+                android:layout_toRightOf="@id/iv_avatar"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="4dp"
+                    android:drawableRight="@mipmap/icon_vip"
+                    android:text="@{funcEntity.name}"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_class_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{funcEntity.className}"
+                    android:textColor="@color/gray"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+
+            <ImageView
+                android:id="@+id/iv_living"
+                android:layout_width="64dp"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@id/tv_mine"
+                android:src="@mipmap/icon_home_living" />
 
             <TextView
-                android:id="@+id/tv_class_info"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_mine"
+                android:layout_width="47dp"
                 android:layout_height="wrap_content"
-                android:textSize="10sp"
-                android:textColor="@color/gray"
-                android:text="@{funcEntity.className}"/>
-        </LinearLayout>
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/tv_msg_center"
+                android:drawablePadding="1dp"
+                android:drawableTop="@mipmap/icon_home_mine"
+                android:gravity="center_horizontal"
+                android:text="@string/home_mine"
+                android:textSize="9sp" />
 
+            <TextView
+                android:id="@+id/tv_msg_center"
+                android:layout_width="47dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:drawablePadding="1dp"
+                android:drawableTop="@mipmap/icon_home_msg_center"
+                android:gravity="center_horizontal"
+                android:text="@string/home_msg_center"
+                android:textSize="9sp" />
+        </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/iv_living"
-            android:layout_width="64dp"
-            android:layout_height="match_parent"
-            android:src="@mipmap/icon_home_living"
-            android:layout_toLeftOf="@id/tv_mine"/>
+    </android.support.v7.widget.CardView>
 
-        <TextView
-            android:id="@+id/tv_mine"
-            android:layout_width="47dp"
-            android:layout_height="wrap_content"
-            android:text="@string/home_mine"
-            android:drawableTop="@mipmap/icon_home_mine"
-            android:gravity="center_horizontal"
-            android:layout_centerVertical="true"
-            android:textSize="9sp"
-            android:drawablePadding="1dp"
-            android:layout_toLeftOf="@+id/tv_msg_center"/>
-
-        <TextView
-            android:id="@+id/tv_msg_center"
-            android:layout_width="47dp"
-            android:layout_height="wrap_content"
-            android:text="@string/home_msg_center"
-            android:drawableTop="@mipmap/icon_home_msg_center"
-            android:gravity="center_horizontal"
-            android:layout_centerVertical="true"
-            android:textSize="9sp"
-            android:drawablePadding="1dp"
-            android:layout_alignParentRight="true"/>
-    </RelativeLayout>
 
 </layout>
 
