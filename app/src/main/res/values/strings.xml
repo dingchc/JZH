@@ -33,4 +33,6 @@
     <string name="home_living">正在直播</string>
     <string name="home_look_the_live">人在听</string>
     <string name="home_enter_live_room">进入直播间</string>
+    <string name="home_live_will">即将直播</string>
+    <string name="home_live_review">往期直播</string>
 </resources>

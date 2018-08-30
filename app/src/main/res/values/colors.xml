@@ -23,4 +23,6 @@
     <color name="home_blue">#FF006DFF</color>
     <color name="font_black">#333333</color>
     <color name="font_light_black">#4A4A4A</color>
+    <color name="font_gray">#9B9B9B</color>
+    <color name="home_bg_light_gray">#F4F4F4</color>
 </resources>

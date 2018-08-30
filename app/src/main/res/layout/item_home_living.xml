@@ -154,18 +154,15 @@
                     android:textColor="@color/white"
                     android:textSize="8sp" />
 
-                <com.jzh.parents.widget.TSButton
+                <Button
                     android:layout_width="80dp"
                     android:layout_height="30dp"
-                    android:textSize="8sp"
-                    android:textColor="#FF0076FF"
                     android:layout_marginTop="12dp"
                     android:layout_below="@id/view_dash_line"
                     android:layout_alignParentRight="true"
-                    android:text="@string/home_enter_live_room"
-                    app:corner="4dp"
-                    app:normal_color="@color/white"
-                    app:pressed_color="@color/light_green" />
+                    android:clickable="true"
+                    android:background="@drawable/btn_enter_live_selector"/>
+
             </RelativeLayout>
         </LinearLayout>
 
