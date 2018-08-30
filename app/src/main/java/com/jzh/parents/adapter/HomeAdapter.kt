@@ -7,11 +7,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jzh.parents.R
-import com.jzh.parents.databinding.ItemHomeFuncBinding
+import com.jzh.parents.databinding.ItemHomeLiveItemBinding
 import com.jzh.parents.databinding.ItemHomeLivingBinding
-import com.jzh.parents.viewmodel.entity.HomeItemEntity
-import com.jzh.parents.viewmodel.entity.HomeItemFuncEntity
-import com.jzh.parents.viewmodel.entity.HomeItemLiveEntity
+import com.jzh.parents.viewmodel.entity.HomeEntity
+import com.jzh.parents.viewmodel.entity.HomeLiveItemEntity
+import com.jzh.parents.viewmodel.entity.HomeLiveNowEntity
 
 /**
  * 首页的适配器
@@ -19,14 +19,14 @@ import com.jzh.parents.viewmodel.entity.HomeItemLiveEntity
  * @author ding
  * Created by Ding on 2018/8/27.
  */
-class HomePageAdapter(var context: Context, private var dataList: MutableList<HomeItemEntity>?) : RecyclerView.Adapter<HomePageAdapter.HomePageViewHolder>() {
+class HomePageAdapter(var context: Context, private var dataList: MutableList<HomeEntity>?) : RecyclerView.Adapter<HomePageAdapter.HomePageViewHolder>() {
 
     /**
      * 布局加载器
      */
     var mInflater: LayoutInflater? = null
 
-    var mDataList: MutableList<HomeItemEntity>? = dataList
+    var mDataList: MutableList<HomeEntity>? = dataList
 
     init {
         mInflater = LayoutInflater.from(context)
@@ -39,10 +39,15 @@ class HomePageAdapter(var context: Context, private var dataList: MutableList<Ho
         when (viewType) {
 
         // 直播（或Banner）条目:
-            HomeItemEntity.ItemTypeEnum.LIVE_NOW.ordinal -> {
+            HomeEntity.ItemTypeEnum.LIVE_NOW.ordinal -> {
 
                 holder.dataBinding as ItemHomeLivingBinding
-                holder.dataBinding.itemEntity = mDataList?.get(position) as HomeItemLiveEntity
+                holder.dataBinding.itemEntity = mDataList?.get(position) as HomeLiveNowEntity
+            }
+        // 即将开播或往期回顾:
+            HomeEntity.ItemTypeEnum.LIVE_ITEM.ordinal -> {
+                holder.dataBinding as ItemHomeLiveItemBinding
+                holder.dataBinding.itemEntity = mDataList?.get(position) as HomeLiveItemEntity
             }
         // 其他
             else -> {
@@ -65,9 +70,15 @@ class HomePageAdapter(var context: Context, private var dataList: MutableList<Ho
         when (viewType) {
 
         // 直播（或Banner）条目:
-            HomeItemEntity.ItemTypeEnum.LIVE_NOW.ordinal -> {
+            HomeEntity.ItemTypeEnum.LIVE_NOW.ordinal -> {
 
                 val binding: ItemHomeLivingBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_living, parent, false)
+                return HomePageViewHolder(binding)
+            }
+        // 即将开播或往期回顾:
+            HomeEntity.ItemTypeEnum.LIVE_ITEM.ordinal -> {
+
+                val binding: ItemHomeLiveItemBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_live_item, parent, false)
                 return HomePageViewHolder(binding)
             }
         // 其他

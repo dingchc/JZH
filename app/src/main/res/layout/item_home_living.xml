@@ -6,7 +6,7 @@
 
         <variable
             name="itemEntity"
-            type="com.jzh.parents.viewmodel.entity.HomeItemLiveEntity" />
+            type="com.jzh.parents.viewmodel.entity.HomeLiveNowEntity" />
 
     </data>
 

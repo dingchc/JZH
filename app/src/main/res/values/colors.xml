@@ -21,4 +21,6 @@
     <color name="light_green">#FFEFEFEF</color>
     <color name="register_input_text_hint_color">#FF999999</color>
     <color name="home_blue">#FF006DFF</color>
+    <color name="font_black">#333333</color>
+    <color name="font_light_black">#4A4A4A</color>
 </resources>

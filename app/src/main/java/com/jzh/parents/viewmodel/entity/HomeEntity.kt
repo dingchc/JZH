@@ -5,7 +5,7 @@ package com.jzh.parents.viewmodel.entity
  * @author ding
  * Created by Ding on 2018/8/27.
  */
-abstract class HomeItemEntity(var itemType: ItemTypeEnum = ItemTypeEnum.LIVE_ITEM) {
+abstract class HomeEntity(var itemType: ItemTypeEnum = ItemTypeEnum.LIVE_ITEM) {
 
 
     /**
@@ -22,11 +22,6 @@ abstract class HomeItemEntity(var itemType: ItemTypeEnum = ItemTypeEnum.LIVE_ITE
          * 活动(Banner、正在直播)
          */
         LIVE_NOW,
-
-        /**
-         * 即将直播
-         */
-        LIVE_WILL,
 
         /**
          * 直播项目

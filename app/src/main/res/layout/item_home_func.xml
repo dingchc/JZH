@@ -5,7 +5,7 @@
 
         <variable
             name="funcEntity"
-            type="com.jzh.parents.viewmodel.entity.HomeItemFuncEntity" />
+            type="com.jzh.parents.viewmodel.entity.HomeFuncEntity" />
     </data>
 
     <RelativeLayout

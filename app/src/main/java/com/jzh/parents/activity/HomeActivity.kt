@@ -10,9 +10,8 @@ import com.jzh.parents.R
 import com.jzh.parents.adapter.HomePageAdapter
 import com.jzh.parents.databinding.ActivityHomeBinding
 import com.jzh.parents.utils.AppLogger
-import com.jzh.parents.viewmodel.entity.HomeItemEntity
-import com.jzh.parents.viewmodel.entity.HomeItemFuncEntity
-import com.jzh.parents.viewmodel.entity.HomeItemLiveEntity
+import com.jzh.parents.viewmodel.entity.HomeEntity
+import com.jzh.parents.viewmodel.entity.HomeLiveNowEntity
 import com.jzh.parents.viewmodel.HomeViewModel
 
 /**
@@ -58,7 +57,7 @@ class HomeActivity : BaseActivity() {
      */
     override fun initEvent() {
 
-        mViewModel?.getItemEntities()?.observe(this@HomeActivity, Observer<MutableList<HomeItemEntity>> {
+        mViewModel?.getItemEntities()?.observe(this@HomeActivity, Observer<MutableList<HomeEntity>> {
 
             itemEntities ->
             mAdapter?.mDataList = itemEntities
@@ -79,13 +78,13 @@ class HomeActivity : BaseActivity() {
         mViewModel?.loadFuncEntity()
 
         // 加载列表
-        val dataList: MutableList<HomeItemEntity> = mutableListOf(HomeItemLiveEntity())
+        val dataList: MutableList<HomeEntity> = mutableListOf(HomeLiveNowEntity())
 
         mAdapter = HomePageAdapter(this@HomeActivity, dataList)
         mDataBinding?.rvData?.adapter = mAdapter
 
         val handler: Handler = android.os.Handler()
-        handler.postDelayed({ mViewModel?.loadItemEntities() }, 5000L)
+        handler.postDelayed({ mViewModel?.loadItemEntities() }, 500L)
     }
 
     /**

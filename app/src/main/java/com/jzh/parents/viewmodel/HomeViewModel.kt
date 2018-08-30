@@ -5,9 +5,10 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import com.jzh.parents.datamodel.repo.HomeRepository
 import com.jzh.parents.utils.AppLogger
-import com.jzh.parents.viewmodel.entity.HomeItemEntity
-import com.jzh.parents.viewmodel.entity.HomeItemFuncEntity
-import com.jzh.parents.viewmodel.entity.HomeItemLiveEntity
+import com.jzh.parents.viewmodel.entity.HomeEntity
+import com.jzh.parents.viewmodel.entity.HomeFuncEntity
+import com.jzh.parents.viewmodel.entity.HomeLiveItemEntity
+import com.jzh.parents.viewmodel.entity.HomeLiveNowEntity
 
 /**
  * 主页的ViewModel
@@ -20,12 +21,12 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
     /**
      * 功能条数据实体
      */
-    private var funcEntity: MutableLiveData<HomeItemFuncEntity> = MutableLiveData<HomeItemFuncEntity>()
+    private var funcEntity: MutableLiveData<HomeFuncEntity> = MutableLiveData<HomeFuncEntity>()
 
     /**
      * 主页的条目
      */
-    private var itemEntities: MutableLiveData<MutableList<HomeItemEntity>> = MutableLiveData<MutableList<HomeItemEntity>>()
+    private var itemEntities: MutableLiveData<MutableList<HomeEntity>> = MutableLiveData<MutableList<HomeEntity>>()
 
     /**
      * 数据仓库
@@ -36,7 +37,7 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
     /**
      * 获取条目List
      */
-    fun getItemEntities(): LiveData<MutableList<HomeItemEntity>> {
+    fun getItemEntities(): LiveData<MutableList<HomeEntity>> {
 
         return itemEntities
     }
@@ -44,7 +45,7 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
     /**
      * 设置条目List
      */
-    fun setItemEntities(entities: MutableList<HomeItemEntity>) {
+    fun setItemEntities(entities: MutableList<HomeEntity>) {
 
         itemEntities.value = entities
     }
@@ -52,7 +53,7 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
     /**
      * 获取功能条数据
      */
-    fun getFuncEntity(): MutableLiveData<HomeItemFuncEntity> {
+    fun getFuncEntity(): MutableLiveData<HomeFuncEntity> {
 
         return funcEntity
     }
@@ -72,10 +73,13 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
 
         AppLogger.i("* loadItemEntities")
 
-        // 直播
-        val livingEntity = HomeItemLiveEntity(onlineCount = 1234, title = "热门直播", author = "MacTalk", authorDescription = "CCTV特约评论员1")
+        // 正在直播
+        val livingEntity = HomeLiveNowEntity(onlineCount = 1234, title = "热门直播", author = "MacTalk", authorDescription = "CCTV特约评论员1")
 
-        val entities = mutableListOf<HomeItemEntity>(livingEntity)
+        // 即将直播
+        val liveEntity = HomeLiveItemEntity(title = "西红柿首付")
+
+        val entities = mutableListOf<HomeEntity>(livingEntity, liveEntity)
 
         itemEntities.value = entities
     }

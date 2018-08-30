@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="itemEntity"
+            type="com.jzh.parents.viewmodel.entity.HomeLiveItemEntity" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="14dp"
+        android:orientation="vertical"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/timg" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white">
+
+                    <!-- 标题 -->
+                    <TextView
+                        android:id="@+id/tv_live_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical"
+                        android:ellipsize="end"
+                        android:text="@string/app_name"
+                        android:maxLines="2"
+                        android:textSize="14sp"
+                        android:textColor="@color/font_black"/>
+
+                    <!-- 时间 -->
+                    <TextView
+                        android:id="@+id/tv_live_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_live_title"
+                        android:layout_alignLeft="@id/tv_live_title"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="8dp"
+                        android:drawableLeft="@mipmap/icon_home_live_time"
+                        android:drawablePadding="5dp"
+                        android:textSize="11sp"
+                        android:text="2018-10-11 10:30"
+                        android:textColor="@color/font_light_black" />
+
+                    <!-- 收听数 -->
+                    <TextView
+                        android:id="@+id/tv_live_attendance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_live_time"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_alignLeft="@id/tv_live_time"
+                        android:gravity="center_vertical"
+                        android:drawableLeft="@mipmap/icon_home_live_attendance"
+                        android:drawablePadding="3dp"
+                        android:textSize="11sp"
+                        android:text="123456 收听"
+                        android:textColor="@color/gray"/>
+
+                    <!-- 评论数 -->
+                    <TextView
+                        android:id="@+id/tv_live_comments"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_live_time"
+                        android:layout_toRightOf="@id/tv_live_time"
+                        android:layout_alignBaseline="@id/tv_live_attendance"
+                        android:gravity="center_vertical"
+                        android:drawableLeft="@mipmap/icon_home_live_comments"
+                        android:drawablePadding="3dp"
+                        android:textSize="11sp"
+                        android:text="3456 评论"
+                        android:textColor="@color/gray"/>
+
+                    <ImageView
+                        android:layout_width="72dp"
+                        android:layout_height="32dp"
+                        android:text="预约"
+                        android:textSize="13sp"
+                        android:layout_alignRight="@id/tv_live_title"
+                        android:layout_alignBottom="@id/tv_live_comments"
+                        android:background="@mipmap/icon_home_living"
+                        android:textColor="@color/white"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+</layout>
