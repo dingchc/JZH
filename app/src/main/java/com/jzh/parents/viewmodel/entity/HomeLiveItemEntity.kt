@@ -6,5 +6,5 @@ package com.jzh.parents.viewmodel.entity
  * @author ding
  * Created by Ding on 2018/8/29.
  */
-data class HomeLiveItemEntity(var title: String = "") : HomeEntity(ItemTypeEnum.LIVE_ITEM) {
+data class HomeLiveItemEntity(val liveItem: LiveItemEntity) : HomeEntity(ItemTypeEnum.LIVE_ITEM) {
 }

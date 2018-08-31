@@ -74,21 +74,29 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
         val livingEntity = HomeLiveNowEntity(onlineCount = 1234, title = "热门直播", author = "MacTalk", authorDescription = "CCTV特约评论员1")
 
         // 即将直播
-        val liveEntity = HomeLiveItemEntity(title = "西红柿首付")
-
-        val category1 = HomeLiveCategoryEntity.LiveCategory("手机游戏", "共25场讲座")
-        val category2 = HomeLiveCategoryEntity.LiveCategory("电脑游戏", "共250场讲座")
-        val category3 = HomeLiveCategoryEntity.LiveCategory("网页游戏", "共15场讲座")
-        val category4 = HomeLiveCategoryEntity.LiveCategory("AR游戏", "共22场讲座")
-
-        val categoryList = mutableListOf(category1, category2, category3, category4)
+        val liveItem = LiveItemEntity(title = "精彩1")
+        val liveEntity = HomeLiveItemEntity(liveItem)
 
         // 直播分类
+        val category1 = HomeLiveCategoryEntity.LiveCategory("手机游戏", "◆共25场讲座◆")
+        val category2 = HomeLiveCategoryEntity.LiveCategory("电脑游戏", "◆共250场讲座◆")
+        val category3 = HomeLiveCategoryEntity.LiveCategory("网页游戏", "◆共15场讲座◆")
+        val category4 = HomeLiveCategoryEntity.LiveCategory("AR游戏", "◆共22场讲座◆")
+
+        val categoryList = mutableListOf(category1, category2, category3, category4)
         val liveCategories = HomeLiveCategoryEntity(categoryList)
 
+        // 精彩推荐
 
-        val entities = mutableListOf<HomeEntity>(livingEntity, liveEntity, liveCategories)
+        val liveItem1 = LiveItemEntity(title = "精彩1")
+        val liveItem2 = LiveItemEntity(title = "精彩2")
 
+        val liveItemList = listOf(liveItem1, liveItem2)
+        val topPicksEntity = HomeLiveTopPicksEntity(liveItemList)
+
+        val entities = mutableListOf<HomeEntity>(livingEntity, liveEntity, topPicksEntity, liveCategories)
+
+        AppLogger.i("entities=" + entities.get(0).itemType.ordinal)
         itemEntities.value = entities
     }
 

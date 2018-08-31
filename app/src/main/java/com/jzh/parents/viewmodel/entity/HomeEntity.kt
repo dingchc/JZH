@@ -29,9 +29,9 @@ abstract class HomeEntity(var itemType: ItemTypeEnum = ItemTypeEnum.LIVE_ITEM) {
         LIVE_ITEM,
 
         /**
-         * 推荐直播
+         * 精彩推荐
          */
-        LIVE_RECOMMENDATION,
+        LIVE_TOP_PICKS,
 
         /**
          * 直播分类
