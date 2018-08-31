@@ -7,9 +7,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jzh.parents.R
+import com.jzh.parents.databinding.ItemHomeCategoryBinding
 import com.jzh.parents.databinding.ItemHomeLiveItemBinding
 import com.jzh.parents.databinding.ItemHomeLivingBinding
 import com.jzh.parents.viewmodel.entity.HomeEntity
+import com.jzh.parents.viewmodel.entity.HomeLiveCategoryEntity
 import com.jzh.parents.viewmodel.entity.HomeLiveItemEntity
 import com.jzh.parents.viewmodel.entity.HomeLiveNowEntity
 
@@ -49,6 +51,11 @@ class HomePageAdapter(var context: Context, private var dataList: MutableList<Ho
                 holder.dataBinding as ItemHomeLiveItemBinding
                 holder.dataBinding.itemEntity = mDataList?.get(position) as HomeLiveItemEntity
             }
+        // 直播分类:
+            HomeEntity.ItemTypeEnum.LIVE_CATEGORY.ordinal -> {
+                holder.dataBinding as ItemHomeCategoryBinding
+                holder.dataBinding.itemEntity = mDataList?.get(position) as HomeLiveCategoryEntity
+            }
         // 其他
             else -> {
 
@@ -79,6 +86,12 @@ class HomePageAdapter(var context: Context, private var dataList: MutableList<Ho
             HomeEntity.ItemTypeEnum.LIVE_ITEM.ordinal -> {
 
                 val binding: ItemHomeLiveItemBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_live_item, parent, false)
+                return HomePageViewHolder(binding)
+            }
+        // 直播分类:
+            HomeEntity.ItemTypeEnum.LIVE_CATEGORY.ordinal -> {
+
+                val binding: ItemHomeCategoryBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_category, parent, false)
                 return HomePageViewHolder(binding)
             }
         // 其他

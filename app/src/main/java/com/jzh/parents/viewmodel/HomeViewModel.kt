@@ -5,10 +5,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import com.jzh.parents.datamodel.repo.HomeRepository
 import com.jzh.parents.utils.AppLogger
-import com.jzh.parents.viewmodel.entity.HomeEntity
-import com.jzh.parents.viewmodel.entity.HomeFuncEntity
-import com.jzh.parents.viewmodel.entity.HomeLiveItemEntity
-import com.jzh.parents.viewmodel.entity.HomeLiveNowEntity
+import com.jzh.parents.viewmodel.entity.*
 
 /**
  * 主页的ViewModel
@@ -79,7 +76,18 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
         // 即将直播
         val liveEntity = HomeLiveItemEntity(title = "西红柿首付")
 
-        val entities = mutableListOf<HomeEntity>(livingEntity, liveEntity)
+        val category1 = HomeLiveCategoryEntity.LiveCategory("手机游戏", "共25场讲座")
+        val category2 = HomeLiveCategoryEntity.LiveCategory("电脑游戏", "共250场讲座")
+        val category3 = HomeLiveCategoryEntity.LiveCategory("网页游戏", "共15场讲座")
+        val category4 = HomeLiveCategoryEntity.LiveCategory("AR游戏", "共22场讲座")
+
+        val categoryList = mutableListOf(category1, category2, category3, category4)
+
+        // 直播分类
+        val liveCategories = HomeLiveCategoryEntity(categoryList)
+
+
+        val entities = mutableListOf<HomeEntity>(livingEntity, liveEntity, liveCategories)
 
         itemEntities.value = entities
     }

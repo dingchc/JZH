@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="itemEntity"
+            type="com.jzh.parents.viewmodel.entity.HomeLiveCategoryEntity" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        
+        <!-- 行1 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:orientation="horizontal"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingStart="@dimen/activity_horizontal_margin">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="66dp"
+                android:layout_weight="1"
+                android:background="@mipmap/bg_home_category1">
+
+                <TextView
+                    android:id="@+id/tv_category1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="9.5dp"
+                    android:layout_marginTop="11dp"
+                    android:text="@{itemEntity.categoryList.get(0).title}"
+                    android:textColor="@color/font_black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/tv_category1"
+                    android:layout_marginLeft="9.5dp"
+                    android:text="@{itemEntity.categoryList.get(0).desc}"
+                    android:textColor="@color/font_black"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="66dp"
+                android:layout_marginLeft="9.5dp"
+                android:layout_weight="1"
+                android:background="@mipmap/bg_home_category2">
+
+                <TextView
+                    android:id="@+id/tv_category2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="9.5dp"
+                    android:layout_marginTop="11dp"
+                    android:text="@{itemEntity.categoryList.get(1).title}"
+                    android:textColor="@color/font_black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/tv_category2"
+                    android:layout_marginLeft="9.5dp"
+                    android:text="@{itemEntity.categoryList.get(1).desc}"
+                    android:textColor="@color/font_black"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <!-- 行2 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingStart="@dimen/activity_horizontal_margin">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="66dp"
+                android:layout_weight="1"
+                android:background="@mipmap/bg_home_category3">
+
+                <TextView
+                    android:id="@+id/tv_category3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="9.5dp"
+                    android:layout_marginTop="11dp"
+                    android:text="@{itemEntity.categoryList.get(2).title}"
+                    android:textColor="@color/font_black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/tv_category3"
+                    android:layout_marginLeft="9.5dp"
+                    android:text="@{itemEntity.categoryList.get(2).desc}"
+                    android:textColor="@color/font_black"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="66dp"
+                android:layout_marginLeft="9.5dp"
+                android:layout_weight="1"
+                android:background="@mipmap/bg_home_category4">
+
+                <TextView
+                    android:id="@+id/tv_category4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="9.5dp"
+                    android:layout_marginTop="11dp"
+                    android:text="@{itemEntity.categoryList.get(3).title}"
+                    android:textColor="@color/font_black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/tv_category4"
+                    android:layout_marginLeft="9.5dp"
+                    android:text="@{itemEntity.categoryList.get(3).desc}"
+                    android:textColor="@color/font_black"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>
+
