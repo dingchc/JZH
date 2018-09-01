@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import com.jzh.parents.R
 import com.jzh.parents.databinding.*
 import com.jzh.parents.utils.AppLogger
+import com.jzh.parents.viewmodel.entity.BaseLiveEntity
+import com.jzh.parents.viewmodel.entity.LiveItemEntity
 import com.jzh.parents.viewmodel.entity.home.*
 
 /**
@@ -18,7 +20,7 @@ import com.jzh.parents.viewmodel.entity.home.*
  * @author ding
  * Created by Ding on 2018/8/27.
  */
-class HomePageAdapter(private var mContext: Context, var mDataList: MutableList<HomeEntity>?) : RecyclerView.Adapter<HomePageAdapter.HomePageViewHolder>() {
+class HomePageAdapter(private var mContext: Context, var mDataList: MutableList<BaseLiveEntity>?) : RecyclerView.Adapter<HomePageAdapter.HomePageViewHolder>() {
 
     /**
      * 布局加载器
@@ -38,13 +40,13 @@ class HomePageAdapter(private var mContext: Context, var mDataList: MutableList<
         when (viewType) {
 
         // 正在直播条目:
-            HomeEntity.ItemTypeEnum.LIVE_NOW.ordinal -> {
+            BaseLiveEntity.ItemTypeEnum.LIVE_NOW.ordinal -> {
 
                 holder.dataBinding as ItemHomeLivingBinding
                 holder.dataBinding.itemEntity = mDataList?.get(position) as HomeLiveNowEntity
             }
         // Banner条目:
-            HomeEntity.ItemTypeEnum.LIVE_BANNER.ordinal -> {
+            BaseLiveEntity.ItemTypeEnum.LIVE_BANNER.ordinal -> {
 
                 holder.dataBinding as ItemHomeBannerBinding
                 val bannerEntity = mDataList?.get(position) as HomeBannerEntity
@@ -53,17 +55,17 @@ class HomePageAdapter(private var mContext: Context, var mDataList: MutableList<
                 holder.dataBinding.bannerPage.addChildrenViews()
             }
         // 即将开播或往期回顾:
-            HomeEntity.ItemTypeEnum.LIVE_ITEM.ordinal -> {
+            BaseLiveEntity.ItemTypeEnum.LIVE_ITEM.ordinal -> {
                 holder.dataBinding as ItemHomeLiveItemBinding
-                holder.dataBinding.itemEntity = mDataList?.get(position) as HomeLiveItemEntity
+                holder.dataBinding.itemEntity = mDataList?.get(position) as LiveItemEntity
             }
         // 直播分类:
-            HomeEntity.ItemTypeEnum.LIVE_CATEGORY.ordinal -> {
+            BaseLiveEntity.ItemTypeEnum.LIVE_CATEGORY.ordinal -> {
                 holder.dataBinding as ItemHomeCategoryBinding
                 holder.dataBinding.itemEntity = mDataList?.get(position) as HomeLiveCategoryEntity
             }
         // 精彩推荐:
-            HomeEntity.ItemTypeEnum.LIVE_TOP_PICKS.ordinal -> {
+            BaseLiveEntity.ItemTypeEnum.LIVE_TOP_PICKS.ordinal -> {
 
                 holder.dataBinding as ItemHomeTopPicksBinding
 
@@ -77,7 +79,7 @@ class HomePageAdapter(private var mContext: Context, var mDataList: MutableList<
                 holder.dataBinding.rvPicks.adapter = topPicksAdapter
             }
         // 搜索:
-            HomeEntity.ItemTypeEnum.LIVE_SEARCH.ordinal -> {
+            BaseLiveEntity.ItemTypeEnum.LIVE_SEARCH.ordinal -> {
                 holder.dataBinding as ItemHomeSearchBinding
             }
         // 其他
@@ -101,37 +103,37 @@ class HomePageAdapter(private var mContext: Context, var mDataList: MutableList<
         when (viewType) {
 
         // 正在直播条目:
-            HomeEntity.ItemTypeEnum.LIVE_NOW.ordinal -> {
+            BaseLiveEntity.ItemTypeEnum.LIVE_NOW.ordinal -> {
 
                 val binding: ItemHomeLivingBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_living, parent, false)
                 return HomePageViewHolder(binding)
             }
         // Banner条目:
-            HomeEntity.ItemTypeEnum.LIVE_BANNER.ordinal -> {
+            BaseLiveEntity.ItemTypeEnum.LIVE_BANNER.ordinal -> {
 
                 val binding: ItemHomeBannerBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_banner, parent, false)
                 return HomePageViewHolder(binding)
             }
         // 即将开播或往期回顾:
-            HomeEntity.ItemTypeEnum.LIVE_ITEM.ordinal -> {
+            BaseLiveEntity.ItemTypeEnum.LIVE_ITEM.ordinal -> {
 
                 val binding: ItemHomeLiveItemBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_live_item, parent, false)
                 return HomePageViewHolder(binding)
             }
         // 直播分类:
-            HomeEntity.ItemTypeEnum.LIVE_CATEGORY.ordinal -> {
+            BaseLiveEntity.ItemTypeEnum.LIVE_CATEGORY.ordinal -> {
 
                 val binding: ItemHomeCategoryBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_category, parent, false)
                 return HomePageViewHolder(binding)
             }
         // 精彩推荐:
-            HomeEntity.ItemTypeEnum.LIVE_TOP_PICKS.ordinal -> {
+            BaseLiveEntity.ItemTypeEnum.LIVE_TOP_PICKS.ordinal -> {
 
                 val binding: ItemHomeTopPicksBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_top_picks, parent, false)
                 return HomePageViewHolder(binding)
             }
         // 搜索:
-            HomeEntity.ItemTypeEnum.LIVE_SEARCH.ordinal -> {
+            BaseLiveEntity.ItemTypeEnum.LIVE_SEARCH.ordinal -> {
 
                 val binding: ItemHomeSearchBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_search, parent, false)
                 return HomePageViewHolder(binding)

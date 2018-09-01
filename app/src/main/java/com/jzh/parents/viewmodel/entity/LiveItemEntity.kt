@@ -1,10 +1,12 @@
 package com.jzh.parents.viewmodel.entity
 
+import com.jzh.parents.viewmodel.info.LiveInfo
+
 /**
- * 直播信息
+ * 直播条目（即将直播、直播历史）
  *
  * @author ding
- * Created by Ding on 2018/8/31.
+ * Created by Ding on 2018/8/29.
  */
-class LiveItemEntity(val imageUrl: String = "", val title: String = "", val dateTime: String = "", val attendance: Int = 0, val comments: Int = 0) {
+data class LiveItemEntity(val liveItem: LiveInfo) : BaseLiveEntity(ItemTypeEnum.LIVE_ITEM) {
 }

@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jzh.parents.R
 import com.jzh.parents.databinding.ItemTopPicksBinding
-import com.jzh.parents.viewmodel.entity.LiveItemEntity
+import com.jzh.parents.viewmodel.info.LiveInfo
 
 /**
  * 精彩推荐的适配器
@@ -16,7 +16,7 @@ import com.jzh.parents.viewmodel.entity.LiveItemEntity
  * @author ding
  * Created by Ding on 2018/8/31.
  */
-class HomeTopPicksAdapter(val mContext: Context, val mLiveList: List<LiveItemEntity>?) : RecyclerView.Adapter<HomeTopPicksAdapter.TopPicksViewHolder>() {
+class HomeTopPicksAdapter(val mContext: Context, val mLiveList: List<LiveInfo>?) : RecyclerView.Adapter<HomeTopPicksAdapter.TopPicksViewHolder>() {
 
     private val mLayoutInflater = LayoutInflater.from(mContext)
 

@@ -1,7 +1,7 @@
 package com.jzh.parents.datamodel.repo
 
 import com.jzh.parents.datamodel.local.HomeLocalDataSource
-import com.jzh.parents.viewmodel.entity.home.HomeFuncEntity
+import com.jzh.parents.viewmodel.entity.FuncEntity
 
 /**
  * 主页的数据仓库
@@ -24,7 +24,7 @@ class HomeRepository {
     /**
      * 返回功能栏数据
      */
-    fun loadFuncEntity() : HomeFuncEntity? {
+    fun loadFuncEntity() : FuncEntity? {
 
         // 功能条
         return mLocalDataSource?.loadFuncEntity()

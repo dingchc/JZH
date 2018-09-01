@@ -8,6 +8,7 @@ import com.jzh.parents.datamodel.repo.HomeRepository
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.entity.*
 import com.jzh.parents.viewmodel.entity.home.*
+import com.jzh.parents.viewmodel.info.LiveInfo
 
 /**
  * 主页的ViewModel
@@ -20,12 +21,12 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
     /**
      * 功能条数据实体
      */
-    private var funcEntity: MutableLiveData<HomeFuncEntity> = MutableLiveData<HomeFuncEntity>()
+    private var funcEntity: MutableLiveData<FuncEntity> = MutableLiveData<FuncEntity>()
 
     /**
      * 主页的条目
      */
-    private var itemEntities: MutableLiveData<MutableList<HomeEntity>> = MutableLiveData<MutableList<HomeEntity>>()
+    private var itemEntities: MutableLiveData<MutableList<BaseLiveEntity>> = MutableLiveData<MutableList<BaseLiveEntity>>()
 
     /**
      * 数据仓库
@@ -36,7 +37,7 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
     /**
      * 获取条目List
      */
-    fun getItemEntities(): LiveData<MutableList<HomeEntity>> {
+    fun getItemEntities(): LiveData<MutableList<BaseLiveEntity>> {
 
         return itemEntities
     }
@@ -44,7 +45,7 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
     /**
      * 设置条目List
      */
-    fun setItemEntities(entities: MutableList<HomeEntity>) {
+    fun setItemEntities(entities: MutableList<BaseLiveEntity>) {
 
         itemEntities.value = entities
     }
@@ -52,7 +53,7 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
     /**
      * 获取功能条数据
      */
-    fun getFuncEntity(): MutableLiveData<HomeFuncEntity> {
+    fun getFuncEntity(): MutableLiveData<FuncEntity> {
 
         return funcEntity
     }
@@ -86,8 +87,8 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
         val bannerEntity = HomeBannerEntity(bannerDataList)
 
         // 即将直播
-        val liveItem = LiveItemEntity(title = "精彩1")
-        val liveEntity = HomeLiveItemEntity(liveItem)
+        val liveItem = LiveInfo(title = "精彩1")
+        val liveEntity = LiveItemEntity(liveItem)
 
         // 直播分类
         val category1 = HomeLiveCategoryEntity.LiveCategory("手机游戏", "◆共25场讲座◆")
@@ -100,18 +101,18 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
 
         // 精彩推荐
 
-        val liveItem1 = LiveItemEntity(title = "精彩1")
-        val liveItem2 = LiveItemEntity(title = "精彩2")
-        val liveItem3 = LiveItemEntity(title = "精彩2")
-        val liveItem4 = LiveItemEntity(title = "精彩2")
+        val liveItem1 = LiveInfo(title = "精彩1")
+        val liveItem2 = LiveInfo(title = "精彩2")
+        val liveItem3 = LiveInfo(title = "精彩2")
+        val liveItem4 = LiveInfo(title = "精彩2")
 
         val liveItemList = listOf(liveItem1, liveItem2, liveItem3, liveItem4)
         val topPicksEntity = HomeLiveTopPicksEntity(liveItemList)
 
         // 搜索
-        val searchBarEntity = HomeSearchEntity()
+        val searchBarEntity = SearchEntity()
 
-        val entities = mutableListOf<HomeEntity>(bannerEntity, liveEntity, topPicksEntity, liveCategories, searchBarEntity)
+        val entities = mutableListOf<BaseLiveEntity>(bannerEntity, liveEntity, topPicksEntity, liveCategories, searchBarEntity)
 
         AppLogger.i("entities=" + entities.get(0).itemType.ordinal)
         itemEntities.value = entities
