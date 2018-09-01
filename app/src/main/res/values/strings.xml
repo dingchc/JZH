@@ -35,4 +35,9 @@
     <string name="home_enter_live_room">进入直播间</string>
     <string name="home_live_will">即将直播</string>
     <string name="home_live_review">往期直播</string>
+    <string name="home_live_top_picks">精彩推荐</string>
+    <string name="home_live_top_picks_desc">往期经典万人播放</string>
+    <string name="home_search_bar_hint">请输入搜索关键词</string>
+    <string name="home_search_hint">找不到想看的讲座？试试搜索一下</string>
+    <string name="home_logo_tip">(C)2018 All rights reserved</string>
 </resources>

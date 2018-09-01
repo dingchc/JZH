@@ -94,7 +94,10 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
         val liveItemList = listOf(liveItem1, liveItem2)
         val topPicksEntity = HomeLiveTopPicksEntity(liveItemList)
 
-        val entities = mutableListOf<HomeEntity>(livingEntity, liveEntity, topPicksEntity, liveCategories)
+        // 搜索
+        val searchBarEntity = HomeSearchEntity()
+
+        val entities = mutableListOf<HomeEntity>(livingEntity, liveEntity, topPicksEntity, liveCategories, searchBarEntity)
 
         AppLogger.i("entities=" + entities.get(0).itemType.ordinal)
         itemEntities.value = entities

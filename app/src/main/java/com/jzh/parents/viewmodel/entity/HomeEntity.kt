@@ -38,5 +38,10 @@ abstract class HomeEntity(var itemType: ItemTypeEnum = ItemTypeEnum.LIVE_ITEM) {
          */
         LIVE_CATEGORY,
 
+        /**
+         * 搜索
+         */
+        LIVE_SEARCH,
+
     }
 }

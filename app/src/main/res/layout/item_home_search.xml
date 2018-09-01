@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:orientation="vertical">
+
+        <!-- 搜索页面 -->
+        <RelativeLayout
+            android:id="@+id/rl_search_area"
+            android:layout_width="match_parent"
+            android:layout_height="95dp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="@drawable/round_bg_search_area">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/home_search_hint"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:textSize="12sp"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/tv_search_bar"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:hint="@string/home_search_bar_hint"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="37dp"
+                android:layout_centerHorizontal="true"
+                android:textSize="12sp"
+                android:gravity="center_vertical|left"
+                android:paddingLeft="4dp"
+                android:background="@drawable/round_bg_search_bar"/>
+            
+            <ImageView
+                android:layout_width="52dp"
+                android:layout_height="36dp"
+                android:layout_alignRight="@+id/tv_search_bar"
+                android:layout_alignTop="@+id/tv_search_bar"
+                android:src="@mipmap/icon_home_search"
+                android:scaleType="center"
+                android:background="@drawable/round_bg_search_icon"/>
+        </RelativeLayout>
+
+        <!-- Logo页面 -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="83dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@mipmap/icon_home_logo"
+                android:drawablePadding="6dp"
+                android:textSize="9dp"
+                android:textColor="@color/font_logo_gray"
+                android:text="@string/home_logo_tip"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="4dp"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+</layout>
+

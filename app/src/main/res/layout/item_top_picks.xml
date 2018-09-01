@@ -4,9 +4,11 @@
 
     <!-- 直播条目信息 -->
     <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
+        android:layout_width="260dp"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="8dp">
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="8dp"
+        app:cardCornerRadius="6dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -15,7 +17,7 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="86dp"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/timg" />
 
@@ -35,33 +37,17 @@
                     android:layout_marginTop="8dp"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
-                    android:maxLines="2"
+                    android:lines="2"
                     android:text="@string/tip_ops_permission"
                     android:textColor="@color/font_black"
                     android:textSize="14sp" />
-
-                <!-- 时间 -->
-                <TextView
-                    android:id="@+id/tv_live_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@id/tv_live_title"
-                    android:layout_below="@id/tv_live_title"
-                    android:layout_marginTop="8dp"
-                    android:drawableLeft="@mipmap/icon_home_live_time"
-                    android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
-                    android:text="2018-10-11 10:30"
-                    android:textColor="@color/font_light_black"
-                    android:textSize="11sp" />
-
                 <!-- 收听数 -->
                 <TextView
                     android:id="@+id/tv_live_attendance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@id/tv_live_time"
-                    android:layout_below="@id/tv_live_time"
+                    android:layout_alignLeft="@id/tv_live_title"
+                    android:layout_below="@id/tv_live_title"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="3dp"
                     android:drawableLeft="@mipmap/icon_home_live_attendance"
@@ -70,31 +56,6 @@
                     android:text="123456 收听"
                     android:textColor="@color/gray"
                     android:textSize="11sp" />
-
-                <!-- 评论数 -->
-                <TextView
-                    android:id="@+id/tv_live_comments"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@id/tv_live_attendance"
-                    android:layout_below="@id/tv_live_time"
-                    android:layout_toRightOf="@id/tv_live_time"
-                    android:drawableLeft="@mipmap/icon_home_live_comments"
-                    android:drawablePadding="3dp"
-                    android:gravity="center_vertical"
-                    android:text="3456 评论"
-                    android:textColor="@color/gray"
-                    android:textSize="11sp" />
-
-                <ImageView
-                    android:layout_width="72dp"
-                    android:layout_height="32dp"
-                    android:layout_alignBottom="@id/tv_live_comments"
-                    android:layout_alignRight="@id/tv_live_title"
-                    android:background="@mipmap/icon_home_live_subscribe"
-                    android:text="预约"
-                    android:textColor="@color/white"
-                    android:textSize="13sp" />
 
             </RelativeLayout>
         </LinearLayout>

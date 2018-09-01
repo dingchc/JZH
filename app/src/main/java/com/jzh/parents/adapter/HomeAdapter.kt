@@ -18,7 +18,7 @@ import com.jzh.parents.viewmodel.entity.*
  * @author ding
  * Created by Ding on 2018/8/27.
  */
-class HomePageAdapter(var mContext: Context, var mDataList: MutableList<HomeEntity>?) : RecyclerView.Adapter<HomePageAdapter.HomePageViewHolder>() {
+class HomePageAdapter(private var mContext: Context, var mDataList: MutableList<HomeEntity>?) : RecyclerView.Adapter<HomePageAdapter.HomePageViewHolder>() {
 
     /**
      * 布局加载器
@@ -67,6 +67,10 @@ class HomePageAdapter(var mContext: Context, var mDataList: MutableList<HomeEnti
                 val topPicksAdapter = HomeTopPicksAdapter(mContext, entity.topPicksList)
                 holder.dataBinding.rvPicks.adapter = topPicksAdapter
             }
+        // 搜索:
+            HomeEntity.ItemTypeEnum.LIVE_SEARCH.ordinal -> {
+                holder.dataBinding as ItemHomeSearchBinding
+            }
         // 其他
             else -> {
 
@@ -109,6 +113,12 @@ class HomePageAdapter(var mContext: Context, var mDataList: MutableList<HomeEnti
             HomeEntity.ItemTypeEnum.LIVE_TOP_PICKS.ordinal -> {
 
                 val binding: ItemHomeTopPicksBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_top_picks, parent, false)
+                return HomePageViewHolder(binding)
+            }
+        // 搜索:
+            HomeEntity.ItemTypeEnum.LIVE_SEARCH.ordinal -> {
+
+                val binding: ItemHomeSearchBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_search, parent, false)
                 return HomePageViewHolder(binding)
             }
         // 其他

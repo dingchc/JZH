@@ -24,6 +24,10 @@
     <color name="font_black">#333333</color>
     <color name="font_light_black">#4A4A4A</color>
     <color name="font_gray">#9B9B9B</color>
+    <color name="font_logo_gray">#C9C9C9</color>
     <color name="home_bg_light_gray">#F4F4F4</color>
+    <color name="search_bg_light_gray">#F7F7F7</color>
+    <color name="search_bg_line_gray">#F0F0F0</color>
+    <color name="search_bar_line">#E3E3E3</color>
     <color name="home_yellow">#FFFFC600</color>
 </resources>
