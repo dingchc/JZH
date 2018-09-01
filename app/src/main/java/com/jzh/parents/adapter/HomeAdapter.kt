@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import com.jzh.parents.R
 import com.jzh.parents.databinding.*
 import com.jzh.parents.utils.AppLogger
-import com.jzh.parents.viewmodel.entity.*
+import com.jzh.parents.viewmodel.entity.home.*
 
 /**
  * 首页的适配器

@@ -1,4 +1,4 @@
-package com.jzh.parents.viewmodel.entity
+package com.jzh.parents.viewmodel.entity.home
 
 /**
  * 直播分类条目

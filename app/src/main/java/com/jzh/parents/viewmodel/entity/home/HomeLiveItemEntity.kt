@@ -1,4 +1,6 @@
-package com.jzh.parents.viewmodel.entity
+package com.jzh.parents.viewmodel.entity.home
+
+import com.jzh.parents.viewmodel.entity.LiveItemEntity
 
 /**
  * 直播条目（即将直播、直播历史）

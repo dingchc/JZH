@@ -7,6 +7,7 @@ import com.jzh.parents.datamodel.data.BannerData
 import com.jzh.parents.datamodel.repo.HomeRepository
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.entity.*
+import com.jzh.parents.viewmodel.entity.home.*
 
 /**
  * 主页的ViewModel

@@ -55,7 +55,7 @@ public class CircleBannerPage extends RelativeLayout implements
     private int canvasHeight = 0;
     private int dividerDimen = 0;
 
-    private IOnclickListener mIOnclickListener;
+    private BannerClickListener bannerClickListener;
 
     public CircleBannerPage(Context context) {
         this(context, null);
@@ -184,8 +184,8 @@ public class CircleBannerPage extends RelativeLayout implements
         img.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mIOnclickListener != null) {
-                    mIOnclickListener.onClick(position);
+                if (bannerClickListener != null) {
+                    bannerClickListener.onBannerClick(position);
                     return;
                 }
 
@@ -348,12 +348,20 @@ public class CircleBannerPage extends RelativeLayout implements
 
     }
 
-    public void setIOnclickListener(IOnclickListener listener) {
-        this.mIOnclickListener = listener;
+    public void setBannerClickListener(BannerClickListener listener) {
+        this.bannerClickListener = listener;
     }
 
-    public interface IOnclickListener {
-        void onClick(int position);
+    /**
+     * Banner图点击监听
+     */
+    public interface BannerClickListener {
+        /**
+         * 点击了Banner图
+         *
+         * @param position 位置
+         */
+        void onBannerClick(int position);
     }
 
 }

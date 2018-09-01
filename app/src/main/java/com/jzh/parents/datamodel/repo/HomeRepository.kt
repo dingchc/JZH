@@ -1,7 +1,7 @@
 package com.jzh.parents.datamodel.repo
 
 import com.jzh.parents.datamodel.local.HomeLocalDataSource
-import com.jzh.parents.viewmodel.entity.HomeFuncEntity
+import com.jzh.parents.viewmodel.entity.home.HomeFuncEntity
 
 /**
  * 主页的数据仓库

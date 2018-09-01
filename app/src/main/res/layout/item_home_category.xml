@@ -5,7 +5,7 @@
 
         <variable
             name="itemEntity"
-            type="com.jzh.parents.viewmodel.entity.HomeLiveCategoryEntity" />
+            type="com.jzh.parents.viewmodel.entity.home.HomeLiveCategoryEntity" />
     </data>
 
     <LinearLayout

@@ -7,7 +7,7 @@
 
         <variable
             name="itemEntity"
-            type="com.jzh.parents.viewmodel.entity.HomeLiveNowEntity" />
+            type="com.jzh.parents.viewmodel.entity.home.HomeLiveNowEntity" />
 
     </data>
 

@@ -1,6 +1,6 @@
 package com.jzh.parents.datamodel.local
 
-import com.jzh.parents.viewmodel.entity.HomeFuncEntity
+import com.jzh.parents.viewmodel.entity.home.HomeFuncEntity
 
 /**
  * 主页获取本地数据

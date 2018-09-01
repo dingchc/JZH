@@ -10,8 +10,8 @@ import com.jzh.parents.R
 import com.jzh.parents.adapter.HomePageAdapter
 import com.jzh.parents.databinding.ActivityHomeBinding
 import com.jzh.parents.utils.AppLogger
-import com.jzh.parents.viewmodel.entity.HomeEntity
-import com.jzh.parents.viewmodel.entity.HomeLiveNowEntity
+import com.jzh.parents.viewmodel.entity.home.HomeEntity
+import com.jzh.parents.viewmodel.entity.home.HomeLiveNowEntity
 import com.jzh.parents.viewmodel.HomeViewModel
 
 /**
