@@ -6,7 +6,7 @@ package com.jzh.parents.viewmodel.entity
  * @author ding
  * Created by Ding on 2018/8/27.
  */
-data class HomeLiveNowEntity(var onlineCount: Int = 0, var title: String = "", var author: String = "", var authorAvatarUrl: String = "", var authorDescription: String = "") : HomeEntity(ItemTypeEnum.LIVE_NOW) {
+data class HomeLiveNowEntity(var onlineCount: Int = 0, var title: String = "", var author: String = "", var avatarUrl: String = "", var authorDescription: String = "") : HomeEntity(ItemTypeEnum.LIVE_NOW) {
 
 
 }

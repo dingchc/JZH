@@ -10,13 +10,13 @@ import com.jzh.parents.widget.RegisterContentItem;
  */
 public class TSDataBindingComponent implements android.databinding.DataBindingComponent {
 
-    /**
-     * 注册页面，自定义组件支持双向绑定
-     *
-     * @return Companion 静态类
-     */
     @Override
-    public RegisterContentItem.Companion getCompanion() {
+    public TSBindingAdapter.Companion getCompanion1() {
+        return TSBindingAdapter.Companion;
+    }
+
+    @Override
+    public RegisterContentItem.Companion getCompanion2() {
         return RegisterContentItem.Companion;
     }
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -117,7 +118,8 @@
                     android:layout_alignLeft="@id/view_dash_line"
                     android:layout_below="@id/view_dash_line"
                     android:layout_marginTop="8dp"
-                    android:src="@mipmap/ic_login" />
+                    bind:circleImage="@{itemEntity.avatarUrl}"
+                    bind:placeHolder="@{@drawable/ic_login}" />
 
                 <!-- 直播人名称 -->
                 <TextView

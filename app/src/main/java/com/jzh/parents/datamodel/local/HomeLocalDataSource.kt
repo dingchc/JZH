@@ -16,6 +16,6 @@ class HomeLocalDataSource {
     fun loadFuncEntity() : HomeFuncEntity {
 
         // 功能条
-        return HomeFuncEntity(name = "张大伟妈妈", className = "二年级")
+        return HomeFuncEntity(name = "张大伟妈妈", className = "二年级", avatarUrl = "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1606972337,3987749266&fm=200&gp=0.jpg")
     }
 }

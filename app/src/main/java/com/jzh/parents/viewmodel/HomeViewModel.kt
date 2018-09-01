@@ -71,7 +71,7 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
         AppLogger.i("* loadItemEntities")
 
         // 正在直播
-        val livingEntity = HomeLiveNowEntity(onlineCount = 1234, title = "热门直播", author = "MacTalk", authorDescription = "CCTV特约评论员1")
+        val livingEntity = HomeLiveNowEntity(onlineCount = 1234, title = "热门直播", author = "MacTalk", avatarUrl = "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=837429733,2704045953&fm=26&gp=0.jpg", authorDescription = "CCTV特约评论员1")
 
         // 即将直播
         val liveItem = LiveItemEntity(title = "精彩1")
