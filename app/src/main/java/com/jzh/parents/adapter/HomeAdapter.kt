@@ -37,11 +37,20 @@ class HomePageAdapter(private var mContext: Context, var mDataList: MutableList<
 
         when (viewType) {
 
-        // 直播（或Banner）条目:
+        // 正在直播条目:
             HomeEntity.ItemTypeEnum.LIVE_NOW.ordinal -> {
 
                 holder.dataBinding as ItemHomeLivingBinding
                 holder.dataBinding.itemEntity = mDataList?.get(position) as HomeLiveNowEntity
+            }
+        // Banner条目:
+            HomeEntity.ItemTypeEnum.LIVE_BANNER.ordinal -> {
+
+                holder.dataBinding as ItemHomeBannerBinding
+                val bannerEntity = mDataList?.get(position) as HomeBannerEntity
+
+                holder.dataBinding.bannerPage.setAdList(bannerEntity.bannerList)
+                holder.dataBinding.bannerPage.addChildrenViews()
             }
         // 即将开播或往期回顾:
             HomeEntity.ItemTypeEnum.LIVE_ITEM.ordinal -> {
@@ -91,10 +100,16 @@ class HomePageAdapter(private var mContext: Context, var mDataList: MutableList<
 
         when (viewType) {
 
-        // 直播（或Banner）条目:
+        // 正在直播条目:
             HomeEntity.ItemTypeEnum.LIVE_NOW.ordinal -> {
 
                 val binding: ItemHomeLivingBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_living, parent, false)
+                return HomePageViewHolder(binding)
+            }
+        // Banner条目:
+            HomeEntity.ItemTypeEnum.LIVE_BANNER.ordinal -> {
+
+                val binding: ItemHomeBannerBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_banner, parent, false)
                 return HomePageViewHolder(binding)
             }
         // 即将开播或往期回顾:

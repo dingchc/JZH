@@ -32,4 +32,10 @@
 
     </declare-styleable>
 
+    <!-- 圆角图片 -->
+    <declare-styleable name="RoundAngleImageView">
+        <attr name="roundWidth" format="dimension" />
+        <attr name="roundHeight" format="dimension" />
+    </declare-styleable>
+
 </resources>

@@ -19,9 +19,14 @@ abstract class HomeEntity(var itemType: ItemTypeEnum = ItemTypeEnum.LIVE_ITEM) {
         LIVE_FUNC,
 
         /**
-         * 活动(Banner、正在直播)
+         * 活动(正在直播)
          */
         LIVE_NOW,
+
+        /**
+         * 活动(Banner)
+         */
+        LIVE_BANNER,
 
         /**
          * 直播项目
