@@ -1,7 +1,6 @@
 package com.jzh.parents.viewmodel
 
 import android.app.Application
-import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import com.jzh.parents.datamodel.data.BannerData
 import com.jzh.parents.datamodel.repo.HomeRepository
@@ -87,8 +86,11 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
         val bannerEntity = HomeBannerEntity(bannerDataList)
 
         // 即将直播
-        val liveItem = LiveInfo(title = "精彩1")
-        val liveEntity = LiveItemEntity(liveItem)
+        val liveInfo1 = LiveInfo(title = "精彩1", contentType = LiveInfo.LiveInfoEnum.TYPE_WILL)
+        val liveItemEntity1 = LiveItemEntity(liveInfo1, LiveItemEntity.LiveItemEnum.ITEM_WITH_HEADER)
+
+        val liveInfo2 = LiveInfo(title = "精彩2", contentType = LiveInfo.LiveInfoEnum.TYPE_WILL)
+        val liveItemEntity2 = LiveItemEntity(liveInfo2, LiveItemEntity.LiveItemEnum.ITEM_WITH_FOOTER)
 
         // 直播分类
         val category1 = HomeLiveCategoryEntity.LiveCategory("手机游戏", "◆共25场讲座◆")
@@ -109,10 +111,22 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
         val liveItemList = listOf(liveItem1, liveItem2, liveItem3, liveItem4)
         val topPicksEntity = HomeLiveTopPicksEntity(liveItemList)
 
+        // 往期回顾
+
+        // 即将直播
+        val reviewLive1 = LiveInfo(title = "精彩1", contentType = LiveInfo.LiveInfoEnum.TYPE_REVIEW)
+        val reviewLiveItemEntity1 = LiveItemEntity(reviewLive1, LiveItemEntity.LiveItemEnum.ITEM_WITH_HEADER)
+
+        val reviewLive2 = LiveInfo(title = "精彩2", contentType = LiveInfo.LiveInfoEnum.TYPE_REVIEW)
+        val reviewLiveItemEntity2 = LiveItemEntity(reviewLive2, LiveItemEntity.LiveItemEnum.ITEM_DEFAULT)
+
+        val reviewLive3 = LiveInfo(title = "精彩3", contentType = LiveInfo.LiveInfoEnum.TYPE_REVIEW)
+        val reviewLiveItemEntity3 = LiveItemEntity(reviewLive3, LiveItemEntity.LiveItemEnum.ITEM_WITH_FOOTER)
+
         // 搜索
         val searchBarEntity = SearchEntity()
 
-        val entities = mutableListOf<BaseLiveEntity>(bannerEntity, liveEntity, topPicksEntity, liveCategories, searchBarEntity)
+        val entities = mutableListOf<BaseLiveEntity>(bannerEntity, liveItemEntity1, liveItemEntity2, topPicksEntity, liveCategories, reviewLiveItemEntity1, reviewLiveItemEntity2, reviewLiveItemEntity3, searchBarEntity)
 
         AppLogger.i("entities=" + entities.get(0).itemType.ordinal)
         itemEntities.value = entities

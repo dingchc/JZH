@@ -75,6 +75,8 @@ class HomeActivity : BaseActivity() {
 
         })
 
+
+
         mAdapterListener = object : HomePageAdapter.OnHomeViewClick {
 
             override fun onClickHeader(type: Int) {

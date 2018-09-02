@@ -165,12 +165,12 @@ class HomePageAdapter(private var mContext: Context, var mDataList: MutableList<
     interface OnHomeViewClick {
 
         /**
-         * 点击了头部（type == 1 即将播放、 type == 2 往期回顾）
+         * 点击了头部（contentType == 1 即将播放、 contentType == 2 往期回顾）
          */
         fun onClickHeader(type : Int)
 
         /**
-         * 点击了头部（type == 1 即将播放、 type == 2 往期回顾）
+         * 点击了头部（contentType == 1 即将播放、 contentType == 2 往期回顾）
          */
         fun onClickFooter(type : Int)
 

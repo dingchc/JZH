@@ -4,15 +4,25 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <!-- 直播布局类型：默认、带header、带footer -->
+        <import type="com.jzh.parents.viewmodel.entity.LiveItemEntity.LiveItemEnum" />
+
+        <!-- 直播内容类型：即将直播或往期回顾 -->
+        <import type="com.jzh.parents.viewmodel.info.LiveInfo.LiveInfoEnum" />
+
+        <!-- 直播数据 -->
         <variable
             name="itemEntity"
             type="com.jzh.parents.viewmodel.entity.LiveItemEntity" />
+
+
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
         android:orientation="vertical">
 
         <!-- Header -->
@@ -20,17 +30,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="14dp"
             android:paddingBottom="10dp"
             android:paddingEnd="@dimen/activity_horizontal_margin"
             android:paddingStart="@dimen/activity_horizontal_margin"
-            android:paddingTop="24dp">
+            android:paddingTop="24dp"
+            android:visibility="@{itemEntity.liveType == LiveItemEnum.ITEM_WITH_HEADER ? View.VISIBLE : View.GONE}">
 
+            <!-- android:text="@string/home_live_will" -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:gravity="center_vertical"
-                android:text="@string/home_live_will"
+                android:text="@{itemEntity.liveInfo.contentType == LiveInfoEnum.TYPE_WILL ? @string/home_live_will : @string/home_live_review}"
                 android:textColor="@color/font_black"
                 android:textSize="18sp" />
 
@@ -166,7 +179,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingBottom="27dp"
-            android:paddingTop="4dp">
+            android:paddingTop="4dp"
+            android:visibility="@{itemEntity.liveType == LiveItemEnum.ITEM_WITH_FOOTER ? View.VISIBLE : View.GONE}">
 
             <TextView
                 android:id="@+id/tv_view_all"
@@ -178,7 +192,7 @@
                 android:paddingBottom="2dp"
                 android:paddingLeft="9dp"
                 android:paddingRight="9dp"
-                android:text="查看全部往期作品"
+                android:text="@{itemEntity.liveInfo.contentType == LiveInfoEnum.TYPE_WILL ? @string/check_all_will_live : @string/check_all_review_live}"
                 android:textColor="@color/font_gray"
                 android:textSize="12sp" />
 
