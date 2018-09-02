@@ -13,6 +13,7 @@ import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
 import com.jzh.parents.viewmodel.entity.LiveItemEntity
 import com.jzh.parents.viewmodel.entity.home.*
+import com.jzh.parents.viewmodel.info.LiveInfo
 
 /**
  * 首页的适配器
@@ -20,7 +21,7 @@ import com.jzh.parents.viewmodel.entity.home.*
  * @author ding
  * Created by Ding on 2018/8/27.
  */
-class HomePageAdapter(private var mContext: Context, var mDataList: MutableList<BaseLiveEntity>?) : RecyclerView.Adapter<HomePageAdapter.HomePageViewHolder>() {
+class HomePageAdapter(private var mContext: Context, var mDataList: MutableList<BaseLiveEntity>?, var mListener : OnHomeViewClick? = null) : RecyclerView.Adapter<HomePageAdapter.HomePageViewHolder>() {
 
     /**
      * 布局加载器
@@ -58,6 +59,11 @@ class HomePageAdapter(private var mContext: Context, var mDataList: MutableList<
             BaseLiveEntity.ItemTypeEnum.LIVE_ITEM.ordinal -> {
                 holder.dataBinding as ItemHomeLiveItemBinding
                 holder.dataBinding.itemEntity = mDataList?.get(position) as LiveItemEntity
+
+                // 全部
+                holder.dataBinding.tvAll.setOnClickListener {
+                    mListener?.onClickHeader(1)
+                }
             }
         // 直播分类:
             BaseLiveEntity.ItemTypeEnum.LIVE_CATEGORY.ordinal -> {
@@ -151,6 +157,27 @@ class HomePageAdapter(private var mContext: Context, var mDataList: MutableList<
      */
     class HomePageViewHolder(val dataBinding: ViewDataBinding?) : RecyclerView.ViewHolder(dataBinding!!.root) {
 
+    }
+
+    /**
+     * 主页控件点击事件
+     */
+    interface OnHomeViewClick {
+
+        /**
+         * 点击了头部（type == 1 即将播放、 type == 2 往期回顾）
+         */
+        fun onClickHeader(type : Int)
+
+        /**
+         * 点击了头部（type == 1 即将播放、 type == 2 往期回顾）
+         */
+        fun onClickFooter(type : Int)
+
+        /**
+         * 点击了一条直播
+         */
+        fun onClickALive(liveInfo : LiveInfo)
     }
 
 }

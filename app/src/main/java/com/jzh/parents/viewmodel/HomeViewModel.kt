@@ -37,7 +37,7 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
     /**
      * 获取条目List
      */
-    fun getItemEntities(): LiveData<MutableList<BaseLiveEntity>> {
+    fun getItemEntities(): MutableLiveData<MutableList<BaseLiveEntity>> {
 
         return itemEntities
     }

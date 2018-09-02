@@ -2,17 +2,20 @@ package com.jzh.parents.activity
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.jzh.parents.R
 import com.jzh.parents.adapter.HomePageAdapter
+import com.jzh.parents.adapter.HomePageAdapter.OnHomeViewClick
 import com.jzh.parents.databinding.ActivityHomeBinding
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
 import com.jzh.parents.viewmodel.entity.home.HomeLiveNowEntity
 import com.jzh.parents.viewmodel.HomeViewModel
+import com.jzh.parents.viewmodel.info.LiveInfo
 
 /**
  * 主页
@@ -36,6 +39,11 @@ class HomeActivity : BaseActivity() {
      * 适配器
      */
     private var mAdapter: HomePageAdapter? = null
+
+    /**
+     * 适配器监听
+     */
+    private var mAdapterListener : HomePageAdapter.OnHomeViewClick? = null
 
     /**
      * 初始化组件
@@ -67,6 +75,22 @@ class HomeActivity : BaseActivity() {
 
         })
 
+        mAdapterListener = object : HomePageAdapter.OnHomeViewClick {
+
+            override fun onClickHeader(type: Int) {
+
+                val intent = Intent(this@HomeActivity, LivesActivity::class.java)
+                startActivity(intent)
+            }
+
+            override fun onClickFooter(type: Int) {
+            }
+
+            override fun onClickALive(liveInfo: LiveInfo) {
+            }
+
+        }
+
     }
 
     /**
@@ -82,6 +106,8 @@ class HomeActivity : BaseActivity() {
 
         mAdapter = HomePageAdapter(this@HomeActivity, dataList)
         mDataBinding?.rvData?.adapter = mAdapter
+
+        mAdapter?.mListener = mAdapterListener
 
         val handler: Handler = android.os.Handler()
         handler.postDelayed({ mViewModel?.loadItemEntities() }, 500L)

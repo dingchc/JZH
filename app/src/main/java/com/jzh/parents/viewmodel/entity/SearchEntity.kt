@@ -1,7 +1,5 @@
 package com.jzh.parents.viewmodel.entity
 
-import com.jzh.parents.viewmodel.entity.BaseLiveEntity
-
 /**
  * 搜索
  *

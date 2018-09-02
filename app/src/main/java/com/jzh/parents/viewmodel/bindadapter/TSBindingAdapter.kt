@@ -24,7 +24,7 @@ class TSBindingAdapter {
          * @param url
          */
         @BindingAdapter(value = *arrayOf("bind:circleImage", "bind:placeHolder"), requireAll = false)
-        fun loadCircleImage(imageView: ImageView, url: String, holderId : Drawable?) {
+        fun loadCircleImage(imageView: ImageView, url: String?, holderId : Drawable?) {
 
             AppLogger.i("loadCircleImage " + url)
 

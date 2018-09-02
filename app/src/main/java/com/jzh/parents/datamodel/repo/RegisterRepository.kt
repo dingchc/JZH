@@ -8,7 +8,7 @@ import com.jzh.parents.datamodel.remote.RegisterRemoteDataSource
  * @author ding
  * Created by Ding on 2018/8/20.
  */
-class RegisterRepository {
+class RegisterRepository : BaseRepository() {
 
     /**
      * 本地数据源

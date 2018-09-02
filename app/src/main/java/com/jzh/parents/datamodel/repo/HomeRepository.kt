@@ -9,7 +9,7 @@ import com.jzh.parents.viewmodel.entity.FuncEntity
  * @author ding
  * Created by Ding on 2018/8/28.
  */
-class HomeRepository {
+class HomeRepository : BaseRepository() {
 
     /**
      * 本地数据源

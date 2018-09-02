@@ -62,6 +62,15 @@
             </intent-filter>
         </activity>
 
+        <!-- 直播列表 -->
+        <activity
+            android:name=".activity.LivesActivity"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>
