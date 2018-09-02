@@ -38,4 +38,10 @@
         <attr name="roundHeight" format="dimension" />
     </declare-styleable>
 
+    <!-- 自动布局 -->
+    <declare-styleable name="AutoNextRowLayout">
+        <attr name="an_margin_right" format="dimension" />
+        <attr name="an_margin_top" format="dimension" />
+    </declare-styleable>
+
 </resources>

@@ -30,4 +30,8 @@ class SearchViewModel(app: Application) : BaseViewModel(app) {
 
         return searchingContent.postValue(input)
     }
+
+    fun loadSearchRecord() {
+
+    }
 }

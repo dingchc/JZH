@@ -9,12 +9,12 @@ import android.view.ViewGroup;
  * 自动换行的ViewGroup
  *
  * @author Ding
- * Created by Ding on 4/5/17.
+ *         Created by Ding on 4/5/17.
  */
 
 public class AutoNextRowLayout extends ViewGroup {
 
-    ChildViewInfo[] cellInfoArray;
+    private ChildViewInfo[] mCellInfoArray;
 
     public AutoNextRowLayout(Context context) {
         this(context, null);
@@ -38,46 +38,46 @@ public class AutoNextRowLayout extends ViewGroup {
 
         measureChildren(widthMeasureSpec, heightMeasureSpec);
 
-        cellInfoArray = new ChildViewInfo[getChildCount()];
+        mCellInfoArray = new ChildViewInfo[getChildCount()];
 
         int width = 0;
         int height = 0;
 
         for (int i = 0; i < getChildCount(); i++) {
 
-            cellInfoArray[i] = new ChildViewInfo();
+            mCellInfoArray[i] = new ChildViewInfo();
 
             View view = getChildAt(i);
 
             if (i > 0) {
 
-                int lastChildRightMargin = ((MarginLayoutParams) getChildAt(i-1).getLayoutParams()).rightMargin;
+                int lastChildRightMargin = ((MarginLayoutParams) getChildAt(i - 1).getLayoutParams()).rightMargin;
 
-                int needWidth = cellInfoArray[i - 1].right + lastChildRightMargin + ((MarginLayoutParams) view.getLayoutParams()).leftMargin + view.getMeasuredWidth();
+                int needWidth = mCellInfoArray[i - 1].right + lastChildRightMargin + ((MarginLayoutParams) view.getLayoutParams()).leftMargin + view.getMeasuredWidth();
 
                 if (needWidth > widthSize) {
 
-                    cellInfoArray[i].left = ((MarginLayoutParams) view.getLayoutParams()).leftMargin;
-                    cellInfoArray[i].top = ((MarginLayoutParams) view.getLayoutParams()).topMargin + cellInfoArray[i - 1].bottom;
-                    cellInfoArray[i].right = cellInfoArray[i].left + view.getMeasuredWidth();
-                    cellInfoArray[i].bottom = cellInfoArray[i].top + view.getMeasuredHeight();
+                    mCellInfoArray[i].left = ((MarginLayoutParams) view.getLayoutParams()).leftMargin;
+                    mCellInfoArray[i].top = ((MarginLayoutParams) view.getLayoutParams()).topMargin + mCellInfoArray[i - 1].bottom;
+                    mCellInfoArray[i].right = mCellInfoArray[i].left + view.getMeasuredWidth();
+                    mCellInfoArray[i].bottom = mCellInfoArray[i].top + view.getMeasuredHeight();
                 } else {
-                    cellInfoArray[i].left = cellInfoArray[i - 1].right + ((MarginLayoutParams) view.getLayoutParams()).leftMargin + lastChildRightMargin;
-                    cellInfoArray[i].top = cellInfoArray[i - 1].top;
-                    cellInfoArray[i].right = cellInfoArray[i].left + view.getMeasuredWidth();
-                    cellInfoArray[i].bottom = cellInfoArray[i].top + view.getMeasuredHeight();
+                    mCellInfoArray[i].left = mCellInfoArray[i - 1].right + ((MarginLayoutParams) view.getLayoutParams()).leftMargin + lastChildRightMargin;
+                    mCellInfoArray[i].top = mCellInfoArray[i - 1].top;
+                    mCellInfoArray[i].right = mCellInfoArray[i].left + view.getMeasuredWidth();
+                    mCellInfoArray[i].bottom = mCellInfoArray[i].top + view.getMeasuredHeight();
                 }
 
             } else {
 
-                cellInfoArray[i].left = ((MarginLayoutParams) view.getLayoutParams()).leftMargin;
-                cellInfoArray[i].top = ((MarginLayoutParams) view.getLayoutParams()).topMargin;
-                cellInfoArray[i].right = cellInfoArray[i].left + view.getMeasuredWidth();
-                cellInfoArray[i].bottom = cellInfoArray[i].top + view.getMeasuredHeight();
+                mCellInfoArray[i].left = ((MarginLayoutParams) view.getLayoutParams()).leftMargin;
+                mCellInfoArray[i].top = ((MarginLayoutParams) view.getLayoutParams()).topMargin;
+                mCellInfoArray[i].right = mCellInfoArray[i].left + view.getMeasuredWidth();
+                mCellInfoArray[i].bottom = mCellInfoArray[i].top + view.getMeasuredHeight();
             }
 
-            width = Math.max(width, cellInfoArray[i].right);
-            height = cellInfoArray[i].bottom;
+            width = Math.max(width, mCellInfoArray[i].right);
+            height = mCellInfoArray[i].bottom;
 
         }
 
@@ -107,7 +107,7 @@ public class AutoNextRowLayout extends ViewGroup {
         for (int i = 0; i < getChildCount(); i++) {
 
             View view = getChildAt(i);
-            view.layout(cellInfoArray[i].left, cellInfoArray[i].top, cellInfoArray[i].right, cellInfoArray[i].bottom);
+            view.layout(mCellInfoArray[i].left, mCellInfoArray[i].top, mCellInfoArray[i].right, mCellInfoArray[i].bottom);
         }
     }
 
