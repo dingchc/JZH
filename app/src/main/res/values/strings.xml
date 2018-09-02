@@ -42,4 +42,5 @@
     <string name="home_logo_tip">(C)2018 All rights reserved</string>
     <string name="check_all_review_live">查看全部往期作品</string>
     <string name="check_all_will_live">查看全部即将开播讲座</string>
+    <string name="search_history">搜索记录</string>
 </resources>

@@ -87,6 +87,10 @@ class HomePageAdapter(private var mContext: Context, var mDataList: MutableList<
         // 搜索:
             BaseLiveEntity.ItemTypeEnum.LIVE_SEARCH.ordinal -> {
                 holder.dataBinding as ItemHomeSearchBinding
+
+                holder.dataBinding.rlSearchArea.setOnClickListener {
+                    mListener?.onClickSearch()
+                }
             }
         // 其他
             else -> {
@@ -178,6 +182,11 @@ class HomePageAdapter(private var mContext: Context, var mDataList: MutableList<
          * 点击了一条直播
          */
         fun onClickALive(liveInfo : LiveInfo)
+
+        /**
+         * 点击了搜索
+         */
+        fun onClickSearch();
     }
 
 }

@@ -78,19 +78,35 @@ class HomeActivity : BaseActivity() {
 
 
         mAdapterListener = object : HomePageAdapter.OnHomeViewClick {
-
+            /**
+             * 点击了头部（contentType == 1 即将播放、 contentType == 2 往期回顾）
+             */
             override fun onClickHeader(type: Int) {
 
                 val intent = Intent(this@HomeActivity, LivesActivity::class.java)
                 startActivity(intent)
             }
 
+            /**
+             * 点击了头部（contentType == 1 即将播放、 contentType == 2 往期回顾）
+             */
             override fun onClickFooter(type: Int) {
             }
 
+            /**
+             * 点击了一条直播
+             */
             override fun onClickALive(liveInfo: LiveInfo) {
             }
 
+            /**
+             * 点击了搜索
+             */
+            override fun onClickSearch() {
+
+                val intent = Intent(this@HomeActivity, SearchActivity::class.java)
+                startActivity(intent)
+            }
         }
 
     }

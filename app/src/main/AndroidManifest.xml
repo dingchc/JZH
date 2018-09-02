@@ -71,6 +71,15 @@
             </intent-filter>
         </activity>
 
+        <!-- 搜索页面 -->
+        <activity
+            android:name=".activity.SearchActivity"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>
