@@ -38,13 +38,22 @@ class LivesLocalDataSource {
         AppLogger.i("* loadItemEntities")
 
         // 即将直播
-        val liveItem = LiveInfo(title = "精彩1")
-        val liveEntity = LiveItemEntity(liveItem)
+        val liveItem1 = LiveInfo(title = "精彩1")
+        val liveEntity1 = LiveItemEntity(liveItem1, LiveItemEntity.LiveItemEnum.ITEM_WITH_HEADER)
+
+        val liveItem2 = LiveInfo(title = "精彩2")
+        val liveEntity2 = LiveItemEntity(liveItem2)
+
+        val liveItem3 = LiveInfo(title = "精彩2")
+        val liveEntity3 = LiveItemEntity(liveItem3)
+
+        val liveItem4 = LiveInfo(title = "精彩2")
+        val liveEntity4 = LiveItemEntity(liveItem4)
 
         // 搜索
         val searchBarEntity = SearchEntity()
 
-        val entities = mutableListOf<BaseLiveEntity>(searchBarEntity, liveEntity)
+        val entities = mutableListOf<BaseLiveEntity>(searchBarEntity, liveEntity1, liveEntity2, liveEntity3, liveEntity4)
 
         return entities
     }
