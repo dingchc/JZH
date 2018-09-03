@@ -2,47 +2,62 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+        <import type="android.view.View" />
         <variable
             name="viewModel"
-            type="com.jzh.parents.viewmodel.SearchViewModel"/>
+            type="com.jzh.parents.viewmodel.SearchViewModel" />
     </data>
 
+    <!-- 搜索页面 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="10dp"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-        <!-- 搜索页面 -->
-        <RelativeLayout
-            android:id="@+id/rl_search_area"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:background="@drawable/round_bg_search_area">
+        <EditText
+            android:id="@+id/ed_search_bar"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_weight="1"
+            android:background="@drawable/round_bg_search_bar"
+            android:gravity="center_vertical|left"
+            android:hint="@string/home_search_bar_hint"
+            android:paddingLeft="4dp"
+            android:text="@{viewModel.searchingContent}"
+            android:textSize="12sp" />
 
-            <EditText
-                android:id="@+id/ed_search_bar"
+        <FrameLayout
+            android:layout_width="56dp"
+            android:layout_height="36dp"
+            android:layout_marginLeft="-4dp">
+
+            <TextView
+                android:id="@+id/tv_cancel"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
-                android:hint="@string/home_search_bar_hint"
-                android:layout_centerHorizontal="true"
-                android:textSize="12sp"
-                android:gravity="center_vertical|left"
-                android:text="@{viewModel.searchingContent}"
-                android:paddingLeft="4dp"
-                android:background="@drawable/round_bg_search_bar"/>
-            
+                android:text="@string/cancel"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:onClick="onSearchCancelClick"
+                android:visibility="@{viewModel.isSearchable.getValue() ? View.GONE : View.VISIBLE}"
+                android:textColor="@color/font_black_search_title"
+                />
+
             <ImageView
-                android:layout_width="52dp"
+                android:id="@+id/iv_search"
+                android:layout_width="match_parent"
                 android:layout_height="36dp"
-                android:layout_alignRight="@+id/ed_search_bar"
-                android:layout_alignTop="@+id/ed_search_bar"
-                android:src="@mipmap/icon_home_search"
+                android:background="@drawable/round_bg_search_icon"
                 android:scaleType="center"
-                android:background="@drawable/round_bg_search_icon"/>
-        </RelativeLayout>
+                android:onClick="onSearchClick"
+                android:visibility="@{viewModel.isSearchable.getValue() ? View.VISIBLE : View.GONE}"
+                android:src="@mipmap/icon_home_search" />
+
+        </FrameLayout>
+
     </LinearLayout>
 
 </layout>

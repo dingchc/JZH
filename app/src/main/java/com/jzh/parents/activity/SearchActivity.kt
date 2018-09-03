@@ -56,6 +56,7 @@ class SearchActivity : BaseActivity() {
         mDataBinding?.setLifecycleOwner(this)
 
         mDataBinding?.rvData?.layoutManager = LinearLayoutManager(this@SearchActivity, LinearLayoutManager.VERTICAL, false)
+
     }
 
     override fun initEvent() {
@@ -180,6 +181,31 @@ class SearchActivity : BaseActivity() {
             recordTextView.layoutParams = layoutParams
 
         }
+    }
+
+    /**
+     * 取消搜索
+     * @param view 控件
+     */
+    fun onSearchCancelClick(view: View) {
+        controlSearch(true)
+    }
+
+    /**
+     * 搜索
+     * @param view 控件
+     */
+    fun onSearchClick(view: View) {
+
+        controlSearch(false)
+    }
+
+    /**
+     * 控制检索控件显示
+     */
+    private fun controlSearch(isSearch: Boolean) {
+
+        mViewModel?.setIsSearchable(isSearch)
     }
 
     override fun getContentLayout(): View {

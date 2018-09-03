@@ -24,9 +24,18 @@ class SearchViewModel(app: Application) : BaseViewModel(app) {
     private var itemEntities: MutableLiveData<MutableList<BaseLiveEntity>> = MutableLiveData<MutableList<BaseLiveEntity>>()
 
     /**
+     * 是否点击了搜索
+     */
+    private var isSearchable = MutableLiveData<Boolean>()
+
+    /**
      * 数据仓库
      */
     private var repo = SearchRepository()
+
+    init {
+        isSearchable.value = true
+    }
 
 
     /**
@@ -42,6 +51,20 @@ class SearchViewModel(app: Application) : BaseViewModel(app) {
     fun setSearchingContent(input: String) {
 
         return searchingContent.postValue(input)
+    }
+
+    /**
+     * 获取是否可以搜索
+     */
+    fun getIsSearchable() : MutableLiveData<Boolean> {
+        return isSearchable
+    }
+
+    /**
+     * 设置是否可以搜索
+     */
+    fun setIsSearchable(searchable : Boolean) {
+        isSearchable.value = searchable
     }
 
     /**
