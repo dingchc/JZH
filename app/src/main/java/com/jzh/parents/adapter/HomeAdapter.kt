@@ -21,7 +21,7 @@ import com.jzh.parents.viewmodel.info.LiveInfo
  * @author ding
  * Created by Ding on 2018/8/27.
  */
-class HomePageAdapter(private var mContext: Context, var mDataList: MutableList<BaseLiveEntity>?, var mListener : OnHomeViewClick? = null) : RecyclerView.Adapter<HomePageAdapter.HomePageViewHolder>() {
+class HomeAdapter(private var mContext: Context, var mDataList: MutableList<BaseLiveEntity>?, var mListener : OnHomeViewClick? = null) : RecyclerView.Adapter<HomeAdapter.InnerViewHolder>() {
 
     /**
      * 布局加载器
@@ -32,7 +32,7 @@ class HomePageAdapter(private var mContext: Context, var mDataList: MutableList<
         mInflater = LayoutInflater.from(mContext)
     }
 
-    override fun onBindViewHolder(holder: HomePageViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: InnerViewHolder, position: Int) {
 
         val viewType = getItemViewType(position)
 
@@ -108,7 +108,7 @@ class HomePageAdapter(private var mContext: Context, var mDataList: MutableList<
         return mDataList?.get(position)?.itemType?.ordinal ?: -1
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomePageViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InnerViewHolder {
 
         when (viewType) {
 
@@ -116,42 +116,42 @@ class HomePageAdapter(private var mContext: Context, var mDataList: MutableList<
             BaseLiveEntity.ItemTypeEnum.LIVE_NOW.ordinal -> {
 
                 val binding: ItemHomeLivingBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_living, parent, false)
-                return HomePageViewHolder(binding)
+                return InnerViewHolder(binding)
             }
         // Banner条目:
             BaseLiveEntity.ItemTypeEnum.LIVE_BANNER.ordinal -> {
 
                 val binding: ItemHomeBannerBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_banner, parent, false)
-                return HomePageViewHolder(binding)
+                return InnerViewHolder(binding)
             }
         // 即将开播或往期回顾:
             BaseLiveEntity.ItemTypeEnum.LIVE_ITEM.ordinal -> {
 
                 val binding: ItemHomeLiveItemBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_live_item, parent, false)
-                return HomePageViewHolder(binding)
+                return InnerViewHolder(binding)
             }
         // 直播分类:
             BaseLiveEntity.ItemTypeEnum.LIVE_CATEGORY.ordinal -> {
 
                 val binding: ItemHomeCategoryBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_category, parent, false)
-                return HomePageViewHolder(binding)
+                return InnerViewHolder(binding)
             }
         // 精彩推荐:
             BaseLiveEntity.ItemTypeEnum.LIVE_TOP_PICKS.ordinal -> {
 
                 val binding: ItemHomeTopPicksBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_top_picks, parent, false)
-                return HomePageViewHolder(binding)
+                return InnerViewHolder(binding)
             }
         // 搜索:
             BaseLiveEntity.ItemTypeEnum.LIVE_SEARCH.ordinal -> {
 
                 val binding: ItemHomeSearchBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_search, parent, false)
-                return HomePageViewHolder(binding)
+                return InnerViewHolder(binding)
             }
         // 其他
             else -> {
                 val binding: ItemHomeLivingBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_living, parent, false)
-                return HomePageViewHolder(binding)
+                return InnerViewHolder(binding)
             }
         }
     }
@@ -159,7 +159,7 @@ class HomePageAdapter(private var mContext: Context, var mDataList: MutableList<
     /**
      * ViewHolder类
      */
-    class HomePageViewHolder(val dataBinding: ViewDataBinding?) : RecyclerView.ViewHolder(dataBinding!!.root) {
+    class InnerViewHolder(val dataBinding: ViewDataBinding?) : RecyclerView.ViewHolder(dataBinding!!.root) {
 
     }
 

@@ -2,6 +2,8 @@ package com.jzh.parents.viewmodel
 
 import android.app.Application
 import android.arch.lifecycle.MutableLiveData
+import com.jzh.parents.datamodel.repo.SearchRepository
+import com.jzh.parents.viewmodel.entity.BaseLiveEntity
 
 /**
  * 搜索ViewModel
@@ -15,6 +17,17 @@ class SearchViewModel(app: Application) : BaseViewModel(app) {
      * 正在搜索的字符串
      */
     private var searchingContent = MutableLiveData<String>()
+
+    /**
+     * 数据条目
+     */
+    private var itemEntities: MutableLiveData<MutableList<BaseLiveEntity>> = MutableLiveData<MutableList<BaseLiveEntity>>()
+
+    /**
+     * 数据仓库
+     */
+    private var repo = SearchRepository()
+
 
     /**
      * 获取搜索的字符串的LiveData
@@ -31,7 +44,23 @@ class SearchViewModel(app: Application) : BaseViewModel(app) {
         return searchingContent.postValue(input)
     }
 
+    /**
+     * 返回条目实体
+     */
+    fun getItemEntities(): MutableLiveData<MutableList<BaseLiveEntity>> {
+
+        return itemEntities
+    }
+
     fun loadSearchRecord() {
 
+    }
+
+    /**
+     * 加载数据条目
+     */
+    fun loadItemEntitiesData() {
+
+        itemEntities.value = repo.loadItemEntities()
     }
 }

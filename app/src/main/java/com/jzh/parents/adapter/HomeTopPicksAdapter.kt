@@ -16,21 +16,21 @@ import com.jzh.parents.viewmodel.info.LiveInfo
  * @author ding
  * Created by Ding on 2018/8/31.
  */
-class HomeTopPicksAdapter(val mContext: Context, val mLiveList: List<LiveInfo>?) : RecyclerView.Adapter<HomeTopPicksAdapter.TopPicksViewHolder>() {
+class HomeTopPicksAdapter(val mContext: Context, val mLiveList: List<LiveInfo>?) : RecyclerView.Adapter<HomeTopPicksAdapter.InnerViewHolder>() {
 
     private val mLayoutInflater = LayoutInflater.from(mContext)
 
-    override fun onBindViewHolder(holder: TopPicksViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: InnerViewHolder, position: Int) {
 
         holder.dataBinding as ItemTopPicksBinding
         holder.dataBinding.tvLiveTitle.text = "1123"
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopPicksViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InnerViewHolder {
 
         val binding: ItemTopPicksBinding = DataBindingUtil.inflate(mLayoutInflater, R.layout.item_top_picks, parent, false)
 
-        return TopPicksViewHolder(binding)
+        return InnerViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
@@ -39,9 +39,9 @@ class HomeTopPicksAdapter(val mContext: Context, val mLiveList: List<LiveInfo>?)
 
 
     /**
-     *
+     * ViewHolder
      */
-    class TopPicksViewHolder(val dataBinding: ViewDataBinding) : RecyclerView.ViewHolder(dataBinding.root) {
+    class InnerViewHolder(val dataBinding: ViewDataBinding) : RecyclerView.ViewHolder(dataBinding.root) {
 
     }
 }

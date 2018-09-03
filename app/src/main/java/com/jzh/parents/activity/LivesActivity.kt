@@ -3,11 +3,9 @@ package com.jzh.parents.activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
-import android.databinding.ViewDataBinding
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.jzh.parents.R
-import com.jzh.parents.adapter.HomePageAdapter
 import com.jzh.parents.adapter.LivesAdapter
 import com.jzh.parents.databinding.ActivityLivesBinding
 import com.jzh.parents.viewmodel.LivesViewModel

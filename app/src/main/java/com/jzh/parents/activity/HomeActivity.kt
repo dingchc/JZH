@@ -8,8 +8,7 @@ import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.jzh.parents.R
-import com.jzh.parents.adapter.HomePageAdapter
-import com.jzh.parents.adapter.HomePageAdapter.OnHomeViewClick
+import com.jzh.parents.adapter.HomeAdapter
 import com.jzh.parents.databinding.ActivityHomeBinding
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
@@ -38,12 +37,12 @@ class HomeActivity : BaseActivity() {
     /**
      * 适配器
      */
-    private var mAdapter: HomePageAdapter? = null
+    private var mAdapter: HomeAdapter? = null
 
     /**
      * 适配器监听
      */
-    private var mAdapterListener : HomePageAdapter.OnHomeViewClick? = null
+    private var mAdapterListener : HomeAdapter.OnHomeViewClick? = null
 
     /**
      * 初始化组件
@@ -77,7 +76,7 @@ class HomeActivity : BaseActivity() {
 
 
 
-        mAdapterListener = object : HomePageAdapter.OnHomeViewClick {
+        mAdapterListener = object : HomeAdapter.OnHomeViewClick {
             /**
              * 点击了头部（contentType == 1 即将播放、 contentType == 2 往期回顾）
              */
@@ -122,7 +121,7 @@ class HomeActivity : BaseActivity() {
         // 加载列表
         val dataList: MutableList<BaseLiveEntity> = mutableListOf(HomeLiveNowEntity())
 
-        mAdapter = HomePageAdapter(this@HomeActivity, dataList)
+        mAdapter = HomeAdapter(this@HomeActivity, dataList)
         mDataBinding?.rvData?.adapter = mAdapter
 
         mAdapter?.mListener = mAdapterListener

@@ -9,86 +9,89 @@
             type="com.jzh.parents.viewmodel.SearchViewModel" />
     </data>
 
-    <android.support.v4.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <!-- 搜索Bar -->
+        <include
+            layout="@layout/layout_search"
+            bind:viewModel="@{viewModel}" />
+
+        <!-- 搜索历史 -->
+        <RelativeLayout
+            android:id="@+id/layout_history"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="14dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_history_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:gravity="top"
+                android:text="@string/search_history"
+                android:textColor="@color/font_black_search_title"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/iv_clear_history"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="2dp"
+                android:src="@mipmap/icon_clear_search_history" />
+
+            <com.jzh.parents.widget.AutoNextRowLayout
+                android:id="@+id/auto_layout_history"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_history_title" />
+
+        </RelativeLayout>
+
+        <!-- 搜索选项部分 -->
+        <RelativeLayout
+            android:id="@+id/layout_hot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="14dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_hot_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:gravity="top"
+                android:text="@string/search_hot"
+                android:textColor="@color/font_black_search_title"
+                android:textSize="14sp" />
+
+            <com.jzh.parents.widget.AutoNextRowLayout
+                android:id="@+id/auto_layout_hot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_hot_title" />
+
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_data"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_marginTop="10dp"/>
 
-            <!-- 搜索Bar -->
-            <include
-                layout="@layout/layout_search"
-                bind:viewModel="@{viewModel}" />
-
-            <!-- 搜索历史 -->
-            <RelativeLayout
-                android:id="@+id/layout_history"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="14dp">
-
-                <TextView
-                    android:id="@+id/tv_history_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:gravity="top"
-                    android:text="@string/search_history"
-                    android:textColor="@color/font_black_search_title"
-                    android:textSize="14sp" />
-
-                <ImageView
-                    android:id="@+id/iv_clear_history"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="2dp"
-                    android:src="@mipmap/icon_clear_search_history" />
-
-                <com.jzh.parents.widget.AutoNextRowLayout
-                    android:id="@+id/auto_layout_history"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_history_title" />
-
-            </RelativeLayout>
-
-            <!-- 搜索选项部分 -->
-            <RelativeLayout
-                android:id="@+id/layout_hot"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="14dp">
-
-                <TextView
-                    android:id="@+id/tv_hot_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:gravity="top"
-                    android:text="@string/search_hot"
-                    android:textColor="@color/font_black_search_title"
-                    android:textSize="14sp" />
-
-                <com.jzh.parents.widget.AutoNextRowLayout
-                    android:id="@+id/auto_layout_hot"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_hot_title" />
-
-            </RelativeLayout>
-
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
 </layout>
 

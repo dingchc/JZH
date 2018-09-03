@@ -7,19 +7,19 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jzh.parents.R
-import com.jzh.parents.databinding.*
+import com.jzh.parents.databinding.ItemHomeLiveItemBinding
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
 import com.jzh.parents.viewmodel.entity.LiveItemEntity
 import com.jzh.parents.viewmodel.info.LiveInfo
 
 /**
- * 直播列表的适配器
+ * 搜索列表的适配器
  *
  * @author ding
  * Created by Ding on 2018/8/27.
  */
-class LivesAdapter(mContext: Context, var mDataList: MutableList<BaseLiveEntity>?, var mListener : OnViewClick? = null) : RecyclerView.Adapter<LivesAdapter.InnerViewHolder>() {
+class SearchAdapter(mContext: Context, var mDataList: MutableList<BaseLiveEntity>?, var mListener : OnViewClick? = null) : RecyclerView.Adapter<InnerViewHolder>() {
 
     /**
      * 布局加载器
@@ -43,10 +43,6 @@ class LivesAdapter(mContext: Context, var mDataList: MutableList<BaseLiveEntity>
                 holder.dataBinding as ItemHomeLiveItemBinding
                 holder.dataBinding.itemEntity = mDataList?.get(position) as LiveItemEntity
 
-            }
-        // 搜索:
-            BaseLiveEntity.ItemTypeEnum.LIVE_SEARCH.ordinal -> {
-                holder.dataBinding as ItemLivesSearchBinding
             }
         // 其他
             else -> {
@@ -75,25 +71,12 @@ class LivesAdapter(mContext: Context, var mDataList: MutableList<BaseLiveEntity>
                 val binding: ItemHomeLiveItemBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_live_item, parent, false)
                 return InnerViewHolder(binding)
             }
-        // 搜索:
-            BaseLiveEntity.ItemTypeEnum.LIVE_SEARCH.ordinal -> {
-
-                val binding: ItemLivesSearchBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_lives_search, parent, false)
-                return InnerViewHolder(binding)
-            }
         // 其他
             else -> {
                 val binding: ItemHomeLiveItemBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_live_item, parent, false)
                 return InnerViewHolder(binding)
             }
         }
-    }
-
-    /**
-     * ViewHolder类
-     */
-    class InnerViewHolder(val dataBinding: ViewDataBinding?) : RecyclerView.ViewHolder(dataBinding!!.root) {
-
     }
 
     /**
