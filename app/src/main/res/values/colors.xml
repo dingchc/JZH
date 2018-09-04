@@ -31,4 +31,5 @@
     <color name="search_bg_line_gray">#F0F0F0</color>
     <color name="search_bar_line">#E3E3E3</color>
     <color name="home_yellow">#FFFFC600</color>
+    <color name="myself_divider_line">#FFD8D8D8</color>
 </resources>

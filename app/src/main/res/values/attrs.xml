@@ -44,4 +44,18 @@
         <attr name="an_margin_top" format="dimension" />
     </declare-styleable>
 
+    <!-- 我页面Item -->
+    <declare-styleable name="MyselfContentItem">
+
+        <!-- 是否显示右侧点击箭头 -->
+        <attr name="mc_show_tap_arrow" format="boolean" />
+
+        <!-- 图标 -->
+        <attr name="mc_icon_src" format="reference" />
+
+        <!-- 提示内容 -->
+        <attr name="mc_hint" format="string" />
+
+    </declare-styleable>
+
 </resources>

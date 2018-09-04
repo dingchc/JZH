@@ -44,4 +44,7 @@
     <string name="check_all_will_live">查看全部即将开播讲座</string>
     <string name="search_history">搜索记录</string>
     <string name="search_hot">热门搜索</string>
+    <string name="subscribe_live">预约讲座</string>
+    <string name="myself_favorite">收藏讲座</string>
+    <string name="myself_feedback">意见反馈</string>
 </resources>

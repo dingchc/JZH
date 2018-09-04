@@ -45,6 +45,9 @@
                     android:layout_alignParentLeft="true"
                     android:layout_below="@id/tv_category1"
                     android:layout_marginLeft="9.5dp"
+                    android:drawableLeft="@mipmap/icon_home_category_decorate"
+                    android:drawableRight="@mipmap/icon_home_category_decorate"
+                    android:drawablePadding="3dp"
                     android:text="@{itemEntity.categoryList.get(0).desc}"
                     android:textColor="@color/font_black"
                     android:textSize="12sp" />
@@ -77,6 +80,9 @@
                     android:layout_below="@id/tv_category2"
                     android:layout_marginLeft="9.5dp"
                     android:text="@{itemEntity.categoryList.get(1).desc}"
+                    android:drawableLeft="@mipmap/icon_home_category_decorate"
+                    android:drawableRight="@mipmap/icon_home_category_decorate"
+                    android:drawablePadding="3dp"
                     android:textColor="@color/font_black"
                     android:textSize="12sp" />
 
@@ -118,6 +124,9 @@
                     android:layout_below="@id/tv_category3"
                     android:layout_marginLeft="9.5dp"
                     android:text="@{itemEntity.categoryList.get(2).desc}"
+                    android:drawableLeft="@mipmap/icon_home_category_decorate"
+                    android:drawableRight="@mipmap/icon_home_category_decorate"
+                    android:drawablePadding="3dp"
                     android:textColor="@color/font_black"
                     android:textSize="12sp" />
 
@@ -149,6 +158,9 @@
                     android:layout_below="@id/tv_category4"
                     android:layout_marginLeft="9.5dp"
                     android:text="@{itemEntity.categoryList.get(3).desc}"
+                    android:drawableLeft="@mipmap/icon_home_category_decorate"
+                    android:drawableRight="@mipmap/icon_home_category_decorate"
+                    android:drawablePadding="3dp"
                     android:textColor="@color/font_black"
                     android:textSize="12sp" />
 

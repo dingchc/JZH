@@ -17,6 +17,7 @@
 
         <!-- 功能栏 -->
         <include
+            android:id="@+id/layout_func"
             layout="@layout/item_home_func"
             bind:funcEntity="@{viewModel.funcEntity}" />
 

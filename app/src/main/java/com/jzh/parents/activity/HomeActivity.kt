@@ -42,7 +42,7 @@ class HomeActivity : BaseActivity() {
     /**
      * 适配器监听
      */
-    private var mAdapterListener : HomeAdapter.OnHomeViewClick? = null
+    private var mAdapterListener: HomeAdapter.OnViewClick? = null
 
     /**
      * 初始化组件
@@ -64,6 +64,7 @@ class HomeActivity : BaseActivity() {
      */
     override fun initEvent() {
 
+        // 列表数据
         mViewModel?.getItemEntities()?.observe(this@HomeActivity, Observer<MutableList<BaseLiveEntity>> {
 
             itemEntities ->
@@ -74,9 +75,21 @@ class HomeActivity : BaseActivity() {
 
         })
 
+        // 点击了我
+        mDataBinding?.layoutFunc?.tvMyself?.setOnClickListener {
 
+            val intent = Intent(this@HomeActivity, MyselfActivity::class.java)
+            startActivity(intent)
+        }
 
-        mAdapterListener = object : HomeAdapter.OnHomeViewClick {
+        // 点击了消息中心
+        mDataBinding?.layoutFunc?.tvMsgCenter?.setOnClickListener {
+
+        }
+
+        // 列表点击
+        mAdapterListener = object : HomeAdapter.OnViewClick {
+
             /**
              * 点击了头部（contentType == 1 即将播放、 contentType == 2 往期回顾）
              */

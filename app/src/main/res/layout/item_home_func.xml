@@ -62,11 +62,11 @@
                 android:id="@+id/iv_living"
                 android:layout_width="64dp"
                 android:layout_height="match_parent"
-                android:layout_toLeftOf="@id/tv_mine"
+                android:layout_toLeftOf="@id/tv_myself"
                 android:src="@mipmap/icon_home_living" />
 
             <TextView
-                android:id="@+id/tv_mine"
+                android:id="@+id/tv_myself"
                 android:layout_width="47dp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"

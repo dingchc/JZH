@@ -93,10 +93,10 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
         val liveItemEntity2 = LiveItemEntity(liveInfo2, LiveItemEntity.LiveItemEnum.ITEM_WITH_FOOTER)
 
         // 直播分类
-        val category1 = HomeLiveCategoryEntity.LiveCategory("手机游戏", "◆共25场讲座◆")
-        val category2 = HomeLiveCategoryEntity.LiveCategory("电脑游戏", "◆共250场讲座◆")
-        val category3 = HomeLiveCategoryEntity.LiveCategory("网页游戏", "◆共15场讲座◆")
-        val category4 = HomeLiveCategoryEntity.LiveCategory("AR游戏", "◆共22场讲座◆")
+        val category1 = HomeLiveCategoryEntity.LiveCategory("手机游戏", "共25场讲座")
+        val category2 = HomeLiveCategoryEntity.LiveCategory("电脑游戏", "共250场讲座")
+        val category3 = HomeLiveCategoryEntity.LiveCategory("网页游戏", "共15场讲座")
+        val category4 = HomeLiveCategoryEntity.LiveCategory("AR游戏", "共22场讲座")
 
         val categoryList = mutableListOf(category1, category2, category3, category4)
         val liveCategories = HomeLiveCategoryEntity(categoryList)

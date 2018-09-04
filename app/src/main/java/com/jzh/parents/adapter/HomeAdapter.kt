@@ -21,7 +21,7 @@ import com.jzh.parents.viewmodel.info.LiveInfo
  * @author ding
  * Created by Ding on 2018/8/27.
  */
-class HomeAdapter(private var mContext: Context, var mDataList: MutableList<BaseLiveEntity>?, var mListener : OnHomeViewClick? = null) : RecyclerView.Adapter<HomeAdapter.InnerViewHolder>() {
+class HomeAdapter(private var mContext: Context, var mDataList: MutableList<BaseLiveEntity>?, var mListener : OnViewClick? = null) : RecyclerView.Adapter<HomeAdapter.InnerViewHolder>() {
 
     /**
      * 布局加载器
@@ -166,7 +166,7 @@ class HomeAdapter(private var mContext: Context, var mDataList: MutableList<Base
     /**
      * 主页控件点击事件
      */
-    interface OnHomeViewClick {
+    interface OnViewClick {
 
         /**
          * 点击了头部（contentType == 1 即将播放、 contentType == 2 往期回顾）
