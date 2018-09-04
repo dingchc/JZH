@@ -47,4 +47,5 @@
     <string name="subscribe_live">预约讲座</string>
     <string name="myself_favorite">收藏讲座</string>
     <string name="myself_feedback">意见反馈</string>
+    <string name="myself_logout">退出登录</string>
 </resources>
