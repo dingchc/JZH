@@ -628,8 +628,8 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
             }
 
             slidingPaneLayout.setPanelSlideListener(this@BaseActivity)
-            slidingPaneLayout.sliderFadeColor = resources.getColor(android.R.color.transparent)
-            slidingPaneLayout.setShadowDrawableLeft(resources.getDrawable(R.drawable.sliding_left_shadow))
+            slidingPaneLayout.sliderFadeColor = Util.getColorCompat(android.R.color.transparent)
+            slidingPaneLayout.setShadowDrawableLeft(Util.getDrawableCompat(R.drawable.sliding_left_shadow))
 
             val leftView = View(this)
             leftView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
@@ -637,7 +637,7 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
 
             val decor = window.decorView as ViewGroup
             val decorChild = decor.getChildAt(0) as ViewGroup
-            decorChild.setBackgroundColor(resources.getColor(android.R.color.white))
+            decorChild.setBackgroundColor(Util.getColorCompat(android.R.color.white))
             decor.removeView(decorChild)
             decor.addView(slidingPaneLayout)
             slidingPaneLayout.addView(decorChild, 1)

@@ -246,6 +246,17 @@ class Util {
         }
 
         /**
+         * 获取Drawable
+         *
+         * @param drawableId drawable资源值
+         * @return drawable
+         */
+        fun getDrawableCompat(drawableId: Int): Drawable? {
+            return ContextCompat.getDrawable(JZHApplication.instance!!, drawableId)
+
+        }
+
+        /**
          * 根据图片资源id，返回Drawable
          * @param resources 资源
          * @param iconIdRes 资源id

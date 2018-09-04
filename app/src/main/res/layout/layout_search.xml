@@ -42,7 +42,7 @@
                 android:textSize="14sp"
                 android:gravity="center"
                 android:onClick="onSearchCancelClick"
-                android:visibility="@{viewModel.isSearchable.getValue() ? View.GONE : View.VISIBLE}"
+                android:visibility="@{safeUnbox(viewModel.isSearchable) ? View.GONE : View.VISIBLE}"
                 android:textColor="@color/font_black_search_title"
                 />
 
@@ -53,7 +53,7 @@
                 android:background="@drawable/round_bg_search_icon"
                 android:scaleType="center"
                 android:onClick="onSearchClick"
-                android:visibility="@{viewModel.isSearchable.getValue() ? View.VISIBLE : View.GONE}"
+                android:visibility="@{safeUnbox(viewModel.isSearchable) ? View.VISIBLE : View.GONE}"
                 android:src="@mipmap/icon_home_search" />
 
         </FrameLayout>
