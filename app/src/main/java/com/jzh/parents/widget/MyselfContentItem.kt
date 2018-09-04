@@ -211,12 +211,17 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
             }
             MotionEvent.ACTION_UP -> {
                 mIsPressed = false
+                performClick()
             }
         }
 
         postInvalidate()
 
         return true
+    }
+
+    override fun performClick(): Boolean {
+        return super.performClick()
     }
 
     override fun dispatchDraw(canvas: Canvas?) {

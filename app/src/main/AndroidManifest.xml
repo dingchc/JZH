@@ -91,6 +91,16 @@
             </intent-filter>
         </activity>
 
+        <!-- 收藏页面 -->
+        <activity
+            android:name=".activity.FavoriteActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

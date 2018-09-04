@@ -1,5 +1,6 @@
 package com.jzh.parents.activity
 
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.view.View
 import com.jzh.parents.R
@@ -19,7 +20,7 @@ class MyselfActivity : BaseActivity() {
     /**
      * 数据绑定
      */
-    private var mDataBinding : ActivityMyselfBinding? = null
+    private var mDataBinding: ActivityMyselfBinding? = null
 
     /**
      * 初始化组件
@@ -41,6 +42,57 @@ class MyselfActivity : BaseActivity() {
     override fun initData() {
 
         showClassInfo()
+    }
+
+    /**
+     * 当点击消息中心
+     *
+     * @param view 控件
+     */
+    fun onMsgCenterClick(view: View) {
+
+    }
+
+    /**
+     * 当点击预约
+     *
+     * @param view 控件
+     */
+    fun onSubcribeClick(view: View) {
+
+        // 去收藏页面
+        val intent = Intent(this@MyselfActivity, FavoriteActivity::class.java)
+        startActivity(intent)
+    }
+
+    /**
+     * 当点击收藏
+     *
+     * @param view 控件
+     */
+    fun onFavoriteClick(view: View) {
+
+        // 去收藏页面
+        val intent = Intent(this@MyselfActivity, FavoriteActivity::class.java)
+        startActivity(intent)
+    }
+
+    /**
+     * 当点击意见反馈
+     *
+     * @param view 控件
+     */
+    fun onFeedbackClick(view: View) {
+
+    }
+
+    /**
+     * 当点击注销登录
+     *
+     * @param view 控件
+     */
+    fun onLogoutClick(view: View) {
+
     }
 
     /**

@@ -365,6 +365,9 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
             enterTransition.excludeTarget(android.R.id.statusBarBackground, true)
             enterTransition.excludeTarget(android.R.id.navigationBarBackground, true)
 
+            exitTransition.excludeTarget(android.R.id.statusBarBackground, true)
+            exitTransition.excludeTarget(android.R.id.navigationBarBackground, true)
+
             window.enterTransition = enterTransition.setDuration(ANIMATION_DURATION.toLong())
             window.exitTransition = exitTransition.setDuration(ANIMATION_DURATION.toLong())
 

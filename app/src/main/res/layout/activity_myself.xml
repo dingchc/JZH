@@ -86,6 +86,7 @@
                 android:layout_height="@dimen/item_height"
                 android:paddingEnd="10dp"
                 android:paddingStart="10dp"
+                android:onClick="onMsgCenterClick"
                 app:mc_hint="@string/home_msg_center"
                 app:mc_icon_src="@mipmap/icon_myself_msg_center"
                 app:mc_show_tap_arrow="true" />
@@ -96,6 +97,7 @@
                 android:layout_height="@dimen/item_height"
                 android:paddingEnd="10dp"
                 android:paddingStart="10dp"
+                android:onClick="onSubcribeClick"
                 app:mc_hint="@string/subscribe_live"
                 app:mc_icon_src="@mipmap/icon_myself_subscribe"
                 app:mc_show_tap_arrow="true" />
@@ -106,6 +108,7 @@
                 android:layout_height="@dimen/item_height"
                 android:paddingEnd="10dp"
                 android:paddingStart="10dp"
+                android:onClick="onFavoriteClick"
                 app:mc_hint="@string/myself_favorite"
                 app:mc_icon_src="@mipmap/icon_myself_favorite"
                 app:mc_show_tap_arrow="true" />
@@ -122,6 +125,7 @@
             android:background="@drawable/round_bg_white_with_border"
             android:paddingEnd="10dp"
             android:paddingStart="10dp"
+            android:onClick="onFeedbackClick"
             app:mc_hint="@string/myself_feedback"
             app:mc_icon_src="@mipmap/icon_myself_feedback"
             app:mc_show_tap_arrow="true" />
@@ -135,6 +139,7 @@
             android:text="@string/myself_logout"
             android:textColor="@color/login_btn_green"
             android:textSize="14sp"
+            android:onClick="onLogoutClick"
             app:corner="8dp"
             app:normal_color="@color/transparent"
             app:pressed_color="@color/login_btn_green_dark" />
