@@ -74,6 +74,7 @@
                 android:drawablePadding="1dp"
                 android:drawableTop="@mipmap/icon_home_mine"
                 android:gravity="center_horizontal"
+                android:background="@drawable/item_selector"
                 android:text="@string/home_mine"
                 android:textSize="9sp" />
 
@@ -85,6 +86,7 @@
                 android:layout_centerVertical="true"
                 android:drawablePadding="1dp"
                 android:drawableTop="@mipmap/icon_home_msg_center"
+                android:background="@drawable/item_selector"
                 android:gravity="center_horizontal"
                 android:text="@string/home_msg_center"
                 android:textSize="9sp" />

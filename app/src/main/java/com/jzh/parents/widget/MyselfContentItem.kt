@@ -3,6 +3,7 @@ package com.jzh.parents.widget
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
@@ -40,9 +41,14 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
     private var mHintStringResId: Int? = null
 
     /**
-     * 文本框
+     * 标题文本框
      */
     private val mTitleTextView = TextView(context)
+
+    /**
+     * 退出班级
+     */
+    private val mExitClassTextView = TextView(context)
 
     /**
      * 画笔
@@ -54,11 +60,20 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
      */
     private var mPressedRect: Rect? = null
 
+    /**
+     * 模式（默认 - 0、 班级 - 1）
+     */
+    private var mMode: Int = 0
 
     /**
      * 是否是按下
      */
     private var mIsPressed: Boolean = false
+
+    /**
+     * 退出
+     */
+    private var mExitListener: OnExitClickListener? = null
 
 
     constructor(context: Context) : this(context, null) {
@@ -79,13 +94,15 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
 
             val typedArray: TypedArray? = resources.obtainAttributes(attributeSet, R.styleable.MyselfContentItem)
 
-            mShowTapArrow = typedArray?.getBoolean(R.styleable.MyselfContentItem_mc_show_tap_arrow, true)
+            mShowTapArrow = typedArray?.getBoolean(R.styleable.MyselfContentItem_mc_show_tap_arrow, false)
 
             mIconResId = typedArray?.getDrawable(R.styleable.MyselfContentItem_mc_icon_src)
 
             mHintStringResId = typedArray?.getResourceId(R.styleable.MyselfContentItem_mc_hint, 0)
 
-            typedArray?.recycle()
+            mMode = typedArray?.getInt(R.styleable.MyselfContentItem_mc_mode, 0) as Int
+
+            typedArray.recycle()
         }
 
         mPaint.isAntiAlias = true
@@ -96,19 +113,37 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
     override fun onFinishInflate() {
         super.onFinishInflate()
 
+        AppLogger.i("onFinishInflate")
+
+        addCustomViews()
+    }
+
+    /**
+     * 添加自定义View
+     */
+    private fun addCustomViews() {
+
         // 设置重心
         gravity = Gravity.CENTER_VERTICAL
 
-        // 图标
-        addIcon()
+        // 默认模式
+        if (mMode == 0) {
+            // 图标
+            addIcon()
+        }
 
         // 输入框
         addTextViewText()
 
         // 添加箭头
-        if (mShowTapArrow!!) {
+        if (mMode == 0 && mShowTapArrow!!) {
 
             addArrowIcon()
+        }
+
+        // 班级模式
+        if (mMode == 1) {
+            addExitClassTextView()
         }
     }
 
@@ -117,10 +152,14 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
      */
     private fun addIcon() {
 
-        val iconImageView = ImageView(context)
-        iconImageView.setImageDrawable(mIconResId!!)
+        if (mIconResId != null) {
 
-        addView(iconImageView)
+            val iconImageView = ImageView(context)
+            iconImageView.setImageDrawable(mIconResId!!)
+
+            addView(iconImageView)
+        }
+
     }
 
     /**
@@ -128,7 +167,10 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
      */
     private fun addTextViewText() {
 
-        mTitleTextView.text = resources.getString(mHintStringResId!!)
+        if (mHintStringResId != null) {
+            mTitleTextView.text = resources.getString(mHintStringResId!!)
+        }
+
         mTitleTextView.setTextColor(ContextCompat.getColor(context, R.color.font_black))
         mTitleTextView.background = null
         mTitleTextView.textSize = 16.0f
@@ -138,13 +180,27 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
         val layoutParam = mTitleTextView.layoutParams as LinearLayout.LayoutParams
         layoutParam.weight = 1.0f
 
-        val marginLayoutParam = mTitleTextView.layoutParams as MarginLayoutParams
-        marginLayoutParam.leftMargin = Util.dp2px(context, 10.0f)
+        if (mIconResId != null) {
+            val marginLayoutParam = mTitleTextView.layoutParams as MarginLayoutParams
+            marginLayoutParam.leftMargin = Util.dp2px(context, 10.0f)
+        }
     }
 
-    override fun onInterceptTouchEvent(event: MotionEvent?): Boolean {
+    /**
+     * 退出班级
+     */
+    private fun addExitClassTextView() {
 
-        return true
+        mExitClassTextView.text = "退出班级"
+        mExitClassTextView.setTextColor(Color.parseColor("#26D6B9"))
+        mExitClassTextView.setBackgroundResource(R.drawable.item_selector)
+        mExitClassTextView.textSize = 14.0f
+
+        addView(mExitClassTextView)
+
+        mExitClassTextView.setOnClickListener {
+            mExitListener?.onExitClick()
+        }
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -165,7 +221,7 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
 
     override fun dispatchDraw(canvas: Canvas?) {
 
-        if (mIsPressed) {
+        if (mIsPressed && mShowTapArrow!!) {
 
             if (mPressedRect == null) {
                 mPressedRect = Rect(paddingLeft, 0, resources.displayMetrics.widthPixels - paddingLeft - paddingRight, height)
@@ -185,5 +241,45 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
         imageView.setImageResource(R.mipmap.icon_next_arrow)
 
         addView(imageView)
+    }
+
+    /**
+     * 设置模式
+     * @mode 模式
+     */
+    fun setMode(mode: Int) {
+
+        mMode = mode
+
+        addCustomViews()
+
+        mTitleTextView.setTextColor(Util.getColorCompat(R.color.font_myself_class_title))
+    }
+
+    /**
+     * 设置标题
+     * @param title 标题
+     */
+    fun setTitleText(title: String) {
+
+        mTitleTextView.text = title
+    }
+
+    /**
+     * 设置退出班级监听
+     */
+    fun setOnExitClickListener(listener : OnExitClickListener)  {
+        mExitListener = listener
+    }
+
+    /**
+     * 退出班级监听器
+     */
+    interface OnExitClickListener {
+
+        /**
+         * 点击退出
+         */
+        fun onExitClick()
     }
 }

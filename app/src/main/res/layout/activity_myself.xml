@@ -23,89 +23,107 @@
                 android:id="@+id/iv_avatar"
                 android:layout_width="54dp"
                 android:layout_height="54dp"
-                android:src="@mipmap/ic_launcher"
-                android:layout_marginTop="25dp"
                 android:layout_centerHorizontal="true"
-                app:riv_corner_radius="27dp"
+                android:layout_marginTop="25dp"
+                android:src="@mipmap/ic_launcher"
+                app:riv_border_color="@color/white"
                 app:riv_border_width="1dp"
-                app:riv_border_color="@color/white"/>
+                app:riv_corner_radius="27dp" />
 
             <TextView
                 android:id="@+id/tv_author"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:text="程一生妈妈"
-                android:gravity="center"
-                android:drawablePadding="6dp"
-                android:layout_marginTop="9dp"
                 android:layout_below="@id/iv_avatar"
-                android:drawableRight="@mipmap/icon_vip"
                 android:layout_centerHorizontal="true"
-                android:textColor="@color/white"/>
+                android:layout_marginTop="9dp"
+                android:drawablePadding="6dp"
+                android:drawableRight="@mipmap/icon_vip"
+                android:gravity="center"
+                android:text="程一生妈妈"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
 
             <ImageView
                 android:id="@+id/iv_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/icon_myself_edit"
                 android:layout_alignParentRight="true"
+                android:layout_alignTop="@id/iv_avatar"
                 android:layout_marginRight="18dp"
-                android:layout_alignTop="@id/iv_avatar"/>
+                android:src="@mipmap/icon_myself_edit" />
         </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_class_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/round_bg_white_with_border"
+            android:divider="@drawable/divider_line"
+            android:dividerPadding="10dp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:showDividers="middle"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="12dp"
-            android:divider="@drawable/divider_line"
-            android:background="@drawable/round_bg_white_with_border"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/round_bg_white_with_border"
+            android:divider="@drawable/divider_line"
             android:dividerPadding="10dp"
+            android:orientation="vertical"
             android:showDividers="middle">
 
+            <!-- 消息中心 -->
             <com.jzh.parents.widget.MyselfContentItem
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/item_height"
-                android:paddingStart="10dp"
                 android:paddingEnd="10dp"
+                android:paddingStart="10dp"
                 app:mc_hint="@string/home_msg_center"
                 app:mc_icon_src="@mipmap/icon_myself_msg_center"
                 app:mc_show_tap_arrow="true" />
 
+            <!-- 预约讲座 -->
             <com.jzh.parents.widget.MyselfContentItem
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/item_height"
-                android:paddingStart="10dp"
                 android:paddingEnd="10dp"
+                android:paddingStart="10dp"
                 app:mc_hint="@string/subscribe_live"
                 app:mc_icon_src="@mipmap/icon_myself_subscribe"
                 app:mc_show_tap_arrow="true" />
 
+            <!-- 收藏讲座 -->
             <com.jzh.parents.widget.MyselfContentItem
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/item_height"
-                android:paddingStart="10dp"
                 android:paddingEnd="10dp"
+                android:paddingStart="10dp"
                 app:mc_hint="@string/myself_favorite"
                 app:mc_icon_src="@mipmap/icon_myself_favorite"
                 app:mc_show_tap_arrow="true" />
 
         </LinearLayout>
 
+        <!-- 意见反馈 -->
         <com.jzh.parents.widget.MyselfContentItem
             android:layout_width="match_parent"
             android:layout_height="@dimen/item_height"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_marginTop="15dp"
-            android:paddingStart="10dp"
+            android:background="@drawable/round_bg_white_with_border"
             android:paddingEnd="10dp"
+            android:paddingStart="10dp"
             app:mc_hint="@string/myself_feedback"
             app:mc_icon_src="@mipmap/icon_myself_feedback"
-            android:background="@drawable/round_bg_white_with_border"
             app:mc_show_tap_arrow="true" />
 
     </LinearLayout>

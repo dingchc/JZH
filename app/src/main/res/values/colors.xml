@@ -32,4 +32,5 @@
     <color name="search_bar_line">#E3E3E3</color>
     <color name="home_yellow">#FFFFC600</color>
     <color name="myself_divider_line">#FFD8D8D8</color>
+    <color name="font_myself_class_title">#FF666666</color>
 </resources>

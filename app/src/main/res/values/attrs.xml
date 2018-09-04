@@ -56,6 +56,14 @@
         <!-- 提示内容 -->
         <attr name="mc_hint" format="string" />
 
+        <!-- 模式-->
+        <attr name="mc_mode" format="enum">
+            <!-- 默认 -->
+            <enum name="item_default" value="0" />
+            <!-- 班级 -->
+            <enum name="item_class" value="1" />
+        </attr>
+
     </declare-styleable>
 
 </resources>
