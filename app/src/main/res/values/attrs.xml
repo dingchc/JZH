@@ -30,9 +30,6 @@
         <!-- 提示内容 -->
         <attr name="rc_hint" format="string" />
 
-        <!-- 是否显示右侧验证码 -->
-        <attr name="rc_show_verify_code" format="boolean" />
-
     </declare-styleable>
 
     <!-- 圆角图片 -->
@@ -93,7 +90,7 @@
         <attr name="dc_hint" format="string" />
 
         <!-- 是否显示右侧验证码 -->
-        <attr name="dc_show_verify_code" format="boolean" />
+        <attr name="dc_is_show_verify_code" format="boolean" />
 
     </declare-styleable>
 </resources>

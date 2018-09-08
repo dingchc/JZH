@@ -51,12 +51,12 @@
             android:layout_marginTop="4dp"
             android:background="@drawable/round_bg_white_with_border"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:textSize="18sp"
             app:dc_hint="@string/input_code"
             app:dc_is_input_editable="true"
+            app:dc_is_show_verify_code="true"
             app:dc_show_tap_arrow="false" />
 
         <View
