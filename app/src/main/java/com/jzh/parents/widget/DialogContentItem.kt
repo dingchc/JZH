@@ -17,7 +17,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RadioGroup
 import com.jzh.parents.R
-import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.Util
 
 /**
@@ -27,9 +26,9 @@ import com.jzh.parents.utils.Util
  * Created by Ding on 2018/8/21.
  */
 @InverseBindingMethods(value = *arrayOf(
-        InverseBindingMethod(type = RegisterContentItem::class, attribute = "contentText", event = "contentTextAttrChanged", method = "getContentText"),
-        InverseBindingMethod(type = RegisterContentItem::class, attribute = "checkedValue", event = "checkedValueAttrChanged", method = "getCheckedValue")))
-class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyle: Int) : LinearLayout(context, attributeSet, defStyle) {
+        InverseBindingMethod(type = DialogContentItem::class, attribute = "contentText", event = "contentTextAttrChanged", method = "getContentText"),
+        InverseBindingMethod(type = DialogContentItem::class, attribute = "checkedValue", event = "checkedValueAttrChanged", method = "getCheckedValue")))
+class DialogContentItem(context: Context, attributeSet: AttributeSet?, defStyle: Int) : LinearLayout(context, attributeSet, defStyle) {
 
     /**
      * 是否显示右侧点击箭头
@@ -146,9 +145,6 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
         // 设置重心
         gravity = Gravity.CENTER_VERTICAL
 
-        // 图标
-        addIcon()
-
         // 输入框
         addInputEditText()
 
@@ -251,7 +247,7 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
          * @param listener 监听
          */
         @BindingAdapter(value = *arrayOf("contentTextAttrChanged"), requireAll = false)
-        fun setContentTextInverseBindingListener(view: RegisterContentItem, listener: InverseBindingListener?) {
+        fun setContentTextInverseBindingListener(view: DialogContentItem, listener: InverseBindingListener?) {
 
             val newListener = object : OnContentTextNotifyListener {
 
@@ -281,7 +277,7 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
          * @param listener 监听
          */
         @BindingAdapter(value = *arrayOf("checkedValueAttrChanged"), requireAll = false)
-        fun setCheckedValueInverseBindingListener(view: RegisterContentItem, listener: InverseBindingListener?) {
+        fun setCheckedValueInverseBindingListener(view: DialogContentItem, listener: InverseBindingListener?) {
 
             val newListener = object : OnCheckedValueNotifyListener {
 
@@ -305,18 +301,6 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
         }
     }
 
-
-    /**
-     * 添加图标
-     */
-    private fun addIcon() {
-
-        val iconImageView = ImageView(context)
-        iconImageView.setImageDrawable(mIconResId!!)
-
-        addView(iconImageView)
-    }
-
     /**
      * 添加输入框
      */
@@ -324,7 +308,7 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
 
         mInputEditText.hint = resources.getString(mHintStringResId!!)
         mInputEditText.background = null
-        mInputEditText.textSize = 14.0f
+        mInputEditText.textSize = 12.0f
 
         // 设置是否可输入
         if (!mIsInputEditable!!) {
@@ -333,19 +317,10 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
 
         addView(mInputEditText)
 
-        val layoutParam = mInputEditText.layoutParams as LinearLayout.LayoutParams
+        val layoutParam = mInputEditText.layoutParams as LayoutParams
         layoutParam.weight = 1.0f
 
         mInputEditText.setHintTextColor(Util.getColorCompat(R.color.register_input_text_hint_color))
-
-        val marginLayoutParam = mInputEditText.layoutParams as MarginLayoutParams
-        marginLayoutParam.leftMargin = Util.dp2px(context, 15.0f)
-
-        // 星号
-        val starDrawable = Util.getCompoundDrawable(resources, R.mipmap.icon_register_star)
-
-        mInputEditText.setCompoundDrawables(starDrawable, null, null, null)
-        mInputEditText.compoundDrawablePadding = Util.dp2px(context, 4.0f)
 
         // 添加事件
         initInputEditTextEvent()
@@ -380,9 +355,10 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
             radioBtn.setValue(index + 1)
             mRadioGroup!!.addView(radioBtn)
             val lp = radioBtn.layoutParams
-            lp.width = Util.dp2px(context, TSRegisterRadioButton.WIDTH_DIMEN)
-            lp.height = Util.dp2px(context, TSRegisterRadioButton.HEIGHT_DIMEN)
+            lp.width = Util.dp2px(context, 52.0f)
+            lp.height = Util.dp2px(context, 30.0f)
             radioBtn.isClickable = true
+            radioBtn.textSize = 12.0f
 
             when (radioBtn.getValue()) {
             // 妈妈

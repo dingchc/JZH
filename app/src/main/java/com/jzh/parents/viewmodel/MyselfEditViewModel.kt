@@ -19,6 +19,16 @@ class MyselfEditViewModel(app: Application) : BaseViewModel(app) {
     private var userInfo: MutableLiveData<UserInfo> = MutableLiveData<UserInfo>()
 
     /**
+     * 选择角色
+     */
+    val selectRole: MutableLiveData<Int> = MutableLiveData()
+
+    /**
+     * 学生姓名
+     */
+    val studentName: MutableLiveData<String> = MutableLiveData()
+
+    /**
      * 数据仓库
      */
     private val repo: MyselfEditRepository = MyselfEditRepository()
@@ -45,6 +55,8 @@ class MyselfEditViewModel(app: Application) : BaseViewModel(app) {
     fun loadUserInfo() {
 
         userInfo.value = repo.loadUserInfoEntity()
+
+        selectRole.value = userInfo.value?.roleId
     }
 
 
