@@ -48,4 +48,5 @@
     <string name="myself_favorite">收藏讲座</string>
     <string name="myself_feedback">意见反馈</string>
     <string name="myself_logout">退出登录</string>
+    <string name="myself_exit_class">退出班级</string>
 </resources>

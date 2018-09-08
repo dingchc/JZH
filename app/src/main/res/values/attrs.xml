@@ -56,12 +56,17 @@
         <!-- 提示内容 -->
         <attr name="mc_hint" format="string" />
 
+        <!-- 右侧文本内容 -->
+        <attr name="mc_right_text" format="string" />
+
         <!-- 模式-->
         <attr name="mc_mode" format="enum">
             <!-- 默认 -->
             <enum name="item_default" value="0" />
             <!-- 班级 -->
             <enum name="item_class" value="1" />
+            <!-- 图片 -->
+            <enum name="item_image" value="2" />
         </attr>
 
     </declare-styleable>

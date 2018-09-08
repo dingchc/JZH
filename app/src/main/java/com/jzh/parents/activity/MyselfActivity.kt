@@ -110,8 +110,11 @@ class MyselfActivity : BaseActivity() {
 
         item1.setMode(1)
         item1.setTitleText("一年级一班")
+        item1.setRightText(R.string.myself_exit_class)
+
         item2.setMode(1)
         item2.setTitleText("一年级二班")
+        item2.setRightText(R.string.myself_exit_class)
 
         mDataBinding?.layoutClassInfo?.addView(item1)
         mDataBinding?.layoutClassInfo?.addView(item2)
@@ -124,15 +127,15 @@ class MyselfActivity : BaseActivity() {
         item1.layoutParams.height = resources.getDimensionPixelSize(R.dimen.item_height)
         item2.layoutParams.height = resources.getDimensionPixelSize(R.dimen.item_height)
 
-        item1.setOnExitClickListener(object : MyselfContentItem.OnExitClickListener {
-            override fun onExitClick() {
+        item1.setOnRightClickListener(object : MyselfContentItem.OnRightClickListener {
+            override fun onRightViewClick() {
 
                 AppLogger.i("exit 1")
             }
         })
 
-        item2.setOnExitClickListener(object : MyselfContentItem.OnExitClickListener {
-            override fun onExitClick() {
+        item2.setOnRightClickListener(object : MyselfContentItem.OnRightClickListener {
+            override fun onRightViewClick() {
 
                 AppLogger.i("exit 2")
 

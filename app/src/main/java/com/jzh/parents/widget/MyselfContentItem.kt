@@ -8,6 +8,7 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
+import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.MotionEvent
@@ -36,9 +37,14 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
     private var mIconResId: Drawable? = null
 
     /**
-     * 提示文字
+     * 提示文字资源Id
      */
     private var mHintStringResId: Int? = null
+
+    /**
+     * 右侧文字资源Id
+     */
+    private var mRightTextStringResId: Int = 0
 
     /**
      * 标题文本框
@@ -46,9 +52,9 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
     private val mTitleTextView = TextView(context)
 
     /**
-     * 退出班级
+     * 右侧文本
      */
-    private val mExitClassTextView = TextView(context)
+    private val mRightTextView = TextView(context)
 
     /**
      * 画笔
@@ -71,9 +77,9 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
     private var mIsPressed: Boolean = false
 
     /**
-     * 退出
+     * 右侧文本点击
      */
-    private var mExitListener: OnExitClickListener? = null
+    private var mRightListener: OnRightClickListener? = null
 
 
     constructor(context: Context) : this(context, null) {
@@ -98,6 +104,8 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
 
             mIconResId = typedArray?.getDrawable(R.styleable.MyselfContentItem_mc_icon_src)
 
+            mRightTextStringResId = typedArray?.getResourceId(R.styleable.MyselfContentItem_mc_right_text, 0) as Int
+
             mHintStringResId = typedArray?.getResourceId(R.styleable.MyselfContentItem_mc_hint, 0)
 
             mMode = typedArray?.getInt(R.styleable.MyselfContentItem_mc_mode, 0) as Int
@@ -119,6 +127,30 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
     }
 
     /**
+     * 设置右侧文本
+     *
+     * @param textResId 文本资源id
+     */
+    fun setRightText(textResId: Int) {
+
+        if (textResId > 0) {
+            mRightTextView.text = context.getString(textResId)
+        }
+    }
+
+    /**
+     * 设置右侧文本
+     *
+     * @param text 文本内容
+     */
+    fun setRightText(text: String) {
+
+        if (!TextUtils.isEmpty(text)) {
+            mRightTextView.text = text
+        }
+    }
+
+    /**
      * 添加自定义View
      */
     private fun addCustomViews() {
@@ -135,16 +167,7 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
         // 输入框
         addTextViewText()
 
-        // 添加箭头
-        if (mMode == 0 && mShowTapArrow!!) {
-
-            addArrowIcon()
-        }
-
-        // 班级模式
-        if (mMode == 1) {
-            addExitClassTextView()
-        }
+        addRightTextView()
     }
 
     /**
@@ -187,19 +210,35 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
     }
 
     /**
-     * 退出班级
+     * 右侧文本
      */
-    private fun addExitClassTextView() {
+    private fun addRightTextView() {
 
-        mExitClassTextView.text = "退出班级"
-        mExitClassTextView.setTextColor(Color.parseColor("#26D6B9"))
-        mExitClassTextView.setBackgroundResource(R.drawable.item_selector)
-        mExitClassTextView.textSize = 14.0f
+        if (mRightTextStringResId > 0) {
+            mRightTextView.text = context.getString(mRightTextStringResId)
+        }
 
-        addView(mExitClassTextView)
+        mRightTextView.setTextColor(Color.parseColor("#26D6B9"))
+        mRightTextView.textSize = 14.0f
+        mRightTextView.gravity = Gravity.RIGHT
 
-        mExitClassTextView.setOnClickListener {
-            mExitListener?.onExitClick()
+        // 添加箭头
+        if (mShowTapArrow!!) {
+
+            // 右侧箭头
+            val arrowDrawable = Util.getCompoundDrawable(resources, R.mipmap.icon_next_arrow)
+
+            mRightTextView.setCompoundDrawables(null, null, arrowDrawable, null)
+        }
+        // 局部反馈
+        else {
+            mRightTextView.setBackgroundResource(R.drawable.item_selector)
+        }
+
+        addView(mRightTextView)
+
+        mRightTextView.setOnClickListener {
+            mRightListener?.onRightViewClick()
         }
     }
 
@@ -273,18 +312,18 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
     /**
      * 设置退出班级监听
      */
-    fun setOnExitClickListener(listener : OnExitClickListener)  {
-        mExitListener = listener
+    fun setOnRightClickListener(listener: OnRightClickListener) {
+        mRightListener = listener
     }
 
     /**
      * 退出班级监听器
      */
-    interface OnExitClickListener {
+    interface OnRightClickListener {
 
         /**
-         * 点击退出
+         * 右侧内容点击
          */
-        fun onExitClick()
+        fun onRightViewClick()
     }
 }
