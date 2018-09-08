@@ -15,6 +15,8 @@ import android.view.MotionEvent
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.jzh.parents.R
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.Util
@@ -57,6 +59,11 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
     private val mRightTextView = TextView(context)
 
     /**
+     * 右侧图片
+     */
+    private val mRightImageView = ImageView(context)
+
+    /**
      * 画笔
      */
     private val mPaint: Paint = Paint()
@@ -80,6 +87,11 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
      * 右侧文本点击
      */
     private var mRightListener: OnRightClickListener? = null
+
+    /**
+     * Url地址
+     */
+    private var mUrl: String = ""
 
 
     constructor(context: Context) : this(context, null) {
@@ -127,6 +139,14 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
     }
 
     /**
+     * 获取右侧文本
+     */
+    fun getRightText(): String {
+
+        return mRightTextView.text.toString()
+    }
+
+    /**
      * 设置右侧文本
      *
      * @param textResId 文本资源id
@@ -151,6 +171,29 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
     }
 
     /**
+     * 获取右侧文本
+     */
+    fun getRightImageUrl(): String {
+
+        return mUrl
+    }
+
+    /**
+     * 设置右侧文本
+     *
+     * @param textResId 文本资源id
+     */
+    fun setRightImageUrl(url: String) {
+
+        mUrl = url
+
+        val options = RequestOptions()
+        options.circleCrop().placeholder(R.mipmap.icon_home_logo)
+
+        Glide.with(context).load(mUrl).apply(options).into(mRightImageView)
+    }
+
+    /**
      * 添加自定义View
      */
     private fun addCustomViews() {
@@ -167,7 +210,14 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
         // 输入框
         addTextViewText()
 
-        addRightTextView()
+        // 图片模式
+        if (mMode == 2) {
+            addRightImage()
+        }
+        else {
+            // 右侧文本
+            addRightTextView()
+        }
     }
 
     /**
@@ -230,8 +280,10 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
 
             mRightTextView.setCompoundDrawables(null, null, arrowDrawable, null)
         }
+
+
         // 局部反馈
-        else {
+        if (!isShowRowFeedback()) {
             mRightTextView.setBackgroundResource(R.drawable.item_selector)
         }
 
@@ -240,6 +292,29 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
         mRightTextView.setOnClickListener {
             mRightListener?.onRightViewClick()
         }
+    }
+
+    /**
+     * 添加右侧ImageView
+     */
+    private fun addRightImage() {
+
+        mRightImageView.setImageResource(R.mipmap.icon_home_logo)
+
+        addView(mRightImageView)
+
+        mRightImageView.layoutParams.apply {
+
+            val dimen = Util.dp2px(context, 50.0f)
+            width = dimen
+            height = dimen
+        }
+
+        mRightImageView.setOnClickListener {
+
+            mRightListener?.onRightViewClick()
+        }
+
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -265,7 +340,7 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
 
     override fun dispatchDraw(canvas: Canvas?) {
 
-        if (mIsPressed && mShowTapArrow!!) {
+        if (mIsPressed && isShowRowFeedback()) {
 
             if (mPressedRect == null) {
                 mPressedRect = Rect(paddingLeft, 0, resources.displayMetrics.widthPixels - paddingLeft - paddingRight, height)
@@ -277,14 +352,11 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
     }
 
     /**
-     * 添加图标
+     * 显示整行点击反馈
      */
-    private fun addArrowIcon() {
+    private fun isShowRowFeedback(): Boolean {
 
-        val imageView = ImageView(context)
-        imageView.setImageResource(R.mipmap.icon_next_arrow)
-
-        addView(imageView)
+        return mShowTapArrow!! && TextUtils.isEmpty(mRightTextView.text) && mMode == 0
     }
 
     /**
@@ -310,7 +382,7 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
     }
 
     /**
-     * 设置退出班级监听
+     * 设置右侧点击监听
      */
     fun setOnRightClickListener(listener: OnRightClickListener) {
         mRightListener = listener

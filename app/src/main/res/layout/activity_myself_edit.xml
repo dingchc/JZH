@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.jzh.parents.viewmodel.MyselfEditViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/round_bg_white_with_border"
+            android:divider="@drawable/divider_line"
+            android:dividerPadding="10dp"
+            android:orientation="vertical"
+            android:showDividers="middle">
+
+            <!-- 头像 -->
+            <com.jzh.parents.widget.MyselfContentItem
+                android:id="@+id/item_avatar"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                app:rightImageUrl="@{viewModel.userInfo.avatarUrl}"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                app:mc_hint="@string/avatar"
+                app:mc_mode="item_image" />
+
+            <!-- 手机号 -->
+            <com.jzh.parents.widget.MyselfContentItem
+                android:id="@+id/item_phone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                app:mc_hint="@string/phone"
+                app:mc_show_tap_arrow="true"
+                app:rightText="@{viewModel.userInfo.phone}" />
+
+            <!-- 身份信息 -->
+            <com.jzh.parents.widget.MyselfContentItem
+                android:id="@+id/item_role_info"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                app:mc_hint="@string/role_info"
+                app:mc_show_tap_arrow="true"
+                app:rightText="@{viewModel.userInfo.roleName}" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</layout>
+

@@ -45,6 +45,18 @@ class MyselfActivity : BaseActivity() {
     }
 
     /**
+     * 当点击编辑
+     *
+     * @param view 控件
+     */
+    fun onEditClick(view: View) {
+
+        // 去消息中心页面
+        val intent = Intent(this@MyselfActivity, MyselfEditActivity::class.java)
+        startActivity(intent)
+    }
+
+    /**
      * 当点击消息中心
      *
      * @param view 控件

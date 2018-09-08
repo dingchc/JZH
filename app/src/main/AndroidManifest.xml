@@ -111,6 +111,16 @@
             </intent-filter>
         </activity>
 
+        <!-- 编辑我的信息页面 -->
+        <activity
+            android:name=".activity.MyselfEditActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>
