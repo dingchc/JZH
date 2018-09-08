@@ -1,20 +1,14 @@
 package com.jzh.parents.activity
 
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.view.View
 import com.jzh.parents.R
-import com.jzh.parents.databinding.ActivityMyselfBinding
 import com.jzh.parents.databinding.ActivityMyselfEditBinding
 import com.jzh.parents.utils.AppLogger
-import com.jzh.parents.utils.Util
-import com.jzh.parents.viewmodel.LivesViewModel
 import com.jzh.parents.viewmodel.MyselfEditViewModel
-import com.jzh.parents.viewmodel.entity.BaseLiveEntity
-import com.jzh.parents.viewmodel.info.UserInfo
 import com.jzh.parents.widget.MyselfContentItem
+import com.jzh.parents.widget.PickBottomDialog
 
 /**
  * 我-编辑信息
@@ -105,6 +99,16 @@ class MyselfEditActivity : BaseActivity() {
     fun onAvatarClick() {
 
         AppLogger.i("onAvatarClick")
+
+        val prevFragment = supportFragmentManager.findFragmentByTag(PickBottomDialog.TAG_FRAGMENT)
+        // 显示对话框
+        if (prevFragment == null || prevFragment.isHidden) {
+            showPickDialog()
+        }
+        // 隐藏对话框
+        else {
+            hiddenPickDialog()
+        }
     }
 
     /**
@@ -120,6 +124,38 @@ class MyselfEditActivity : BaseActivity() {
      */
     fun onRoleClick() {
         AppLogger.i("onRoleClick")
+    }
+
+    /**
+     * 显示选择相册对话框
+     */
+    private fun showPickDialog() {
+
+        val prevFragment = supportFragmentManager.findFragmentByTag(PickBottomDialog.TAG_FRAGMENT)
+        val ft = supportFragmentManager.beginTransaction()
+        if (prevFragment != null) {
+            ft.remove(prevFragment)
+        }
+        ft.addToBackStack(null)
+        ft.commit()
+
+        val currentFragment = PickBottomDialog.newInstance()
+
+        currentFragment.show(supportFragmentManager, PickBottomDialog.TAG_FRAGMENT)
+
+    }
+
+    /**
+     * 隐藏选择相册对话框
+     */
+    private fun hiddenPickDialog() {
+
+        val prevFragment = supportFragmentManager.findFragmentByTag(PickBottomDialog.TAG_FRAGMENT)
+
+        if (prevFragment != null) {
+            prevFragment as PickBottomDialog
+            prevFragment.dismiss()
+        }
     }
 
     /**
