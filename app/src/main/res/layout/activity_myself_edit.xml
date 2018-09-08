@@ -38,6 +38,17 @@
                 app:mc_hint="@string/avatar"
                 app:mc_mode="item_image" />
 
+            <!-- 昵称 -->
+            <com.jzh.parents.widget.MyselfContentItem
+                android:id="@+id/item_alias"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                app:rightText="@{viewModel.userInfo.alias}"
+                app:mc_hint="@string/alias"
+                />
+
             <!-- 手机号 -->
             <com.jzh.parents.widget.MyselfContentItem
                 android:id="@+id/item_phone"

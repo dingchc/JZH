@@ -6,5 +6,5 @@ package com.jzh.parents.viewmodel.info
  * @author ding
  * Created by Ding on 2018/9/8.
  */
-data class UserInfo(val avatarUrl: String = "", val phone: String = "", val roleId: Int = 0, val roleName: String = "爸爸") {
+data class UserInfo(val avatarUrl: String = "", val phone: String = "", val alias: String = "", val roleId: Int = 0, val roleName: String = "爸爸") {
 }
