@@ -124,15 +124,15 @@ class DialogContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
         // 读取属性
         if (attributeSet != null) {
 
-            val typedArray: TypedArray? = resources.obtainAttributes(attributeSet, R.styleable.RegisterContentItem)
+            val typedArray: TypedArray? = resources.obtainAttributes(attributeSet, R.styleable.DialogContentItem)
 
-            mIsInputEditable = typedArray?.getBoolean(R.styleable.RegisterContentItem_rc_is_input_editable, false)
-            mShowTapArrow = typedArray?.getBoolean(R.styleable.RegisterContentItem_rc_show_tap_arrow, true)
-            mIsOptional = typedArray?.getBoolean(R.styleable.RegisterContentItem_rc_is_optional, false)
+            mIsInputEditable = typedArray?.getBoolean(R.styleable.DialogContentItem_dc_is_input_editable, false)
+            mShowTapArrow = typedArray?.getBoolean(R.styleable.DialogContentItem_dc_show_tap_arrow, true)
+            mIsOptional = typedArray?.getBoolean(R.styleable.DialogContentItem_dc_is_optional, false)
 
-            mIconResId = typedArray?.getDrawable(R.styleable.RegisterContentItem_rc_icon_src)
+            mIconResId = typedArray?.getDrawable(R.styleable.DialogContentItem_dc_icon_src)
 
-            mHintStringResId = typedArray?.getResourceId(R.styleable.RegisterContentItem_rc_hint, 0)
+            mHintStringResId = typedArray?.getResourceId(R.styleable.DialogContentItem_dc_hint, 0)
 
             typedArray?.recycle()
         }

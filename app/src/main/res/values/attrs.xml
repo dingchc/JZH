@@ -30,6 +30,9 @@
         <!-- 提示内容 -->
         <attr name="rc_hint" format="string" />
 
+        <!-- 是否显示右侧验证码 -->
+        <attr name="rc_show_verify_code" format="boolean" />
+
     </declare-styleable>
 
     <!-- 圆角图片 -->
@@ -71,4 +74,26 @@
 
     </declare-styleable>
 
+    <!-- 编辑页面Item -->
+    <declare-styleable name="DialogContentItem">
+
+        <!-- 是否显示右侧点击箭头 -->
+        <attr name="dc_show_tap_arrow" format="boolean" />
+
+        <!-- 是否输入可编辑 -->
+        <attr name="dc_is_input_editable" format="boolean" />
+
+        <!-- 是否输入可选择 -->
+        <attr name="dc_is_optional" format="boolean" />
+
+        <!-- 图标 -->
+        <attr name="dc_icon_src" format="reference" />
+
+        <!-- 提示内容 -->
+        <attr name="dc_hint" format="string" />
+
+        <!-- 是否显示右侧验证码 -->
+        <attr name="dc_show_verify_code" format="boolean" />
+
+    </declare-styleable>
 </resources>

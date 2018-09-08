@@ -37,9 +37,9 @@
             android:paddingRight="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            app:rc_hint="@string/input_phone"
-            app:rc_is_input_editable="true"
-            app:rc_show_tap_arrow="false"
+            app:dc_hint="@string/input_phone"
+            app:dc_is_input_editable="true"
+            app:dc_show_tap_arrow="false"
             app:contentText="@={viewModel.newPhone}"
             />
 
@@ -55,9 +55,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:textSize="18sp"
-            app:rc_hint="@string/input_code"
-            app:rc_is_input_editable="true"
-            app:rc_show_tap_arrow="false" />
+            app:dc_hint="@string/input_code"
+            app:dc_is_input_editable="true"
+            app:dc_show_tap_arrow="false" />
 
         <View
             android:layout_width="match_parent"
