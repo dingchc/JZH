@@ -3,7 +3,6 @@ package com.jzh.parents.widget
 import android.app.Dialog
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
-import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatDialogFragment
 import android.view.LayoutInflater
@@ -11,26 +10,27 @@ import android.view.View
 import android.widget.TextView
 import com.jzh.parents.R
 import com.jzh.parents.activity.MyselfEditActivity
+import com.jzh.parents.databinding.DialogEditPhoneBinding
 import com.jzh.parents.databinding.DialogEditRoleBinding
 import com.jzh.parents.viewmodel.MyselfEditViewModel
 
 /**
- * 编辑身份对话框
+ * 编辑手机号对话框
  *
  * @author ding
  * Created by Ding on 2018/9/8.
  */
-class RoleEditDialog : AppCompatDialogFragment() {
+class PhoneEditDialog : AppCompatDialogFragment() {
 
     /**
      * 数据绑定
      */
-    private var mDataBinding: DialogEditRoleBinding? = null
+    private var mDataBinding: DialogEditPhoneBinding? = null
 
     /**
      * 监听
      */
-    private var mListener: RoleEditDialogClickListener? = null
+    private var mListener: PhoneEditDialogClickListener? = null
 
 
     /**
@@ -38,18 +38,13 @@ class RoleEditDialog : AppCompatDialogFragment() {
      */
     private var mInitStudentName: String = ""
 
-    /**
-     * 初始化的角色
-     */
-    private var mInitRole: Int = 0
-
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
         val customDialog = super.onCreateDialog(savedInstanceState)
 
         val myLayoutInflater = LayoutInflater.from(context)
-        mDataBinding = DataBindingUtil.inflate(myLayoutInflater, R.layout.dialog_edit_role, null, false)
+        mDataBinding = DataBindingUtil.inflate(myLayoutInflater, R.layout.dialog_edit_phone, null, false)
 
         customDialog.setContentView(mDataBinding?.root)
 
@@ -64,7 +59,7 @@ class RoleEditDialog : AppCompatDialogFragment() {
      * 设置回调
      * @param listener 回调
      */
-    fun setRoleEditDialogClickListener(listener: RoleEditDialogClickListener) {
+    fun setPhoneEditDialogClickListener(listener: PhoneEditDialogClickListener) {
         mListener = listener
     }
 
@@ -73,8 +68,6 @@ class RoleEditDialog : AppCompatDialogFragment() {
         val viewModel = ViewModelProviders.of(context as MyselfEditActivity).get(MyselfEditViewModel::class.java)
 
         mDataBinding?.viewModel = viewModel
-
-        mInitRole = viewModel.selectRole.value as Int
 
         mInitStudentName = viewModel.studentName.value as String
 
@@ -85,7 +78,6 @@ class RoleEditDialog : AppCompatDialogFragment() {
      */
     private fun cancelChangedValue() {
 
-        mDataBinding?.viewModel?.selectRole?.value = mInitRole
         mDataBinding?.viewModel?.studentName?.value = mInitStudentName
     }
 
@@ -101,7 +93,7 @@ class RoleEditDialog : AppCompatDialogFragment() {
         // 确认
         confirmBtn.setOnClickListener {
             mListener?.onConfirmClick()
-            this@RoleEditDialog.dismiss()
+            this@PhoneEditDialog.dismiss()
         }
 
         // 取消
@@ -111,7 +103,7 @@ class RoleEditDialog : AppCompatDialogFragment() {
 
             mListener?.onCancelClick()
 
-            this@RoleEditDialog.dismiss()
+            this@PhoneEditDialog.dismiss()
         }
     }
 
@@ -120,7 +112,7 @@ class RoleEditDialog : AppCompatDialogFragment() {
         /**
          * Fragment的Tag
          */
-        val TAG_FRAGMENT: String = "tag_role_edit_dialog"
+        val TAG_FRAGMENT: String = "tag_phone_edit_dialog"
 
 
         /**
@@ -128,9 +120,9 @@ class RoleEditDialog : AppCompatDialogFragment() {
          *
          * @return Fragment
          */
-        fun newInstance(): RoleEditDialog {
+        fun newInstance(): PhoneEditDialog {
 
-            val fragment = RoleEditDialog()
+            val fragment = PhoneEditDialog()
 
             val bundle = Bundle()
 
@@ -141,9 +133,9 @@ class RoleEditDialog : AppCompatDialogFragment() {
     }
 
     /**
-     * 编辑身份的点击回调
+     * 编辑手机号的点击回调
      */
-    interface RoleEditDialogClickListener {
+    interface PhoneEditDialogClickListener {
 
         /**
          * 点击确认

@@ -56,5 +56,9 @@
     <string name="personal_info">个人信息</string>
     <string name="capture">拍照</string>
     <string name="photo_from_album">从相册中选择</string>
+    <string name="change_phone">修改手机号</string>
+    <string name="input_phone">请输入手机号</string>
+    <string name="input_code">输入验证码</string>
+
 
 </resources>

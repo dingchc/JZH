@@ -8,6 +8,7 @@ import com.jzh.parents.databinding.ActivityMyselfEditBinding
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.MyselfEditViewModel
 import com.jzh.parents.widget.MyselfContentItem
+import com.jzh.parents.widget.PhoneEditDialog
 import com.jzh.parents.widget.PickImageDialog
 import com.jzh.parents.widget.RoleEditDialog
 
@@ -116,6 +117,16 @@ class MyselfEditActivity : BaseActivity() {
      */
     fun onPhoneClick() {
         AppLogger.i("onPhoneClick")
+
+        val prevFragment = supportFragmentManager.findFragmentByTag(PhoneEditDialog.TAG_FRAGMENT)
+        // 显示对话框
+        if (prevFragment == null || prevFragment.isHidden) {
+            showPhoneEditDialog()
+        }
+        // 隐藏对话框
+        else {
+            hiddenPhoneEditDialog()
+        }
     }
 
     /**
@@ -228,6 +239,50 @@ class MyselfEditActivity : BaseActivity() {
 
         if (prevFragment != null) {
             prevFragment as RoleEditDialog
+            prevFragment.dismiss()
+        }
+    }
+
+    /**
+     * 显示编辑手机号对话框
+     */
+    private fun showPhoneEditDialog() {
+
+        val prevFragment = supportFragmentManager.findFragmentByTag(PhoneEditDialog.TAG_FRAGMENT)
+        val ft = supportFragmentManager.beginTransaction()
+
+        if (prevFragment != null) {
+            ft.remove(prevFragment)
+        }
+        ft.addToBackStack(null)
+        ft.commit()
+
+        val currentFragment = PhoneEditDialog.newInstance()
+
+        currentFragment.show(supportFragmentManager, PhoneEditDialog.TAG_FRAGMENT)
+
+        // 点击回调
+        currentFragment.setPhoneEditDialogClickListener(object : PhoneEditDialog.PhoneEditDialogClickListener {
+            override fun onConfirmClick() {
+                AppLogger.i("onConfirmClick" + mViewModel?.selectRole?.value + ", studentName="+ mViewModel?.studentName?.value)
+            }
+
+            override fun onCancelClick() {
+                AppLogger.i("onCancelClick")
+            }
+        })
+
+    }
+
+    /**
+     * 隐藏选择相册对话框
+     */
+    private fun hiddenPhoneEditDialog() {
+
+        val prevFragment = supportFragmentManager.findFragmentByTag(PhoneEditDialog.TAG_FRAGMENT)
+
+        if (prevFragment != null) {
+            prevFragment as PhoneEditDialog
             prevFragment.dismiss()
         }
     }
