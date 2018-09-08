@@ -22,7 +22,7 @@ class MyselfEditLocalDataSource {
         AppLogger.i("* loadUserInfoEntity")
 
 
-        val userInfo = UserInfo(avatarUrl = "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=837429733,2704045953&fm=26&gp=0.jpg", alias = "丁丁", phone = "15010233266", roleId = 2)
+        val userInfo = UserInfo(avatarUrl = "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=837429733,2704045953&fm=26&gp=0.jpg", alias = "丁丁", phone = "15010233266", roleId = 2, studentName = "小明")
 
         return userInfo
     }

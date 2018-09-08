@@ -309,6 +309,7 @@ class DialogContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
         mInputEditText.hint = resources.getString(mHintStringResId!!)
         mInputEditText.background = null
         mInputEditText.textSize = 12.0f
+        mInputEditText.setLines(1)
 
         // 设置是否可输入
         if (!mIsInputEditable!!) {

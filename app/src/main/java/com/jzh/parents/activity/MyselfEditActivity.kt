@@ -8,7 +8,7 @@ import com.jzh.parents.databinding.ActivityMyselfEditBinding
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.MyselfEditViewModel
 import com.jzh.parents.widget.MyselfContentItem
-import com.jzh.parents.widget.PickBottomDialog
+import com.jzh.parents.widget.PickImageDialog
 import com.jzh.parents.widget.RoleEditDialog
 
 /**
@@ -99,7 +99,7 @@ class MyselfEditActivity : BaseActivity() {
      */
     fun onAvatarClick() {
 
-        val prevFragment = supportFragmentManager.findFragmentByTag(PickBottomDialog.TAG_FRAGMENT)
+        val prevFragment = supportFragmentManager.findFragmentByTag(PickImageDialog.TAG_FRAGMENT)
         // 显示对话框
         if (prevFragment == null || prevFragment.isHidden) {
             showPickDialog()
@@ -140,7 +140,7 @@ class MyselfEditActivity : BaseActivity() {
      */
     private fun showPickDialog() {
 
-        val prevFragment = supportFragmentManager.findFragmentByTag(PickBottomDialog.TAG_FRAGMENT)
+        val prevFragment = supportFragmentManager.findFragmentByTag(PickImageDialog.TAG_FRAGMENT)
         val ft = supportFragmentManager.beginTransaction()
 
         if (prevFragment != null) {
@@ -149,10 +149,10 @@ class MyselfEditActivity : BaseActivity() {
         ft.addToBackStack(null)
         ft.commit()
 
-        val currentFragment = PickBottomDialog.newInstance()
+        val currentFragment = PickImageDialog.newInstance()
 
         // 设置事件
-        currentFragment.setPickDialogClickListener(object : PickBottomDialog.PickDialogClickListener {
+        currentFragment.setPickDialogClickListener(object : PickImageDialog.PickDialogClickListener {
 
             override fun onCaptureClick() {
                 AppLogger.i("onCaptureClick")
@@ -171,7 +171,7 @@ class MyselfEditActivity : BaseActivity() {
             }
         })
 
-        currentFragment.show(supportFragmentManager, PickBottomDialog.TAG_FRAGMENT)
+        currentFragment.show(supportFragmentManager, PickImageDialog.TAG_FRAGMENT)
 
     }
 
@@ -180,10 +180,10 @@ class MyselfEditActivity : BaseActivity() {
      */
     private fun hiddenPickDialog() {
 
-        val prevFragment = supportFragmentManager.findFragmentByTag(PickBottomDialog.TAG_FRAGMENT)
+        val prevFragment = supportFragmentManager.findFragmentByTag(PickImageDialog.TAG_FRAGMENT)
 
         if (prevFragment != null) {
-            prevFragment as PickBottomDialog
+            prevFragment as PickImageDialog
             prevFragment.dismiss()
         }
     }
@@ -205,6 +205,17 @@ class MyselfEditActivity : BaseActivity() {
         val currentFragment = RoleEditDialog.newInstance()
 
         currentFragment.show(supportFragmentManager, RoleEditDialog.TAG_FRAGMENT)
+
+        // 点击回调
+        currentFragment.setRoleEditDialogClickListener(object : RoleEditDialog.RoleEditDialogClickListener {
+            override fun onConfirmClick() {
+                AppLogger.i("onConfirmClick" + mViewModel?.selectRole?.value + ", studentName="+ mViewModel?.studentName?.value)
+            }
+
+            override fun onCancelClick() {
+                AppLogger.i("onCancelClick")
+            }
+        })
 
     }
 

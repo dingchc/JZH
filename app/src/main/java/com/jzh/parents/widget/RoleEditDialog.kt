@@ -8,10 +8,10 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatDialogFragment
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
 import com.jzh.parents.R
 import com.jzh.parents.activity.MyselfEditActivity
 import com.jzh.parents.databinding.DialogEditRoleBinding
-import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.MyselfEditViewModel
 
 /**
@@ -25,7 +25,24 @@ class RoleEditDialog : AppCompatDialogFragment() {
     /**
      * 数据绑定
      */
-    var mDataBinding: DialogEditRoleBinding? = null
+    private var mDataBinding: DialogEditRoleBinding? = null
+
+    /**
+     * 监听
+     */
+    private var mListener: RoleEditDialogClickListener? = null
+
+
+    /**
+     * 初始化的名字
+     */
+    private var mInitStudentName: String = ""
+
+    /**
+     * 初始化的角色
+     */
+    private var mInitRole: Int = 0
+
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
@@ -36,12 +53,19 @@ class RoleEditDialog : AppCompatDialogFragment() {
 
         customDialog.setContentView(mDataBinding?.root)
 
-        //圆角边的关键
-        (mDataBinding?.root?.parent as View).setBackgroundColor(Color.TRANSPARENT)
-
         init()
 
+        initEvent(mDataBinding!!.root)
+
         return customDialog
+    }
+
+    /**
+     * 设置回调
+     * @param listener 回调
+     */
+    fun setRoleEditDialogClickListener(listener: RoleEditDialogClickListener) {
+        mListener = listener
     }
 
     private fun init() {
@@ -49,7 +73,46 @@ class RoleEditDialog : AppCompatDialogFragment() {
         val viewModel = ViewModelProviders.of(context as MyselfEditActivity).get(MyselfEditViewModel::class.java)
 
         mDataBinding?.viewModel = viewModel
-        AppLogger.i("viewModel selectRole = " + viewModel.selectRole.value)
+
+        mInitRole = viewModel.selectRole.value as Int
+
+        mInitStudentName = viewModel.studentName.value as String
+
+    }
+
+    /**
+     * 取消设定的值， 由于是双向绑定，值自动改变了，所以，设置为之前的值
+     */
+    private fun cancelChangedValue() {
+
+        mDataBinding?.viewModel?.selectRole?.value = mInitRole
+        mDataBinding?.viewModel?.studentName?.value = mInitStudentName
+    }
+
+    /**
+     * 初始化事件
+     * @param rootView 根试图
+     */
+    private fun initEvent(rootView: View) {
+
+        val confirmBtn: TextView = rootView.findViewById(R.id.tv_confirm)
+        val cancelBtn: TextView = rootView.findViewById(R.id.tv_cancel)
+
+        // 确认
+        confirmBtn.setOnClickListener {
+            mListener?.onConfirmClick()
+            this@RoleEditDialog.dismiss()
+        }
+
+        // 取消
+        cancelBtn.setOnClickListener {
+
+            cancelChangedValue()
+            
+            mListener?.onCancelClick()
+
+            this@RoleEditDialog.dismiss()
+        }
     }
 
     companion object {
@@ -75,5 +138,22 @@ class RoleEditDialog : AppCompatDialogFragment() {
 
             return fragment
         }
+    }
+
+    /**
+     * 编辑身份的点击回调
+     */
+    interface RoleEditDialogClickListener {
+
+        /**
+         * 点击确认
+         */
+        fun onConfirmClick()
+
+        /**
+         * 点击取消
+         */
+        fun onCancelClick()
+
     }
 }

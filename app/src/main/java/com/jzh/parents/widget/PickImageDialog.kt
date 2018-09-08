@@ -16,7 +16,7 @@ import android.widget.TextView
  * @author ding
  * Created by Ding on 2018/9/8.
  */
-class PickBottomDialog : BottomSheetDialogFragment() {
+class PickImageDialog : BottomSheetDialogFragment() {
 
     /**
      * 行为
@@ -78,7 +78,7 @@ class PickBottomDialog : BottomSheetDialogFragment() {
 
             mListener?.onCancelClick()
 
-            this@PickBottomDialog.dismiss()
+            this@PickImageDialog.dismiss()
         }
     }
 
@@ -102,9 +102,9 @@ class PickBottomDialog : BottomSheetDialogFragment() {
          *
          * @return Fragment
          */
-        fun newInstance(): PickBottomDialog {
+        fun newInstance(): PickImageDialog {
 
-            val fragment = PickBottomDialog()
+            val fragment = PickImageDialog()
 
             val bundle = Bundle()
 

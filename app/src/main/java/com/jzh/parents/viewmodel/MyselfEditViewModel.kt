@@ -57,6 +57,8 @@ class MyselfEditViewModel(app: Application) : BaseViewModel(app) {
         userInfo.value = repo.loadUserInfoEntity()
 
         selectRole.value = userInfo.value?.roleId
+
+        studentName.value = userInfo.value?.studentName
     }
 
 
