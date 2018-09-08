@@ -9,7 +9,9 @@
         <!-- 直播数据 -->
         <variable
             name="itemEntity"
-            type="com.jzh.parents.viewmodel.entity.LiveItemEntity" />
+            type="com.jzh.parents.viewmodel.entity.MsgEntity" />
+
+
 
     </data>
 
@@ -41,7 +43,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="12dp"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:maxLines="2"
@@ -55,7 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_marginLeft="12dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="8dp"
                     android:ellipsize="end"
@@ -65,9 +67,18 @@
                     android:textColor="@color/font_black"
                     android:textSize="12sp" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/shape_msg_horizontal_dash_line"
+                    android:layerType="software"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="42dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:orientation="horizontal">
 
                     <!-- 时间 -->
@@ -75,20 +86,18 @@
                         android:id="@+id/tv_live_time"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:drawablePadding="5dp"
-                        android:gravity="center_vertical"
+                        android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:text="2018-10-11 10:30"
-                        android:textColor="@color/font_light_black"
+                        android:textColor="@color/register_input_text_hint_color"
                         android:textSize="11sp" />
 
-                    <Button
+                    <ImageView
                         android:layout_width="84dp"
                         android:layout_height="24dp"
-                        android:text="点击查看详情"
-                        android:textColor="@color/white"
-                        android:textSize="12sp" />
+                        android:layout_gravity="center_vertical"
+                        android:src="@mipmap/btn_msg_check_detail"
+                         />
 
                 </LinearLayout>
             </LinearLayout>

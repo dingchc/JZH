@@ -6,5 +6,6 @@ package com.jzh.parents.viewmodel.entity
  * @author ding
  * Created by Ding on 2018/9/4.
  */
-data class MsgEntity(val msgId : Long = 0, val title : String = "", val desc : String = "", val url : String = "", val liveId : Long = 0)  {
+data class MsgEntity(val msgId: Long = 0, val title: String = "", val desc: String = "", val url: String = "", val liveId: Long = 0) {
+
 }

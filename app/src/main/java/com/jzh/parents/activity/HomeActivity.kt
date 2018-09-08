@@ -84,7 +84,8 @@ class HomeActivity : BaseActivity() {
 
         // 点击了消息中心
         mDataBinding?.layoutFunc?.tvMsgCenter?.setOnClickListener {
-
+            val intent = Intent(this@HomeActivity, MsgCenterActivity::class.java)
+            startActivity(intent)
         }
 
         // 列表点击

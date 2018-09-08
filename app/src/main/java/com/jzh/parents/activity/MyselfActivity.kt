@@ -51,6 +51,9 @@ class MyselfActivity : BaseActivity() {
      */
     fun onMsgCenterClick(view: View) {
 
+        // 去消息中心页面
+        val intent = Intent(this@MyselfActivity, MsgCenterActivity::class.java)
+        startActivity(intent)
     }
 
     /**

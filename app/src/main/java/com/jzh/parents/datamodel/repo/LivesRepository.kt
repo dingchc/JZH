@@ -10,10 +10,9 @@ import com.jzh.parents.viewmodel.info.LiveInfo
 
 /**
  *
- * 直播列表的仓库类
+ * 仓库类
  *
  * @author ding
- * Created by Ding on 2018/9/1.
  */
 class LivesRepository : BaseRepository() {
 

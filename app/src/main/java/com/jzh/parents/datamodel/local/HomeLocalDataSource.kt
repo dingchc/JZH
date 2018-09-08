@@ -6,12 +6,11 @@ import com.jzh.parents.viewmodel.entity.FuncEntity
  * 主页获取本地数据
  *
  * @author ding
- * Created by Ding on 2018/8/28.
  */
 class HomeLocalDataSource {
 
     /**
-     * 返回功能栏数据
+     * 返回数据
      */
     fun loadFuncEntity() : FuncEntity {
 
