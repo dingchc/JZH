@@ -2,6 +2,7 @@ package com.jzh.parents.activity
 
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
+import android.support.design.widget.BottomSheetBehavior
 import android.view.View
 import com.jzh.parents.R
 import com.jzh.parents.databinding.ActivityMyselfEditBinding
@@ -133,6 +134,7 @@ class MyselfEditActivity : BaseActivity() {
 
         val prevFragment = supportFragmentManager.findFragmentByTag(PickBottomDialog.TAG_FRAGMENT)
         val ft = supportFragmentManager.beginTransaction()
+
         if (prevFragment != null) {
             ft.remove(prevFragment)
         }
@@ -140,6 +142,26 @@ class MyselfEditActivity : BaseActivity() {
         ft.commit()
 
         val currentFragment = PickBottomDialog.newInstance()
+
+        currentFragment.setPickDialogClickListener(object : PickBottomDialog.PickDialogClickListener {
+
+            override fun onCaptureClick() {
+                AppLogger.i("onCaptureClick")
+
+                currentFragment.dismiss()
+            }
+
+            override fun onPhotoClick() {
+                AppLogger.i("onPhotoClick")
+
+                currentFragment.dismiss()
+            }
+
+            override fun onCancelClick() {
+                AppLogger.i("onCancelClick")
+            }
+
+        })
 
         currentFragment.show(supportFragmentManager, PickBottomDialog.TAG_FRAGMENT)
 
