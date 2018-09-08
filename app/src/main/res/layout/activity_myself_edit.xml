@@ -42,7 +42,7 @@
             <com.jzh.parents.widget.MyselfContentItem
                 android:id="@+id/item_alias"
                 android:layout_width="match_parent"
-                android:layout_height="64dp"
+                android:layout_height="@dimen/item_height"
                 android:paddingEnd="10dp"
                 android:paddingStart="10dp"
                 app:rightText="@{viewModel.userInfo.alias}"

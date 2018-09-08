@@ -8,7 +8,6 @@ import android.view.View
 import com.jzh.parents.R
 import android.support.design.widget.BottomSheetBehavior
 import android.widget.TextView
-import com.jzh.parents.utils.AppLogger
 
 
 /**

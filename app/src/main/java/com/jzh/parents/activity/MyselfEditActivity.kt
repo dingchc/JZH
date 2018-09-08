@@ -2,7 +2,6 @@ package com.jzh.parents.activity
 
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
-import android.support.design.widget.BottomSheetBehavior
 import android.view.View
 import com.jzh.parents.R
 import com.jzh.parents.databinding.ActivityMyselfEditBinding
@@ -10,6 +9,7 @@ import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.MyselfEditViewModel
 import com.jzh.parents.widget.MyselfContentItem
 import com.jzh.parents.widget.PickBottomDialog
+import com.jzh.parents.widget.RoleEditDialog
 
 /**
  * 我-编辑信息
@@ -99,8 +99,6 @@ class MyselfEditActivity : BaseActivity() {
      */
     fun onAvatarClick() {
 
-        AppLogger.i("onAvatarClick")
-
         val prevFragment = supportFragmentManager.findFragmentByTag(PickBottomDialog.TAG_FRAGMENT)
         // 显示对话框
         if (prevFragment == null || prevFragment.isHidden) {
@@ -125,6 +123,16 @@ class MyselfEditActivity : BaseActivity() {
      */
     fun onRoleClick() {
         AppLogger.i("onRoleClick")
+
+        val prevFragment = supportFragmentManager.findFragmentByTag(RoleEditDialog.TAG_FRAGMENT)
+        // 显示对话框
+        if (prevFragment == null || prevFragment.isHidden) {
+            showRoleEditDialog()
+        }
+        // 隐藏对话框
+        else {
+            hiddenRoleEditDialog()
+        }
     }
 
     /**
@@ -143,6 +151,7 @@ class MyselfEditActivity : BaseActivity() {
 
         val currentFragment = PickBottomDialog.newInstance()
 
+        // 设置事件
         currentFragment.setPickDialogClickListener(object : PickBottomDialog.PickDialogClickListener {
 
             override fun onCaptureClick() {
@@ -160,7 +169,6 @@ class MyselfEditActivity : BaseActivity() {
             override fun onCancelClick() {
                 AppLogger.i("onCancelClick")
             }
-
         })
 
         currentFragment.show(supportFragmentManager, PickBottomDialog.TAG_FRAGMENT)
@@ -176,6 +184,39 @@ class MyselfEditActivity : BaseActivity() {
 
         if (prevFragment != null) {
             prevFragment as PickBottomDialog
+            prevFragment.dismiss()
+        }
+    }
+
+    /**
+     * 显示编辑身份对话框
+     */
+    private fun showRoleEditDialog() {
+
+        val prevFragment = supportFragmentManager.findFragmentByTag(RoleEditDialog.TAG_FRAGMENT)
+        val ft = supportFragmentManager.beginTransaction()
+
+        if (prevFragment != null) {
+            ft.remove(prevFragment)
+        }
+        ft.addToBackStack(null)
+        ft.commit()
+
+        val currentFragment = RoleEditDialog.newInstance()
+
+        currentFragment.show(supportFragmentManager, RoleEditDialog.TAG_FRAGMENT)
+
+    }
+
+    /**
+     * 隐藏选择相册对话框
+     */
+    private fun hiddenRoleEditDialog() {
+
+        val prevFragment = supportFragmentManager.findFragmentByTag(RoleEditDialog.TAG_FRAGMENT)
+
+        if (prevFragment != null) {
+            prevFragment as RoleEditDialog
             prevFragment.dismiss()
         }
     }
