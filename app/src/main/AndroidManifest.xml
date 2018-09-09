@@ -121,6 +121,12 @@
             </intent-filter>
         </activity>
 
+        <!-- 微信回调 -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:exported="true" />
     </application>
 
 </manifest>

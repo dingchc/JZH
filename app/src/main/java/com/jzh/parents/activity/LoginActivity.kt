@@ -1,13 +1,18 @@
 package com.jzh.parents.activity
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.view.View
 import com.jzh.parents.R
+import com.jzh.parents.app.Constants
 import com.jzh.parents.databinding.ActivityLoginBinding
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.LoginViewModel
+import com.tencent.mm.opensdk.modelmsg.SendAuth
+import com.tencent.mm.opensdk.openapi.IWXAPI
+import com.tencent.mm.opensdk.openapi.WXAPIFactory
 
 /**
  * 登录页面
@@ -45,6 +50,14 @@ class LoginActivity : BaseActivity() {
      * 初始化事件
      */
     override fun initEvent() {
+
+        mViewModel?.retCode?.observe(this@LoginActivity, Observer { retCode ->
+
+            // 微信未安装
+            if (retCode == Constants.RET_CODE_WX_IS_NOT_INSTALL) {
+                showToastError(getString(R.string.wx_errcode_is_not_install))
+            }
+        })
     }
 
     /**
@@ -72,12 +85,14 @@ class LoginActivity : BaseActivity() {
     /**
      * 微信授权等
      */
-    fun wxAuthorizeClick(view : View?) {
+    fun wxAuthorizeClick(view: View?) {
 
         AppLogger.i("wxAuthorizeClick")
 
-        startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
-        finish()
+//        startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
+//        finish()
+
+        mViewModel?.wxAuthorize()
     }
 
 
