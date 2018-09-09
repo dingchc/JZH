@@ -25,4 +25,9 @@ public interface Constants {
      */
     int RET_CODE_OK = 0;
 
+    /**
+     * wx的token
+     */
+    String EXTRA_WX_TOKEN = "wx_token";
+
 }

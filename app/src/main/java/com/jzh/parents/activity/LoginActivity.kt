@@ -4,15 +4,14 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import com.jzh.parents.R
 import com.jzh.parents.app.Constants
 import com.jzh.parents.databinding.ActivityLoginBinding
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.LoginViewModel
-import com.tencent.mm.opensdk.modelmsg.SendAuth
-import com.tencent.mm.opensdk.openapi.IWXAPI
-import com.tencent.mm.opensdk.openapi.WXAPIFactory
 
 /**
  * 登录页面
@@ -31,6 +30,15 @@ class LoginActivity : BaseActivity() {
      * 数据绑定
      */
     var mDataBinding: ActivityLoginBinding? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        AppLogger.i("* onCreate token=")
+
+        // 处理微信授权返回
+        processWxAuthorize(intent)
+    }
 
     /**
      * 初始化组件
@@ -80,6 +88,33 @@ class LoginActivity : BaseActivity() {
 
     override fun isSupportTransitionAnimation(): Boolean {
         return false
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+
+        setIntent(intent)
+
+        AppLogger.i("* onNewIntent token=")
+        // 处理微信授权返回
+        processWxAuthorize(intent)
+    }
+
+    /**
+     * 处理微信授权返回
+     * @param intent 意图
+     */
+    private fun processWxAuthorize(intent: Intent?) {
+
+        if (intent != null) {
+
+            val token = intent.getStringExtra(Constants.EXTRA_WX_TOKEN)
+
+            if (!TextUtils.isEmpty(token)) {
+
+                AppLogger.i("* token=" + token)
+            }
+        }
     }
 
     /**

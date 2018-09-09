@@ -6,10 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.jzh.parents.R;
+import com.jzh.parents.activity.LoginActivity;
 import com.jzh.parents.app.Constants;
 import com.jzh.parents.utils.AppLogger;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -19,7 +21,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
  *
  * @author ding
  */
-public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHandler{
+public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHandler {
     private IWXAPI api;
 
     @Override
@@ -47,12 +49,13 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
 
     @Override
     public void onResp(BaseResp baseResp) {
-        int result = 0;
+        int result;
 
-        AppLogger.i("code=" + baseResp.errCode + ", str=" + baseResp.errStr);
+        AppLogger.i("code=" + baseResp.errCode);
         switch (baseResp.errCode) {
             case BaseResp.ErrCode.ERR_OK:
                 result = R.string.wx_errcode_success;
+                goLoginPageWithToken(baseResp);
                 break;
             case BaseResp.ErrCode.ERR_USER_CANCEL:
                 result = R.string.wx_errcode_cancel;
@@ -66,6 +69,29 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
         }
 
         Toast.makeText(this, result, Toast.LENGTH_LONG).show();
+
         this.finish();
+    }
+
+    /**
+     * 回到登录页面
+     * @param baseResp 响应数据
+     */
+    private void goLoginPageWithToken(BaseResp baseResp) {
+
+        if (baseResp != null) {
+
+            try {
+                String wxToken = ((SendAuth.Resp) baseResp).code;
+
+                Intent intent = new Intent(this, LoginActivity.class);
+                intent.putExtra(Constants.EXTRA_WX_TOKEN, wxToken);
+                startActivity(intent);
+
+            } catch (Exception e) {
+                AppLogger.i("error_msg:" + e.getMessage());
+            }
+        }
+
     }
 }
