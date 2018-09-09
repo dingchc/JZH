@@ -34,8 +34,6 @@ class LoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        AppLogger.i("* onCreate token=")
-
         // 处理微信授权返回
         processWxAuthorize(intent)
     }
@@ -95,7 +93,6 @@ class LoginActivity : BaseActivity() {
 
         setIntent(intent)
 
-        AppLogger.i("* onNewIntent token=")
         // 处理微信授权返回
         processWxAuthorize(intent)
     }
@@ -113,6 +110,8 @@ class LoginActivity : BaseActivity() {
             if (!TextUtils.isEmpty(token)) {
 
                 AppLogger.i("* token=" + token)
+
+                mViewModel?.wxGetAccessToken(token)
             }
         }
     }
@@ -124,10 +123,10 @@ class LoginActivity : BaseActivity() {
 
         AppLogger.i("wxAuthorizeClick")
 
-//        startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
-//        finish()
+//        mViewModel?.wxAuthorize()
 
-        mViewModel?.wxAuthorize()
+        startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
+        finish()
     }
 
 

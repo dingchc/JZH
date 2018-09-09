@@ -30,4 +30,13 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
         val ret = repo.wxAuthorize()
         retCode.value = ret
     }
+
+    /**
+     * 获取AccessToken
+     * @param token 授权token
+     */
+    fun wxGetAccessToken(token: String) {
+
+        repo.wxGetAccessToken(token)
+    }
 }

@@ -68,8 +68,6 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                 break;
         }
 
-        Toast.makeText(this, result, Toast.LENGTH_LONG).show();
-
         this.finish();
     }
 

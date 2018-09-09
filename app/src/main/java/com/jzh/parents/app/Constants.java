@@ -16,6 +16,11 @@ public interface Constants {
     String WX_APP_ID = "wx16c33bca2ad8b1bd";
 
     /**
+     * 微信AppSecret
+     */
+    String WX_APP_SECRET = "3047ed992e95f14f07487c86aef7d06b";
+
+    /**
      * 微信未安装
      */
     int RET_CODE_WX_IS_NOT_INSTALL = -1000;
