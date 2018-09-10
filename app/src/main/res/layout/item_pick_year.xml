@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="42dp"
+    android:orientation="horizontal"
+    android:background="@color/white">
+
+    <!-- 时间 -->
+    <TextView
+        android:id="@+id/tv_year"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:text="2018-10-11 10:30"
+        android:textColor="@color/register_input_text_hint_color"
+        android:textSize="14sp" />
+
+
+</LinearLayout>

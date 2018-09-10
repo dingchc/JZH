@@ -1,8 +1,11 @@
 package com.jzh.parents.datamodel.remote
 
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.jzh.parents.app.Api
 import com.jzh.parents.app.Constants
 import com.jzh.parents.app.JZHApplication
+import com.jzh.parents.datamodel.data.AccessTokenData
 import com.jzh.parents.utils.AppLogger
 import com.tencent.mm.opensdk.modelmsg.SendAuth
 import com.tencent.mm.opensdk.openapi.WXAPIFactory
@@ -54,6 +57,60 @@ class LoginRemoteDataSource {
         paramsMap.put("grant_type", "authorization_code")
 
         TSHttpController.INSTANCE.doPost(Api.URL_WX_GET_ACCESS_TOKEN, paramsMap, object : TSHttpCallback {
+            override fun onSuccess(res: TSBaseResponse?, json: String?) {
+
+                val gson = Gson()
+
+                val tokenData = gson.fromJson<AccessTokenData>(json, object : TypeToken<AccessTokenData>() {
+
+                }.type)
+
+                AppLogger.i("accessToken=" + tokenData.accessToken + ", unionid=" + tokenData.unionid)
+
+                // 获取用户信息
+                wxGetUserInfo(tokenData.accessToken, tokenData.openid, tokenData.unionid)
+            }
+
+            override fun onException(e: Throwable?) {
+                AppLogger.i(e?.message)
+            }
+        })
+    }
+
+    /**
+     * 获取用户信息
+     */
+    fun wxGetUserInfo(accessToken : String, openId : String, unionId : String) {
+
+        val paramsMap = TreeMap<String, String>()
+        paramsMap.put("access_token", accessToken)
+        paramsMap.put("openid", openId)
+
+        TSHttpController.INSTANCE.doPost(Api.URL_WX_GET_USER_INFO, paramsMap, object : TSHttpCallback {
+            override fun onSuccess(res: TSBaseResponse?, json: String?) {
+
+//                val gson = Gson()
+//
+//                val tokenData = gson.fromJson<AccessTokenData>(json, object : TypeToken<AccessTokenData>() {
+//
+//                }.type)
+                getSmsCode()
+                AppLogger.i("json=" + json)
+            }
+
+            override fun onException(e: Throwable?) {
+                AppLogger.i(e?.message)
+            }
+        })
+    }
+
+    fun getSmsCode() {
+
+
+        val paramsMap = TreeMap<String, String>()
+        paramsMap.put("phone", "15010233266")
+
+        TSHttpController.INSTANCE.doPost("https://t.api.17jzh.com/api/user/sms", paramsMap, object : TSHttpCallback {
             override fun onSuccess(res: TSBaseResponse?, json: String?) {
 
                 AppLogger.i("json=" + json)

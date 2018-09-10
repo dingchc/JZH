@@ -1,7 +1,6 @@
 package com.jzh.parents.activity
 
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.view.View
 import com.jzh.parents.R
@@ -9,6 +8,7 @@ import com.jzh.parents.databinding.ActivityRegisterBinding
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.RegisterViewModel
 import com.jzh.parents.viewmodel.bindadapter.TSDataBindingComponent
+import com.jzh.parents.widget.PickYearDialog
 import java.util.*
 
 /**
@@ -79,8 +79,52 @@ class RegisterActivity : BaseActivity() {
 
         AppLogger.i("mViewModel?.studentName?.value = " + mViewModel?.studentName?.value)
 
-        startActivity(Intent(this@RegisterActivity, HomeActivity::class.java))
-        finishCompat()
+//        startActivity(Intent(this@RegisterActivity, HomeActivity::class.java))
+//        finishCompat()
+
+        val prevFragment = supportFragmentManager.findFragmentByTag(PickYearDialog.TAG_FRAGMENT)
+        // 显示对话框
+        if (prevFragment == null || prevFragment.isHidden) {
+            showPickDialog()
+        }
+        // 隐藏对话框
+        else {
+            hiddenPickDialog()
+        }
+    }
+
+    /**
+     * 显示选择年份对话框
+     */
+    private fun showPickDialog() {
+
+        val prevFragment = supportFragmentManager.findFragmentByTag(PickYearDialog.TAG_FRAGMENT)
+        val ft = supportFragmentManager.beginTransaction()
+
+        if (prevFragment != null) {
+            ft.remove(prevFragment)
+        }
+        ft.addToBackStack(null)
+        ft.commit()
+
+        val currentFragment = PickYearDialog.newInstance()
+
+
+        currentFragment.show(supportFragmentManager, PickYearDialog.TAG_FRAGMENT)
+
+    }
+
+    /**
+     * 隐藏选择年份对话框
+     */
+    private fun hiddenPickDialog() {
+
+        val prevFragment = supportFragmentManager.findFragmentByTag(PickYearDialog.TAG_FRAGMENT)
+
+        if (prevFragment != null) {
+            prevFragment as PickYearDialog
+            prevFragment.dismiss()
+        }
     }
 
     override fun isSupportTransitionAnimation(): Boolean {

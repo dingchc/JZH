@@ -123,10 +123,10 @@ class LoginActivity : BaseActivity() {
 
         AppLogger.i("wxAuthorizeClick")
 
-//        mViewModel?.wxAuthorize()
+        mViewModel?.wxAuthorize()
 
-        startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
-        finish()
+//        startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
+//        finish()
     }
 
 

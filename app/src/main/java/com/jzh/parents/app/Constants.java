@@ -18,7 +18,7 @@ public interface Constants {
     /**
      * 微信AppSecret
      */
-    String WX_APP_SECRET = "3047ed992e95f14f07487c86aef7d06b";
+    String WX_APP_SECRET = "9965a66de900edb09b08b97d7111fa0d";
 
     /**
      * 微信未安装
