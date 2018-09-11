@@ -47,6 +47,12 @@ class RegisterActivity : BaseActivity() {
      * 初始化事件
      */
     override fun initEvent() {
+
+        // 选择入学年份
+        mDataBinding?.itemLearningYear?.setOnClickListener {
+
+            showPickYearDialog()
+        }
     }
 
     /**
@@ -69,7 +75,7 @@ class RegisterActivity : BaseActivity() {
     /**
      * 点击注册按钮
      */
-    fun onRegisterBtnClick(view : View) {
+    fun onRegisterBtnClick(view: View) {
 
         mViewModel?.studentName?.value = "" + Random().nextInt(10000)
 
@@ -82,49 +88,23 @@ class RegisterActivity : BaseActivity() {
 //        startActivity(Intent(this@RegisterActivity, HomeActivity::class.java))
 //        finishCompat()
 
-        val prevFragment = supportFragmentManager.findFragmentByTag(PickYearDialog.TAG_FRAGMENT)
-        // 显示对话框
-        if (prevFragment == null || prevFragment.isHidden) {
-            showPickDialog()
-        }
-        // 隐藏对话框
-        else {
-            hiddenPickDialog()
-        }
+        showPickYearDialog()
     }
 
     /**
      * 显示选择年份对话框
      */
-    private fun showPickDialog() {
+    private fun showPickYearDialog() {
 
-        val prevFragment = supportFragmentManager.findFragmentByTag(PickYearDialog.TAG_FRAGMENT)
-        val ft = supportFragmentManager.beginTransaction()
+        var dialog = supportFragmentManager.findFragmentByTag(PickYearDialog.TAG_FRAGMENT)
 
-        if (prevFragment != null) {
-            ft.remove(prevFragment)
+        if (dialog == null) {
+
+            dialog = PickYearDialog.newInstance()
         }
-        ft.addToBackStack(null)
-        ft.commit()
 
-        val currentFragment = PickYearDialog.newInstance()
+        (dialog as PickYearDialog).show(supportFragmentManager, PickYearDialog.TAG_FRAGMENT)
 
-
-        currentFragment.show(supportFragmentManager, PickYearDialog.TAG_FRAGMENT)
-
-    }
-
-    /**
-     * 隐藏选择年份对话框
-     */
-    private fun hiddenPickDialog() {
-
-        val prevFragment = supportFragmentManager.findFragmentByTag(PickYearDialog.TAG_FRAGMENT)
-
-        if (prevFragment != null) {
-            prevFragment as PickYearDialog
-            prevFragment.dismiss()
-        }
     }
 
     override fun isSupportTransitionAnimation(): Boolean {

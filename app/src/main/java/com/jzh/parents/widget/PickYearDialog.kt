@@ -1,6 +1,7 @@
 package com.jzh.parents.widget
 
 import android.app.Dialog
+import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
@@ -8,6 +9,7 @@ import android.support.design.widget.BottomSheetDialogFragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.TextView
 import com.jzh.parents.R
 import com.jzh.parents.adapter.PickYearAdapter
@@ -19,11 +21,6 @@ import com.jzh.parents.adapter.PickYearAdapter
  * Created by Ding on 2018/9/8.
  */
 class PickYearDialog : BottomSheetDialogFragment() {
-
-    /**
-     * 行为
-     */
-    private var mBehavior: BottomSheetBehavior<View>? = BottomSheetBehavior<View>()
 
     /**
      * 监听
@@ -44,9 +41,6 @@ class PickYearDialog : BottomSheetDialogFragment() {
         // 初始化事件
         initEvent(rootView)
 
-        mBehavior = BottomSheetBehavior.from(rootView.parent as View)
-//        mBehavior?.isHideable = false
-
         //圆角边的关键
         (rootView.parent as View).setBackgroundColor(Color.TRANSPARENT)
 
@@ -65,8 +59,8 @@ class PickYearDialog : BottomSheetDialogFragment() {
 
         val yearList = mutableListOf<String>()
 
-        for (i in 0..99) {
-            yearList.add(i, "20" + i)
+        for (i in 10..99) {
+            yearList.add("20" + i + " 年")
         }
 
         val adapter = PickYearAdapter(context!!, yearList)

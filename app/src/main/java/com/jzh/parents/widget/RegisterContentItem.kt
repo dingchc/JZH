@@ -86,6 +86,11 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
      */
     private var mCheckedValueListener: OnCheckedValueNotifyListener? = null
 
+    /**
+     * 右侧箭头
+     */
+    private var mArrowImageView = ImageView(context)
+
 
     constructor(context: Context) : this(context, null) {
 
@@ -356,10 +361,19 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
      */
     private fun addArrowIcon() {
 
-        val imageView = ImageView(context)
-        imageView.setImageResource(R.mipmap.icon_register_arrow)
+        mArrowImageView.setImageResource(R.mipmap.icon_register_arrow)
 
-        addView(imageView)
+        addView(mArrowImageView)
+    }
+
+    /**
+     * 获取箭头控件
+     *
+     * @return ImageView 箭头控件
+     */
+    fun getArrowImageView(): ImageView {
+
+        return mArrowImageView
     }
 
     /**
@@ -428,6 +442,7 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
             }
         })
     }
+
     /**
      * 选择组添加选中变化事件
      */

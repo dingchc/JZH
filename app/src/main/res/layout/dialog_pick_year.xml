@@ -4,28 +4,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/bottom_sheet"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:behavior_hideable="true"
-        app:behavior_peekHeight="210dp"
-        >
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:divider="@drawable/divider_line"
+        android:dividerPadding="10dp"
+        android:showDividers="middle">
 
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:orientation="vertical">
+            android:layout_height="52dp"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:text="@string/input_learning_year"
+            android:textColor="@color/font_black"/>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_data"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-        </LinearLayout>
-    </FrameLayout>
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
 

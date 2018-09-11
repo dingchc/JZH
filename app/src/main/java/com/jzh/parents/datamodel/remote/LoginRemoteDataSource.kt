@@ -89,11 +89,6 @@ class LoginRemoteDataSource {
         TSHttpController.INSTANCE.doPost(Api.URL_WX_GET_USER_INFO, paramsMap, object : TSHttpCallback {
             override fun onSuccess(res: TSBaseResponse?, json: String?) {
 
-//                val gson = Gson()
-//
-//                val tokenData = gson.fromJson<AccessTokenData>(json, object : TypeToken<AccessTokenData>() {
-//
-//                }.type)
                 getSmsCode()
                 AppLogger.i("json=" + json)
             }
