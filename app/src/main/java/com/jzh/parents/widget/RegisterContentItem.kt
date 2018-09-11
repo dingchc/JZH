@@ -330,6 +330,7 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
         mInputEditText.hint = resources.getString(mHintStringResId!!)
         mInputEditText.background = null
         mInputEditText.textSize = 14.0f
+        mInputEditText.setTextColor(Util.getColorCompat(R.color.font_black))
 
         // 设置是否可输入
         if (!mIsInputEditable!!) {

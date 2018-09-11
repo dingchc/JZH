@@ -26,6 +26,11 @@ public interface Constants {
     int RET_CODE_WX_IS_NOT_INSTALL = -1000;
 
     /**
+     * 入学年份的起始年份
+     */
+    int MIN_YEAR_OF_LEANING = 1980;
+
+    /**
      * 成功
      */
     int RET_CODE_OK = 0;

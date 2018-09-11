@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.jzh.parents.R
 import com.jzh.parents.utils.AppLogger
-import com.jzh.parents.widget.PickYearDialog
 
 /**
  * 选择年份
@@ -16,7 +15,7 @@ import com.jzh.parents.widget.PickYearDialog
  * @author ding
  * Created by Ding on 2018/9/9.
  */
-class PickYearAdapter(mContext: Context, val mYearList: List<String>?, var mAdapterListener: PickYearDialog.PickYearClickListener? = null) : RecyclerView.Adapter<PickYearAdapter.MyViewHolder>() {
+class PickYearAdapter(mContext: Context, var mYearList: List<String>?, var mListener: OnItemClickListener? = null) : RecyclerView.Adapter<PickYearAdapter.MyViewHolder>() {
 
     /**
      * 布局加载器
@@ -28,8 +27,7 @@ class PickYearAdapter(mContext: Context, val mYearList: List<String>?, var mAdap
         holder.yearTextView.text = mYearList?.get(position)
 
         holder.view.setOnClickListener {
-            AppLogger.i("* click item " + mAdapterListener + "， " + mYearList)
-            mAdapterListener?.onYearClick(mYearList?.get(position) ?: "")
+            mListener?.onItemClick(mYearList?.get(position) ?: "")
         }
     }
 
@@ -51,5 +49,17 @@ class PickYearAdapter(mContext: Context, val mYearList: List<String>?, var mAdap
     class MyViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
         val yearTextView: TextView = view.findViewById(R.id.tv_year)
+    }
+
+    /**
+     * 点击条目的回调
+     */
+    interface OnItemClickListener {
+
+        /**
+         * 点击了条目
+         * @param pickedYear 选择的年份
+         */
+        fun onItemClick(pickedYear: String)
     }
 }

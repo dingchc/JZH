@@ -105,14 +105,14 @@ class RegisterActivity : BaseActivity() {
 
         val pickYearDialog = dialog as PickYearDialog
 
-        pickYearDialog.setPickYearClickListener(object : PickYearDialog.PickYearClickListener {
-            override fun onYearClick(year: String) {
-                AppLogger.i("year= " + year)
-            }
-        })
-
         pickYearDialog.show(supportFragmentManager, PickYearDialog.TAG_FRAGMENT)
 
+        pickYearDialog.setPickYearClickListener(object : PickYearDialog.OnPickAYearListener {
+            override fun onPickedYear(year: String) {
+
+                mViewModel?.learningYear?.value = year
+            }
+        })
 
 
     }

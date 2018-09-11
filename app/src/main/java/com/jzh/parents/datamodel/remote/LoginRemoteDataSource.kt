@@ -103,9 +103,11 @@ class LoginRemoteDataSource {
 
 
         val paramsMap = TreeMap<String, String>()
-        paramsMap.put("phone", "15010233266")
+        paramsMap.put("category", "0")
+        paramsMap.put("page", "1")
+        paramsMap.put("status", "0")
 
-        TSHttpController.INSTANCE.doPost("https://t.api.17jzh.com/api/user/sms", paramsMap, object : TSHttpCallback {
+        TSHttpController.INSTANCE.doGet("https://m.nxdev.cn/api/lives/list", paramsMap, object : TSHttpCallback {
             override fun onSuccess(res: TSBaseResponse?, json: String?) {
 
                 AppLogger.i("json=" + json)

@@ -8,9 +8,11 @@ import android.support.design.widget.BottomSheetDialogFragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.widget.FrameLayout
 import com.jzh.parents.R
 import com.jzh.parents.adapter.PickYearAdapter
 import com.jzh.parents.utils.AppLogger
+import com.jzh.parents.utils.Util
 
 /**
  * 选择年份的底部对话框
@@ -21,21 +23,32 @@ import com.jzh.parents.utils.AppLogger
 class PickYearDialog : BottomSheetDialogFragment() {
 
     /**
-     * 监听
-     */
-    private var mListener: PickYearClickListener? = null
-
-    /**
      * 适配器
      */
     private var mAdapter: PickYearAdapter? = null
 
+    /**
+     * 选取了年份的回调
+     */
+    private var mListener: OnPickAYearListener? = null
+
+    private var mBehavior: BottomSheetBehavior<View>? = null
+
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+
+        AppLogger.i("* onCreateDialog")
 
         val customDialog = super.onCreateDialog(savedInstanceState)
 
         val rootView = View.inflate(context, R.layout.dialog_pick_year, null)
+
+        customDialog.setOnShowListener {
+
+            val bottomSheet = customDialog.findViewById<FrameLayout>(android.support.design.R.id.design_bottom_sheet)
+
+            mBehavior = BottomSheetBehavior.from(bottomSheet!!)
+        }
 
         customDialog.setContentView(rootView)
 
@@ -61,13 +74,17 @@ class PickYearDialog : BottomSheetDialogFragment() {
 
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-        val yearList = mutableListOf<String>()
+        val yearList = Util.getLearningYears().map { it -> it.toString() + " 年" }
 
-        for (i in 1980 .. 2018) {
-            yearList.add(i.toString() + " 年")
-        }
+        // 创建年份适配器
+        mAdapter = PickYearAdapter(context!!, yearList, object : PickYearAdapter.OnItemClickListener {
+            override fun onItemClick(pickedYear: String) {
 
-        mAdapter = PickYearAdapter(context!!, yearList)
+                mListener?.onPickedYear(pickedYear)
+
+                mBehavior?.state = BottomSheetBehavior.STATE_HIDDEN
+            }
+        })
 
         recyclerView.adapter = mAdapter
     }
@@ -85,11 +102,10 @@ class PickYearDialog : BottomSheetDialogFragment() {
     /**
      * 设置对话框事件
      */
-    fun setPickYearClickListener(listener: PickYearClickListener) {
+    fun setPickYearClickListener(listener: OnPickAYearListener) {
 
-        mAdapter?.mAdapterListener = listener
-        
         mListener = listener
+
     }
 
     companion object {
@@ -120,13 +136,13 @@ class PickYearDialog : BottomSheetDialogFragment() {
     /**
      * 选择弹窗的点击回调
      */
-    interface PickYearClickListener {
+    interface OnPickAYearListener {
 
         /**
          * 点击年份
          * @param year 年份
          */
-        fun onYearClick(year: String)
+        fun onPickedYear(year: String)
 
     }
 

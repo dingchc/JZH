@@ -51,6 +51,7 @@
             android:textSize="18sp"
             app:rc_hint="@string/input_learning_year"
             app:rc_icon_src="@mipmap/icon_register_learning_year"
+            app:contentText="@={viewModel.learningYear}"
             />
 
         <!-- 名称 -->

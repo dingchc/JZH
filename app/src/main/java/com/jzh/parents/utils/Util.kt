@@ -16,6 +16,7 @@ import android.support.v4.content.ContextCompat
 import android.text.TextUtils
 import com.jzh.parents.app.JZHApplication
 import com.jzh.parents.R
+import com.jzh.parents.app.Constants
 import com.jzh.parents.listener.IDialogCallback
 import java.io.File
 import java.io.FileInputStream
@@ -293,6 +294,18 @@ class Util {
             drawable!!.setBounds(0, 0, targetWidth, targetHeight)
 
             return drawable
+        }
+
+        /**
+         * 获取年份列表
+         */
+        fun getLearningYears(): List<Int> {
+
+            val calendar: Calendar = Calendar.getInstance()
+
+            calendar.timeInMillis = System.currentTimeMillis()
+
+            return Constants.MIN_YEAR_OF_LEANING.rangeTo(calendar.get(Calendar.YEAR)).toList()
         }
     }
 
