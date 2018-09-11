@@ -103,7 +103,17 @@ class RegisterActivity : BaseActivity() {
             dialog = PickYearDialog.newInstance()
         }
 
-        (dialog as PickYearDialog).show(supportFragmentManager, PickYearDialog.TAG_FRAGMENT)
+        val pickYearDialog = dialog as PickYearDialog
+
+        pickYearDialog.setPickYearClickListener(object : PickYearDialog.PickYearClickListener {
+            override fun onYearClick(year: String) {
+                AppLogger.i("year= " + year)
+            }
+        })
+
+        pickYearDialog.show(supportFragmentManager, PickYearDialog.TAG_FRAGMENT)
+
+
 
     }
 

@@ -1,7 +1,6 @@
 package com.jzh.parents.widget
 
 import android.app.Dialog
-import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
@@ -9,10 +8,9 @@ import android.support.design.widget.BottomSheetDialogFragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.widget.FrameLayout
-import android.widget.TextView
 import com.jzh.parents.R
 import com.jzh.parents.adapter.PickYearAdapter
+import com.jzh.parents.utils.AppLogger
 
 /**
  * 选择年份的底部对话框
@@ -25,7 +23,13 @@ class PickYearDialog : BottomSheetDialogFragment() {
     /**
      * 监听
      */
-    private var mListener: PickDialogClickListener? = null
+    private var mListener: PickYearClickListener? = null
+
+    /**
+     * 适配器
+     */
+    private var mAdapter: PickYearAdapter? = null
+
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
@@ -59,13 +63,13 @@ class PickYearDialog : BottomSheetDialogFragment() {
 
         val yearList = mutableListOf<String>()
 
-        for (i in 10..99) {
-            yearList.add("20" + i + " 年")
+        for (i in 1980 .. 2018) {
+            yearList.add(i.toString() + " 年")
         }
 
-        val adapter = PickYearAdapter(context!!, yearList)
+        mAdapter = PickYearAdapter(context!!, yearList)
 
-        recyclerView.adapter = adapter
+        recyclerView.adapter = mAdapter
     }
 
     /**
@@ -74,12 +78,17 @@ class PickYearDialog : BottomSheetDialogFragment() {
      */
     private fun initEvent(rootView: View) {
 
+        AppLogger.i("View = " + rootView)
+
     }
 
     /**
      * 设置对话框事件
      */
-    fun setPickDialogClickListener(listener: PickDialogClickListener) {
+    fun setPickYearClickListener(listener: PickYearClickListener) {
+
+        mAdapter?.mAdapterListener = listener
+        
         mListener = listener
     }
 
@@ -111,18 +120,13 @@ class PickYearDialog : BottomSheetDialogFragment() {
     /**
      * 选择弹窗的点击回调
      */
-    interface PickDialogClickListener {
+    interface PickYearClickListener {
 
         /**
          * 点击年份
          * @param year 年份
          */
         fun onYearClick(year: String)
-
-        /**
-         * 点击取消
-         */
-        fun onCancelClick()
 
     }
 

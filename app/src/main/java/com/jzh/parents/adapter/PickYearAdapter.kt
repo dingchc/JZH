@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.jzh.parents.R
+import com.jzh.parents.utils.AppLogger
+import com.jzh.parents.widget.PickYearDialog
 
 /**
  * 选择年份
@@ -14,7 +16,7 @@ import com.jzh.parents.R
  * @author ding
  * Created by Ding on 2018/9/9.
  */
-class PickYearAdapter(mContext: Context, val mYearList: List<String>?) : RecyclerView.Adapter<PickYearAdapter.MyViewHolder>() {
+class PickYearAdapter(mContext: Context, val mYearList: List<String>?, var mAdapterListener: PickYearDialog.PickYearClickListener? = null) : RecyclerView.Adapter<PickYearAdapter.MyViewHolder>() {
 
     /**
      * 布局加载器
@@ -24,6 +26,11 @@ class PickYearAdapter(mContext: Context, val mYearList: List<String>?) : Recycle
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
         holder.yearTextView.text = mYearList?.get(position)
+
+        holder.view.setOnClickListener {
+            AppLogger.i("* click item " + mAdapterListener + "， " + mYearList)
+            mAdapterListener?.onYearClick(mYearList?.get(position) ?: "")
+        }
     }
 
     override fun getItemCount(): Int {
@@ -33,7 +40,7 @@ class PickYearAdapter(mContext: Context, val mYearList: List<String>?) : Recycle
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
 
-        val view  = mLayoutInflater.inflate(R.layout.item_pick_year, parent, false)
+        val view = mLayoutInflater.inflate(R.layout.item_pick_year, parent, false)
 
         return MyViewHolder(view)
     }
@@ -41,8 +48,8 @@ class PickYearAdapter(mContext: Context, val mYearList: List<String>?) : Recycle
     /**
      * 自定义ViewHolder
      */
-    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class MyViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
-        val yearTextView : TextView = view.findViewById(R.id.tv_year)
+        val yearTextView: TextView = view.findViewById(R.id.tv_year)
     }
 }
