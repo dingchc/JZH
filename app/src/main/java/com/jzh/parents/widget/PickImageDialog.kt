@@ -11,7 +11,7 @@ import android.widget.TextView
 
 
 /**
- * 底部对话框
+ * 选择图片底部对话框
  *
  * @author ding
  * Created by Ding on 2018/9/8.
@@ -85,7 +85,7 @@ class PickImageDialog : BottomSheetDialogFragment() {
     /**
      * 设置对话框事件
      */
-    fun setPickDialogClickListener(listener : PickDialogClickListener) {
+    fun setPickDialogClickListener(listener: PickDialogClickListener) {
         mListener = listener
     }
 

@@ -65,6 +65,11 @@
     <string name="wx_errcode_unknown">发送返回</string>
     <string name="wx_errcode_is_not_install">您还未安装微信</string>
     <string name="select_learning_year">请选择入学年份</string>
+    <string name="section_preschool">学龄前</string>
+    <string name="section_primary_school">小学</string>
+    <string name="section_junior_school">初中</string>
+    <string name="section_senior_school">高中</string>
+
 
 
 </resources>

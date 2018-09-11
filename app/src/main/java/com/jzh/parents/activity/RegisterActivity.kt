@@ -8,6 +8,7 @@ import com.jzh.parents.databinding.ActivityRegisterBinding
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.RegisterViewModel
 import com.jzh.parents.viewmodel.bindadapter.TSDataBindingComponent
+import com.jzh.parents.widget.PickSectionDialog
 import com.jzh.parents.widget.PickYearDialog
 import java.util.*
 
@@ -88,7 +89,7 @@ class RegisterActivity : BaseActivity() {
 //        startActivity(Intent(this@RegisterActivity, HomeActivity::class.java))
 //        finishCompat()
 
-        showPickYearDialog()
+        showPickSectionDialog()
     }
 
     /**
@@ -114,6 +115,24 @@ class RegisterActivity : BaseActivity() {
             }
         })
 
+
+    }
+
+    /**
+     * 显示选择学段对话框
+     */
+    private fun showPickSectionDialog() {
+
+        var dialog = supportFragmentManager.findFragmentByTag(PickSectionDialog.TAG_FRAGMENT)
+
+        if (dialog == null) {
+
+            dialog = PickSectionDialog.newInstance()
+        }
+
+        val pickYearDialog = dialog as PickSectionDialog
+
+        pickYearDialog.show(supportFragmentManager, PickSectionDialog.TAG_FRAGMENT)
 
     }
 
