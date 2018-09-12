@@ -1,6 +1,7 @@
 package com.jzh.parents.activity
 
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.view.View
 import com.jzh.parents.R
@@ -49,11 +50,20 @@ class RegisterActivity : BaseActivity() {
      */
     override fun initEvent() {
 
+
+        // 选择学段
+        mDataBinding?.itemLearningSection?.setOnClickListener {
+
+            showPickSectionDialog()
+        }
+
         // 选择入学年份
         mDataBinding?.itemLearningYear?.setOnClickListener {
 
             showPickYearDialog()
         }
+
+
     }
 
     /**
@@ -86,10 +96,9 @@ class RegisterActivity : BaseActivity() {
 
         AppLogger.i("mViewModel?.studentName?.value = " + mViewModel?.studentName?.value)
 
-//        startActivity(Intent(this@RegisterActivity, HomeActivity::class.java))
-//        finishCompat()
+        startActivity(Intent(this@RegisterActivity, HomeActivity::class.java))
+        finishCompat()
 
-        showPickSectionDialog()
     }
 
     /**
@@ -114,8 +123,6 @@ class RegisterActivity : BaseActivity() {
                 mViewModel?.learningYear?.value = year
             }
         })
-
-
     }
 
     /**
@@ -130,9 +137,23 @@ class RegisterActivity : BaseActivity() {
             dialog = PickSectionDialog.newInstance()
         }
 
-        val pickYearDialog = dialog as PickSectionDialog
+        val pickSectionDialog = dialog as PickSectionDialog
 
-        pickYearDialog.show(supportFragmentManager, PickSectionDialog.TAG_FRAGMENT)
+        pickSectionDialog.show(supportFragmentManager, PickSectionDialog.TAG_FRAGMENT)
+
+        pickSectionDialog.setPickDialogClickListener(object : PickSectionDialog.PickDialogClickListener {
+
+            override fun onPickedSection(type: Int, desc: String) {
+
+                AppLogger.i("* type=$type, desc=$desc")
+                mViewModel?.learningSection?.value = desc
+            }
+
+            override fun onCancelClick() {
+
+            }
+
+        })
 
     }
 

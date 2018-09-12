@@ -44,7 +44,7 @@ class RegisterViewModel(app: Application) : BaseViewModel(app) {
      */
     init {
         repo = RegisterRepository()
-//        studentName.value="123"
+        selectRole.value = 1
     }
 
     /**

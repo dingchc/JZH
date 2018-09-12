@@ -68,29 +68,24 @@ class PickSectionDialog : BottomSheetDialogFragment() {
 
         val cancelBtn: TextView = rootView.findViewById(R.id.btn_cancel)
 
-        // 拍照
+        // 学龄前
         preSchoolBtn.setOnClickListener {
-            mListener?.onCaptureClick()
-            mBehavior?.setState(BottomSheetBehavior.STATE_HIDDEN)
+            pickASection(LearningSectionEnum.SECTION_PRESCHOOL.value, preSchoolBtn.text.toString())
         }
 
-        // 选择相册
+        // 小学
         primaryBtn.setOnClickListener {
-            mListener?.onPhotoClick()
-            mBehavior?.setState(BottomSheetBehavior.STATE_HIDDEN)
+            pickASection(LearningSectionEnum.SECTION_PRIMARY.value, primaryBtn.text.toString())
         }
 
-        // 选择相册
+        // 初中
         juniorBtn.setOnClickListener {
-            mListener?.onPhotoClick()
-            mBehavior?.setState(BottomSheetBehavior.STATE_HIDDEN)
-
+            pickASection(LearningSectionEnum.SECTION_JUNIOR.value, juniorBtn.text.toString())
         }
 
-        // 选择相册
+        // 高中
         seniorBtn.setOnClickListener {
-            mListener?.onPhotoClick()
-            mBehavior?.setState(BottomSheetBehavior.STATE_HIDDEN)
+            pickASection(LearningSectionEnum.SECTION_SENIOR.value, seniorBtn.text.toString())
         }
 
         // 取消
@@ -103,9 +98,20 @@ class PickSectionDialog : BottomSheetDialogFragment() {
     }
 
     /**
+     * 选择了一个学段
+     * @param type 类型
+     * @param desc 描述
+     */
+    private fun pickASection(type: Int, desc: String) {
+
+        mListener?.onPickedSection(type, desc)
+        mBehavior?.state = BottomSheetBehavior.STATE_HIDDEN
+    }
+
+    /**
      * 设置对话框事件
      */
-    fun setPickDialogClickListener(listener : PickDialogClickListener) {
+    fun setPickDialogClickListener(listener: PickDialogClickListener) {
         mListener = listener
     }
 
@@ -140,19 +146,43 @@ class PickSectionDialog : BottomSheetDialogFragment() {
     interface PickDialogClickListener {
 
         /**
-         * 点击拍照
+         * 点击了学段
+         * @param type 类型
+         * @param desc 描述
          */
-        fun onCaptureClick()
-
-        /**
-         * 点击相册
-         */
-        fun onPhotoClick()
+        fun onPickedSection(type: Int, desc: String)
 
         /**
          * 点击取消
          */
         fun onCancelClick()
+
+    }
+
+    /**
+     * 学段枚举
+     */
+    enum class LearningSectionEnum(val value: Int) {
+
+        /**
+         * 学段：学龄前
+         */
+        SECTION_PRESCHOOL(1),
+
+        /**
+         * 学段：小学
+         */
+        SECTION_PRIMARY(2),
+
+        /**
+         * 学段：初中
+         */
+        SECTION_JUNIOR(3),
+
+        /**
+         * 学段：高中
+         */
+        SECTION_SENIOR(4),
 
     }
 
