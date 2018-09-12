@@ -65,6 +65,15 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
     }
 
     /**
+     * 请求直播数据
+     * @param target 数据目标
+     */
+    fun fetchLivesData() {
+
+        repo.fetchLivesData(itemEntities)
+    }
+
+    /**
      * 加载数据
      */
     fun loadItemEntities() {

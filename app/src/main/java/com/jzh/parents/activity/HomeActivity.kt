@@ -142,6 +142,9 @@ class HomeActivity : BaseActivity() {
 
         val handler: Handler = android.os.Handler()
         handler.postDelayed({ mViewModel?.loadItemEntities() }, 500L)
+
+        // 拉取直播数据
+        mViewModel?.fetchLivesData()
     }
 
     /**

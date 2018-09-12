@@ -19,6 +19,7 @@ import android.widget.RadioGroup
 import com.jzh.parents.R
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.Util
+import com.jzh.parents.viewmodel.enum.RoleTypeEnum
 
 /**
  * 注册页面Item
@@ -401,17 +402,17 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
 
             when (radioBtn.getValue()) {
             // 妈妈
-                1 -> {
+                RoleTypeEnum.ROLE_TYPE_MOTHER.value -> {
                     radioBtn.setText(R.string.role_mother)
                 }
             // 爸爸
-                2 -> {
+                RoleTypeEnum.ROLE_TYPE_FATHER.value -> {
                     radioBtn.setText(R.string.role_father)
                     lp as MarginLayoutParams
                     lp.leftMargin = Util.dp2px(context, TSRegisterRadioButton.MARGIN_DIMEN)
                 }
             // 其他
-                3 -> {
+                RoleTypeEnum.ROLE_TYPE_OTHER.value -> {
                     radioBtn.setText(R.string.role_other)
                     lp as MarginLayoutParams
                     lp.leftMargin = Util.dp2px(context, TSRegisterRadioButton.MARGIN_DIMEN)

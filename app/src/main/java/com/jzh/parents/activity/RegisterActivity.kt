@@ -11,7 +11,6 @@ import com.jzh.parents.viewmodel.RegisterViewModel
 import com.jzh.parents.viewmodel.bindadapter.TSDataBindingComponent
 import com.jzh.parents.widget.PickSectionDialog
 import com.jzh.parents.widget.PickYearDialog
-import java.util.*
 
 /**
  * 注册页面
@@ -88,17 +87,9 @@ class RegisterActivity : BaseActivity() {
      */
     fun onRegisterBtnClick(view: View) {
 
-        mViewModel?.studentName?.value = "" + Random().nextInt(10000)
-
-        mViewModel?.selectRole?.value = 2
-
-        mViewModel?.print()
-
-        AppLogger.i("mViewModel?.studentName?.value = " + mViewModel?.studentName?.value)
-
         startActivity(Intent(this@RegisterActivity, HomeActivity::class.java))
-        finishCompat()
 
+        finishCompat()
     }
 
     /**

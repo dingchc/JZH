@@ -17,4 +17,16 @@ object Api {
      * 地址：微信获取用户信息
      */
     const val URL_WX_GET_USER_INFO = "https://api.weixin.qq.com/sns/userinfo"
+
+    /**
+     * 地址：SCHEMAS
+     */
+    private const val URL_API_LIVE_DOMAIN = "https://m.nxdev.cn/"
+
+    /**
+     * 地址：获取直播列表
+     */
+    const val URL_API_LIVE_LIST = URL_API_LIVE_DOMAIN + "api/lives/list"
+
+
 }

@@ -5,6 +5,7 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
 import com.jzh.parents.datamodel.repo.RegisterRepository
 import com.jzh.parents.utils.AppLogger
+import com.jzh.parents.viewmodel.enum.RoleTypeEnum
 
 /**
  * 注册的ViewModel
@@ -44,7 +45,7 @@ class RegisterViewModel(app: Application) : BaseViewModel(app) {
      */
     init {
         repo = RegisterRepository()
-        selectRole.value = 1
+        selectRole.value = RoleTypeEnum.ROLE_TYPE_MOTHER.value
     }
 
     /**

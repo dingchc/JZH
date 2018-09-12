@@ -7,7 +7,7 @@ import com.tunes.library.wrapper.network.TSHttpController
  * @author ding
  * Created by Ding on 2018/8/20.
  */
-class RegisterRemoteDataSource {
+class RegisterRemoteDataSource : BaseRemoteDataSource() {
 
     /**
      * 注册

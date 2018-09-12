@@ -20,7 +20,7 @@ import java.util.*
  * @author ding
  * Created by Ding on 2018/9/9.
  */
-class LoginRemoteDataSource {
+class LoginRemoteDataSource : BaseRemoteDataSource() {
 
     /**
      * 微信授权
@@ -87,27 +87,6 @@ class LoginRemoteDataSource {
         paramsMap.put("openid", openId)
 
         TSHttpController.INSTANCE.doPost(Api.URL_WX_GET_USER_INFO, paramsMap, object : TSHttpCallback {
-            override fun onSuccess(res: TSBaseResponse?, json: String?) {
-
-                getSmsCode()
-                AppLogger.i("json=" + json)
-            }
-
-            override fun onException(e: Throwable?) {
-                AppLogger.i(e?.message)
-            }
-        })
-    }
-
-    fun getSmsCode() {
-
-
-        val paramsMap = TreeMap<String, String>()
-        paramsMap.put("category", "0")
-        paramsMap.put("page", "1")
-        paramsMap.put("status", "0")
-
-        TSHttpController.INSTANCE.doGet("https://m.nxdev.cn/api/lives/list", paramsMap, object : TSHttpCallback {
             override fun onSuccess(res: TSBaseResponse?, json: String?) {
 
                 AppLogger.i("json=" + json)

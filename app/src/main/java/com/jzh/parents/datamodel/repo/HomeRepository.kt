@@ -1,6 +1,9 @@
 package com.jzh.parents.datamodel.repo
 
+import android.arch.lifecycle.MutableLiveData
 import com.jzh.parents.datamodel.local.HomeLocalDataSource
+import com.jzh.parents.datamodel.remote.HomeRemoteDataSource
+import com.jzh.parents.viewmodel.entity.BaseLiveEntity
 import com.jzh.parents.viewmodel.entity.FuncEntity
 
 /**
@@ -16,15 +19,21 @@ class HomeRepository : BaseRepository() {
      */
     private var mLocalDataSource: HomeLocalDataSource? = null
 
+    /**
+     * 远程数据源
+     */
+    private var mRemoteDataSource: HomeRemoteDataSource? = null
+
     init {
         mLocalDataSource = HomeLocalDataSource()
+        mRemoteDataSource = HomeRemoteDataSource()
     }
 
 
     /**
      * 返回功能栏数据
      */
-    fun loadFuncEntity() : FuncEntity? {
+    fun loadFuncEntity(): FuncEntity? {
 
         // 功能条
         return mLocalDataSource?.loadFuncEntity()
@@ -32,5 +41,14 @@ class HomeRepository : BaseRepository() {
 
     fun loadItemEntities() {
 
+    }
+
+    /**
+     * 请求直播数据
+     * @param target 数据目标
+     */
+    fun fetchLivesData(target: MutableLiveData<MutableList<BaseLiveEntity>>) {
+
+        mRemoteDataSource?.fetchLivesData(target)
     }
 }
