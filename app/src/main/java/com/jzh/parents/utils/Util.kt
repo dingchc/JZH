@@ -14,6 +14,7 @@ import android.support.annotation.DrawableRes
 import android.support.annotation.IdRes
 import android.support.v4.content.ContextCompat
 import android.text.TextUtils
+import com.google.gson.Gson
 import com.jzh.parents.app.JZHApplication
 import com.jzh.parents.R
 import com.jzh.parents.app.Constants
@@ -21,6 +22,7 @@ import com.jzh.parents.listener.IDialogCallback
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
+import java.lang.reflect.Type
 import java.util.*
 
 /**
@@ -306,6 +308,16 @@ class Util {
             calendar.timeInMillis = System.currentTimeMillis()
 
             return Constants.MIN_YEAR_OF_LEANING.rangeTo(calendar.get(Calendar.YEAR)).toList()
+        }
+
+        /**
+         * json转对象
+         */
+        fun <T> fromJson(json : String, type : Type) : T {
+
+            val gson = Gson()
+
+            return gson.fromJson<T>(json, type)
         }
     }
 

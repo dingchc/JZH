@@ -99,6 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:text="@{itemEntity.title}"
+                    android:maxLines="2"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
 
@@ -141,18 +142,9 @@
                     android:layout_height="wrap_content"
                     android:layout_alignLeft="@id/tv_author_name"
                     android:layout_below="@id/tv_author_name"
-                    android:text="国家一级讲师"
-                    android:textColor="@color/white"
-                    android:textSize="8sp" />
-
-                <!-- 直播人描述2 -->
-                <TextView
-                    android:id="@+id/tv_author_desc2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@id/tv_author_name"
-                    android:layout_below="@id/tv_author_desc1"
-                    android:text="CCTV特约评论员"
+                    android:text="@{itemEntity.authorDescription}"
+                    android:maxLines="2"
+                    android:layout_marginRight="80dp"
                     android:textColor="@color/white"
                     android:textSize="8sp" />
 

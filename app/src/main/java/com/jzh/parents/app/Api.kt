@@ -24,9 +24,14 @@ object Api {
     private const val URL_API_LIVE_DOMAIN = "https://m.nxdev.cn/"
 
     /**
-     * 地址：获取直播列表
+     * 地址：获取首页直播列表
      */
-    const val URL_API_LIVE_LIST = URL_API_LIVE_DOMAIN + "api/lives/list"
+    const val URL_API_HOME_LIVE_LIST = URL_API_LIVE_DOMAIN + "api/index/lives"
+
+    /**
+     * 地址：获取首页访客列表
+     */
+    const val URL_API_HOME_LIVE_LIST_FOR_GUEST = URL_API_LIVE_DOMAIN + "api/guest/lives"
 
 
 }
