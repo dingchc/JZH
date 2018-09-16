@@ -28,6 +28,11 @@ data class LiveItemEntity(val liveInfo: LiveInfo, val liveType: LiveItemEnum = L
         /**
          * 带Footer条目
          */
-        ITEM_WITH_FOOTER
+        ITEM_WITH_FOOTER,
+
+        /**
+         * 带Header、Footer条目
+         */
+        ITEM_SINGLE,
     }
 }

@@ -13,160 +13,160 @@ data class LiveData(
         /**
          * id
          */
-        val id: Long,
+        var id: Long,
 
         /**
          * 0-家长会 1-讲座 2-视频直播
          */
-        val type: Int,
+        var type: Int,
 
         /**
          * 1-已开始 2-准备开始 3-已结束 4-删除
          */
-        val status: Int,
+        var status: Int,
 
         /**
          * 用户id
          */
-        @SerializedName("user_id") val userId: Long,
+        @SerializedName("user_id") var userId: Long,
 
-        val tpl: Int,
+        var tpl: Int,
 
         /**
          * 分类
          */
-        val category: Int,
+        var category: Int,
 
         /**
          * 收藏数
          */
-        val favorites: Int,
+        var favorites: Int,
 
         /**
          * 观看数
          */
-        val look: Int,
+        var look: Int,
 
         /**
          * 说数
          */
-        val talk: Int,
+        var talk: Int,
 
         /**
          * 年级
          */
-        val grades: Int,
+        var grades: Int,
 
         /**
          * 价格
          */
-        val price: String,
+        var price: String?,
 
         /**
          * 标题
          */
-        val title: String,
+        var title: String?,
 
         /**
          * 描述
          */
-        val desc: String,
+        var desc: String?,
 
         /**
          * 评论
          */
-        val comments: Int,
+        var comments: Int,
 
         /**
          * 摘要
          */
-        val brief: String,
+        var brief: String?,
 
         /**
          * VIP等级
          */
-        @SerializedName("live_vip") val liveVIP: Int,
+        @SerializedName("live_vip") var liveVIP: Int,
 
         /**
          * 开始时间
          */
-        @SerializedName("start_at") val startAt: String,
+        @SerializedName("start_at") var startAt: String?,
 
         /**
          * 结束时间
          */
-        @SerializedName("end_at") val endAt: String,
+        @SerializedName("end_at") var endAt: String?,
 
         /**
          * 离开时间
          */
-        @SerializedName("leave_time") val leaveTime: String,
+        @SerializedName("leave_time") var leaveTime: String?,
 
         /**
          * 开始时间-天
          */
-        @SerializedName("start_day") val startDay: String,
+        @SerializedName("start_day") var startDay: String?,
 
         /**
          * 开始时间-周
          */
-        @SerializedName("start_week") val startWeek: String,
+        @SerializedName("start_week") var startWeek: String?,
 
         /**
          * 开始时间-小时
          */
-        @SerializedName("start_hour") val startHour: String,
+        @SerializedName("start_hour") var startHour: String?,
 
         /**
          * 是否免费
          */
-        @SerializedName("is_free") val isFree: Int,
+        @SerializedName("is_free") var isFree: Int,
 
         /**
          * 开始已收藏
          */
-        @SerializedName("is_favorite") val isFavorite: Int,
+        @SerializedName("is_favorite") var isFavorite: Int,
 
         /**
          * 开始已预约
          */
-        @SerializedName("is_subscribe") val isSubscribe: Int,
+        @SerializedName("is_subscribe") var isSubscribe: Int,
 
         /**
          * 访客
          */
-        val guest: Guest,
+        var guest: Guest?,
 
         /**
          * 图片
          */
-        val pics: List<Pic>) {
+        var pics: List<Pic>?) {
 
     /**
      * 访客
      */
-    data class Guest(@SerializedName("role_id") val roleId: Int,
-                     @SerializedName("realname") val realName: String,
-                     @SerializedName("headimg") val headImg: String,
-                     @SerializedName("userdetail") val userDetail: UserDetail) {
+    data class Guest(@SerializedName("role_id") var roleId: Int,
+                     @SerializedName("realname") var realName: String?,
+                     @SerializedName("headimg") var headImg: String?,
+                     @SerializedName("userdetail") var userDetail: UserDetail?) {
 
     }
 
     /**
      * 用户详情
      */
-    data class UserDetail(@SerializedName("id") val id: Int,
-                          @SerializedName("user_id") val userId: String,
-                          @SerializedName("desc") val desc: String) {
+    data class UserDetail(@SerializedName("id") var id: Int,
+                          @SerializedName("user_id") var userId: String?,
+                          @SerializedName("desc") var desc: String?) {
 
     }
 
     /**
      * 图片
      */
-    data class Pic(val position: Int,
-                   val info: String,
-                   @SerializedName("live_id") val live_id: Long) {
+    data class Pic(var position: Int,
+                   var info: String?,
+                   @SerializedName("live_id") var live_id: Long) {
 
     }
 }

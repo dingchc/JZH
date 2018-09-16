@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -35,9 +36,8 @@
             android:paddingEnd="@dimen/activity_horizontal_margin"
             android:paddingStart="@dimen/activity_horizontal_margin"
             android:paddingTop="24dp"
-            android:visibility="@{itemEntity.liveType == LiveItemEnum.ITEM_WITH_HEADER ? View.VISIBLE : View.GONE}">
+            android:visibility="@{(itemEntity.liveType == LiveItemEnum.ITEM_WITH_HEADER || itemEntity.liveType == LiveItemEnum.ITEM_SINGLE) ? View.VISIBLE : View.GONE}">
 
-            <!-- android:text="@string/home_live_will" -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="晚上 19:30 不见不散"
+                android:text="@{itemEntity.liveInfo.contentType == LiveInfoEnum.TYPE_WILL ? @string/home_live_will_tip : @string/home_live_review_tip}"
                 android:textColor="@color/font_gray"
                 android:textSize="10sp" />
 
@@ -66,7 +66,7 @@
                 android:drawablePadding="2dp"
                 android:drawableRight="@mipmap/icon_home_live_more"
                 android:gravity="center_vertical"
-                android:text="全部(6)"
+                android:text="@{@string/all_with_count(itemEntity.liveInfo.liveCnt)}"
                 android:textColor="@color/font_gray"
                 android:textSize="12sp" />
 
@@ -90,7 +90,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
                     android:scaleType="centerCrop"
-                    android:src="@mipmap/timg" />
+                    bind:image="@{itemEntity.liveInfo.imageUrl}"
+                    bind:placeHolder="@{@drawable/bg_home_mask}" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -109,7 +110,7 @@
                         android:ellipsize="end"
                         android:gravity="center_vertical"
                         android:maxLines="2"
-                        android:text="@string/tip_ops_permission"
+                        android:text="@{itemEntity.liveInfo.title}"
                         android:textColor="@color/font_black"
                         android:textSize="14sp" />
 
@@ -124,7 +125,7 @@
                         android:drawableLeft="@mipmap/icon_home_live_time"
                         android:drawablePadding="5dp"
                         android:gravity="center_vertical"
-                        android:text="2018-10-11 10:30"
+                        android:text="@{itemEntity.liveInfo.dateTime}"
                         android:textColor="@color/font_light_black"
                         android:textSize="11sp" />
 
@@ -140,7 +141,7 @@
                         android:drawableLeft="@mipmap/icon_home_live_attendance"
                         android:drawablePadding="3dp"
                         android:gravity="center_vertical"
-                        android:text="123456 收听"
+                        android:text="@{@string/count_for_look(itemEntity.liveInfo.look)}"
                         android:textColor="@color/gray"
                         android:textSize="11sp" />
 
@@ -155,7 +156,7 @@
                         android:drawableLeft="@mipmap/icon_home_live_comments"
                         android:drawablePadding="3dp"
                         android:gravity="center_vertical"
-                        android:text="3456 评论"
+                        android:text="@{@string/count_for_comment(itemEntity.liveInfo.comments)}"
                         android:textColor="@color/gray"
                         android:textSize="11sp" />
 
@@ -164,7 +165,7 @@
                         android:layout_height="32dp"
                         android:layout_alignBottom="@id/tv_live_comments"
                         android:layout_alignRight="@id/tv_live_title"
-                        android:background="@mipmap/icon_home_live_subscribe"
+                        bind:srcByType="@{itemEntity.liveInfo}"
                         android:text="预约"
                         android:textColor="@color/white"
                         android:textSize="13sp" />
@@ -180,7 +181,7 @@
             android:orientation="vertical"
             android:paddingBottom="27dp"
             android:paddingTop="4dp"
-            android:visibility="@{itemEntity.liveType == LiveItemEnum.ITEM_WITH_FOOTER ? View.VISIBLE : View.GONE}">
+            android:visibility="@{(itemEntity.liveType == LiveItemEnum.ITEM_WITH_FOOTER || itemEntity.liveType == LiveItemEnum.ITEM_SINGLE) ? View.VISIBLE : View.GONE}">
 
             <TextView
                 android:id="@+id/tv_view_all"

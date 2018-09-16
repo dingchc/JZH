@@ -41,6 +41,36 @@ public interface Constants {
     int RET_CODE_OK = 0;
 
     /**
+     * 是否预约：否
+     */
+    int TYPE_SUBSCRIBE_NO = 0;
+
+    /**
+     * 是否预约：是
+     */
+    int TYPE_SUBSCRIBE_YES = 1;
+
+    /**
+     * 是否已收藏：否
+     */
+    int TYPE_FAVORITE_NO = 0;
+
+    /**
+     * 是否已收藏：是
+     */
+    int TYPE_FAVORITE_YES = 1;
+
+    /**
+     * 首页显示即将播放的个数：2个
+     */
+    int HOME_LIVE_WILL_LIMIT = 2;
+
+    /**
+     * 首页精彩回放即将播放的个数：3个
+     */
+    int HOME_LIVE_REVIEW_LIMIT = 3;
+
+    /**
      * wx的token
      */
     String EXTRA_WX_TOKEN = "wx_token";

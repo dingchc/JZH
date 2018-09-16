@@ -3,14 +3,17 @@ package com.jzh.parents.datamodel.remote
 import android.arch.lifecycle.MutableLiveData
 import com.google.gson.reflect.TypeToken
 import com.jzh.parents.app.Api
+import com.jzh.parents.app.Constants
+import com.jzh.parents.app.Constants.HOME_LIVE_REVIEW_LIMIT
 import com.jzh.parents.datamodel.data.LiveData
-import com.jzh.parents.datamodel.response.HomeRes
 import com.jzh.parents.datamodel.response.HomeShowRes
 import com.jzh.parents.datamodel.response.LiveListRes
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.Util
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
+import com.jzh.parents.viewmodel.entity.LiveItemEntity
 import com.jzh.parents.viewmodel.entity.home.HomeLiveNowEntity
+import com.jzh.parents.viewmodel.info.LiveInfo
 import com.tunes.library.wrapper.network.TSHttpController
 import com.tunes.library.wrapper.network.listener.TSHttpCallback
 import com.tunes.library.wrapper.network.model.TSBaseResponse
@@ -59,14 +62,91 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
      */
     fun composeLiveEntities(homeShowRes: HomeShowRes, target: MutableLiveData<MutableList<BaseLiveEntity>>) {
 
+        // 组装的实体
+        val showEntities = mutableListOf<BaseLiveEntity>()
+
         val liveStarted: LiveData = homeShowRes.output.liveStartedList.last()
 
         // 正在直播
-        val livingEntity = HomeLiveNowEntity(onlineCount = liveStarted.look, title = liveStarted.title, author = liveStarted.guest.realName, avatarUrl = liveStarted.guest.headImg, authorDescription = liveStarted.guest.userDetail.desc)
+        val livingEntity = HomeLiveNowEntity(onlineCount = liveStarted.look, title = liveStarted.title ?: "", author = liveStarted.guest?.realName ?: "", avatarUrl = liveStarted.guest?.headImg ?: "", authorDescription = liveStarted.guest?.userDetail?.desc ?: "")
 
-        val entities = mutableListOf<BaseLiveEntity>(livingEntity)
+        showEntities.add(livingEntity)
 
-        target.value = entities
+        // 即将播出
+        val liveReadyList: List<LiveData>? = homeShowRes.output.liveReadyList
+
+        if (liveReadyList != null) {
+
+            for ((index, value) in liveReadyList.withIndex()) {
+
+                // 达到最大显示数，跳出
+                if (index == Constants.HOME_LIVE_WILL_LIMIT) {
+                    break
+                }
+
+                val liveInfo = LiveInfo(title = value.title ?: "", imageUrl = value.pics?.last()?.info ?: "", dateTime = value.startAt ?: "", look = value.look, comments = value.comments, isFavorited = value.isFavorite, isSubscribed = value.isSubscribe, liveCnt = homeShowRes.output.readyCount, contentType = LiveInfo.LiveInfoEnum.TYPE_WILL)
+
+                var liveItemEntity: LiveItemEntity
+
+                // 只有一条
+                if (index == 0 && index == liveReadyList.size - 1) {
+                    liveItemEntity = LiveItemEntity(liveInfo, LiveItemEntity.LiveItemEnum.ITEM_SINGLE)
+                }
+                // 第一条
+                else if (index == 0) {
+                    liveItemEntity = LiveItemEntity(liveInfo, LiveItemEntity.LiveItemEnum.ITEM_WITH_HEADER)
+                }
+                // 最后一条
+                else if (index == Constants.HOME_LIVE_WILL_LIMIT - 1) {
+                    liveItemEntity = LiveItemEntity(liveInfo, LiveItemEntity.LiveItemEnum.ITEM_WITH_FOOTER)
+                }
+                // 正常的
+                else {
+                    liveItemEntity = LiveItemEntity(liveInfo, LiveItemEntity.LiveItemEnum.ITEM_DEFAULT)
+                }
+
+                showEntities.add(liveItemEntity)
+            }
+        }
+
+        // 精彩回顾
+        val liveFinishList: List<LiveData>? = homeShowRes.output.liveFinishList
+
+        if (liveFinishList != null) {
+
+            for ((index, value) in liveFinishList.withIndex()) {
+
+                // 达到最大显示数，跳出
+                if (index == Constants.HOME_LIVE_REVIEW_LIMIT) {
+                    break
+                }
+
+                val liveInfo = LiveInfo(title = value.title ?: "", imageUrl = value.pics?.last()?.info ?: "", dateTime = value.startAt ?: "", look = value.look, comments = value.comments, isFavorited = value.isFavorite, isSubscribed = value.isSubscribe, liveCnt = homeShowRes.output.finishCount, contentType = LiveInfo.LiveInfoEnum.TYPE_REVIEW)
+
+                var liveItemEntity: LiveItemEntity
+
+                // 只有一条
+                if (index == 0 && index == liveFinishList.size - 1) {
+                    liveItemEntity = LiveItemEntity(liveInfo, LiveItemEntity.LiveItemEnum.ITEM_SINGLE)
+                }
+                // 第一条
+                else if (index == 0) {
+                    liveItemEntity = LiveItemEntity(liveInfo, LiveItemEntity.LiveItemEnum.ITEM_WITH_HEADER)
+                }
+                // 最后一条
+                else if (index == Constants.HOME_LIVE_REVIEW_LIMIT - 1) {
+                    liveItemEntity = LiveItemEntity(liveInfo, LiveItemEntity.LiveItemEnum.ITEM_WITH_FOOTER)
+                }
+                // 正常的
+                else {
+                    liveItemEntity = LiveItemEntity(liveInfo, LiveItemEntity.LiveItemEnum.ITEM_DEFAULT)
+                }
+
+                showEntities.add(liveItemEntity)
+            }
+        }
+
+        target.value = showEntities
     }
 
 
