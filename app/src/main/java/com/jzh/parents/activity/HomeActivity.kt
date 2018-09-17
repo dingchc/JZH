@@ -71,7 +71,7 @@ class HomeActivity : BaseActivity() {
             mAdapter?.mDataList = itemEntities
             mAdapter?.notifyDataSetChanged()
 
-            AppLogger.i("* list changed... ")
+            AppLogger.i("* list changed... " + itemEntities)
 
         })
 
@@ -139,9 +139,6 @@ class HomeActivity : BaseActivity() {
         mDataBinding?.rvData?.adapter = mAdapter
 
         mAdapter?.mListener = mAdapterListener
-
-        val handler: Handler = android.os.Handler()
-        handler.postDelayed({ mViewModel?.loadItemEntities() }, 500L)
 
         // 拉取直播数据
         mViewModel?.fetchLivesData()

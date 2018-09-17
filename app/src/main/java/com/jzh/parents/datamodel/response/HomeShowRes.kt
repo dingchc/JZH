@@ -19,9 +19,9 @@ data class HomeShowRes(val output: Output
      */
     data class Output(@SerializedName("ready_count") val readyCount: Int,
                       @SerializedName("finish_count") val finishCount: Int,
-                      @SerializedName("live_started") val liveStartedList: List<LiveData>,
-                      @SerializedName("live_ready") val liveReadyList: List<LiveData>,
-                      @SerializedName("live_finish") val liveFinishList: List<LiveData>) {
+                      @SerializedName("live_started") val liveStartedList: List<LiveData>?,
+                      @SerializedName("live_ready") val liveReadyList: List<LiveData>?,
+                      @SerializedName("live_finish") val liveFinishList: List<LiveData>?) {
 
     }
 }

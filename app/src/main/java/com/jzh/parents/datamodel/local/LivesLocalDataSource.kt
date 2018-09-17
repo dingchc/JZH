@@ -1,15 +1,10 @@
 package com.jzh.parents.datamodel.local
 
-import com.jzh.parents.datamodel.data.BannerData
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
 import com.jzh.parents.viewmodel.entity.FuncEntity
 import com.jzh.parents.viewmodel.entity.LiveItemEntity
 import com.jzh.parents.viewmodel.entity.SearchEntity
-import com.jzh.parents.viewmodel.entity.home.HomeBannerEntity
-import com.jzh.parents.viewmodel.entity.home.HomeLiveCategoryEntity
-import com.jzh.parents.viewmodel.entity.home.HomeLiveNowEntity
-import com.jzh.parents.viewmodel.entity.home.HomeLiveTopPicksEntity
 import com.jzh.parents.viewmodel.info.LiveInfo
 
 /**

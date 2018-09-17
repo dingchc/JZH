@@ -179,7 +179,7 @@ public class CircleBannerPage extends RelativeLayout implements
 
         RequestOptions options = new RequestOptions();
         options.placeholder(R.mipmap.bg_home_mask);
-        Glide.with(JZHApplication.Companion.getInstance()).load(info.getImageUrl()).apply(options).into(img);
+        Glide.with(JZHApplication.Companion.getInstance()).load(info.getImgUrl()).apply(options).into(img);
 
         img.setOnClickListener(new OnClickListener() {
             @Override
