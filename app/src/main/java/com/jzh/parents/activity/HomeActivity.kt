@@ -141,7 +141,7 @@ class HomeActivity : BaseActivity() {
         mAdapter?.mListener = mAdapterListener
 
         // 拉取直播数据
-        mViewModel?.fetchLivesData()
+        mViewModel?.fetchHomeLiveData()
     }
 
     /**

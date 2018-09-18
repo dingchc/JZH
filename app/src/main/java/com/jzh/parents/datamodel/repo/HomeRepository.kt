@@ -47,8 +47,8 @@ class HomeRepository : BaseRepository() {
      * 请求直播数据
      * @param target 数据目标
      */
-    fun fetchLivesData(target: MutableLiveData<MutableList<BaseLiveEntity>>) {
+    fun fetchHomeLiveData(target: MutableLiveData<MutableList<BaseLiveEntity>>) {
 
-        mRemoteDataSource?.fetchLivesData(target)
+        mRemoteDataSource?.fetchHomeLiveData(target)
     }
 }

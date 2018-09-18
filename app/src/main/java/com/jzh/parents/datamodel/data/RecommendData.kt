@@ -11,8 +11,8 @@ import com.google.gson.annotations.SerializedName
 data class RecommendData(val keyword: String? = "",
                          @SerializedName("re_id") val reId: Long = 0,
                          val type: Int = 0,
-                         @SerializedName("pic") val pics: List<Pic>?,
-                         @SerializedName("live") val lives: List<Live>?) {
+                         @SerializedName("pic") val pic: Pic?,
+                         @SerializedName("live") val live: Live?) {
 
     /**
      * 图片信息

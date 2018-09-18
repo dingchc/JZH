@@ -8,7 +8,7 @@ import com.jzh.parents.datamodel.data.LiveData
  * @author ding
  * Created by Ding on 2018/9/12.
  */
-data class HomeShowRes(val output: Output
+data class HomeShowRes(val output: Output?
 
 
 ) : BaseRes() {
