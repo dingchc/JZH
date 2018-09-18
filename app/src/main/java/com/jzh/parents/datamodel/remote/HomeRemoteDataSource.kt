@@ -15,6 +15,7 @@ import com.jzh.parents.utils.Util
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
 import com.jzh.parents.viewmodel.entity.LiveItemEntity
 import com.jzh.parents.viewmodel.entity.home.HomeBannerEntity
+import com.jzh.parents.viewmodel.entity.home.HomeLiveCategoryEntity
 import com.jzh.parents.viewmodel.entity.home.HomeLiveNowEntity
 import com.jzh.parents.viewmodel.info.LiveInfo
 import com.tunes.library.wrapper.network.TSHttpController
@@ -122,6 +123,9 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
         // 制作即将直播
         makeLiveWillItems(homeShowRes, showEntities)
 
+        // 制作直播分类
+        makeLiveCategoryItem(homeConfigRes, showEntities)
+
         // 制作精彩回放直播
         makeLiveReviewItems(homeShowRes, showEntities)
 
@@ -194,6 +198,31 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
         val liveReadyList: List<LiveData>? = homeShowRes?.output?.liveReadyList
 
         showEntities.addAll(composeLiveItemList(liveReadyList, LiveInfo.LiveInfoEnum.TYPE_WILL, homeShowRes?.output?.readyCount ?: 0, Constants.HOME_LIVE_WILL_LIMIT))
+    }
+
+    /**
+     * 直播分类
+     *
+     * @param homeConfigRes 配置数据（推荐或回顾）
+     * @param showEntities 主页的条目
+     */
+    private fun makeLiveCategoryItem(homeConfigRes: HomeConfigRes?, showEntities: MutableList<BaseLiveEntity>) {
+
+        val categoryList = mutableListOf<HomeLiveCategoryEntity.LiveCategory>()
+
+        homeConfigRes?.output?.categoryList?.let {
+
+            homeConfigRes.output.categoryList.forEach {
+
+                val category = HomeLiveCategoryEntity.LiveCategory(it.name ?: "", String.format("共场%d讲座", it.count))
+                categoryList.add(category)
+            }
+
+            if (categoryList.isNotEmpty()) {
+                showEntities.add(HomeLiveCategoryEntity(categoryList))
+            }
+        }
+
     }
 
     /**
