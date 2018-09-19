@@ -17,6 +17,7 @@ import com.jzh.parents.viewmodel.entity.LiveItemEntity
 import com.jzh.parents.viewmodel.entity.home.HomeBannerEntity
 import com.jzh.parents.viewmodel.entity.home.HomeLiveCategoryEntity
 import com.jzh.parents.viewmodel.entity.home.HomeLiveNowEntity
+import com.jzh.parents.viewmodel.entity.home.HomeLiveTopPicksEntity
 import com.jzh.parents.viewmodel.info.LiveInfo
 import com.tunes.library.wrapper.network.TSHttpController
 import com.tunes.library.wrapper.network.listener.TSHttpCallback
@@ -220,6 +221,33 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
 
             if (categoryList.isNotEmpty()) {
                 showEntities.add(HomeLiveCategoryEntity(categoryList))
+            }
+        }
+
+    }
+
+    /**
+     * 直播推荐
+     *
+     * @param homeConfigRes 配置数据（推荐或回顾）
+     * @param showEntities 主页的条目
+     */
+    private fun makeLiveRecommendItems(homeConfigRes: HomeConfigRes?, showEntities: MutableList<BaseLiveEntity>) {
+
+        val recommendList = mutableListOf<LiveInfo>()
+
+        homeConfigRes?.output?.recommendList?.let {
+
+            homeConfigRes.output.recommendList.forEach {
+
+                val liveItem1 = LiveInfo(title = it.live?.title?: "", imageUrl = it.pic?.info ?: "", recommendPos = it.pic?.position ?: 0)
+
+                recommendList.add(liveItem1)
+            }
+
+            if (recommendList.isNotEmpty()) {
+                val recommendEntity = HomeLiveTopPicksEntity(recommendList)
+                showEntities.add(recommendEntity)
             }
         }
 

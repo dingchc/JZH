@@ -16,7 +16,7 @@ data class HomeConfigRes(val output: Output) : BaseRes() {
      * Output结构
      */
     data class Output(@SerializedName("banner") val bannerList: List<BannerData>?,
-                      @SerializedName("recommend") val recommendList: List<RecommendData>,
+                      @SerializedName("recommend") val recommendList: List<RecommendData>?,
                       @SerializedName("category") val categoryList: List<CategoryData>) {
 
     }

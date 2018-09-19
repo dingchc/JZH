@@ -56,7 +56,12 @@ class LiveInfo(
         /**
          * 数量
          */
-        val liveCnt: Int = 0) {
+        val liveCnt: Int = 0,
+
+        /**
+         * 推荐的位置（排序）
+         */
+        val recommendPos: Int = 0) {
 
     /**
      * 直播条目的类型
