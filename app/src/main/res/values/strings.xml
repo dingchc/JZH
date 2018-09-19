@@ -74,6 +74,7 @@
     <string name="count_for_look">%1$d 收听</string>
     <string name="count_for_comment">%1$d 评论</string>
     <string name="all_with_count">全部(%1$d)</string>
+    <string name="tip_sdcard_cannot_use">sd卡不可用</string>
 
 
 

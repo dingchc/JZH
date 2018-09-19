@@ -6,6 +6,7 @@ import android.view.View
 import com.jzh.parents.R
 import com.jzh.parents.databinding.ActivityMyselfEditBinding
 import com.jzh.parents.utils.AppLogger
+import com.jzh.parents.utils.MPermissionUtil
 import com.jzh.parents.viewmodel.MyselfEditViewModel
 import com.jzh.parents.widget.MyselfContentItem
 import com.jzh.parents.widget.PhoneEditDialog
@@ -143,12 +144,26 @@ class MyselfEditActivity : BaseActivity() {
                 AppLogger.i("onCaptureClick")
 
                 pickImageDialog.dismiss()
+
+                if (!checkPermission(MPermissionUtil.PermissionRequest.CAMERA)) {
+                    return
+                }
+
+                callCameraCapture();
+
             }
 
             override fun onPhotoClick() {
                 AppLogger.i("onPhotoClick")
 
                 pickImageDialog.dismiss()
+
+                if (!checkPermission(MPermissionUtil.PermissionRequest.READ_WRITE_STORAGE)) {
+                    return
+                }
+
+                callChoosePicture()
+
             }
 
             override fun onCancelClick() {
@@ -186,6 +201,17 @@ class MyselfEditActivity : BaseActivity() {
             }
         })
 
+    }
+
+    /**
+     * 相册选择或拍照后的回调
+     * case: 直接返回、预览、裁剪
+     *
+     * @param path 路径
+     */
+    override fun onPhotoSinglePicked(path: String?) {
+
+        AppLogger.i("path = " + path)
     }
 
     /**

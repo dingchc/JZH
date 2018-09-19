@@ -1,11 +1,16 @@
 package com.jzh.parents.activity
 
+import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.support.annotation.StringRes
 import android.support.v4.app.ActivityOptionsCompat
+import android.support.v4.content.FileProvider
 import android.support.v4.widget.SlidingPaneLayout
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
@@ -17,12 +22,15 @@ import android.view.*
 import android.widget.FrameLayout
 import android.widget.Toast
 import com.jzh.parents.R
+import com.jzh.parents.app.Constants
 import com.jzh.parents.listener.IDialogCallback
 import com.jzh.parents.utils.*
 import com.jzh.parents.widget.TSProgressDialog
 import com.jzh.parents.widget.TSToolbar
 import com.jzh.parents.widget.swipe.PageSlidingPaneLayout
 import com.jzh.parents.widget.TSToolbar.ToolbarClickListener
+import java.io.File
+import java.util.*
 
 /**
  * Activity父类
@@ -501,6 +509,16 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
      */
     protected fun onPermissionGranted(requestCode: Int) {
 
+        // 拍照
+        if (requestCode == MPermissionUtil.PermissionRequest.CAMERA.requestCode) {
+
+            callCameraCapture()
+        }
+        // 选择相册
+        else if (requestCode == MPermissionUtil.PermissionRequest.READ_WRITE_STORAGE.requestCode) {
+
+            callChoosePicture()
+        }
     }
 
     /**
@@ -581,6 +599,191 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
      * @return 控件
      */
     protected abstract fun getContentLayout(): View
+
+    /**
+     * 拍照
+     */
+    protected fun callCameraCapture() {
+
+        if (!Util.checkSDExists()) {
+            Toast.makeText(this, getString(R.string.tip_sdcard_cannot_use), Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        val fileUri = getOutputMediaFileUri()
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri)
+        startActivityForResult(intent, Constants.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE)
+    }
+
+    /**
+     * 选择图片
+     */
+    protected fun callChoosePicture() {
+
+        if (!Util.checkSDExists()) {
+            Toast.makeText(this, getString(R.string.tip_sdcard_cannot_use), Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(intent, Constants.PHONE_ALBUM_REQUEST_CODE)
+    }
+
+    /**
+     * 获取媒体存放路径URI
+     *
+     * @return 媒体存放路径
+     */
+    protected fun getOutputMediaFileUri(): Uri? {
+
+        return getOutputMediaFileUri(getImgOutputFile()?.absolutePath ?: "")
+    }
+
+    /**
+     * 获取图片文件
+     *
+     * @return 文件
+     */
+    fun getImgOutputFile(): File? {
+
+        val filePath = File(Util.getAppDir())
+
+        if (!filePath.exists()) {
+            if (!filePath.mkdirs()) {
+                return null
+            }
+        }
+
+        val path = DirUtil.getValidPath(Util.getAppDir(), DateUtils.formatDateString(Date(), DateUtils.YYYYMMDD_HHMMSS) + ".jpg")
+        AppLogger.i(AppLogger.TAG, "path=" + path)
+
+        return File(path)
+    }
+
+    /**
+     * 获取媒体存放路径URI
+     *
+     * @param filePath 输出路径
+     * @return 媒体存放路径
+     */
+    protected fun getOutputMediaFileUri(filePath: String): Uri? {
+
+        val file = File(filePath)
+
+        var uri: Uri? = null
+
+        try {
+
+            photoPath = file.absolutePath
+
+            // 特殊处理（Android N）
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                uri = FileProvider.getUriForFile(this, Constants.PROVIDER_AUTHORIZE, file)
+
+            } else {
+                uri = Uri.fromFile(file)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        return uri
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+
+            Constants.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE ->
+
+                if (resultCode == Activity.RESULT_OK) {
+                    cropImage(photoPath)
+                }
+
+            Constants.PHONE_ALBUM_REQUEST_CODE ->
+
+                if (resultCode == Activity.RESULT_OK) {
+
+                    if (data != null) {
+                        val uri = data.data
+                        val filePath = ImageUtils.getPath(this, uri)
+                        cropImage(filePath)
+                    }
+                }
+
+            Constants.CROP_IMAGE_REQUEST_CODE -> if (resultCode == Activity.RESULT_OK) {
+                onPhotoSinglePicked(photoPath)
+            }
+            else -> {
+            }
+        }
+    }
+
+    /**
+     * 相册选择或拍照后的回调
+     * case: 直接返回、预览、裁剪
+     *
+     * @param path 路径
+     */
+    open fun onPhotoSinglePicked(path: String?) {
+
+    }
+
+    /**
+     * 打开系统裁剪图片
+     *
+     * @param filePath 文件路径
+     */
+    private fun cropImage(filePath: String?) {
+
+        if (TextUtils.isEmpty(filePath)) {
+            AppLogger.e("filePath is null")
+            return
+        }
+
+        val file = File(filePath)
+
+        if (!file.exists()) {
+            AppLogger.e("file is not exists")
+            return
+        }
+
+        val intent = Intent("com.android.camera.action.CROP")
+
+        val inputUri: Uri
+        // 特殊处理（Android N）
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+
+            inputUri = FileProvider.getUriForFile(this, Constants.PROVIDER_AUTHORIZE, file)
+
+            intent.setDataAndType(inputUri, "image/*")
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+        } else {
+            inputUri = Uri.fromFile(file)
+            // input
+            intent.setDataAndType(inputUri, "image/*")
+        }
+
+        intent.putExtra("crop", "true")
+        intent.putExtra("aspectX", 0)
+        intent.putExtra("aspectY", 0)
+        intent.putExtra("scale", true)
+
+        val cropFile = getImgOutputFile()
+
+        if (cropFile != null) {
+            photoPath = cropFile.path
+        }
+
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cropFile))
+
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString())
+        startActivityForResult(intent, Constants.CROP_IMAGE_REQUEST_CODE)
+    }
 
 
     // ######################################## private fun ########################################

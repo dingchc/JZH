@@ -80,4 +80,29 @@ public interface Constants {
      */
     String EXTRA_WX_TOKEN = "wx_token";
 
+    /**
+     * 拍照
+     */
+    int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
+
+    /**
+     * 相册
+     */
+    int PHONE_ALBUM_REQUEST_CODE = CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE + 1;
+
+    /**
+     * 裁剪图片
+     */
+    int CROP_IMAGE_REQUEST_CODE = PHONE_ALBUM_REQUEST_CODE + 1;
+
+    /**
+     * 文件前缀
+     */
+    String FILE_NAME_PREFIX = "jzh";
+
+    /**
+     * Android N provider authority
+     */
+    String PROVIDER_AUTHORIZE = "com.jzh.parents.authority";
+
 }

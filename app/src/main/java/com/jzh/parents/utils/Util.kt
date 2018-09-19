@@ -313,11 +313,48 @@ class Util {
         /**
          * json转对象
          */
-        fun <T> fromJson(json : String, type : Type) : T {
+        fun <T> fromJson(json: String, type: Type): T {
 
             val gson = Gson()
 
             return gson.fromJson<T>(json, type)
+        }
+
+        /**
+         * 检查SD卡是否可用
+         *
+         * @return true 存在、 false 不存在
+         */
+        fun checkSDExists(): Boolean {
+            return Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
+        }
+
+        /**
+         * 获取App路径
+         */
+        fun getAppDir(): String {
+            return JZHApplication.instance?.externalCacheDir.toString() + File.separator + Constants.FILE_NAME_PREFIX + File.separator
+        }
+
+        /**
+         * 创建目录
+         *
+         * @param path 路径
+         * @return true 创建成功、false 创建失败
+         */
+
+        fun mkDirs(path: String): Boolean {
+
+            if (!TextUtils.isEmpty(path)) {
+
+                val file = File(path)
+
+                if (!file.exists()) {
+                    return file.mkdirs()
+                }
+            }
+
+            return false
         }
     }
 
