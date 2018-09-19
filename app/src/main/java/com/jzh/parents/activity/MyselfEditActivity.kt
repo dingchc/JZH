@@ -100,15 +100,7 @@ class MyselfEditActivity : BaseActivity() {
      */
     fun onAvatarClick() {
 
-        val prevFragment = supportFragmentManager.findFragmentByTag(PickImageDialog.TAG_FRAGMENT)
-        // 显示对话框
-        if (prevFragment == null || prevFragment.isHidden) {
-            showPickDialog()
-        }
-        // 隐藏对话框
-        else {
-            hiddenPickDialog()
-        }
+        showPickDialog()
     }
 
     /**
@@ -118,32 +110,17 @@ class MyselfEditActivity : BaseActivity() {
     fun onPhoneClick() {
         AppLogger.i("onPhoneClick")
 
-        val prevFragment = supportFragmentManager.findFragmentByTag(PhoneEditDialog.TAG_FRAGMENT)
-        // 显示对话框
-        if (prevFragment == null || prevFragment.isHidden) {
-            showPhoneEditDialog()
-        }
-        // 隐藏对话框
-        else {
-            hiddenPhoneEditDialog()
-        }
+        showPhoneEditDialog()
     }
 
     /**
      * 当点击身份
      */
     fun onRoleClick() {
+
         AppLogger.i("onRoleClick")
 
-        val prevFragment = supportFragmentManager.findFragmentByTag(RoleEditDialog.TAG_FRAGMENT)
-        // 显示对话框
-        if (prevFragment == null || prevFragment.isHidden) {
-            showRoleEditDialog()
-        }
-        // 隐藏对话框
-        else {
-            hiddenRoleEditDialog()
-        }
+        showRoleEditDialog()
     }
 
     /**
@@ -151,30 +128,27 @@ class MyselfEditActivity : BaseActivity() {
      */
     private fun showPickDialog() {
 
-        val prevFragment = supportFragmentManager.findFragmentByTag(PickImageDialog.TAG_FRAGMENT)
-        val ft = supportFragmentManager.beginTransaction()
+        var dialog = supportFragmentManager.findFragmentByTag(PickImageDialog.TAG_FRAGMENT)
 
-        if (prevFragment != null) {
-            ft.remove(prevFragment)
+        if (dialog == null) {
+            dialog = PickImageDialog.newInstance()
         }
-        ft.addToBackStack(null)
-        ft.commit()
 
-        val currentFragment = PickImageDialog.newInstance()
+        val pickImageDialog = dialog as PickImageDialog
 
         // 设置事件
-        currentFragment.setPickDialogClickListener(object : PickImageDialog.PickDialogClickListener {
+        pickImageDialog.setPickDialogClickListener(object : PickImageDialog.PickDialogClickListener {
 
             override fun onCaptureClick() {
                 AppLogger.i("onCaptureClick")
 
-                currentFragment.dismiss()
+                pickImageDialog.dismiss()
             }
 
             override fun onPhotoClick() {
                 AppLogger.i("onPhotoClick")
 
-                currentFragment.dismiss()
+                pickImageDialog.dismiss()
             }
 
             override fun onCancelClick() {
@@ -182,21 +156,8 @@ class MyselfEditActivity : BaseActivity() {
             }
         })
 
-        currentFragment.show(supportFragmentManager, PickImageDialog.TAG_FRAGMENT)
+        pickImageDialog.show(supportFragmentManager, PickImageDialog.TAG_FRAGMENT)
 
-    }
-
-    /**
-     * 隐藏选择相册对话框
-     */
-    private fun hiddenPickDialog() {
-
-        val prevFragment = supportFragmentManager.findFragmentByTag(PickImageDialog.TAG_FRAGMENT)
-
-        if (prevFragment != null) {
-            prevFragment as PickImageDialog
-            prevFragment.dismiss()
-        }
     }
 
     /**
@@ -204,23 +165,20 @@ class MyselfEditActivity : BaseActivity() {
      */
     private fun showRoleEditDialog() {
 
-        val prevFragment = supportFragmentManager.findFragmentByTag(RoleEditDialog.TAG_FRAGMENT)
-        val ft = supportFragmentManager.beginTransaction()
+        var dialog = supportFragmentManager.findFragmentByTag(RoleEditDialog.TAG_FRAGMENT)
 
-        if (prevFragment != null) {
-            ft.remove(prevFragment)
+        if (dialog == null) {
+            dialog = RoleEditDialog.newInstance()
         }
-        ft.addToBackStack(null)
-        ft.commit()
 
-        val currentFragment = RoleEditDialog.newInstance()
+        val roleEditDialog = dialog as RoleEditDialog
 
-        currentFragment.show(supportFragmentManager, RoleEditDialog.TAG_FRAGMENT)
+        roleEditDialog.show(supportFragmentManager, RoleEditDialog.TAG_FRAGMENT)
 
         // 点击回调
-        currentFragment.setRoleEditDialogClickListener(object : RoleEditDialog.RoleEditDialogClickListener {
+        roleEditDialog.setRoleEditDialogClickListener(object : RoleEditDialog.RoleEditDialogClickListener {
             override fun onConfirmClick() {
-                AppLogger.i("onConfirmClick" + mViewModel?.selectRole?.value + ", studentName="+ mViewModel?.studentName?.value)
+                AppLogger.i("onConfirmClick" + mViewModel?.selectRole?.value + ", studentName=" + mViewModel?.studentName?.value)
             }
 
             override fun onCancelClick() {
@@ -228,19 +186,6 @@ class MyselfEditActivity : BaseActivity() {
             }
         })
 
-    }
-
-    /**
-     * 隐藏选择相册对话框
-     */
-    private fun hiddenRoleEditDialog() {
-
-        val prevFragment = supportFragmentManager.findFragmentByTag(RoleEditDialog.TAG_FRAGMENT)
-
-        if (prevFragment != null) {
-            prevFragment as RoleEditDialog
-            prevFragment.dismiss()
-        }
     }
 
     /**
@@ -248,23 +193,20 @@ class MyselfEditActivity : BaseActivity() {
      */
     private fun showPhoneEditDialog() {
 
-        val prevFragment = supportFragmentManager.findFragmentByTag(PhoneEditDialog.TAG_FRAGMENT)
-        val ft = supportFragmentManager.beginTransaction()
+        var dialog = supportFragmentManager.findFragmentByTag(PhoneEditDialog.TAG_FRAGMENT)
 
-        if (prevFragment != null) {
-            ft.remove(prevFragment)
+        if (dialog == null) {
+            dialog = PhoneEditDialog.newInstance()
         }
-        ft.addToBackStack(null)
-        ft.commit()
 
-        val currentFragment = PhoneEditDialog.newInstance()
+        val phoneEditDialog = dialog as PhoneEditDialog
 
-        currentFragment.show(supportFragmentManager, PhoneEditDialog.TAG_FRAGMENT)
+        phoneEditDialog.show(supportFragmentManager, PhoneEditDialog.TAG_FRAGMENT)
 
         // 点击回调
-        currentFragment.setPhoneEditDialogClickListener(object : PhoneEditDialog.PhoneEditDialogClickListener {
+        phoneEditDialog.setPhoneEditDialogClickListener(object : PhoneEditDialog.PhoneEditDialogClickListener {
             override fun onConfirmClick() {
-                AppLogger.i("onConfirmClick" + mViewModel?.selectRole?.value + ", studentName="+ mViewModel?.studentName?.value)
+                AppLogger.i("onConfirmClick" + mViewModel?.selectRole?.value + ", studentName=" + mViewModel?.studentName?.value)
             }
 
             override fun onCancelClick() {
@@ -272,19 +214,6 @@ class MyselfEditActivity : BaseActivity() {
             }
         })
 
-    }
-
-    /**
-     * 隐藏选择相册对话框
-     */
-    private fun hiddenPhoneEditDialog() {
-
-        val prevFragment = supportFragmentManager.findFragmentByTag(PhoneEditDialog.TAG_FRAGMENT)
-
-        if (prevFragment != null) {
-            prevFragment as PhoneEditDialog
-            prevFragment.dismiss()
-        }
     }
 
     /**
