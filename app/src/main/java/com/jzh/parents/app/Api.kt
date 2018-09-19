@@ -43,4 +43,11 @@ object Api {
      */
     const val URL_API_HOME_CATEGORY_AND_RECOMMEND = URL_API_LIVE_DOMAIN + "index/config"
 
+    /**
+     * 地址：收藏列表
+     */
+    const val URL_API_FAVORITES_LIST = URL_API_LIVE_DOMAIN + "lives/favorites"
+
+
+
 }

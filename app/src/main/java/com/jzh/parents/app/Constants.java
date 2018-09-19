@@ -71,6 +71,11 @@ public interface Constants {
     int HOME_LIVE_REVIEW_LIMIT = 3;
 
     /**
+     * 一页显示的个数：10个
+     */
+    int PAGE_CNT = 10;
+
+    /**
      * wx的token
      */
     String EXTRA_WX_TOKEN = "wx_token";

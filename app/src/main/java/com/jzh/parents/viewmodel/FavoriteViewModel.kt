@@ -47,7 +47,7 @@ class FavoriteViewModel(app: Application) : BaseViewModel(app) {
     /**
      * 返回条目实体
      */
-    fun getItemEntities() : MutableLiveData<MutableList<BaseLiveEntity>> {
+    fun getItemEntities(): MutableLiveData<MutableList<BaseLiveEntity>> {
 
         return itemEntities
     }
@@ -58,5 +58,13 @@ class FavoriteViewModel(app: Application) : BaseViewModel(app) {
     fun loadItemEntitiesData() {
 
         itemEntities.value = repo.loadItemEntities()
+    }
+
+    /**
+     * 获取收藏列表
+     * @param targetList 目标列表
+     */
+    fun fetchFavoriteList(targetList: MutableLiveData<MutableList<BaseLiveEntity>>) {
+        repo.fetchFavoriteList(targetList)
     }
 }
