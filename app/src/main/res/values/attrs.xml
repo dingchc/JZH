@@ -30,6 +30,9 @@
         <!-- 提示内容 -->
         <attr name="rc_hint" format="string" />
 
+        <!-- 获取验证码 -->
+        <attr name="rc_is_sms_code" format="boolean" />
+
     </declare-styleable>
 
     <!-- 圆角图片 -->

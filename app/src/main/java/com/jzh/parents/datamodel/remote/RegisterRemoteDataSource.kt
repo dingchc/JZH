@@ -1,9 +1,8 @@
 package com.jzh.parents.datamodel.remote
 
-import com.tunes.library.wrapper.network.TSHttpController
-
 /**
  * 注册远程数据源
+ *
  * @author ding
  * Created by Ding on 2018/8/20.
  */

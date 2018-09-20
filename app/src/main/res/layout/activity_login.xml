@@ -39,16 +39,15 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="9dp"
             android:text="@string/login_desc"
-            android:textColor="@color/light_gray"
+            android:textColor="#999999"
             android:textSize="12sp" />
 
-        <!-- @{()->viewModel.wxAuthorizeClick()} -->
         <com.jzh.parents.widget.TSButton
             android:layout_width="match_parent"
             android:layout_height="@dimen/btn_height"
             android:layout_marginTop="80dp"
             android:onClick="wxAuthorizeClick"
-            android:text="@string/login"
+            android:text="@string/wx_login"
             android:textSize="18sp"
             android:textColor="@color/white"
             app:corner="8dp"
@@ -59,9 +58,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:text="@string/login_addition"
-            android:textColor="@color/light_gray"
+            android:layout_marginTop="20dp"
+            android:text="@string/login_by_phone"
+            android:textColor="@color/green"
+            android:onClick="loginByPhoneClick"
             android:textSize="12sp" />
 
     </LinearLayout>

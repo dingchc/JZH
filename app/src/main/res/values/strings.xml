@@ -5,6 +5,7 @@
     <string name="input_student_name">请输入学生姓名</string>
     <string name="input_select_role">您的身份?</string>
     <string name="login">登 录</string>
+    <string name="wx_login">微信登录</string>
     <string name="login_desc">家长好好学习 孩子天天向上</string>
     <string name="login_addition">登录即表示同意用户协议</string>
     <string name="loading">加载中&#8230;</string>
@@ -75,6 +76,8 @@
     <string name="count_for_comment">%1$d 评论</string>
     <string name="all_with_count">全部(%1$d)</string>
     <string name="tip_sdcard_cannot_use">sd卡不可用</string>
+    <string name="login_by_phone">手机号登录</string>
+    <string name="input_phone_number">请输入手机号</string>
 
 
 

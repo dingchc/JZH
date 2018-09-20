@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.jzh.parents.viewmodel.PhoneLoginViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:contentDescription="@string/login"
+            android:src="@mipmap/ic_login" />
+
+        <!-- 手机号 -->
+        <com.jzh.parents.widget.RegisterContentItem
+            android:id="@+id/item_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height"
+            android:layout_marginTop="98dp"
+            android:background="@drawable/round_bg_white"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:textSize="18sp"
+            app:contentText="@={viewModel.phoneNumber}"
+            app:rc_hint="@string/input_phone_number"
+            app:rc_icon_src="@mipmap/icon_register_name"
+            app:rc_is_input_editable="true"
+            app:rc_show_tap_arrow="false" />
+
+        <com.jzh.parents.widget.TSButton
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/btn_height"
+            android:layout_marginTop="40dp"
+            android:text="@string/finish"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:corner="8dp"
+            app:normal_color="@color/login_btn_green"
+            app:pressed_color="@color/login_btn_green_dark" />
+
+    </LinearLayout>
+
+</layout>

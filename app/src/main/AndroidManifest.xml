@@ -38,8 +38,8 @@
         <!-- 登录页面 -->
         <activity
             android:name=".activity.LoginActivity"
-            android:theme="@style/AppTheme"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -122,12 +122,21 @@
             </intent-filter>
         </activity>
 
+        <!-- 手机号登录页面 -->
+        <activity
+            android:name=".activity.PhoneLoginActivity"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <!-- 微信回调 -->
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
 
         <!-- File Provider -->
         <provider

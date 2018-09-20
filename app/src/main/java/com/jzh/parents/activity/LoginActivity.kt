@@ -129,5 +129,16 @@ class LoginActivity : BaseActivity() {
         finish()
     }
 
+    /**
+     * 手机号登录
+     */
+    fun loginByPhoneClick(view: View?) {
+
+        AppLogger.i("loginByPhoneClick")
+
+        startActivity(Intent(this@LoginActivity, PhoneLoginActivity::class.java))
+        finish()
+    }
+
 
 }
