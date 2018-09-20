@@ -12,10 +12,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.Gravity
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.RadioGroup
+import android.widget.*
 import com.jzh.parents.R
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.Util
@@ -92,6 +89,16 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
      */
     private var mArrowImageView = ImageView(context)
 
+    /**
+     * 是否显示验证码
+     */
+    private var mIsShowVerifyCode: Boolean? = false
+
+    /**
+     * 验证码文本框
+     */
+    private val mVerifyCodeTextView = TextView(context)
+
 
     constructor(context: Context) : this(context, null) {
 
@@ -141,6 +148,8 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
 
             mHintStringResId = typedArray?.getResourceId(R.styleable.RegisterContentItem_rc_hint, 0)
 
+            mIsShowVerifyCode = typedArray?.getBoolean(R.styleable.RegisterContentItem_rc_is_show_verify_code, false)
+
             typedArray?.recycle()
         }
 
@@ -159,7 +168,7 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
         addInputEditText()
 
         // 添加箭头
-        if (mShowTapArrow!!) {
+        if (mShowTapArrow!! && !mIsShowVerifyCode!!) {
 
             addArrowIcon()
         }
@@ -168,6 +177,13 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
         if (mIsOptional!!) {
             addOptionalRadioGroup()
         }
+
+        // 是否显示验证码
+        if (mIsShowVerifyCode!!) {
+
+            addVerifyCodeTextView()
+        }
+
     }
 
 
@@ -467,6 +483,24 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
                 }
             }
         })
+    }
+
+    /**
+     * 添加输入框
+     */
+    private fun addVerifyCodeTextView() {
+
+        mVerifyCodeTextView.setBackgroundResource(R.drawable.round_bg_verify_code)
+        mVerifyCodeTextView.textSize = 14.0f
+        mVerifyCodeTextView.text = "获取验证码"
+        mVerifyCodeTextView.gravity = Gravity.CENTER
+        mVerifyCodeTextView.setTextColor(Util.getColorCompat(R.color.white))
+
+        addView(mVerifyCodeTextView)
+
+        mVerifyCodeTextView.layoutParams.width = Util.dp2px(context, 92.0f)
+        mVerifyCodeTextView.layoutParams.height = Util.dp2px(context, 52.0f)
+
     }
 
 }

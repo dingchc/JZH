@@ -78,6 +78,7 @@
     <string name="tip_sdcard_cannot_use">sd卡不可用</string>
     <string name="login_by_phone">手机号登录</string>
     <string name="input_phone_number">请输入手机号</string>
+    <string name="input_sms_code">请输入验证码</string>
 
 
 

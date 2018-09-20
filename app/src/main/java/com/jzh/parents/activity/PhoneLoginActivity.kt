@@ -29,7 +29,7 @@ class PhoneLoginActivity : BaseActivity() {
 
     override fun initViews() {
 
-        setToolbarTitle(R.string.register)
+        setToolbarTitle(R.string.login_by_phone)
 
         mViewModel = ViewModelProviders.of(this@PhoneLoginActivity).get(PhoneLoginViewModel::class.java)
 
