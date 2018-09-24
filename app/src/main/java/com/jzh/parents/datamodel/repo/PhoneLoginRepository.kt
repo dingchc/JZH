@@ -1,6 +1,8 @@
 package com.jzh.parents.datamodel.repo
 
+import android.arch.lifecycle.MutableLiveData
 import com.jzh.parents.datamodel.remote.PhoneLoginRemoteDataSource
+import com.jzh.parents.viewmodel.info.ResultInfo
 
 /**
  * 手机号登录
@@ -17,10 +19,13 @@ class PhoneLoginRepository : BaseRepository() {
 
     /**
      * 获取验证码
+     *
+     * @param phoneNumber 手机号
+     * @param resultInfoLiveData 返回信息
      */
-    fun fetchSmsCode(phoneNumber : String): String {
+    fun fetchSmsCode(phoneNumber : String, resultInfoLiveData: MutableLiveData<ResultInfo>) {
 
-        return mRemoteDataSource.fetchSmsCode(phoneNumber)
+        return mRemoteDataSource.fetchSmsCode(phoneNumber, resultInfoLiveData)
     }
 
 }

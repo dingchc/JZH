@@ -1,10 +1,12 @@
 package com.jzh.parents.viewmodel
 
 import android.app.Application
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
-import com.jzh.parents.datamodel.repo.RegisterRepository
+import android.arch.lifecycle.Transformations
+import com.jzh.parents.datamodel.repo.PhoneLoginRepository
 import com.jzh.parents.utils.AppLogger
-import com.jzh.parents.viewmodel.enum.RoleTypeEnum
+import com.jzh.parents.viewmodel.info.ResultInfo
 
 /**
  * 注册的ViewModel
@@ -24,17 +26,30 @@ class PhoneLoginViewModel(app: Application) : BaseViewModel(app) {
      */
     val smsCode: MutableLiveData<String> = MutableLiveData()
 
+//    val smsShow : MutableLiveData<String> = Transformations.map(smsCode, input -> { return "$x"})
 
     /**
      * 数据仓库
      */
-    private var repo: RegisterRepository? = null
+    private var repo: PhoneLoginRepository? = null
 
     /**
      * 初始化
      */
     init {
-        repo = RegisterRepository()
+
+        repo = PhoneLoginRepository()
+
+        resultInfo.value = ResultInfo()
+    }
+
+    /**
+     * 获取验证码
+     */
+    fun fetchSmsCode(phoneNumber: String) {
+
+        AppLogger.i("resultInfo=" + resultInfo)
+        repo?.fetchSmsCode(phoneNumber, resultInfo)
     }
 
 }

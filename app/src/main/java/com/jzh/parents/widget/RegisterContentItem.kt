@@ -97,7 +97,7 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
     /**
      * 验证码文本框
      */
-    private val mVerifyCodeTextView = TextView(context)
+    private var mVerifyCodeTextView: TextView? = null
 
 
     constructor(context: Context) : this(context, null) {
@@ -490,17 +490,28 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
      */
     private fun addVerifyCodeTextView() {
 
-        mVerifyCodeTextView.setBackgroundResource(R.drawable.round_bg_verify_code)
-        mVerifyCodeTextView.textSize = 14.0f
-        mVerifyCodeTextView.text = "获取验证码"
-        mVerifyCodeTextView.gravity = Gravity.CENTER
-        mVerifyCodeTextView.setTextColor(Util.getColorCompat(R.color.white))
+        mVerifyCodeTextView = TextView(context)
+        mVerifyCodeTextView?.setBackgroundResource(R.drawable.round_bg_verify_code)
+        mVerifyCodeTextView?.textSize = 14.0f
+        mVerifyCodeTextView?.text = "获取验证码"
+        mVerifyCodeTextView?.gravity = Gravity.CENTER
+        mVerifyCodeTextView?.setTextColor(Util.getColorCompat(R.color.white))
 
         addView(mVerifyCodeTextView)
 
-        mVerifyCodeTextView.layoutParams.width = Util.dp2px(context, 92.0f)
-        mVerifyCodeTextView.layoutParams.height = Util.dp2px(context, 52.0f)
+        mVerifyCodeTextView?.layoutParams?.width = Util.dp2px(context, 92.0f)
+        mVerifyCodeTextView?.layoutParams?.height = Util.dp2px(context, 52.0f)
 
+    }
+
+    /**
+     * 设置右侧控件的点击事件
+     */
+    fun setRightViewClickListener(listener: OnClickListener) {
+
+        if (mIsShowVerifyCode!!) {
+            mVerifyCodeTextView?.setOnClickListener(listener)
+        }
     }
 
 }
