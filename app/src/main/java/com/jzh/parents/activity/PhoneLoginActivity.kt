@@ -115,9 +115,7 @@ class PhoneLoginActivity : BaseActivity(), SmsCDTimer.OnSmsTickListener {
                         showToastError(resultInfo.tip)
                     }
                 }
-
             }
-
         })
 
     }

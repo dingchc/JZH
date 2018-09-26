@@ -2,13 +2,19 @@ package com.jzh.parents.activity
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.databinding.DataBindingUtil
+import android.os.Bundle
 import android.os.Handler
+import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.jzh.parents.R
 import com.jzh.parents.adapter.HomeAdapter
+import com.jzh.parents.app.Constants
 import com.jzh.parents.databinding.ActivityHomeBinding
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
@@ -43,6 +49,39 @@ class HomeActivity : BaseActivity() {
      * 适配器监听
      */
     private var mAdapterListener: HomeAdapter.OnViewClick? = null
+
+    /**
+     * 接收广播
+     */
+    private val mReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+
+            // 微信预约
+            if (Constants.ACTION_WX_SUBSCRIBE == intent?.action) {
+
+                val action = intent.getStringExtra(Constants.EXTRA_WX_SUBSCRIBE_ACTION)
+                val liveId = intent.getIntExtra(Constants.EXTRA_WX_SUBSCRIBE_SCENE, 0)
+
+                AppLogger.i("* action=$action, liveId = $liveId")
+            }
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // 注册广播
+        val intentFilter = IntentFilter()
+        intentFilter.addAction(Constants.ACTION_WX_SUBSCRIBE)
+        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, intentFilter)
+    }
+
+    override fun onDestroy() {
+
+        // 注销广播
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver)
+        super.onDestroy()
+    }
 
     /**
      * 初始化组件
@@ -120,8 +159,13 @@ class HomeActivity : BaseActivity() {
                 val intent = Intent(this@HomeActivity, SearchActivity::class.java)
                 startActivity(intent)
             }
-        }
 
+            override fun onClickOperate(type: Int, liveInfo: LiveInfo) {
+
+                AppLogger.i("* type=" + type + ", " + liveInfo.id)
+                mViewModel?.subscribeALive(liveInfo.id)
+            }
+        }
     }
 
     /**

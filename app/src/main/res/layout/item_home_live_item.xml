@@ -162,6 +162,7 @@
                         android:textSize="11sp" />
 
                     <ImageView
+                        android:id="@+id/iv_operate"
                         android:layout_width="72dp"
                         android:layout_height="32dp"
                         android:layout_alignBottom="@id/tv_live_comments"

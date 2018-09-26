@@ -9,6 +9,11 @@ package com.jzh.parents.viewmodel.info
 class LiveInfo(
 
         /**
+         * id
+         */
+        var id: Int = 0,
+
+        /**
          * 直播类型：即将直播、往期直播
          */
         val contentType: LiveInfoEnum = LiveInfoEnum.TYPE_WILL,
@@ -66,16 +71,16 @@ class LiveInfo(
     /**
      * 直播条目的类型
      */
-    enum class LiveInfoEnum {
+    enum class LiveInfoEnum(val value : Int) {
 
         /**
          * 即将直播
          */
-        TYPE_WILL,
+        TYPE_WILL(1),
 
         /**
          * 往期直播
          */
-        TYPE_REVIEW,
+        TYPE_REVIEW(2),
     }
 }

@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName
  * @author ding
  * Created by Ding on 2018/9/26.
  */
-data class UserInfoRes(val output: UserInfo?) : BaseRes() {
+data class UserInfoRes(@SerializedName("output") val userInfo: UserInfo?) : BaseRes() {
 
     /**
      * 班级信息
@@ -22,7 +22,7 @@ data class UserInfoRes(val output: UserInfo?) : BaseRes() {
             /**
              * 名称
              */
-            @SerializedName("realname") val realame: String?,
+            @SerializedName("realname") val realName: String?,
 
             /**
              * 头像地址

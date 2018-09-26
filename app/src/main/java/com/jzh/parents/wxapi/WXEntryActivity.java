@@ -2,15 +2,15 @@ package com.jzh.parents.wxapi;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 
 import com.jzh.parents.R;
-import com.jzh.parents.activity.LoginActivity;
 import com.jzh.parents.app.Constants;
 import com.jzh.parents.utils.AppLogger;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.tencent.mm.opensdk.modelbiz.SubscribeMessage;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
@@ -51,11 +51,19 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
     public void onResp(BaseResp baseResp) {
         int result;
 
-        AppLogger.i("code=" + baseResp.errCode);
+        AppLogger.i("* code=" + baseResp.errCode);
         switch (baseResp.errCode) {
             case BaseResp.ErrCode.ERR_OK:
                 result = R.string.wx_errcode_success;
-                goLoginPageWithToken(baseResp);
+
+                // 微信授权
+                if (baseResp instanceof SendAuth.Resp) {
+                    processWxAuthorize(baseResp);
+                }
+                // 预约直播
+                else if (baseResp instanceof SubscribeMessage.Resp) {
+                    processWxSubscribeResult(baseResp);
+                }
                 break;
             case BaseResp.ErrCode.ERR_USER_CANCEL:
                 result = R.string.wx_errcode_cancel;
@@ -72,19 +80,49 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
     }
 
     /**
-     * 回到登录页面
+     * 处理微信授权登录
+     *
      * @param baseResp 响应数据
      */
-    private void goLoginPageWithToken(BaseResp baseResp) {
+    private void processWxAuthorize(BaseResp baseResp) {
 
         if (baseResp != null) {
 
             try {
                 String wxToken = ((SendAuth.Resp) baseResp).code;
 
-                Intent intent = new Intent(this, LoginActivity.class);
+                Intent intent = new Intent(Constants.ACTION_WX_AUTHORIZE);
                 intent.putExtra(Constants.EXTRA_WX_TOKEN, wxToken);
-                startActivity(intent);
+                LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+
+                finish();
+
+            } catch (Exception e) {
+                AppLogger.i("error_msg:" + e.getMessage());
+            }
+        }
+
+    }
+
+    /**
+     * 处理微信预约结果
+     *
+     * @param baseResp 响应数据
+     */
+    private void processWxSubscribeResult(BaseResp baseResp) {
+
+        if (baseResp != null) {
+
+            try {
+
+                SubscribeMessage.Resp resp = ((SubscribeMessage.Resp) baseResp);
+
+                Intent intent = new Intent(Constants.ACTION_WX_SUBSCRIBE);
+                intent.putExtra(Constants.EXTRA_WX_SUBSCRIBE_ACTION, resp.action);
+                intent.putExtra(Constants.EXTRA_WX_SUBSCRIBE_SCENE, resp.scene);
+                LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+
+                finish();
 
             } catch (Exception e) {
                 AppLogger.i("error_msg:" + e.getMessage());

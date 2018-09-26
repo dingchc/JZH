@@ -2,12 +2,19 @@ package com.jzh.parents.viewmodel
 
 import android.app.Application
 import android.arch.lifecycle.MutableLiveData
+import com.jzh.parents.app.Constants
+import com.jzh.parents.app.JZHApplication
 import com.jzh.parents.datamodel.data.BannerData
 import com.jzh.parents.datamodel.repo.HomeRepository
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.entity.*
 import com.jzh.parents.viewmodel.entity.home.*
 import com.jzh.parents.viewmodel.info.LiveInfo
+import com.tencent.mm.opensdk.modelbiz.SubscribeMessage
+import com.tencent.mm.opensdk.openapi.WXAPIFactory
+import java.net.URLEncoder
+import java.util.*
+
 
 /**
  * 主页的ViewModel
@@ -78,6 +85,26 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
      */
     fun fetchUserInfo() {
         repo.fetchUserInfo(funcEntity)
+    }
+
+    /**
+     * 订阅一个直播
+     *
+     * @param liveId 场景值
+     */
+    fun subscribeALive(liveId: Int) {
+
+        val wxApi = WXAPIFactory.createWXAPI(JZHApplication.instance, Constants.WX_APP_ID)
+        wxApi.registerApp(Constants.WX_APP_ID)
+
+        val req = SubscribeMessage.Req()
+        req.scene = liveId
+        req.templateID = Constants.WX_SUBSCRIBE_TEMPLATE_ID
+
+        // 可选
+        req.reserved = URLEncoder.encode("hello dcc", "utf-8")
+
+        wxApi.sendReq(req)
     }
 
     /**

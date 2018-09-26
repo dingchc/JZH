@@ -76,9 +76,39 @@ public interface Constants {
     int PAGE_CNT = 10;
 
     /**
+     * wx的授权登录的action
+     */
+    String ACTION_WX_AUTHORIZE = "com.jzh.parents.app.action.wx_authorize";
+
+    /**
+     * wx的预约的action
+     */
+    String ACTION_WX_SUBSCRIBE = "com.jzh.parents.app.action.wx_subscribe";
+
+    /**
      * wx的token
      */
     String EXTRA_WX_TOKEN = "wx_token";
+
+    /**
+     * wx的预约的直播action
+     */
+    String EXTRA_WX_SUBSCRIBE_ACTION = "wx_subscribe_action";
+
+    /**
+     * wx的预约的直播Id
+     */
+    String EXTRA_WX_SUBSCRIBE_SCENE = "wx_subscribe_scene";
+
+    /**
+     * wx的预约的直播action - 预约成功
+     */
+    String WX_SUBSCRIBE_ACTION_CONFIRM = "confirm";
+
+    /**
+     * wx的预约的直播action - 取消预约
+     */
+    String WX_SUBSCRIBE_ACTION_CANCEL = "cancel";
 
     /**
      * 拍照
@@ -110,5 +140,10 @@ public interface Constants {
      * 短信验证码计时间隔：60秒
      */
     int SMS_INTERVAL_TIME = 60;
+
+    /**
+     * 微信预约的模板
+     */
+    String WX_SUBSCRIBE_TEMPLATE_ID = "qhcWtTQswPB0j3oVHgW_I_pyKLurGcw8k-wB4Kt20aw";
 
 }

@@ -13,7 +13,7 @@ data class LiveData(
         /**
          * id
          */
-        var id: Long,
+        var id: Int,
 
         /**
          * 0-家长会 1-讲座 2-视频直播

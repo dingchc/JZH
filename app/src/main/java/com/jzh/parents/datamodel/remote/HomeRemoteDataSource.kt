@@ -63,17 +63,33 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
 
                 AppLogger.i("json=$json")
 
-                val userInfo: UserInfoRes = Util.fromJson<UserInfoRes>(json ?: "", object : TypeToken<UserInfoRes>() {
+                val userInfoRes: UserInfoRes? = Util.fromJson<UserInfoRes>(json ?: "", object : TypeToken<UserInfoRes>() {
 
                 }.type)
 
-                AppLogger.i("userInfo=" + userInfo)
+                AppLogger.i("userInfoRes=" + userInfoRes)
+
+                target.value = makeFunc(userInfoRes)
             }
 
             override fun onException(e: Throwable?) {
                 AppLogger.i(e?.message)
             }
         })
+    }
+
+    private fun makeFunc(userInfoRes: UserInfoRes?): FuncEntity? {
+
+        val isEmpty: Boolean? = userInfoRes?.userInfo?.classRoomList?.isNotEmpty()
+
+        var className = ""
+
+        if (isEmpty != null && isEmpty) {
+
+            className = userInfoRes.userInfo.classRoomList.first().name ?: ""
+        }
+
+        return FuncEntity(name = userInfoRes?.userInfo?.realName ?: "", avatarUrl = userInfoRes?.userInfo?.headImg ?: "", className = className, isVip = userInfoRes?.userInfo?.isVip ?: 0)
     }
 
     /**
@@ -115,8 +131,9 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
     private fun fetchLivesData(homeConfigRes: HomeConfigRes?, target: MutableLiveData<MutableList<BaseLiveEntity>>) {
 
         val paramsMap = TreeMap<String, String>()
+        paramsMap.put("token", PreferenceUtil.instance.getToken())
 
-        TSHttpController.INSTANCE.doGet(Api.URL_API_HOME_LIVE_LIST_FOR_GUEST, paramsMap, object : TSHttpCallback {
+        TSHttpController.INSTANCE.doGet(Api.URL_API_HOME_LIVE_LIST, paramsMap, object : TSHttpCallback {
             override fun onSuccess(res: TSBaseResponse?, json: String?) {
 
                 val homeShowRes: HomeShowRes = Util.fromJson<HomeShowRes>(json ?: "", object : TypeToken<HomeShowRes>() {
@@ -327,7 +344,7 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
                     break
                 }
 
-                val liveInfo = LiveInfo(title = value.title ?: "", imageUrl = value.pics?.last()?.info ?: "", dateTime = value.startAt ?: "", look = value.look, comments = value.comments, isFavorited = value.isFavorite, isSubscribed = value.isSubscribe, liveCnt = totalCnt, contentType = contentType)
+                val liveInfo = LiveInfo(id = value.id, title = value.title ?: "", imageUrl = value.pics?.last()?.info ?: "", dateTime = value.startAt ?: "", look = value.look, comments = value.comments, isFavorited = value.isFavorite, isSubscribed = value.isSubscribe, liveCnt = totalCnt, contentType = contentType)
 
                 var liveItemEntity: LiveItemEntity
 

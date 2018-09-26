@@ -2,9 +2,13 @@ package com.jzh.parents.activity
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.v4.content.LocalBroadcastManager
 import android.text.TextUtils
 import android.view.View
 import com.jzh.parents.R
@@ -31,11 +35,38 @@ class LoginActivity : BaseActivity() {
      */
     var mDataBinding: ActivityLoginBinding? = null
 
+    /**
+     * 接收广播
+     */
+    private val mReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+
+            // 微信预约
+            if (Constants.ACTION_WX_AUTHORIZE == intent?.action) {
+
+                val token = intent.getStringExtra(Constants.EXTRA_WX_TOKEN)
+                AppLogger.i("* token=$token")
+
+//                mViewModel?.wxGetAccessToken(token)
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // 处理微信授权返回
-        processWxAuthorize(intent)
+        // 注册广播
+        val intentFilter = IntentFilter()
+        intentFilter.addAction(Constants.ACTION_WX_AUTHORIZE)
+        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, intentFilter)
+    }
+
+    override fun onDestroy() {
+
+        // 注销广播
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver)
+
+        super.onDestroy()
     }
 
     /**
@@ -88,34 +119,6 @@ class LoginActivity : BaseActivity() {
         return false
     }
 
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-
-        setIntent(intent)
-
-        // 处理微信授权返回
-        processWxAuthorize(intent)
-    }
-
-    /**
-     * 处理微信授权返回
-     * @param intent 意图
-     */
-    private fun processWxAuthorize(intent: Intent?) {
-
-        if (intent != null) {
-
-            val token = intent.getStringExtra(Constants.EXTRA_WX_TOKEN)
-
-            if (!TextUtils.isEmpty(token)) {
-
-                AppLogger.i("* token=" + token)
-
-                mViewModel?.wxGetAccessToken(token)
-            }
-        }
-    }
-
     /**
      * 微信授权等
      */
@@ -123,10 +126,10 @@ class LoginActivity : BaseActivity() {
 
         AppLogger.i("wxAuthorizeClick")
 
-//        mViewModel?.wxAuthorize()
+        mViewModel?.wxAuthorize()
 
-        startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
-        finish()
+//        startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
+//        finish()
     }
 
     /**
