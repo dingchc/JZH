@@ -4,6 +4,7 @@ import android.app.Application
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
+import com.jzh.parents.app.Constants
 import com.jzh.parents.datamodel.repo.PhoneLoginRepository
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.info.ResultInfo
@@ -26,30 +27,49 @@ class PhoneLoginViewModel(app: Application) : BaseViewModel(app) {
      */
     val smsCode: MutableLiveData<String> = MutableLiveData()
 
-//    val smsShow : MutableLiveData<String> = Transformations.map(smsCode, input -> { return "$x"})
+    /**
+     * 倒计时
+     */
+    val countDown: MutableLiveData<Int> = MutableLiveData()
 
     /**
-     * 数据仓库
+     * 短信验证码显示
      */
-    private var repo: PhoneLoginRepository? = null
+    val smsShow: LiveData<String> = Transformations.map(countDown, { input ->
 
-    /**
-     * 初始化
-     */
-    init {
+        if (input < Constants.SMS_INTERVAL_TIME) {
+            "$input" + "s"
+        }
+        else {
+            "获取验证码"
+        }
+    })
 
-        repo = PhoneLoginRepository()
 
-        resultInfo.value = ResultInfo()
-    }
+/**
+ * 数据仓库
+ */
+private var repo: PhoneLoginRepository? = null
 
-    /**
-     * 获取验证码
-     */
-    fun fetchSmsCode(phoneNumber: String) {
+/**
+ * 初始化
+ */
+init {
 
-        AppLogger.i("resultInfo=" + resultInfo)
-        repo?.fetchSmsCode(phoneNumber, resultInfo)
-    }
+    repo = PhoneLoginRepository()
+
+    resultInfo.value = ResultInfo()
+
+    phoneNumber.value = "15010233266"
+}
+
+/**
+ * 获取验证码
+ */
+fun fetchSmsCode() {
+
+    AppLogger.i("resultInfo=" + resultInfo)
+    repo?.fetchSmsCode(phoneNumber.value ?: "", resultInfo)
+}
 
 }

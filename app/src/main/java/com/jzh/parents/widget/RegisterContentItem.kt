@@ -218,6 +218,26 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
     }
 
     /**
+     * 获取右侧文本内容
+     */
+    fun getRightViewText(): String {
+        return Util.getEmptyString(mVerifyCodeTextView?.text.toString())
+    }
+
+    /**
+     * 设置右侧文本内容
+     */
+    fun setRightViewText(input: String?) {
+
+        // 避免循环提示
+        if (mVerifyCodeTextView?.text.toString() == input) {
+            return
+        }
+
+        mVerifyCodeTextView?.text = input
+    }
+
+    /**
      * 返回RadioGroup已选中的值
      */
     fun getCheckedValue(): Int {
@@ -511,6 +531,18 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
 
         if (mIsShowVerifyCode!!) {
             mVerifyCodeTextView?.setOnClickListener(listener)
+        }
+    }
+
+    /**
+     * 设置右侧控件的是否可以点击
+     *
+     * @param isEnable 是否可用
+     */
+    fun setRightViewIsEnable(isEnable: Boolean) {
+
+        if (mIsShowVerifyCode!!) {
+            mVerifyCodeTextView?.isEnabled = isEnabled
         }
     }
 

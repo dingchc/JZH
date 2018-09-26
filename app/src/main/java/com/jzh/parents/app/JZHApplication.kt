@@ -1,6 +1,9 @@
 package com.jzh.parents.app
 
 import android.app.Application
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import com.google.gson.Gson
 import com.google.gson.JsonParser
 import com.jzh.parents.utils.AppLogger
@@ -53,4 +56,6 @@ class JZHApplication : Application() {
             }
         })
     }
+
+
 }

@@ -44,7 +44,7 @@ class PhoneLoginRemoteDataSource : BaseRemoteDataSource() {
 
                     val res: BaseRes? = Util.fromJson<BaseRes>(json!!, object : TypeToken<BaseRes>() {}.type)
 
-                    notifyResult(res?.code, res?.tip, resultLiveData = resultInfoLiveData)
+                    notifyResult(ResultInfo.CMD_LOGIN_GET_SMS_CODE, code = res?.code ?: 0, tip = res?.tip ?: "", resultLiveData = resultInfoLiveData)
                 }
             }
 
@@ -52,7 +52,7 @@ class PhoneLoginRemoteDataSource : BaseRemoteDataSource() {
 
                 AppLogger.i("error msg =" + throwable?.message)
 
-                notifyResult(ResultInfo.CODE_EXCEPTION, ResultInfo.TIP_EXCEPTION, resultLiveData = resultInfoLiveData)
+                notifyResult(ResultInfo.CMD_LOGIN_GET_SMS_CODE, ResultInfo.CODE_EXCEPTION, ResultInfo.TIP_EXCEPTION, resultLiveData = resultInfoLiveData)
 
             }
 

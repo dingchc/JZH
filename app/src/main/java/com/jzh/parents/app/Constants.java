@@ -105,4 +105,10 @@ public interface Constants {
      */
     String PROVIDER_AUTHORIZE = "com.jzh.parents.authority";
 
+
+    /**
+     * 短信验证码计时间隔：60秒
+     */
+    int SMS_INTERVAL_TIME = 60;
+
 }

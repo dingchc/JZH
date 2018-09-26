@@ -15,26 +15,26 @@ abstract class BaseRemoteDataSource {
 
     /**
      * 通知结果
+     *
+     * @param cmd                指令
      * @param code               状态码
      * @param tip                信息
      * @param obj                数据
-     * @param resultLiveData 结果的ResultInfo
+     * @param resultLiveData     结果的ResultInfo
      *
      */
-    fun notifyResult(code: Int? = 200, tip: String? = "", obj: Any? = null, resultLiveData: MutableLiveData<ResultInfo>? = null) {
-
-
-        AppLogger.i("*1 " + resultLiveData)
+    fun notifyResult(cmd: Int = 0, code: Int = 200, tip: String? = "", obj: Any? = null, resultLiveData: MutableLiveData<ResultInfo>? = null) {
 
         val result = resultLiveData?.value
 
         AppLogger.i("* " + result)
 
-        result?.code = code ?: 0
+        result?.cmd = cmd
+        result?.code = code
         result?.tip = tip ?: ""
         result?.obj = obj
 
-        AppLogger.i("* " + result?.code + ", " + result?.tip)
+        AppLogger.i("* " + result?.cmd + result?.code + ", " + result?.tip)
         resultLiveData?.value = result
     }
 }

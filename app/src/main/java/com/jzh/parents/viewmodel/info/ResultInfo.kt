@@ -6,6 +6,11 @@ package com.jzh.parents.viewmodel.info
 data class ResultInfo(
 
         /**
+         * 指令码
+         */
+        var cmd: Int = 0,
+
+        /**
          * 错误码
          */
         var code: Int = CODE_SUCCESS,
@@ -37,6 +42,16 @@ data class ResultInfo(
          * 信息：异常
          */
         const val TIP_EXCEPTION = "请求异常"
+
+        /**
+         * 获取短信验证码
+         */
+        const val CMD_LOGIN_GET_SMS_CODE = 1
+
+        /**
+         * 获取短信验证码
+         */
+        const val CMD_LOGIN_SMS_LOGIN = 2
     }
 
 

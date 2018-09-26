@@ -37,7 +37,7 @@
             android:textSize="18sp"
             app:contentText="@={viewModel.phoneNumber}"
             app:rc_hint="@string/input_phone_number"
-            app:rc_icon_src="@mipmap/icon_register_name"
+            app:rc_icon_src="@mipmap/icon_login_phone"
             app:rc_is_input_editable="true"
             app:rc_show_tap_arrow="false" />
 
@@ -51,8 +51,9 @@
             android:paddingLeft="10dp"
             android:textSize="18sp"
             app:contentText="@={viewModel.smsCode}"
+            app:rightViewText="@{viewModel.smsShow}"
             app:rc_hint="@string/input_sms_code"
-            app:rc_icon_src="@mipmap/icon_register_name"
+            app:rc_icon_src="@mipmap/icon_login_sms_code"
             app:rc_is_input_editable="true"
             app:rc_show_tap_arrow="false"
             app:rc_is_show_verify_code="true"/>

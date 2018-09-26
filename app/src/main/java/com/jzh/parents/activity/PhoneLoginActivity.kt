@@ -3,12 +3,19 @@ package com.jzh.parents.activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.view.View
 import com.jzh.parents.R
 import com.jzh.parents.databinding.ActivityPhoneLoginBinding
 import com.jzh.parents.utils.AppLogger
+import com.jzh.parents.utils.SmsCDTimer
 import com.jzh.parents.viewmodel.PhoneLoginViewModel
 import com.jzh.parents.viewmodel.bindadapter.TSDataBindingComponent
+import com.jzh.parents.viewmodel.info.ResultInfo
+import java.util.*
 
 /**
  * 手机号登录
@@ -16,7 +23,7 @@ import com.jzh.parents.viewmodel.bindadapter.TSDataBindingComponent
  * @author ding
  * Created by Ding on 2018/9/20.
  */
-class PhoneLoginActivity : BaseActivity() {
+class PhoneLoginActivity : BaseActivity(), SmsCDTimer.OnSmsTickListener {
 
     /**
      * ViewMode
@@ -38,27 +45,60 @@ class PhoneLoginActivity : BaseActivity() {
         mDataBinding?.setLifecycleOwner(this@PhoneLoginActivity)
 
         mDataBinding?.viewModel = mViewModel
+
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        SmsCDTimer.addOnSmsTickListener(this)
+    }
+
+    override fun onDestroy() {
+
+        SmsCDTimer.removeOnSmsTickListener(this)
+
+        super.onDestroy()
     }
 
     override fun initEvent() {
 
+        // 短信验证码
         mDataBinding?.itemSmsCode?.setRightViewClickListener(View.OnClickListener { v ->
-            AppLogger.i("" + v)
 
-            mViewModel?.fetchSmsCode("15010233266")
+            mViewModel?.fetchSmsCode()
         })
 
+        // 返回状态
         mViewModel?.resultInfo?.observe(this@PhoneLoginActivity, Observer {
 
             resultInfo ->
 
-            AppLogger.i("* " + resultInfo + ", "+ resultInfo?.code + ", " + resultInfo?.tip)
+            AppLogger.i("* " + resultInfo + ", " + resultInfo?.code + ", " + resultInfo?.tip)
 
-            if (resultInfo?.code != 200) {
+            // 短信验证码
+            if (resultInfo?.cmd == ResultInfo.CMD_LOGIN_GET_SMS_CODE) {
 
-                showToastError(resultInfo?.tip ?: "")
+                // 成功
+                if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
+
+                    SmsCDTimer.startSmsTimer()
+
+                }
+                // 失败
+                else {
+                    showToastError(resultInfo.tip)
+                }
             }
 
+        })
+
+        // 返回状态
+        mViewModel?.countDown?.observe(this@PhoneLoginActivity, Observer {
+
+            value ->
+
+            AppLogger.i("* " + value)
 
         })
 
@@ -66,6 +106,14 @@ class PhoneLoginActivity : BaseActivity() {
 
     override fun initData() {
 
+        // 是否可以发送短信验证码
+        if (SmsCDTimer.isSmsTimerStart()) {
+            enableFetchSmsView(false)
+        } else {
+            enableFetchSmsView(true)
+        }
+
+        mViewModel?.countDown?.value = SmsCDTimer.getCurrentCountDownTime()
     }
 
     override fun getContentLayout(): View {
@@ -73,6 +121,23 @@ class PhoneLoginActivity : BaseActivity() {
         DataBindingUtil.setDefaultComponent(TSDataBindingComponent())
         mDataBinding = DataBindingUtil.inflate(layoutInflater, R.layout.activity_phone_login, null, false)
         return mDataBinding!!.root
+    }
+
+    override fun onTimeTick(time: Int) {
+
+        AppLogger.i("time=" + time)
+
+        mViewModel?.countDown?.value = time
+    }
+
+    /**
+     * 获取短信验证码控件是否可用
+     *
+     * @param isEnable 是否可用
+     */
+    private fun enableFetchSmsView(isEnable: Boolean) {
+
+        mDataBinding?.itemSmsCode?.setRightViewIsEnable(isEnable)
     }
 
 
