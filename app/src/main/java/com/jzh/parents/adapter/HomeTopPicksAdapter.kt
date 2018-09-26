@@ -23,7 +23,8 @@ class HomeTopPicksAdapter(val mContext: Context, val mLiveList: List<LiveInfo>?)
     override fun onBindViewHolder(holder: InnerViewHolder, position: Int) {
 
         holder.dataBinding as ItemTopPicksBinding
-        holder.dataBinding.tvLiveTitle.text = "1123"
+
+        holder.dataBinding.liveInfo = mLiveList?.get(position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InnerViewHolder {

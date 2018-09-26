@@ -177,6 +177,9 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
         // 制作直播分类
         makeLiveCategoryItem(homeConfigRes, showEntities)
 
+        // 推荐直播
+        makeLiveRecommendItems(homeConfigRes, showEntities)
+
         // 制作精彩回放直播
         makeLiveReviewItems(homeShowRes, showEntities)
 
@@ -294,9 +297,9 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
 
             homeConfigRes.output.recommendList.forEach {
 
-                val liveItem1 = LiveInfo(title = it.live?.title ?: "", imageUrl = it.pic?.info ?: "", recommendPos = it.pic?.position ?: 0)
+                val liveItem = LiveInfo(title = it.live?.title ?: "", imageUrl = it.pic?.info ?: "", look = it.live?.look ?: 0, recommendPos = it.pic?.position ?: 0)
 
-                recommendList.add(liveItem1)
+                recommendList.add(liveItem)
             }
 
             if (recommendList.isNotEmpty()) {

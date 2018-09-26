@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="liveInfo"
+            type="com.jzh.parents.viewmodel.info.LiveInfo" />
+    </data>
 
     <!-- 直播条目信息 -->
     <android.support.v7.widget.CardView
         android:layout_width="260dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
         app:cardCornerRadius="6dp">
 
         <LinearLayout
@@ -19,7 +27,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="86dp"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/timg" />
+                bind:image="@{liveInfo.imageUrl}"
+                bind:placeHolder="@{@drawable/bg_home_mask}" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -38,9 +47,10 @@
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:lines="2"
-                    android:text="@string/tip_ops_permission"
+                    android:text="@{liveInfo.title}"
                     android:textColor="@color/font_black"
                     android:textSize="14sp" />
+
                 <!-- 收听数 -->
                 <TextView
                     android:id="@+id/tv_live_attendance"
@@ -53,7 +63,7 @@
                     android:drawableLeft="@mipmap/icon_home_live_attendance"
                     android:drawablePadding="3dp"
                     android:gravity="center_vertical"
-                    android:text="123456 收听"
+                    android:text="@{@string/count_for_look(liveInfo.look)}"
                     android:textColor="@color/gray"
                     android:textSize="11sp" />
 
