@@ -65,6 +65,7 @@
             android:text="@string/login"
             android:textColor="@color/white"
             android:textSize="18sp"
+            android:onClick="onSmsLoginClick"
             app:corner="8dp"
             app:normal_color="@color/login_btn_green"
             app:pressed_color="@color/login_btn_green_dark" />

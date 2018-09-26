@@ -24,6 +24,7 @@ import java.io.FileInputStream
 import java.io.InputStream
 import java.lang.reflect.Type
 import java.util.*
+import java.util.regex.Pattern
 
 /**
  * 工具类
@@ -355,6 +356,18 @@ class Util {
             }
 
             return false
+        }
+
+        /**
+         * 检查手机号
+         *
+         * @return true 正确、false 否
+         */
+        fun checkPhoneNumberValid(phoneNumber: String?): Boolean {
+
+            val pattern = Pattern.compile("1[0-9]{10}")
+
+            return pattern.matcher(phoneNumber).find()
         }
     }
 

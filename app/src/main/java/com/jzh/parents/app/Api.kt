@@ -53,5 +53,10 @@ object Api {
      */
     const val URL_API_GET_SMS_CODE = URL_API_LIVE_DOMAIN + "login/sms"
 
+    /**
+     * 地址：短信登录
+     */
+    const val URL_API_SMS_LOGIN = URL_API_LIVE_DOMAIN + "login/code"
+
 
 }

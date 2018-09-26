@@ -79,6 +79,12 @@
     <string name="login_by_phone">手机号登录</string>
     <string name="input_phone_number">请输入手机号</string>
     <string name="input_sms_code">请输入验证码</string>
+    <string name="phone_number_is_invalid">请输入正确的手机号</string>
+    <string name="please_input_sms_code">请输入短信验证码</string>
+    <string name="login_doing">正在登录&#8230;</string>
+
+
+
 
 
 

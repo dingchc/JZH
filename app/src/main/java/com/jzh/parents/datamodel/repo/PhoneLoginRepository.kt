@@ -25,7 +25,18 @@ class PhoneLoginRepository : BaseRepository() {
      */
     fun fetchSmsCode(phoneNumber : String, resultInfoLiveData: MutableLiveData<ResultInfo>) {
 
-        return mRemoteDataSource.fetchSmsCode(phoneNumber, resultInfoLiveData)
+        mRemoteDataSource.fetchSmsCode(phoneNumber, resultInfoLiveData)
+    }
+
+    /**
+     * 短信登录
+     *
+     * @param phoneNumber        手机号
+     * @param code               验证码
+     * @param resultInfoLiveData 返回信息
+     */
+    fun smsLogin(phoneNumber: String, code: String, resultInfoLiveData: MutableLiveData<ResultInfo>) {
+        mRemoteDataSource.smsLogin(phoneNumber, code, resultInfoLiveData)
     }
 
 }

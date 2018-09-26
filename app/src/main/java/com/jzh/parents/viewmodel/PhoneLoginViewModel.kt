@@ -39,37 +39,43 @@ class PhoneLoginViewModel(app: Application) : BaseViewModel(app) {
 
         if (input < Constants.SMS_INTERVAL_TIME) {
             "$input" + "s"
-        }
-        else {
+        } else {
             "获取验证码"
         }
     })
 
 
-/**
- * 数据仓库
- */
-private var repo: PhoneLoginRepository? = null
+    /**
+     * 数据仓库
+     */
+    private var repo: PhoneLoginRepository? = null
 
-/**
- * 初始化
- */
-init {
+    /**
+     * 初始化
+     */
+    init {
 
-    repo = PhoneLoginRepository()
+        repo = PhoneLoginRepository()
 
-    resultInfo.value = ResultInfo()
+        resultInfo.value = ResultInfo()
 
-    phoneNumber.value = "15010233266"
-}
+        phoneNumber.value = "15010233266"
+    }
 
-/**
- * 获取验证码
- */
-fun fetchSmsCode() {
+    /**
+     * 获取验证码
+     */
+    fun fetchSmsCode() {
 
-    AppLogger.i("resultInfo=" + resultInfo)
-    repo?.fetchSmsCode(phoneNumber.value ?: "", resultInfo)
-}
+        AppLogger.i("resultInfo=" + resultInfo)
+        repo?.fetchSmsCode(phoneNumber.value ?: "", resultInfo)
+    }
+
+    /**
+     * 短信登录
+     */
+    fun smsLogin() {
+        repo?.smsLogin(phoneNumber.value ?: "", smsCode.value ?: "", resultInfo)
+    }
 
 }

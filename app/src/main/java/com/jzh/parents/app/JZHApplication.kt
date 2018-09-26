@@ -32,7 +32,7 @@ class JZHApplication : Application() {
         instance = this@JZHApplication
         TSHttpController.INSTANCE.setAppContext(this)
 
-        getTestToken()
+//        getTestToken()
     }
 
     /**
