@@ -140,6 +140,9 @@ class HomeActivity : BaseActivity() {
 
         mAdapter?.mListener = mAdapterListener
 
+        // 拉取用户信息
+        mViewModel?.fetchUserInfo()
+
         // 拉取直播数据
         mViewModel?.fetchHomeLiveData()
     }

@@ -25,7 +25,7 @@ class PreferenceUtil private constructor() {
         /**
          * 获取token
          */
-        const val KEY_TOKEN = "token"
+        private const val KEY_TOKEN = "token"
     }
 
     init {

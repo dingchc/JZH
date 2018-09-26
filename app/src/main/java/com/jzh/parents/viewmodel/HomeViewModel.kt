@@ -73,6 +73,14 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
     }
 
     /**
+     * 获取用户信息
+     *
+     */
+    fun fetchUserInfo() {
+        repo.fetchUserInfo(funcEntity)
+    }
+
+    /**
      * 加载数据
      */
     fun loadItemEntities() {

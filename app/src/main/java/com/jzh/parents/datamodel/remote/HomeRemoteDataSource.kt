@@ -10,10 +10,14 @@ import com.jzh.parents.datamodel.data.LiveData
 import com.jzh.parents.datamodel.response.HomeConfigRes
 import com.jzh.parents.datamodel.response.HomeShowRes
 import com.jzh.parents.datamodel.response.LiveListRes
+import com.jzh.parents.datamodel.response.UserInfoRes
 import com.jzh.parents.utils.AppLogger
+import com.jzh.parents.utils.PreferenceUtil
 import com.jzh.parents.utils.Util
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
+import com.jzh.parents.viewmodel.entity.FuncEntity
 import com.jzh.parents.viewmodel.entity.LiveItemEntity
+import com.jzh.parents.viewmodel.entity.SearchEntity
 import com.jzh.parents.viewmodel.entity.home.HomeBannerEntity
 import com.jzh.parents.viewmodel.entity.home.HomeLiveCategoryEntity
 import com.jzh.parents.viewmodel.entity.home.HomeLiveNowEntity
@@ -35,12 +39,41 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
     /**
      * 请求直播数据
      *
-     * @param target 数据目标
+     * @param target 目标数据
      */
     fun fetchHomeLiveData(target: MutableLiveData<MutableList<BaseLiveEntity>>) {
 
         // 获取首页配置
         fetchCategoryAndTopPicks(target)
+    }
+
+    /**
+     * 获取用户信息
+     *
+     * @param target 目标数据
+     */
+    fun fetchUserInfo(target: MutableLiveData<FuncEntity>) {
+
+        val paramsMap = TreeMap<String, String>()
+
+        paramsMap.put("token", PreferenceUtil.instance.getToken())
+
+        TSHttpController.INSTANCE.doGet(Api.URL_API_GET_USER_INFO, paramsMap, object : TSHttpCallback {
+            override fun onSuccess(res: TSBaseResponse?, json: String?) {
+
+                AppLogger.i("json=$json")
+
+                val userInfo: UserInfoRes = Util.fromJson<UserInfoRes>(json ?: "", object : TypeToken<UserInfoRes>() {
+
+                }.type)
+
+                AppLogger.i("userInfo=" + userInfo)
+            }
+
+            override fun onException(e: Throwable?) {
+                AppLogger.i(e?.message)
+            }
+        })
     }
 
     /**
@@ -52,7 +85,7 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
 
         val paramsMap = TreeMap<String, String>()
 
-        paramsMap.put("token", JZHApplication.instance?.token ?: "")
+        paramsMap.put("token", PreferenceUtil.instance.getToken())
 
         TSHttpController.INSTANCE.doGet(Api.URL_API_HOME_CATEGORY_AND_RECOMMEND, paramsMap, object : TSHttpCallback {
             override fun onSuccess(res: TSBaseResponse?, json: String?) {
@@ -129,6 +162,10 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
 
         // 制作精彩回放直播
         makeLiveReviewItems(homeShowRes, showEntities)
+
+        // 搜索条目
+        val searchEntity = SearchEntity()
+        showEntities.add(searchEntity)
 
         target.value = showEntities
     }
@@ -240,7 +277,7 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
 
             homeConfigRes.output.recommendList.forEach {
 
-                val liveItem1 = LiveInfo(title = it.live?.title?: "", imageUrl = it.pic?.info ?: "", recommendPos = it.pic?.position ?: 0)
+                val liveItem1 = LiveInfo(title = it.live?.title ?: "", imageUrl = it.pic?.info ?: "", recommendPos = it.pic?.position ?: 0)
 
                 recommendList.add(liveItem1)
             }

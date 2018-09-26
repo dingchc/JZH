@@ -44,6 +44,15 @@ class HomeRepository : BaseRepository() {
     }
 
     /**
+     * 获取用户信息
+     *
+     * @param target 目标数据
+     */
+    fun fetchUserInfo(target: MutableLiveData<FuncEntity>) {
+        mRemoteDataSource?.fetchUserInfo(target)
+    }
+
+    /**
      * 请求直播数据
      * @param target 数据目标
      */
