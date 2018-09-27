@@ -120,6 +120,8 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                 Intent intent = new Intent(Constants.ACTION_WX_SUBSCRIBE);
                 intent.putExtra(Constants.EXTRA_WX_SUBSCRIBE_ACTION, resp.action);
                 intent.putExtra(Constants.EXTRA_WX_SUBSCRIBE_SCENE, resp.scene);
+                intent.putExtra(Constants.EXTRA_WX_SUBSCRIBE_OPEN_ID, resp.openId);
+
                 LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 
                 finish();

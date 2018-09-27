@@ -69,7 +69,9 @@ class MyselfEditActivity : BaseActivity() {
              */
             override fun onRightViewClick() {
 
-                onPhoneClick()
+//                onPhoneClick()
+
+                mViewModel?.fetchOssConfig()
             }
 
         })

@@ -1,6 +1,7 @@
 package com.jzh.parents.datamodel.repo
 
 import com.jzh.parents.datamodel.local.MyselfEditLocalDataSource
+import com.jzh.parents.datamodel.remote.MyselfEditRemoteDataSource
 import com.jzh.parents.viewmodel.info.UserInfo
 
 /**
@@ -17,10 +18,23 @@ class MyselfEditRepository : BaseRepository() {
     private val mLocalDataSource: MyselfEditLocalDataSource = MyselfEditLocalDataSource()
 
     /**
+     * 远程数据
+     */
+    private val mRemoteDataSource: MyselfEditRemoteDataSource = MyselfEditRemoteDataSource()
+
+    /**
      * 加载数据
      */
-    fun loadUserInfoEntity() : UserInfo? {
+    fun loadUserInfoEntity(): UserInfo? {
 
         return mLocalDataSource.loadUserInfoEntity()
+    }
+
+    /**
+     * 获取OSS配置
+     */
+    fun fetchOssConfig() {
+
+        mRemoteDataSource.initOSSConfig()
     }
 }

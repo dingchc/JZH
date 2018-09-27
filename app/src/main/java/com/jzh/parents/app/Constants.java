@@ -31,6 +31,12 @@ public interface Constants {
     String ALI_APP_SECRET = "632b6bee8481fcb10c1d5e9b704c46a1";
 
     /**
+     *
+     */
+    String STS_SERVER = "632b6bee8481fcb10c1d5e9b704c46a1";
+
+
+    /**
      * 微信未安装
      */
     int RET_CODE_WX_IS_NOT_INSTALL = -1000;
@@ -104,6 +110,11 @@ public interface Constants {
      * wx的预约的直播action
      */
     String EXTRA_WX_SUBSCRIBE_ACTION = "wx_subscribe_action";
+
+    /**
+     * wx的预约的直播openId
+     */
+    String EXTRA_WX_SUBSCRIBE_OPEN_ID = "wx_subscribe_open_id";
 
     /**
      * wx的预约的直播Id

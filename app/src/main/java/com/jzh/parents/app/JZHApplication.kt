@@ -37,10 +37,13 @@ class JZHApplication : Application() {
         instance = this@JZHApplication
         TSHttpController.INSTANCE.setAppContext(this)
 
-//        getTestToken()
+        getTestToken()
 
         // 初始化阿里云推送服务
-        initPushService(this@JZHApplication)
+//        initPushService(this@JZHApplication)
+
+
+//        initOSSConfig()
     }
 
     /**
@@ -56,6 +59,7 @@ class JZHApplication : Application() {
                 token = jsonParser.parse(json).asJsonObject.get("output").asString
 
                 AppLogger.i("token=" + token)
+
             }
 
             override fun onException(throwable: Throwable?) {

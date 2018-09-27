@@ -46,12 +46,22 @@ data class ResultInfo(
         /**
          * 获取短信验证码
          */
-        const val CMD_LOGIN_GET_SMS_CODE = 1
+        const val CMD_LOGIN_GET_SMS_CODE = 1001
 
         /**
          * 获取短信验证码
          */
-        const val CMD_LOGIN_SMS_LOGIN = 2
+        const val CMD_LOGIN_SMS_LOGIN = 1002
+
+        /**
+         * 首页：预约
+         */
+        const val CMD_HOME_SUBSCRIBE = 2001
+
+        /**
+         * 首页：收藏
+         */
+        const val CMD_HOME_FAVORITE = 2002
     }
 
 

@@ -73,5 +73,13 @@ class MyselfEditViewModel(app: Application) : BaseViewModel(app) {
         newPhone.value = userInfo.value?.phone
     }
 
+    /**
+     * 加载OSS配置信息
+     */
+    fun fetchOssConfig() {
+
+        repo.fetchOssConfig()
+    }
+
 
 }

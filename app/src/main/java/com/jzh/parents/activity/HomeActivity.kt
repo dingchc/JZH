@@ -8,7 +8,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.os.Handler
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -21,6 +20,7 @@ import com.jzh.parents.viewmodel.entity.BaseLiveEntity
 import com.jzh.parents.viewmodel.entity.home.HomeLiveNowEntity
 import com.jzh.parents.viewmodel.HomeViewModel
 import com.jzh.parents.viewmodel.info.LiveInfo
+import com.jzh.parents.viewmodel.info.ResultInfo
 
 /**
  * 主页
@@ -60,9 +60,12 @@ class HomeActivity : BaseActivity() {
             if (Constants.ACTION_WX_SUBSCRIBE == intent?.action) {
 
                 val action = intent.getStringExtra(Constants.EXTRA_WX_SUBSCRIBE_ACTION)
+                val openId = intent.getStringExtra(Constants.EXTRA_WX_SUBSCRIBE_OPEN_ID)
                 val liveId = intent.getIntExtra(Constants.EXTRA_WX_SUBSCRIBE_SCENE, 0)
 
                 AppLogger.i("* action=$action, liveId = $liveId")
+
+                mViewModel?.syncSubscribedALive(liveId, openId, action)
             }
         }
     }
@@ -163,9 +166,42 @@ class HomeActivity : BaseActivity() {
             override fun onClickOperate(type: Int, liveInfo: LiveInfo) {
 
                 AppLogger.i("* type=" + type + ", " + liveInfo.id)
-                mViewModel?.subscribeALive(liveInfo.id)
+
+                // 未预约的直播
+                if (type == LiveInfo.LiveInfoEnum.TYPE_WILL.value && liveInfo.isSubscribed == Constants.TYPE_SUBSCRIBE_NO) {
+                    mViewModel?.subscribeALiveOnWx(liveInfo.id)
+                }
+                //未收藏的直播
+                else if (type == LiveInfo.LiveInfoEnum.TYPE_REVIEW.value && liveInfo.isFavorited == Constants.TYPE_FAVORITE_NO) {
+                    mViewModel?.favoriteALive(liveInfo)
+                }
             }
         }
+
+        // 错误返回
+        mViewModel?.resultInfo?.observe(this@HomeActivity, Observer { resultInfo ->
+
+            when (resultInfo?.cmd) {
+
+            // 预约
+                ResultInfo.CMD_HOME_SUBSCRIBE -> {
+
+                    if (resultInfo.code != ResultInfo.CODE_SUCCESS) {
+
+                        showToastError(resultInfo.tip)
+                    }
+                }
+
+            // 收藏
+                ResultInfo.CMD_HOME_FAVORITE -> {
+
+                    if (resultInfo.code != ResultInfo.CODE_SUCCESS) {
+
+                        showToastError(resultInfo.tip)
+                    }
+                }
+            }
+        })
     }
 
     /**

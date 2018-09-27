@@ -49,6 +49,11 @@ object Api {
     const val URL_API_FAVORITES_LIST = URL_API_LIVE_DOMAIN + "lives/favorites"
 
     /**
+     * 地址：预约一个直播
+     */
+    const val URL_API_SUBSCRIBE_A_LIVE = URL_API_LIVE_DOMAIN + "lives/subscribe"
+
+    /**
      * 地址：搜索
      */
     const val URL_API_SEARCH = URL_API_LIVE_DOMAIN + "lives/search"
@@ -67,6 +72,11 @@ object Api {
      * 地址：获取用户信息
      */
     const val URL_API_GET_USER_INFO = URL_API_LIVE_DOMAIN + "user/base"
+
+    /**
+     * 地址：获取OSS配置信息
+     */
+    const val URL_API_GET_OSS_CONFIG = URL_API_LIVE_DOMAIN + "uploadsign"
 
 
 }

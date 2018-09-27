@@ -36,8 +36,6 @@ class HomeAdapter(private var mContext: Context, var mDataList: MutableList<Base
 
         val viewType = getItemViewType(position)
 
-        AppLogger.i("viewType=" + viewType)
-
         when (viewType) {
 
         // 正在直播条目:

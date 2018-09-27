@@ -30,8 +30,6 @@ class TSBindingAdapter {
         @BindingAdapter(value = *arrayOf("bind:circleImage", "bind:placeHolder"), requireAll = false)
         fun loadCircleImage(imageView: ImageView, url: String?, holderId: Drawable?) {
 
-            AppLogger.i("loadCircleImage " + url)
-
             Glide.with(imageView.context).load(url).apply(RequestOptions().circleCrop().placeholder(holderId)).into(imageView)
         }
 
@@ -42,8 +40,6 @@ class TSBindingAdapter {
          */
         @BindingAdapter(value = *arrayOf("bind:image", "bind:placeHolder"), requireAll = false)
         fun loadImage(imageView: ImageView, url: String?, holderId: Drawable?) {
-
-            AppLogger.i("loadImage " + url)
 
             Glide.with(imageView.context).load(url).apply(RequestOptions().placeholder(holderId)).into(imageView)
         }
@@ -56,9 +52,7 @@ class TSBindingAdapter {
         @BindingAdapter(value = "bind:srcByType")
         fun showImageByType(imageView: ImageView, liveInfo: LiveInfo?) {
 
-            AppLogger.i("showImageByType " + liveInfo)
-
-            var drawableResId = when (liveInfo?.contentType) {
+            val drawableResId = when (liveInfo?.contentType) {
 
             // 即将开始
                 LiveInfo.LiveInfoEnum.TYPE_WILL -> {

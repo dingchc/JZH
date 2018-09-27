@@ -46,12 +46,12 @@ class LiveInfo(
         /**
          * 是否已预约（0 - 未预约、1 - 已预约）
          */
-        val isSubscribed: Int = 0,
+        var isSubscribed: Int = 0,
 
         /**
          * 是否已收藏（0 - 未收藏、1 - 已收藏）
          */
-        val isFavorited: Int = 0,
+        var isFavorited: Int = 0,
 
         /**
          * 是否免费（0 - 不免费、1 - 免费）
