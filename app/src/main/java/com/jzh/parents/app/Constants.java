@@ -21,6 +21,16 @@ public interface Constants {
     String WX_APP_SECRET = "9965a66de900edb09b08b97d7111fa0d";
 
     /**
+     * 阿里云AppKey
+     */
+    String ALI_APP_KEY = "25048548";
+
+    /**
+     * 阿里云AppSecret
+     */
+    String ALI_APP_SECRET = "632b6bee8481fcb10c1d5e9b704c46a1";
+
+    /**
      * 微信未安装
      */
     int RET_CODE_WX_IS_NOT_INSTALL = -1000;

@@ -49,6 +49,11 @@ object Api {
     const val URL_API_FAVORITES_LIST = URL_API_LIVE_DOMAIN + "lives/favorites"
 
     /**
+     * 地址：搜索
+     */
+    const val URL_API_SEARCH = URL_API_LIVE_DOMAIN + "lives/search"
+
+    /**
      * 地址：获取短信验证码
      */
     const val URL_API_GET_SMS_CODE = URL_API_LIVE_DOMAIN + "login/sms"

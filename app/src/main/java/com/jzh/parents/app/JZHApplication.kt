@@ -1,6 +1,7 @@
 package com.jzh.parents.app
 
 import android.app.Application
+import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
@@ -11,6 +12,10 @@ import com.tunes.library.wrapper.network.TSHttpController
 import com.tunes.library.wrapper.network.listener.TSHttpCallback
 import com.tunes.library.wrapper.network.model.TSBaseResponse
 import java.util.*
+import com.alibaba.sdk.android.push.CommonCallback
+import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory
+import com.alibaba.sdk.android.push.CloudPushService
+
 
 /**
  * 主App
@@ -33,6 +38,9 @@ class JZHApplication : Application() {
         TSHttpController.INSTANCE.setAppContext(this)
 
 //        getTestToken()
+
+        // 初始化阿里云推送服务
+        initPushService(this@JZHApplication)
     }
 
     /**
@@ -53,6 +61,26 @@ class JZHApplication : Application() {
             override fun onException(throwable: Throwable?) {
                 AppLogger.i("error =" + throwable?.message)
 
+            }
+        })
+    }
+
+    /**
+     * 初始化云推送通道
+     *
+     * @param context 上下文
+     */
+    private fun initPushService(context: Context) {
+
+        PushServiceFactory.init(context)
+        val pushService = PushServiceFactory.getCloudPushService()
+        pushService.register(context, object : CommonCallback {
+            override fun onSuccess(response: String) {
+                AppLogger.i("init cloudchannel success")
+            }
+
+            override fun onFailed(errorCode: String, errorMessage: String) {
+                AppLogger.e("init cloudchannel failed -- errorcode:$errorCode -- errorMessage:$errorMessage")
             }
         })
     }
