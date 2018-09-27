@@ -1,10 +1,12 @@
 package com.jzh.parents.datamodel.repo
 
+import android.arch.lifecycle.MutableLiveData
 import com.jzh.parents.app.Api
 import com.jzh.parents.app.Constants
 import com.jzh.parents.app.JZHApplication
 import com.jzh.parents.datamodel.remote.LoginRemoteDataSource
 import com.jzh.parents.utils.AppLogger
+import com.jzh.parents.viewmodel.info.ResultInfo
 import com.tencent.mm.opensdk.modelmsg.SendAuth
 import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import com.tunes.library.wrapper.network.TSHttpController
@@ -40,5 +42,15 @@ class LoginRepository : BaseRepository() {
     fun wxGetAccessToken(token: String) {
 
         mRemoteDataSource.wxGetAccessToken(token)
+    }
+
+    /**
+     * 获取AccessToken
+     * @param token 授权token
+     * @param resultInfo 返回结果
+     */
+    fun loginWithAuthorize(token: String, resultInfo : MutableLiveData<ResultInfo>) {
+
+        mRemoteDataSource.loginWithAuthorize(token, resultInfo)
     }
 }

@@ -37,7 +37,7 @@ class JZHApplication : Application() {
         instance = this@JZHApplication
         TSHttpController.INSTANCE.setAppContext(this)
 
-        getTestToken()
+//        getTestToken()
 
         // 初始化阿里云推送服务
 //        initPushService(this@JZHApplication)

@@ -21,6 +21,11 @@ public interface Constants {
     String WX_APP_SECRET = "9965a66de900edb09b08b97d7111fa0d";
 
     /**
+     * 微信授权登录的渠道Id
+     */
+    String WX_AUTHORIZE_CHANNEL_ID = "20";
+
+    /**
      * 阿里云AppKey
      */
     String ALI_APP_KEY = "25048548";

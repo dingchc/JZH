@@ -78,5 +78,10 @@ object Api {
      */
     const val URL_API_GET_OSS_CONFIG = URL_API_LIVE_DOMAIN + "uploadsign"
 
+    /**
+     * 地址：微信登录
+     */
+    const val URL_API_LOGIN_WITH_WX_AUTHORIZE = URL_API_LIVE_DOMAIN + "wx/login"
+
 
 }

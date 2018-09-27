@@ -45,9 +45,8 @@ class LoginActivity : BaseActivity() {
             if (Constants.ACTION_WX_AUTHORIZE == intent?.action) {
 
                 val token = intent.getStringExtra(Constants.EXTRA_WX_TOKEN)
-                AppLogger.i("* token=$token")
 
-//                mViewModel?.wxGetAccessToken(token)
+                mViewModel?.loginWithAuthorize(token)
             }
         }
     }
