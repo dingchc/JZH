@@ -19,6 +19,7 @@ import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
 import com.jzh.parents.viewmodel.entity.home.HomeLiveNowEntity
 import com.jzh.parents.viewmodel.HomeViewModel
+import com.jzh.parents.viewmodel.bindadapter.TSDataBindingComponent
 import com.jzh.parents.viewmodel.info.LiveInfo
 import com.jzh.parents.viewmodel.info.ResultInfo
 
@@ -234,6 +235,7 @@ class HomeActivity : BaseActivity() {
      */
     override fun getContentLayout(): View {
 
+        DataBindingUtil.setDefaultComponent(TSDataBindingComponent())
         mDataBinding = DataBindingUtil.inflate(layoutInflater, R.layout.activity_home, null, false)
         return mDataBinding!!.root
     }

@@ -14,11 +14,6 @@ import com.jzh.parents.viewmodel.info.ResultInfo
 class LoginViewModel(app: Application) : BaseViewModel(app) {
 
     /**
-     * 操作返回码
-     */
-    val retCode: MutableLiveData<Int> = MutableLiveData<Int>()
-
-    /**
      * 数据仓库
      */
     val repo: LoginRepository = LoginRepository()
@@ -33,8 +28,7 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
      */
     fun wxAuthorize() {
 
-        val ret = repo.wxAuthorize()
-        retCode.value = ret
+        repo.wxAuthorize(resultInfo)
     }
 
     /**

@@ -30,9 +30,9 @@ class LoginRepository : BaseRepository() {
     /**
      * 微信授权
      */
-    fun wxAuthorize(): Int {
+    fun wxAuthorize(resultInfo: MutableLiveData<ResultInfo>) {
 
-        return mRemoteDataSource.wxAuthorize()
+        mRemoteDataSource.wxAuthorize(resultInfo)
     }
 
     /**

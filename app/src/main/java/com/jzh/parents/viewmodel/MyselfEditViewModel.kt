@@ -3,6 +3,7 @@ package com.jzh.parents.viewmodel
 import android.app.Application
 import android.arch.lifecycle.MutableLiveData
 import com.jzh.parents.datamodel.repo.MyselfEditRepository
+import com.jzh.parents.viewmodel.info.ResultInfo
 import com.jzh.parents.viewmodel.info.UserInfo
 
 /**
@@ -43,6 +44,11 @@ class MyselfEditViewModel(app: Application) : BaseViewModel(app) {
      */
     private val repo: MyselfEditRepository = MyselfEditRepository()
 
+    init {
+
+        resultInfo.value = ResultInfo()
+    }
+
     /**
      * 获取用户信息
      */
@@ -74,11 +80,12 @@ class MyselfEditViewModel(app: Application) : BaseViewModel(app) {
     }
 
     /**
-     * 加载OSS配置信息
+     * 上传头像
+     * @param filePath 文件路径
      */
-    fun fetchOssConfig() {
+    fun uploadAvatar(filePath: String) {
 
-        repo.fetchOssConfig()
+        repo.uploadAvatar(filePath, resultInfo)
     }
 
 

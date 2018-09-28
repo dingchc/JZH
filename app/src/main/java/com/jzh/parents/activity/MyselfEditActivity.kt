@@ -69,9 +69,8 @@ class MyselfEditActivity : BaseActivity() {
              */
             override fun onRightViewClick() {
 
-//                onPhoneClick()
+                onPhoneClick()
 
-                mViewModel?.fetchOssConfig()
             }
 
         })
@@ -214,6 +213,8 @@ class MyselfEditActivity : BaseActivity() {
     override fun onPhotoSinglePicked(path: String?) {
 
         AppLogger.i("path = " + path)
+
+        mViewModel?.uploadAvatar(path ?: "")
     }
 
     /**

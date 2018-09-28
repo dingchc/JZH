@@ -75,7 +75,4 @@ dependencies {
 
     // 微信
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.1.4'
-
-    // 阿里云存储
-    implementation 'com.aliyun.dpa:oss-android-sdk:2.9.1'
 }

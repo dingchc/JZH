@@ -14,8 +14,10 @@ import android.view.View
 import com.jzh.parents.R
 import com.jzh.parents.app.Constants
 import com.jzh.parents.databinding.ActivityLoginBinding
+import com.jzh.parents.datamodel.response.WxAuthorizeRes
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.LoginViewModel
+import com.jzh.parents.viewmodel.info.ResultInfo
 
 /**
  * 登录页面
@@ -87,11 +89,43 @@ class LoginActivity : BaseActivity() {
      */
     override fun initEvent() {
 
-        mViewModel?.retCode?.observe(this@LoginActivity, Observer { retCode ->
+        mViewModel?.resultInfo?.observe(this@LoginActivity, Observer { resultInfo ->
 
-            // 微信未安装
-            if (retCode == Constants.RET_CODE_WX_IS_NOT_INSTALL) {
-                showToastError(getString(R.string.wx_errcode_is_not_install))
+            // 判断结果
+            when (resultInfo?.cmd) {
+
+            // 微信授权
+                ResultInfo.CMD_LOGIN_WX_AUTHORIZE -> {
+
+                    // 微信未安装
+                    if (resultInfo.code == ResultInfo.CODE_WX_IS_NOT_INSTALL) {
+                        showToastError(getString(R.string.wx_errcode_is_not_install))
+                    }
+                }
+
+            // 授权登录
+                ResultInfo.CMD_LOGIN_WX_LOGIN -> {
+
+                    // 未填写资料
+                    if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
+
+                        val authorize: WxAuthorizeRes? = resultInfo.obj as? WxAuthorizeRes
+
+                        // 填写资料
+                        if (TextUtils.isEmpty(authorize?.authorize?.token)) {
+                            startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
+                            finishCompat()
+                        }
+                        // 进首页
+                        else {
+                            startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                            finishCompat()
+                        }
+
+                    } else {
+                        showToastError(resultInfo.tip)
+                    }
+                }
             }
         })
     }

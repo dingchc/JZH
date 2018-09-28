@@ -1,7 +1,9 @@
 package com.jzh.parents.datamodel.repo
 
+import android.arch.lifecycle.MutableLiveData
 import com.jzh.parents.datamodel.local.MyselfEditLocalDataSource
 import com.jzh.parents.datamodel.remote.MyselfEditRemoteDataSource
+import com.jzh.parents.viewmodel.info.ResultInfo
 import com.jzh.parents.viewmodel.info.UserInfo
 
 /**
@@ -31,10 +33,12 @@ class MyselfEditRepository : BaseRepository() {
     }
 
     /**
-     * 获取OSS配置
+     * 上传头像
+     *
+     * @param filePath   文件路径
+     * @param resultInfo 结果
      */
-    fun fetchOssConfig() {
-
-        mRemoteDataSource.initOSSConfig()
+    fun uploadAvatar(filePath: String, resultInfo: MutableLiveData<ResultInfo>) {
+        mRemoteDataSource.uploadAvatar(filePath, resultInfo)
     }
 }

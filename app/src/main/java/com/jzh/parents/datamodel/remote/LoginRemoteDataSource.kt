@@ -1,14 +1,16 @@
 package com.jzh.parents.datamodel.remote
 
 import android.arch.lifecycle.MutableLiveData
+import android.text.TextUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jzh.parents.app.Api
 import com.jzh.parents.app.Constants
 import com.jzh.parents.app.JZHApplication
 import com.jzh.parents.datamodel.data.AccessTokenData
-import com.jzh.parents.datamodel.data.WxAuthorizeData
+import com.jzh.parents.datamodel.response.WxAuthorizeRes
 import com.jzh.parents.utils.AppLogger
+import com.jzh.parents.utils.PreferenceUtil
 import com.jzh.parents.viewmodel.info.ResultInfo
 import com.tencent.mm.opensdk.modelmsg.SendAuth
 import com.tencent.mm.opensdk.openapi.WXAPIFactory
@@ -27,8 +29,10 @@ class LoginRemoteDataSource : BaseRemoteDataSource() {
 
     /**
      * 微信授权
+     *
+     * @param resultInfo 结果
      */
-    fun wxAuthorize(): Int {
+    fun wxAuthorize(resultInfo: MutableLiveData<ResultInfo>) {
 
         val api = WXAPIFactory.createWXAPI(JZHApplication.instance, Constants.WX_APP_ID)
         // 注册
@@ -36,15 +40,15 @@ class LoginRemoteDataSource : BaseRemoteDataSource() {
 
         // 检查微信是否已安装
         if (!api.isWXAppInstalled) {
-            return Constants.RET_CODE_WX_IS_NOT_INSTALL
+
+            notifyResult(cmd = ResultInfo.CMD_LOGIN_WX_AUTHORIZE, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo)
+            return
         }
 
         val req = SendAuth.Req()
         req.scope = "snsapi_userinfo"
         req.state = "diandi_wx_login"
         api.sendReq(req)
-
-        return Constants.RET_CODE_OK
     }
 
     /**
@@ -63,16 +67,37 @@ class LoginRemoteDataSource : BaseRemoteDataSource() {
 
                 val gson = Gson()
 
-                val tokenData: WxAuthorizeData? = gson.fromJson<WxAuthorizeData>(json, object : TypeToken<WxAuthorizeData>() {
+                val authorizeRes: WxAuthorizeRes? = gson.fromJson<WxAuthorizeRes>(json, object : TypeToken<WxAuthorizeRes>() {
 
                 }.type)
 
-                AppLogger.i("token=" + tokenData?.token + ", openId=" + tokenData?.openId)
+                if (authorizeRes != null) {
+
+                    // 成功
+                    if (authorizeRes.code == ResultInfo.CODE_SUCCESS) {
+                        AppLogger.i("token=" + authorizeRes.authorize?.token + ", openId=" + authorizeRes.authorize?.openId)
+
+                        // 设置Token
+                        if (!TextUtils.isEmpty(authorizeRes.authorize?.token)) {
+                            PreferenceUtil.instance.setToken(authorizeRes.authorize?.token)
+                        }
+                        notifyResult(cmd = ResultInfo.CMD_LOGIN_WX_LOGIN, code = ResultInfo.CODE_SUCCESS, obj = authorizeRes, resultLiveData = resultInfo)
+                    }
+                    // 失败
+                    else {
+                        notifyResult(cmd = ResultInfo.CMD_LOGIN_WX_LOGIN, code = authorizeRes.code, tip = authorizeRes.tip, resultLiveData = resultInfo)
+                    }
+                } else {
+                    notifyResult(cmd = ResultInfo.CMD_LOGIN_WX_LOGIN, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo)
+                }
 
             }
 
             override fun onException(e: Throwable?) {
                 AppLogger.i(e?.message)
+
+                notifyResult(cmd = ResultInfo.CMD_LOGIN_WX_LOGIN, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo)
+
             }
         })
     }

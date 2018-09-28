@@ -36,7 +36,12 @@ data class ResultInfo(
         /**
          * 异常
          */
-        const val CODE_EXCEPTION = 99999
+        const val CODE_EXCEPTION = -200
+
+        /**
+         * 微信未安装
+         */
+        val CODE_WX_IS_NOT_INSTALL = -1000
 
         /**
          * 信息：异常
@@ -54,6 +59,16 @@ data class ResultInfo(
         const val CMD_LOGIN_SMS_LOGIN = 1002
 
         /**
+         * 微信授权
+         */
+        const val CMD_LOGIN_WX_AUTHORIZE = 1003
+
+        /**
+         * 微信登录操作
+         */
+        const val CMD_LOGIN_WX_LOGIN = 1004
+
+        /**
          * 首页：预约
          */
         const val CMD_HOME_SUBSCRIBE = 2001
@@ -62,6 +77,8 @@ data class ResultInfo(
          * 首页：收藏
          */
         const val CMD_HOME_FAVORITE = 2002
+
+
     }
 
 

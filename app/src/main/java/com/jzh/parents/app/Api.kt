@@ -84,4 +84,10 @@ object Api {
     const val URL_API_LOGIN_WITH_WX_AUTHORIZE = URL_API_LIVE_DOMAIN + "wx/login"
 
 
+    /**
+     * 地址：上传头像
+     */
+    const val URL_API_MYSELF_UPLOAD_AVATAR = URL_API_LIVE_DOMAIN + "upload/headimg"
+
+
 }

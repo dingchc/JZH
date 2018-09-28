@@ -40,12 +40,6 @@ public interface Constants {
      */
     String STS_SERVER = "632b6bee8481fcb10c1d5e9b704c46a1";
 
-
-    /**
-     * 微信未安装
-     */
-    int RET_CODE_WX_IS_NOT_INSTALL = -1000;
-
     /**
      * 入学年份的起始年份
      */
