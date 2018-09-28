@@ -41,7 +41,12 @@ data class ResultInfo(
         /**
          * 微信未安装
          */
-        val CODE_WX_IS_NOT_INSTALL = -1000
+        const val CODE_WX_IS_NOT_INSTALL = -201
+
+        /**
+         * 上传进度
+         */
+        const val CODE_UPLOAD_PROGRESS = -202
 
         /**
          * 信息：异常
@@ -77,6 +82,11 @@ data class ResultInfo(
          * 首页：收藏
          */
         const val CMD_HOME_FAVORITE = 2002
+
+        /**
+         * 我：上传头像
+         */
+        const val CMD_MYSELF_UPLOAD_AVATAR = 3001
 
 
     }

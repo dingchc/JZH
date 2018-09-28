@@ -27,8 +27,6 @@ abstract class BaseRemoteDataSource {
 
         val result = resultLiveData?.value
 
-        AppLogger.i("* " + result)
-
         result?.cmd = cmd
         result?.code = code
         result?.tip = tip ?: ""

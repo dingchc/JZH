@@ -1,13 +1,16 @@
 package com.jzh.parents.activity
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.view.View
 import com.jzh.parents.R
 import com.jzh.parents.databinding.ActivityMyselfEditBinding
+import com.jzh.parents.datamodel.response.OutputRes
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.MPermissionUtil
 import com.jzh.parents.viewmodel.MyselfEditViewModel
+import com.jzh.parents.viewmodel.info.ResultInfo
 import com.jzh.parents.widget.MyselfContentItem
 import com.jzh.parents.widget.PhoneEditDialog
 import com.jzh.parents.widget.PickImageDialog
@@ -40,7 +43,6 @@ class MyselfEditActivity : BaseActivity() {
 
         mDataBinding?.viewModel = mViewModel
         mDataBinding?.setLifecycleOwner(this)
-
 
         setToolbarTitle(R.string.personal_info)
     }
@@ -85,6 +87,30 @@ class MyselfEditActivity : BaseActivity() {
                 onRoleClick()
             }
 
+        })
+
+        // 错误返回
+        mViewModel?.resultInfo?.observe(this@MyselfEditActivity, Observer { resultInfo ->
+
+            when (resultInfo?.cmd) {
+
+            // 上传头像
+                ResultInfo.CMD_MYSELF_UPLOAD_AVATAR -> {
+
+                    // 成功
+                    if (resultInfo.code == ResultInfo.CODE_SUCCESS && resultInfo.obj != null) {
+                        hiddenProgressDialog()
+                        val userInfo = mViewModel?.userInfo?.value
+                        userInfo?.avatarUrl = (resultInfo.obj as OutputRes).output
+                        mViewModel?.userInfo?.value = userInfo
+                    }
+                    // 失败提示
+                    else {
+                        hiddenProgressDialog()
+                        showToastError(resultInfo.tip)
+                    }
+                }
+            }
         })
     }
 
@@ -214,6 +240,7 @@ class MyselfEditActivity : BaseActivity() {
 
         AppLogger.i("path = " + path)
 
+        showProgressDialog(getString(R.string.upload_percent))
         mViewModel?.uploadAvatar(path ?: "")
     }
 
