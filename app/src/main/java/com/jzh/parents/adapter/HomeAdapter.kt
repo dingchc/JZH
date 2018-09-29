@@ -56,11 +56,13 @@ class HomeAdapter(private var mContext: Context, var mDataList: MutableList<Base
         // 即将开播或往期回顾:
             BaseLiveEntity.ItemTypeEnum.LIVE_ITEM.ordinal -> {
                 holder.dataBinding as ItemHomeLiveItemBinding
-                holder.dataBinding.itemEntity = mDataList?.get(position) as LiveItemEntity
+
+                val liveItem = mDataList?.get(position) as LiveItemEntity
+                holder.dataBinding.itemEntity = liveItem
 
                 // 全部
                 holder.dataBinding.tvAll.setOnClickListener {
-                    mListener?.onClickHeader(1)
+                    mListener?.onClickHeader(liveItem.liveInfo.contentType.value)
                 }
 
                 // 操作

@@ -3,10 +3,12 @@ package com.jzh.parents.activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
+import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.jzh.parents.R
 import com.jzh.parents.adapter.LivesAdapter
+import com.jzh.parents.app.Constants
 import com.jzh.parents.databinding.ActivityLivesBinding
 import com.jzh.parents.viewmodel.LivesViewModel
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
@@ -37,7 +39,12 @@ class LivesActivity() : BaseActivity() {
     /**
      * 适配器监听
      */
-    private var mAdapterListener : LivesAdapter.OnViewClick? = null
+    private var mAdapterListener: LivesAdapter.OnViewClick? = null
+
+    /**
+     * 状态类型
+     */
+    private var mStatusType: Int = 0
 
 
     override fun initViews() {
@@ -53,23 +60,25 @@ class LivesActivity() : BaseActivity() {
 
     override fun initEvent() {
 
-        mViewModel?.getItemEntities()?.observe(this@LivesActivity, Observer<MutableList<BaseLiveEntity>> {
+        mViewModel?.itemEntities?.observe(this@LivesActivity, Observer<MutableList<BaseLiveEntity>> {
 
-            itemEntities -> mAdapter?.mDataList = itemEntities
+            itemEntities ->
+            mAdapter?.mDataList = itemEntities
             mAdapter?.notifyDataSetChanged()
         })
     }
 
     override fun initData() {
 
+        // 直播的状态
+        mStatusType = intent.getIntExtra(Constants.EXTRA_LIVES_STATUS_TYPE, 0)
+
         mAdapter = LivesAdapter(this@LivesActivity, null)
         mDataBinding?.rvData?.adapter = mAdapter
 
         mAdapter?.mListener = mAdapterListener
 
-        mViewModel?.loadFuncData()
-
-        mViewModel?.loadItemEntitiesData()
+        mViewModel?.refreshItemEntities(mStatusType, 0)
     }
 
     override fun getContentLayout(): View {

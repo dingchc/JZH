@@ -9,7 +9,6 @@ package com.jzh.parents.app;
 
 public interface Constants {
 
-
     /**
      * 微信AppId
      */
@@ -121,6 +120,16 @@ public interface Constants {
     String EXTRA_WX_SUBSCRIBE_SCENE = "wx_subscribe_scene";
 
     /**
+     * 直播列表-状态类型
+     */
+    String EXTRA_LIVES_STATUS_TYPE = "lives_status_type";
+
+    /**
+     * 直播列表-分类类型
+     */
+    String EXTRA_LIVES_CATEGORY_TYPE = "lives_category_type";
+
+    /**
      * wx的预约的直播action - 预约成功
      */
     String WX_SUBSCRIBE_ACTION_CONFIRM = "confirm";
@@ -154,7 +163,6 @@ public interface Constants {
      * Android N provider authority
      */
     String PROVIDER_AUTHORIZE = "com.jzh.parents.authority";
-
 
     /**
      * 短信验证码计时间隔：60秒

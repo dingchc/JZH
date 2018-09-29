@@ -89,5 +89,10 @@ object Api {
      */
     const val URL_API_MYSELF_UPLOAD_AVATAR = URL_API_LIVE_DOMAIN + "upload/headimg"
 
+    /**
+     * 地址：获取直播列表
+     */
+    const val URL_API_GET_LIVES = URL_API_LIVE_DOMAIN + "lives/list"
+
 
 }

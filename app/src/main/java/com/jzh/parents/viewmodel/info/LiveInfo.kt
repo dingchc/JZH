@@ -71,16 +71,16 @@ class LiveInfo(
     /**
      * 直播条目的类型
      */
-    enum class LiveInfoEnum(val value : Int) {
+    enum class LiveInfoEnum(val value: Int) {
 
         /**
-         * 即将直播
+         * 即将直播(准备开始)
          */
-        TYPE_WILL(1),
+        TYPE_WILL(2),
 
         /**
-         * 往期直播
+         * 往期直播(已结束)
          */
-        TYPE_REVIEW(2),
+        TYPE_REVIEW(3),
     }
 }

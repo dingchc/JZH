@@ -88,6 +88,11 @@ data class ResultInfo(
          */
         const val CMD_MYSELF_UPLOAD_AVATAR = 3001
 
+        /**
+         * 获取直播列表
+         */
+        const val CMD_GET_LIVES = 4001
+
 
     }
 

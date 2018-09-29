@@ -15,11 +15,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- 功能栏 -->
-        <include
-            layout="@layout/item_home_func"
-            bind:funcEntity="@{viewModel.funcEntity}" />
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_data"
             android:layout_width="match_parent"

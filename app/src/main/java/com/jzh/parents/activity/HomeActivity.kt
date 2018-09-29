@@ -135,11 +135,13 @@ class HomeActivity : BaseActivity() {
         mAdapterListener = object : HomeAdapter.OnViewClick {
 
             /**
-             * 点击了头部（contentType == 1 即将播放、 contentType == 2 往期回顾）
+             * 点击了头部（contentType == 2 即将播放、 contentType == 3 往期回顾）
              */
             override fun onClickHeader(type: Int) {
 
                 val intent = Intent(this@HomeActivity, LivesActivity::class.java)
+                intent.putExtra(Constants.EXTRA_LIVES_STATUS_TYPE, type)
+                intent.putExtra(Constants.EXTRA_LIVES_CATEGORY_TYPE, type)
                 startActivity(intent)
             }
 
