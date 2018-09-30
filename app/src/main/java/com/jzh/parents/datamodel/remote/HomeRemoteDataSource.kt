@@ -2,6 +2,7 @@ package com.jzh.parents.datamodel.remote
 
 import android.arch.lifecycle.MutableLiveData
 import com.google.gson.reflect.TypeToken
+import com.jzh.parents.R
 import com.jzh.parents.app.Api
 import com.jzh.parents.app.Constants
 import com.jzh.parents.app.JZHApplication
@@ -273,7 +274,7 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
 
             homeConfigRes.output.categoryList.forEach {
 
-                val category = HomeLiveCategoryEntity.LiveCategory(it.name ?: "", String.format("共场%d讲座", it.count))
+                val category = HomeLiveCategoryEntity.LiveCategory(it.id, it.name ?: "", String.format("共场%d讲座", it.count))
                 categoryList.add(category)
             }
 
@@ -362,6 +363,15 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
                 // 第一条
                 else if (index == 0) {
                     liveItemEntity = LiveItemEntity(liveInfo, LiveItemEntity.LiveItemEnum.ITEM_WITH_HEADER)
+
+                    // 即将直播
+                    if (liveInfo.contentType == LiveInfo.LiveInfoEnum.TYPE_WILL) {
+                        liveItemEntity.headerTitle = JZHApplication.instance?.getString(R.string.home_live_will) ?: ""
+                        liveItemEntity.headerTip = JZHApplication.instance?.getString(R.string.home_live_will_tip) ?: ""
+                    } else {
+                        liveItemEntity.headerTitle = JZHApplication.instance?.getString(R.string.home_live_review) ?: ""
+                        liveItemEntity.headerTip = JZHApplication.instance?.getString(R.string.home_live_review_tip) ?: ""
+                    }
                 }
                 // 最后一条
                 else if (index == countLimit - 1) {

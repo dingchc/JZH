@@ -17,6 +17,7 @@ import com.jzh.parents.viewmodel.entity.BaseLiveEntity
 import com.jzh.parents.viewmodel.entity.home.HomeLiveNowEntity
 import com.jzh.parents.viewmodel.HomeViewModel
 import com.jzh.parents.viewmodel.bindadapter.TSDataBindingComponent
+import com.jzh.parents.viewmodel.entity.home.HomeLiveCategoryEntity
 import com.jzh.parents.viewmodel.info.LiveInfo
 import com.jzh.parents.viewmodel.info.ResultInfo
 import com.tencent.mm.opensdk.modelbase.BaseResp
@@ -109,14 +110,11 @@ class HomeActivity : BaseActivity() {
              */
             override fun onClickHeader(type: Int) {
 
-                val intent = Intent(this@HomeActivity, LivesActivity::class.java)
-                intent.putExtra(Constants.EXTRA_LIVES_STATUS_TYPE, type)
-                intent.putExtra(Constants.EXTRA_LIVES_CATEGORY_TYPE, type)
-                startActivity(intent)
+                gotoLiveListPage(type, 0)
             }
 
             /**
-             * 点击了头部（contentType == 1 即将播放、 contentType == 2 往期回顾）
+             * 点击了头部（contentType == 2 即将播放、 contentType == 3 往期回顾）
              */
             override fun onClickFooter(type: Int) {
             }
@@ -136,9 +134,10 @@ class HomeActivity : BaseActivity() {
                 startActivity(intent)
             }
 
+            /**
+             * 点击右下角按钮
+             */
             override fun onClickOperate(type: Int, liveInfo: LiveInfo) {
-
-                AppLogger.i("* type=" + type + ", " + liveInfo.id)
 
                 // 未预约的直播
                 if (type == LiveInfo.LiveInfoEnum.TYPE_WILL.value && liveInfo.isSubscribed == Constants.TYPE_SUBSCRIBE_NO) {
@@ -148,6 +147,14 @@ class HomeActivity : BaseActivity() {
                 else if (type == LiveInfo.LiveInfoEnum.TYPE_REVIEW.value && liveInfo.isFavorited == Constants.TYPE_FAVORITE_NO) {
                     mViewModel?.favoriteALive(liveInfo)
                 }
+            }
+
+            /**
+             * 点击分类
+             */
+            override fun onClickCategory(category: HomeLiveCategoryEntity.LiveCategory) {
+
+                gotoLiveListPage(0, category.categoryId, category.title)
             }
         }
 
@@ -178,6 +185,49 @@ class HomeActivity : BaseActivity() {
     }
 
     /**
+     * 去直播列表页面
+     *
+     * @param type          类型
+     * @param categoryId    分类
+     * @param categoryName  标题
+     */
+    private fun gotoLiveListPage(type: Int = 0, categoryId: Int = 0, categoryName: String = "") {
+
+        val intent = Intent(this@HomeActivity, LivesActivity::class.java)
+        intent.putExtra(Constants.EXTRA_LIVES_STATUS_TYPE, type)
+        intent.putExtra(Constants.EXTRA_LIVES_CATEGORY_ID, categoryId)
+
+        // 未分类
+        if (categoryId == 0) {
+
+            var headerTitle = ""
+            var headerTip = ""
+
+            // 即将直播
+            if (type == LiveInfo.LiveInfoEnum.TYPE_WILL.value) {
+                headerTitle = JZHApplication.instance?.getString(R.string.home_live_will) ?: ""
+                headerTip = JZHApplication.instance?.getString(R.string.home_live_will_tip) ?: ""
+            } else if (type == LiveInfo.LiveInfoEnum.TYPE_REVIEW.value) {
+                headerTitle = JZHApplication.instance?.getString(R.string.home_live_review) ?: ""
+                headerTip = JZHApplication.instance?.getString(R.string.home_live_review_tip) ?: ""
+            }
+
+            intent.putExtra(Constants.EXTRA_LIVES_CATEGORY_NAME, headerTitle)
+            intent.putExtra(Constants.EXTRA_LIVES_CATEGORY_TIP, headerTip)
+        }
+        // 分类列表
+        else {
+
+            val headerTip = JZHApplication.instance?.getString(R.string.home_live_will_tip) ?: ""
+
+            intent.putExtra(Constants.EXTRA_LIVES_CATEGORY_NAME, categoryName)
+            intent.putExtra(Constants.EXTRA_LIVES_CATEGORY_TIP, headerTip)
+        }
+
+        startActivity(intent)
+    }
+
+    /**
      * 初始化数据
      */
     override fun initData() {
@@ -205,7 +255,7 @@ class HomeActivity : BaseActivity() {
      */
     private fun processWxSubscribe() {
 
-        val wxResult : BaseResp? = JZHApplication.instance?.wxResult
+        val wxResult: BaseResp? = JZHApplication.instance?.wxResult
 
         if (wxResult is SubscribeMessage.Resp) {
 

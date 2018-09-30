@@ -4,6 +4,7 @@ import android.content.Context
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jzh.parents.R
@@ -19,7 +20,7 @@ import com.jzh.parents.viewmodel.info.LiveInfo
  * @author ding
  * Created by Ding on 2018/8/27.
  */
-class LivesAdapter(mContext: Context, var mDataList: MutableList<BaseLiveEntity>?, var mListener : OnViewClick? = null) : RecyclerView.Adapter<LivesAdapter.InnerViewHolder>() {
+class LivesAdapter(mContext: Context, private val mHeaderTitle: String = "", private val mHeaderTip: String = "", var mDataList: MutableList<BaseLiveEntity>?, var mListener: OnViewClick? = null) : RecyclerView.Adapter<LivesAdapter.InnerViewHolder>() {
 
     /**
      * 布局加载器
@@ -41,7 +42,16 @@ class LivesAdapter(mContext: Context, var mDataList: MutableList<BaseLiveEntity>
         // 即将开播或往期回顾:
             BaseLiveEntity.ItemTypeEnum.LIVE_ITEM.ordinal -> {
                 holder.dataBinding as ItemHomeLiveItemBinding
-                holder.dataBinding.itemEntity = mDataList?.get(position) as LiveItemEntity
+
+                val itemEntity = mDataList?.get(position) as LiveItemEntity
+
+                // 替换Header标题及提示
+                if (!TextUtils.isEmpty(mHeaderTitle)) {
+                    itemEntity.headerTitle = mHeaderTitle
+                    itemEntity.headerTip = mHeaderTip
+                }
+
+                holder.dataBinding.itemEntity = itemEntity
 
                 // 操作
                 holder.dataBinding.ivOperate.setOnClickListener {
@@ -113,7 +123,7 @@ class LivesAdapter(mContext: Context, var mDataList: MutableList<BaseLiveEntity>
         /**
          * 点击了一条直播
          */
-        fun onClickALive(liveInfo : LiveInfo)
+        fun onClickALive(liveInfo: LiveInfo)
 
         /**
          * 点击操作（contentType == 2 即将播放、 contentType == 3 往期回顾）

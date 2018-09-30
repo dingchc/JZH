@@ -77,6 +77,8 @@ class HomeAdapter(private var mContext: Context, var mDataList: MutableList<Base
             BaseLiveEntity.ItemTypeEnum.LIVE_CATEGORY.ordinal -> {
                 holder.dataBinding as ItemHomeCategoryBinding
                 holder.dataBinding.itemEntity = mDataList?.get(position) as HomeLiveCategoryEntity
+
+                initCategoryClick(holder.dataBinding, mDataList?.get(position) as HomeLiveCategoryEntity)
             }
         // 精彩推荐:
             BaseLiveEntity.ItemTypeEnum.LIVE_TOP_PICKS.ordinal -> {
@@ -86,7 +88,6 @@ class HomeAdapter(private var mContext: Context, var mDataList: MutableList<Base
                 // 设置RecyclerView的LayoutManager
                 holder.dataBinding.rvPicks.layoutManager = LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
 
-                AppLogger.i("dataList=" + mDataList)
                 // 设置RecyclerView的适配器
                 val entity: HomeLiveTopPicksEntity = mDataList?.get(position) as HomeLiveTopPicksEntity
                 val topPicksAdapter = HomeTopPicksAdapter(mContext, entity.topPicksList)
@@ -165,6 +166,36 @@ class HomeAdapter(private var mContext: Context, var mDataList: MutableList<Base
     }
 
     /**
+     * 初始化分类点击
+     * @param dataBinding    数据绑定
+     * @param categoryEntity 分类实体
+     */
+    private fun initCategoryClick(dataBinding: ItemHomeCategoryBinding, categoryEntity: HomeLiveCategoryEntity) {
+
+        dataBinding.rlCategory1.setOnClickListener {
+
+            mListener?.onClickCategory(categoryEntity.categoryList[0])
+        }
+
+        dataBinding.rlCategory2.setOnClickListener {
+
+            mListener?.onClickCategory(categoryEntity.categoryList[1])
+        }
+
+        dataBinding.rlCategory3.setOnClickListener {
+
+            mListener?.onClickCategory(categoryEntity.categoryList[2])
+        }
+
+        dataBinding.rlCategory4.setOnClickListener {
+
+            mListener?.onClickCategory(categoryEntity.categoryList[3])
+        }
+
+
+    }
+
+    /**
      * ViewHolder类
      */
     class InnerViewHolder(val dataBinding: ViewDataBinding?) : RecyclerView.ViewHolder(dataBinding!!.root) {
@@ -177,12 +208,12 @@ class HomeAdapter(private var mContext: Context, var mDataList: MutableList<Base
     interface OnViewClick {
 
         /**
-         * 点击了头部（contentType == 1 即将播放、 contentType == 2 往期回顾）
+         * 点击了头部（contentType == 2 即将播放、 contentType == 3 往期回顾）
          */
         fun onClickHeader(type: Int)
 
         /**
-         * 点击了头部（contentType == 1 即将播放、 contentType == 2 往期回顾）
+         * 点击了头部（contentType == 2 即将播放、 contentType == 3 往期回顾）
          */
         fun onClickFooter(type: Int)
 
@@ -200,6 +231,13 @@ class HomeAdapter(private var mContext: Context, var mDataList: MutableList<Base
          * 点击操作（contentType == 2 即将播放、 contentType == 3 往期回顾）
          */
         fun onClickOperate(type: Int, liveInfo: LiveInfo)
+
+        /**
+         * 点击分类
+         *
+         * @param category 分类
+         */
+        fun onClickCategory(category: HomeLiveCategoryEntity.LiveCategory)
     }
 
 }

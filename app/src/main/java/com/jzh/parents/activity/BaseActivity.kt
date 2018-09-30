@@ -590,10 +590,20 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
 
     /**
      * 设置Toolbar标题
+     * @param resId 字符串资源
      */
     protected fun setToolbarTitle(@StringRes resId: Int) {
 
         mToolbar?.setTitle(getString(resId))
+    }
+
+    /**
+     * 设置Toolbar标题
+     * @param title 标题
+     */
+    protected fun setToolbarTitle(title: String) {
+
+        mToolbar?.setTitle(title)
     }
 
     /**

@@ -8,7 +8,27 @@ import com.jzh.parents.viewmodel.info.LiveInfo
  * @author ding
  * Created by Ding on 2018/8/29.
  */
-data class LiveItemEntity(val liveInfo: LiveInfo, val liveType: LiveItemEnum = LiveItemEnum.ITEM_DEFAULT) : BaseLiveEntity(ItemTypeEnum.LIVE_ITEM) {
+data class LiveItemEntity(
+
+        /**
+         * 直播信息
+         */
+        val liveInfo: LiveInfo,
+
+        /**
+         * 直播类型
+         */
+        val liveType: LiveItemEnum = LiveItemEnum.ITEM_DEFAULT,
+
+        /**
+         * Header标题
+         */
+        var headerTitle: String = "",
+
+        /**
+         * Header描述
+         */
+        var headerTip: String = "") : BaseLiveEntity(ItemTypeEnum.LIVE_ITEM) {
 
     /**
      * 直播条目的类型

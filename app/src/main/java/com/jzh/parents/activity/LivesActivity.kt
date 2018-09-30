@@ -2,9 +2,7 @@ package com.jzh.parents.activity
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Intent
 import android.databinding.DataBindingUtil
-import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.View
@@ -53,6 +51,21 @@ class LivesActivity() : BaseActivity() {
      * 状态类型
      */
     private var mStatusType: Int = 0
+
+    /**
+     * 分类Id
+     */
+    private var mCategoryId: Int = 0
+
+    /**
+     * 分类名称
+     */
+    private var mCategoryName: String = ""
+
+    /**
+     * 分类提示
+     */
+    private var mCategoryTip: String = ""
 
 
     override fun onResume() {
@@ -136,13 +149,21 @@ class LivesActivity() : BaseActivity() {
 
         // 直播的状态
         mStatusType = intent.getIntExtra(Constants.EXTRA_LIVES_STATUS_TYPE, 0)
+        // 分类Id
+        mCategoryId = intent.getIntExtra(Constants.EXTRA_LIVES_CATEGORY_ID, 0)
+        // 分类名称
+        mCategoryName = intent.getStringExtra(Constants.EXTRA_LIVES_CATEGORY_NAME)
+        // 分类提示
+        mCategoryTip = intent.getStringExtra(Constants.EXTRA_LIVES_CATEGORY_TIP)
 
-        mAdapter = LivesAdapter(this@LivesActivity, null)
+        setToolbarTitle(mCategoryName)
+
+        mAdapter = LivesAdapter(this@LivesActivity, mCategoryName, mCategoryTip, null)
         mDataBinding?.rvData?.adapter = mAdapter
 
         mAdapter?.mListener = mAdapterListener
 
-        mViewModel?.refreshItemEntities(mStatusType, 0)
+        mViewModel?.refreshItemEntities(mStatusType, mCategoryId)
     }
 
     override fun getContentLayout(): View {
@@ -157,7 +178,7 @@ class LivesActivity() : BaseActivity() {
      */
     private fun processWxSubscribe() {
 
-        val wxResult : BaseResp? = JZHApplication.instance?.wxResult
+        val wxResult: BaseResp? = JZHApplication.instance?.wxResult
 
         if (wxResult is SubscribeMessage.Resp) {
 

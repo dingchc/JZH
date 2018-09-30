@@ -127,7 +127,17 @@ public interface Constants {
     /**
      * 直播列表-分类类型
      */
-    String EXTRA_LIVES_CATEGORY_TYPE = "lives_category_type";
+    String EXTRA_LIVES_CATEGORY_ID = "lives_category_id";
+
+    /**
+     * 直播列表-分类名称
+     */
+    String EXTRA_LIVES_CATEGORY_NAME = "lives_category_name";
+
+    /**
+     * 直播列表-分类描述
+     */
+    String EXTRA_LIVES_CATEGORY_TIP = "lives_category_tip";
 
     /**
      * wx的预约的直播action - 预约成功

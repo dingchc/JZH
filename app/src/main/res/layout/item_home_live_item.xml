@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:gravity="center_vertical"
-                android:text="@{itemEntity.liveInfo.contentType == LiveInfoEnum.TYPE_WILL ? @string/home_live_will : @string/home_live_review}"
+                android:text="@{itemEntity.headerTitle}"
                 android:textColor="@color/font_black"
                 android:textSize="18sp" />
 
@@ -53,7 +53,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="@{itemEntity.liveInfo.contentType == LiveInfoEnum.TYPE_WILL ? @string/home_live_will_tip : @string/home_live_review_tip}"
+                android:text="@{itemEntity.headerTip}"
                 android:textColor="@color/font_gray"
                 android:textSize="10sp" />
 

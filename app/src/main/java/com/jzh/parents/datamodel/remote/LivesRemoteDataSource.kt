@@ -40,8 +40,8 @@ class LivesRemoteDataSource : BaseRemoteDataSource() {
         val paramsMap = TreeMap<String, String>()
 
         paramsMap.put("token", PreferenceUtil.instance.getToken())
-        paramsMap.put("category", categoryType.toString())
         paramsMap.put("status", statusType.toString())
+        paramsMap.put("categoryId", categoryType.toString())
         paramsMap.put("page", "1")
 
         TSHttpController.INSTANCE.doGet(Api.URL_API_GET_LIVES, paramsMap, object : TSHttpCallback {

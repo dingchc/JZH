@@ -13,7 +13,7 @@ class HomeLiveCategoryEntity(val categoryList : MutableList<LiveCategory>) : Bas
     /**
      * 直播分类
      */
-    class LiveCategory(var title: String = "", var desc: String = "") {
+    class LiveCategory(val categoryId: Int = 0, var title: String = "", var desc: String = "") {
 
 
     }
