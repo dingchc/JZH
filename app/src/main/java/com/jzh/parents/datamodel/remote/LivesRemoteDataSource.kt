@@ -28,6 +28,11 @@ import java.util.*
 class LivesRemoteDataSource : BaseRemoteDataSource() {
 
     /**
+     * 当前页面
+     */
+    private val page: Int = 1
+
+    /**
      * 刷新直播数据
      *
      * @param statusType   状态类型
@@ -42,7 +47,7 @@ class LivesRemoteDataSource : BaseRemoteDataSource() {
         paramsMap.put("token", PreferenceUtil.instance.getToken())
         paramsMap.put("status", statusType.toString())
         paramsMap.put("categoryId", categoryType.toString())
-        paramsMap.put("page", "1")
+        paramsMap.put("page", page.toString())
 
         TSHttpController.INSTANCE.doGet(Api.URL_API_GET_LIVES, paramsMap, object : TSHttpCallback {
             override fun onSuccess(res: TSBaseResponse?, json: String?) {
@@ -128,7 +133,7 @@ class LivesRemoteDataSource : BaseRemoteDataSource() {
                 }
                 // 最后一条
                 else if (index == countLimit - 1) {
-                    liveItemEntity = LiveItemEntity(liveInfo, LiveItemEntity.LiveItemEnum.ITEM_WITH_FOOTER)
+                    liveItemEntity = LiveItemEntity(liveInfo, LiveItemEntity.LiveItemEnum.ITEM_DEFAULT)
                 }
                 // 正常的
                 else {

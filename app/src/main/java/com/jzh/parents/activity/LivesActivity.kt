@@ -16,6 +16,7 @@ import com.jzh.parents.viewmodel.LivesViewModel
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
 import com.jzh.parents.viewmodel.info.LiveInfo
 import com.jzh.parents.viewmodel.info.ResultInfo
+import com.scwang.smartrefresh.header.MaterialHeader
 import com.tencent.mm.opensdk.modelbase.BaseResp
 import com.tencent.mm.opensdk.modelbiz.SubscribeMessage
 
@@ -84,6 +85,10 @@ class LivesActivity() : BaseActivity() {
 
         mDataBinding?.rvData?.layoutManager = LinearLayoutManager(this@LivesActivity, LinearLayoutManager.VERTICAL, false)
 
+        mDataBinding?.refreshLayout?.refreshHeader = MaterialHeader(this@LivesActivity)
+        mDataBinding?.refreshLayout?.isEnableLoadmore = true
+        mDataBinding?.refreshLayout?.isEnableRefresh = false
+
     }
 
     override fun initEvent() {
@@ -143,6 +148,13 @@ class LivesActivity() : BaseActivity() {
                 }
             }
         })
+
+        // 加载更多
+        mDataBinding?.refreshLayout?.setOnLoadmoreListener {
+
+            AppLogger.i("* load more")
+        }
+
     }
 
     override fun initData() {
