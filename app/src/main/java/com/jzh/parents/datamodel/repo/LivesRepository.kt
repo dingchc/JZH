@@ -49,4 +49,28 @@ class LivesRepository : BaseRepository() {
 
         mRemoteDataSource.refreshItemEntities(statusType, categoryType, target, resultInfo)
     }
+
+    /**
+     * 收藏一个直播
+     *
+     * @param liveInfo 直播
+     * @param target   目标数据
+     * @param resultInfo 结果
+     */
+    fun favoriteALive(liveInfo: LiveInfo, target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
+        mRemoteDataSource.favoriteALive(liveInfo, target, resultInfo)
+    }
+
+    /**
+     * 同步直播的预约状态
+     *
+     * @param liveInfo 直播
+     * @param openId   开放Id
+     * @param action   行为
+     * @param target   目标数据
+     * @param resultInfo 结果
+     */
+    fun syncSubscribedALive(liveInfo: LiveInfo, openId: String, action: String, target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
+        mRemoteDataSource.syncSubscribedALive(liveInfo, openId, action, target, resultInfo)
+    }
 }

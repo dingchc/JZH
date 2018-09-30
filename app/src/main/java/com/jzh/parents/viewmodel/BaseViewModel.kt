@@ -16,4 +16,5 @@ abstract class BaseViewModel(app: Application) : AndroidViewModel(app) {
      * 状态返回及信息
      */
     open val resultInfo: MutableLiveData<ResultInfo> = MutableLiveData<ResultInfo>()
+
 }

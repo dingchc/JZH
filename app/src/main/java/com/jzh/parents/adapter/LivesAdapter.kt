@@ -43,6 +43,14 @@ class LivesAdapter(mContext: Context, var mDataList: MutableList<BaseLiveEntity>
                 holder.dataBinding as ItemHomeLiveItemBinding
                 holder.dataBinding.itemEntity = mDataList?.get(position) as LiveItemEntity
 
+                // 操作
+                holder.dataBinding.ivOperate.setOnClickListener {
+
+                    val liveInfo = (mDataList?.get(position) as LiveItemEntity).liveInfo
+
+                    mListener?.onClickOperate(liveInfo.contentType.value, liveInfo = liveInfo)
+                }
+
             }
         // 搜索:
             BaseLiveEntity.ItemTypeEnum.LIVE_SEARCH.ordinal -> {
@@ -106,6 +114,11 @@ class LivesAdapter(mContext: Context, var mDataList: MutableList<BaseLiveEntity>
          * 点击了一条直播
          */
         fun onClickALive(liveInfo : LiveInfo)
+
+        /**
+         * 点击操作（contentType == 2 即将播放、 contentType == 3 往期回顾）
+         */
+        fun onClickOperate(type: Int, liveInfo: LiveInfo)
     }
 
 }

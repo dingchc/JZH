@@ -2,13 +2,8 @@ package com.jzh.parents.activity
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.databinding.DataBindingUtil
-import android.os.Bundle
-import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.View

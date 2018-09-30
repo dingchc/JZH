@@ -110,6 +110,15 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
     }
 
     /**
+     * 收藏一个直播
+     *
+     * @param liveInfo 直播
+     */
+    fun favoriteALive(liveInfo: LiveInfo) {
+        repo.favoriteALive(liveInfo, itemEntities, resultInfo)
+    }
+
+    /**
      * 同步直播的预约状态
      *
      * @param liveId   直播Id
@@ -127,84 +136,6 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
     private fun findALive(liveId : Int) : LiveInfo {
 
         return (itemEntities.value?.find { it is LiveItemEntity && it.liveInfo.id == liveId } as LiveItemEntity).liveInfo
-    }
-
-    /**
-     * 收藏一个直播
-     *
-     * @param liveInfo 直播
-     */
-    fun favoriteALive(liveInfo: LiveInfo) {
-        repo.favoriteALive(liveInfo, itemEntities, resultInfo)
-    }
-
-    /**
-     * 加载数据
-     */
-    fun loadItemEntities() {
-
-        AppLogger.i("* loadItemEntities")
-
-        // 正在直播
-        val livingEntity = HomeLiveNowEntity(onlineCount = 1234, title = "热门直播", author = "MacTalk", avatarUrl = "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=837429733,2704045953&fm=26&gp=0.jpg", authorDescription = "CCTV特约评论员1")
-
-        // Banner
-        val bannerData1 = BannerData("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535805570577&di=6700dbef71d4e89ea2ba474e177e8bac&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0101975900a3b3a80121455073eddc.jpg%40900w_1l_2o_100sh.jpg", "")
-        val bannerData2 = BannerData("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535805635568&di=a91461575acc8305696dd418f3303cd6&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F13%2F21%2F22%2F71g58PICBQT_1024.jpg", "")
-        val bannerData3 = BannerData("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535805657260&di=cb90efe33a292a741b873fb428094f11&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0161c95690b86032f87574beaa54c2.jpg", "")
-        val bannerData4 = BannerData("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535805674974&di=2ee2a0a7325b9dfb0b44b17718d7dc51&imgtype=0&src=http%3A%2F%2Fpic.90sjimg.com%2Fback_pic%2Fqk%2Fback_origin_pic%2F00%2F03%2F11%2F3e0210f7a00859a4ae0a9991fcbbe8b2.jpg", "")
-
-        val bannerDataList = listOf(bannerData1, bannerData2, bannerData3, bannerData4)
-
-        val bannerEntity = HomeBannerEntity(bannerDataList)
-
-        // 即将直播
-        val liveInfo1 = LiveInfo(title = "精彩1", contentType = LiveInfo.LiveInfoEnum.TYPE_WILL)
-        val liveItemEntity1 = LiveItemEntity(liveInfo1, LiveItemEntity.LiveItemEnum.ITEM_WITH_HEADER)
-
-        val liveInfo2 = LiveInfo(title = "精彩2", contentType = LiveInfo.LiveInfoEnum.TYPE_WILL)
-        val liveItemEntity2 = LiveItemEntity(liveInfo2, LiveItemEntity.LiveItemEnum.ITEM_WITH_FOOTER)
-
-        // 直播分类
-        val category1 = HomeLiveCategoryEntity.LiveCategory("手机游戏", "共25场讲座")
-        val category2 = HomeLiveCategoryEntity.LiveCategory("电脑游戏", "共250场讲座")
-        val category3 = HomeLiveCategoryEntity.LiveCategory("网页游戏", "共15场讲座")
-        val category4 = HomeLiveCategoryEntity.LiveCategory("AR游戏", "共22场讲座")
-
-        val categoryList = mutableListOf(category1, category2, category3, category4)
-        val liveCategories = HomeLiveCategoryEntity(categoryList)
-
-        // 精彩推荐
-
-        val liveItem1 = LiveInfo(title = "精彩1")
-        val liveItem2 = LiveInfo(title = "精彩2")
-        val liveItem3 = LiveInfo(title = "精彩2")
-        val liveItem4 = LiveInfo(title = "精彩2")
-
-        val liveItemList = listOf(liveItem1, liveItem2, liveItem3, liveItem4)
-        val topPicksEntity = HomeLiveTopPicksEntity(liveItemList)
-
-        // 往期回顾
-
-        // 即将直播
-        val reviewLive1 = LiveInfo(title = "精彩1", contentType = LiveInfo.LiveInfoEnum.TYPE_REVIEW)
-        val reviewLiveItemEntity1 = LiveItemEntity(reviewLive1, LiveItemEntity.LiveItemEnum.ITEM_WITH_HEADER)
-
-        val reviewLive2 = LiveInfo(title = "精彩2", contentType = LiveInfo.LiveInfoEnum.TYPE_REVIEW)
-        val reviewLiveItemEntity2 = LiveItemEntity(reviewLive2, LiveItemEntity.LiveItemEnum.ITEM_DEFAULT)
-
-        val reviewLive3 = LiveInfo(title = "精彩3", contentType = LiveInfo.LiveInfoEnum.TYPE_REVIEW)
-        val reviewLiveItemEntity3 = LiveItemEntity(reviewLive3, LiveItemEntity.LiveItemEnum.ITEM_WITH_FOOTER)
-
-        // 搜索
-        val searchBarEntity = SearchEntity()
-
-//        val entities = mutableListOf<BaseLiveEntity>(bannerEntity, liveItemEntity1, liveItemEntity2, topPicksEntity, liveCategories, reviewLiveItemEntity1, reviewLiveItemEntity2, reviewLiveItemEntity3, searchBarEntity)
-
-        val entities = mutableListOf<BaseLiveEntity>(bannerEntity)
-
-        AppLogger.i("entities=" + entities.get(0).itemType.ordinal)
-        itemEntities.value = entities
     }
 
 }

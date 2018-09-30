@@ -5,8 +5,11 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jzh.parents.app.Api
 import com.jzh.parents.datamodel.data.LiveData
+import com.jzh.parents.datamodel.response.BaseRes
 import com.jzh.parents.datamodel.response.LiveListRes
 import com.jzh.parents.utils.AppLogger
+import com.jzh.parents.utils.PreferenceUtil
+import com.jzh.parents.utils.Util
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
 import com.jzh.parents.viewmodel.entity.LiveItemEntity
 import com.jzh.parents.viewmodel.info.LiveInfo
@@ -35,6 +38,8 @@ class LivesRemoteDataSource : BaseRemoteDataSource() {
     fun refreshItemEntities(statusType: Int, categoryType: Int, target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
 
         val paramsMap = TreeMap<String, String>()
+
+        paramsMap.put("token", PreferenceUtil.instance.getToken())
         paramsMap.put("category", categoryType.toString())
         paramsMap.put("status", statusType.toString())
         paramsMap.put("page", "1")
@@ -56,6 +61,7 @@ class LivesRemoteDataSource : BaseRemoteDataSource() {
                         val showEntities: MutableList<BaseLiveEntity> = mutableListOf()
 
                         val liveReadyList = liveListRes.liveList
+
                         showEntities.addAll(composeLiveItemList(liveReadyList, liveReadyList?.size ?: 0, liveReadyList?.size ?: 0, false))
 
                         target.value = showEntities
@@ -78,6 +84,7 @@ class LivesRemoteDataSource : BaseRemoteDataSource() {
             }
         })
     }
+
 
     /**
      * 根据类型，组装并返回对应的直播列表
@@ -104,6 +111,8 @@ class LivesRemoteDataSource : BaseRemoteDataSource() {
 
                 // 内容类型
                 val contentType = if (value.status == LiveInfo.LiveInfoEnum.TYPE_REVIEW.value) LiveInfo.LiveInfoEnum.TYPE_REVIEW else LiveInfo.LiveInfoEnum.TYPE_WILL
+
+                AppLogger.i("* ${value.id}, ${value.isFavorite}, ${value.isSubscribe}")
 
                 val liveInfo = LiveInfo(id = value.id, title = value.title ?: "", imageUrl = value.pics?.last()?.info ?: "", dateTime = value.startAt ?: "", look = value.look, comments = value.comments, isFavorited = value.isFavorite, isSubscribed = value.isSubscribe, liveCnt = totalCnt, contentType = contentType, isShowMore = isShowMore)
 

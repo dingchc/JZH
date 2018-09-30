@@ -42,7 +42,7 @@ class JZHApplication : Application() {
         TSHttpController.INSTANCE.setAppContext(this)
 
         // 初始化阿里云推送服务
-        initPushService(this@JZHApplication)
+//        initPushService(this@JZHApplication)
 
     }
 

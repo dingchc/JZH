@@ -23,12 +23,15 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import com.jzh.parents.R
 import com.jzh.parents.app.Constants
+import com.jzh.parents.app.JZHApplication
 import com.jzh.parents.listener.IDialogCallback
 import com.jzh.parents.utils.*
 import com.jzh.parents.widget.TSProgressDialog
 import com.jzh.parents.widget.TSToolbar
 import com.jzh.parents.widget.swipe.PageSlidingPaneLayout
 import com.jzh.parents.widget.TSToolbar.ToolbarClickListener
+import com.tencent.mm.opensdk.modelbase.BaseResp
+import com.tencent.mm.opensdk.modelbiz.SubscribeMessage
 import java.io.File
 import java.util.*
 

@@ -197,7 +197,7 @@ class HomeAdapter(private var mContext: Context, var mDataList: MutableList<Base
         fun onClickSearch()
 
         /**
-         * 点击操作（contentType == 1 即将播放、 contentType == 2 往期回顾）
+         * 点击操作（contentType == 2 即将播放、 contentType == 3 往期回顾）
          */
         fun onClickOperate(type: Int, liveInfo: LiveInfo)
     }
