@@ -1,12 +1,15 @@
 package com.jzh.parents.wxapi;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.jzh.parents.R;
+import com.jzh.parents.activity.HomeActivity;
 import com.jzh.parents.app.Constants;
+import com.jzh.parents.app.JZHApplication;
 import com.jzh.parents.utils.AppLogger;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -89,13 +92,13 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
         if (baseResp != null) {
 
             try {
-                String wxToken = ((SendAuth.Resp) baseResp).code;
+//                String wxToken = ((SendAuth.Resp) baseResp).code;
 
-                Intent intent = new Intent(Constants.ACTION_WX_AUTHORIZE);
-                intent.putExtra(Constants.EXTRA_WX_TOKEN, wxToken);
-                LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+                JZHApplication app = JZHApplication.Companion.getInstance();
 
-                finish();
+                if (app != null) {
+                    app.setWxResult(baseResp);
+                }
 
             } catch (Exception e) {
                 AppLogger.i("error_msg:" + e.getMessage());
@@ -117,19 +120,28 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
 
                 SubscribeMessage.Resp resp = ((SubscribeMessage.Resp) baseResp);
 
-                Intent intent = new Intent(Constants.ACTION_WX_SUBSCRIBE);
-                intent.putExtra(Constants.EXTRA_WX_SUBSCRIBE_ACTION, resp.action);
-                intent.putExtra(Constants.EXTRA_WX_SUBSCRIBE_SCENE, resp.scene);
-                intent.putExtra(Constants.EXTRA_WX_SUBSCRIBE_OPEN_ID, resp.openId);
+                JZHApplication app = JZHApplication.Companion.getInstance();
 
-                LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-
-                finish();
+                if (app != null) {
+                    app.setWxResult(resp);
+                }
 
             } catch (Exception e) {
                 AppLogger.i("error_msg:" + e.getMessage());
             }
         }
 
+    }
+
+    /**
+     * 等待转场动画结束
+     */
+    protected void finishCompat() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            finishAfterTransition();
+        } else {
+            finish();
+        }
     }
 }

@@ -15,6 +15,7 @@ import java.util.*
 import com.alibaba.sdk.android.push.CommonCallback
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory
 import com.alibaba.sdk.android.push.CloudPushService
+import com.tencent.mm.opensdk.modelbase.BaseResp
 
 
 /**
@@ -24,7 +25,10 @@ import com.alibaba.sdk.android.push.CloudPushService
  */
 class JZHApplication : Application() {
 
-    var token: String? = ""
+    /**
+     * 微信返回结果
+     */
+    var wxResult : BaseResp? = null
 
     companion object {
 
@@ -37,13 +41,9 @@ class JZHApplication : Application() {
         instance = this@JZHApplication
         TSHttpController.INSTANCE.setAppContext(this)
 
-//        getTestToken()
-
         // 初始化阿里云推送服务
-//        initPushService(this@JZHApplication)
+        initPushService(this@JZHApplication)
 
-
-//        initOSSConfig()
     }
 
     /**
@@ -56,7 +56,7 @@ class JZHApplication : Application() {
 
                 val jsonParser = JsonParser()
 
-                token = jsonParser.parse(json).asJsonObject.get("output").asString
+                val token = jsonParser.parse(json).asJsonObject.get("output").asString
 
                 AppLogger.i("token=" + token)
 

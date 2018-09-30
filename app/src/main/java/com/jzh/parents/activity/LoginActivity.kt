@@ -13,11 +13,15 @@ import android.text.TextUtils
 import android.view.View
 import com.jzh.parents.R
 import com.jzh.parents.app.Constants
+import com.jzh.parents.app.JZHApplication
 import com.jzh.parents.databinding.ActivityLoginBinding
 import com.jzh.parents.datamodel.response.WxAuthorizeRes
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.LoginViewModel
 import com.jzh.parents.viewmodel.info.ResultInfo
+import com.tencent.mm.opensdk.modelbase.BaseResp
+import com.tencent.mm.opensdk.modelbiz.SubscribeMessage
+import com.tencent.mm.opensdk.modelmsg.SendAuth
 
 /**
  * 登录页面
@@ -37,37 +41,30 @@ class LoginActivity : BaseActivity() {
      */
     var mDataBinding: ActivityLoginBinding? = null
 
+    override fun onResume() {
+        super.onResume()
+
+        // 处理微信授权返回
+        processWxAuthorize()
+    }
+
     /**
-     * 接收广播
+     * 处理微信授权返回
      */
-    private val mReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
+    private fun processWxAuthorize() {
 
-            // 微信预约
-            if (Constants.ACTION_WX_AUTHORIZE == intent?.action) {
+        val wxResult: BaseResp? = JZHApplication.instance?.wxResult
 
-                val token = intent.getStringExtra(Constants.EXTRA_WX_TOKEN)
+        if (wxResult is SendAuth.Resp) {
 
-                mViewModel?.loginWithAuthorize(token)
+            showProgressDialog(getString(R.string.login_doing))
+
+            if (!TextUtils.isEmpty(wxResult.code)) {
+                mViewModel?.loginWithAuthorize(wxResult.code)
             }
+
+            JZHApplication.instance?.wxResult = null
         }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // 注册广播
-        val intentFilter = IntentFilter()
-        intentFilter.addAction(Constants.ACTION_WX_AUTHORIZE)
-        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, intentFilter)
-    }
-
-    override fun onDestroy() {
-
-        // 注销广播
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver)
-
-        super.onDestroy()
     }
 
     /**
@@ -97,6 +94,8 @@ class LoginActivity : BaseActivity() {
             // 微信授权
                 ResultInfo.CMD_LOGIN_WX_AUTHORIZE -> {
 
+                    hiddenProgressDialog()
+
                     // 微信未安装
                     if (resultInfo.code == ResultInfo.CODE_WX_IS_NOT_INSTALL) {
                         showToastError(getString(R.string.wx_errcode_is_not_install))
@@ -105,6 +104,8 @@ class LoginActivity : BaseActivity() {
 
             // 授权登录
                 ResultInfo.CMD_LOGIN_WX_LOGIN -> {
+
+                    hiddenProgressDialog()
 
                     // 未填写资料
                     if (resultInfo.code == ResultInfo.CODE_SUCCESS) {

@@ -10,10 +10,12 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.widget.LinearLayoutManager
+import android.text.TextUtils
 import android.view.View
 import com.jzh.parents.R
 import com.jzh.parents.adapter.HomeAdapter
 import com.jzh.parents.app.Constants
+import com.jzh.parents.app.JZHApplication
 import com.jzh.parents.databinding.ActivityHomeBinding
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
@@ -22,6 +24,8 @@ import com.jzh.parents.viewmodel.HomeViewModel
 import com.jzh.parents.viewmodel.bindadapter.TSDataBindingComponent
 import com.jzh.parents.viewmodel.info.LiveInfo
 import com.jzh.parents.viewmodel.info.ResultInfo
+import com.tencent.mm.opensdk.modelbase.BaseResp
+import com.tencent.mm.opensdk.modelbiz.SubscribeMessage
 
 /**
  * 主页
@@ -51,40 +55,11 @@ class HomeActivity : BaseActivity() {
      */
     private var mAdapterListener: HomeAdapter.OnViewClick? = null
 
-    /**
-     * 接收广播
-     */
-    private val mReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
+    override fun onResume() {
+        super.onResume()
 
-            // 微信预约
-            if (Constants.ACTION_WX_SUBSCRIBE == intent?.action) {
-
-                val action = intent.getStringExtra(Constants.EXTRA_WX_SUBSCRIBE_ACTION)
-                val openId = intent.getStringExtra(Constants.EXTRA_WX_SUBSCRIBE_OPEN_ID)
-                val liveId = intent.getIntExtra(Constants.EXTRA_WX_SUBSCRIBE_SCENE, 0)
-
-                AppLogger.i("* action=$action, liveId = $liveId")
-
-                mViewModel?.syncSubscribedALive(liveId, openId, action)
-            }
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // 注册广播
-        val intentFilter = IntentFilter()
-        intentFilter.addAction(Constants.ACTION_WX_SUBSCRIBE)
-        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, intentFilter)
-    }
-
-    override fun onDestroy() {
-
-        // 注销广播
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver)
-        super.onDestroy()
+        // 预约
+        processWxSubscribe()
     }
 
     /**
@@ -228,6 +203,23 @@ class HomeActivity : BaseActivity() {
 
         // 拉取直播数据
         mViewModel?.fetchHomeLiveData()
+    }
+
+    /**
+     * 处理微信预约
+     */
+    private fun processWxSubscribe() {
+
+        val wxResult : BaseResp? = JZHApplication.instance?.wxResult
+
+        if (wxResult is SubscribeMessage.Resp) {
+
+            if (!TextUtils.isEmpty(wxResult.openId)) {
+                mViewModel?.syncSubscribedALive(wxResult.scene, wxResult.openId ?: "", wxResult.action ?: "")
+            }
+
+            JZHApplication.instance?.wxResult = null
+        }
     }
 
     /**
