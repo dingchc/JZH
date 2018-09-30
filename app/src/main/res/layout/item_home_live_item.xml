@@ -31,7 +31,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="14dp"
             android:paddingBottom="10dp"
             android:paddingEnd="@dimen/activity_horizontal_margin"
             android:paddingStart="@dimen/activity_horizontal_margin"
@@ -67,6 +66,7 @@
                 android:drawableRight="@mipmap/icon_home_live_more"
                 android:gravity="center_vertical"
                 android:text="@{@string/all_with_count(itemEntity.liveInfo.liveCnt)}"
+                android:visibility="@{itemEntity.liveInfo.isShowMore ? View.VISIBLE : View.GONE}"
                 android:textColor="@color/font_gray"
                 android:textSize="12sp" />
 

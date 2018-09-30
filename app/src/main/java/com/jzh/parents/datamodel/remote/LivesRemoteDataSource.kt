@@ -56,7 +56,7 @@ class LivesRemoteDataSource : BaseRemoteDataSource() {
                         val showEntities: MutableList<BaseLiveEntity> = mutableListOf()
 
                         val liveReadyList = liveListRes.liveList
-                        showEntities.addAll(composeLiveItemList(liveReadyList, liveReadyList?.size ?: 0, liveReadyList?.size ?: 0))
+                        showEntities.addAll(composeLiveItemList(liveReadyList, liveReadyList?.size ?: 0, liveReadyList?.size ?: 0, false))
 
                         target.value = showEntities
                     }
@@ -86,9 +86,10 @@ class LivesRemoteDataSource : BaseRemoteDataSource() {
      * @param contentType  内容类型
      * @param totalCnt     总数
      * @param countLimit   显示条目限制
+     * @param isShowMore   是否显示更多
      * @return 对应的直播列表
      */
-    private fun composeLiveItemList(liveDataList: List<LiveData>?, totalCnt: Int, countLimit: Int): List<LiveItemEntity> {
+    private fun composeLiveItemList(liveDataList: List<LiveData>?, totalCnt: Int, countLimit: Int, isShowMore: Boolean = true): List<LiveItemEntity> {
 
         val liveItemList = mutableListOf<LiveItemEntity>()
 
@@ -104,7 +105,7 @@ class LivesRemoteDataSource : BaseRemoteDataSource() {
                 // 内容类型
                 val contentType = if (value.status == LiveInfo.LiveInfoEnum.TYPE_REVIEW.value) LiveInfo.LiveInfoEnum.TYPE_REVIEW else LiveInfo.LiveInfoEnum.TYPE_WILL
 
-                val liveInfo = LiveInfo(id = value.id, title = value.title ?: "", imageUrl = value.pics?.last()?.info ?: "", dateTime = value.startAt ?: "", look = value.look, comments = value.comments, isFavorited = value.isFavorite, isSubscribed = value.isSubscribe, liveCnt = totalCnt, contentType = contentType)
+                val liveInfo = LiveInfo(id = value.id, title = value.title ?: "", imageUrl = value.pics?.last()?.info ?: "", dateTime = value.startAt ?: "", look = value.look, comments = value.comments, isFavorited = value.isFavorite, isSubscribed = value.isSubscribe, liveCnt = totalCnt, contentType = contentType, isShowMore = isShowMore)
 
                 var liveItemEntity: LiveItemEntity
 

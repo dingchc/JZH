@@ -66,7 +66,12 @@ class LiveInfo(
         /**
          * 推荐的位置（排序）
          */
-        val recommendPos: Int = 0) {
+        val recommendPos: Int = 0,
+
+        /**
+         * 是否显示更多
+         */
+        val isShowMore : Boolean = true) {
 
     /**
      * 直播条目的类型
