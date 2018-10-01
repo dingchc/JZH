@@ -67,6 +67,17 @@ class LivesViewModel(app: Application) : BaseViewModel(app) {
     }
 
     /**
+     * 加载更多直播数据
+     *
+     * @param statusType   状态类型
+     * @param categoryType 分类类型
+     */
+    fun loadMoreItemEntities(statusType: Int, categoryType: Int) {
+
+        repo.loadMoreItemEntities(statusType, categoryType, itemEntities, resultInfo)
+    }
+
+    /**
      * 去微信预约一个直播
      *
      * @param liveId 场景值
@@ -99,7 +110,7 @@ class LivesViewModel(app: Application) : BaseViewModel(app) {
      * @param openId   开放Id
      * @param action   行为
      */
-    fun syncSubscribedALive(liveId: Int, openId : String, action: String) {
+    fun syncSubscribedALive(liveId: Int, openId: String, action: String) {
 
         repo.syncSubscribedALive(findALive(liveId), openId, action, itemEntities, resultInfo)
     }
@@ -107,7 +118,7 @@ class LivesViewModel(app: Application) : BaseViewModel(app) {
     /**
      * 查找一个直播
      */
-    private fun findALive(liveId : Int) : LiveInfo {
+    private fun findALive(liveId: Int): LiveInfo {
 
         return (itemEntities.value?.find { it is LiveItemEntity && it.liveInfo.id == liveId } as LiveItemEntity).liveInfo
     }

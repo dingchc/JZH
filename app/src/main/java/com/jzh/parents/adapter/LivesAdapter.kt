@@ -35,8 +35,6 @@ class LivesAdapter(mContext: Context, private val mHeaderTitle: String = "", pri
 
         val viewType = getItemViewType(position)
 
-        AppLogger.i("viewType=" + viewType)
-
         when (viewType) {
 
         // 即将开播或往期回顾:

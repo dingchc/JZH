@@ -4,12 +4,11 @@ import android.arch.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jzh.parents.app.Api
+import com.jzh.parents.app.Constants
 import com.jzh.parents.datamodel.data.LiveData
-import com.jzh.parents.datamodel.response.BaseRes
 import com.jzh.parents.datamodel.response.LiveListRes
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.PreferenceUtil
-import com.jzh.parents.utils.Util
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
 import com.jzh.parents.viewmodel.entity.LiveItemEntity
 import com.jzh.parents.viewmodel.info.LiveInfo
@@ -30,7 +29,7 @@ class LivesRemoteDataSource : BaseRemoteDataSource() {
     /**
      * 当前页面
      */
-    private val page: Int = 1
+    private var page: Int = 1
 
     /**
      * 刷新直播数据
@@ -42,12 +41,46 @@ class LivesRemoteDataSource : BaseRemoteDataSource() {
      */
     fun refreshItemEntities(statusType: Int, categoryType: Int, target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
 
+        page = 1
+        loadPageData(page, statusType, categoryType, target, resultInfo)
+    }
+
+    /**
+     * 加载更多直播数据
+     *
+     * @param statusType   状态类型
+     * @param categoryType 分类类型
+     * @param target       目标值
+     * @param resultInfo   结果返回
+     */
+    fun loadMoreItemEntities(statusType: Int, categoryType: Int, target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
+
+        page++
+        loadPageData(page, statusType, categoryType, target, resultInfo)
+    }
+
+    /**
+     * 刷新直播数据
+     *
+     * @param page         页面索引
+     * @param statusType   状态类型
+     * @param categoryType 分类类型
+     * @param target       目标值
+     * @param resultInfo   结果返回
+     */
+    private fun loadPageData(page: Int, statusType: Int, categoryType: Int, target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
+
         val paramsMap = TreeMap<String, String>()
 
         paramsMap.put("token", PreferenceUtil.instance.getToken())
         paramsMap.put("status", statusType.toString())
         paramsMap.put("categoryId", categoryType.toString())
         paramsMap.put("page", page.toString())
+
+        var cmd = ResultInfo.CMD_REFRESH_LIVES
+        if (page > 1) {
+            cmd = ResultInfo.CMD_LOAD_MORE_LIVES
+        }
 
         TSHttpController.INSTANCE.doGet(Api.URL_API_GET_LIVES, paramsMap, object : TSHttpCallback {
             override fun onSuccess(res: TSBaseResponse?, json: String?) {
@@ -63,28 +96,45 @@ class LivesRemoteDataSource : BaseRemoteDataSource() {
                     // 成功
                     if (liveListRes.code == ResultInfo.CODE_SUCCESS) {
 
-                        val showEntities: MutableList<BaseLiveEntity> = mutableListOf()
+                        var showEntities = target.value
+
+                        if (showEntities == null) {
+
+                            AppLogger.i("* showEntities == null")
+                            showEntities = mutableListOf()
+                        }
 
                         val liveReadyList = liveListRes.liveList
 
                         showEntities.addAll(composeLiveItemList(liveReadyList, liveReadyList?.size ?: 0, liveReadyList?.size ?: 0, false))
 
                         target.value = showEntities
+
+                        // 通知结果，用于关闭加载对话框等
+                        if (liveReadyList != null) {
+
+                            AppLogger.i("* liveReadyList.size = ${liveReadyList.size}")
+
+                            if (liveReadyList.size < Constants.PAGE_CNT) {
+                                notifyResult(cmd = cmd, code = ResultInfo.CODE_NO_MORE_DATA, resultLiveData = resultInfo)
+                            } else {
+                                notifyResult(cmd = cmd, code = liveListRes.code, resultLiveData = resultInfo)
+                            }
+                        }
                     }
                     // 失败
                     else {
-                        notifyResult(cmd = ResultInfo.CMD_GET_LIVES, code = liveListRes.code, tip = liveListRes.tip, resultLiveData = resultInfo)
+                        notifyResult(cmd = cmd, code = liveListRes.code, tip = liveListRes.tip, resultLiveData = resultInfo)
                     }
                 } else {
-                    notifyResult(cmd = ResultInfo.CMD_GET_LIVES, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo)
+                    notifyResult(cmd = cmd, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo)
                 }
-
             }
 
             override fun onException(e: Throwable?) {
                 AppLogger.i(e?.message)
 
-                notifyResult(cmd = ResultInfo.CMD_GET_LIVES, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo)
+                notifyResult(cmd = cmd, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo)
 
             }
         })
@@ -125,11 +175,17 @@ class LivesRemoteDataSource : BaseRemoteDataSource() {
 
                 // 只有一条
                 if (index == 0 && index == liveDataList.size - 1) {
-                    liveItemEntity = LiveItemEntity(liveInfo, LiveItemEntity.LiveItemEnum.ITEM_SINGLE)
+                    liveItemEntity = LiveItemEntity(liveInfo, LiveItemEntity.LiveItemEnum.ITEM_WITH_HEADER)
                 }
                 // 第一条
                 else if (index == 0) {
-                    liveItemEntity = LiveItemEntity(liveInfo, LiveItemEntity.LiveItemEnum.ITEM_WITH_HEADER)
+
+                    // 只有第一条带头
+                    if (page <= 1) {
+                        liveItemEntity = LiveItemEntity(liveInfo, LiveItemEntity.LiveItemEnum.ITEM_WITH_HEADER)
+                    } else {
+                        liveItemEntity = LiveItemEntity(liveInfo, LiveItemEntity.LiveItemEnum.ITEM_DEFAULT)
+                    }
                 }
                 // 最后一条
                 else if (index == countLimit - 1) {

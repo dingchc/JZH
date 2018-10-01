@@ -49,6 +49,11 @@ data class ResultInfo(
         const val CODE_UPLOAD_PROGRESS = -202
 
         /**
+         * 没有更多数据了
+         */
+        const val CODE_NO_MORE_DATA = -203
+
+        /**
          * 信息：异常
          */
         const val TIP_EXCEPTION = "请求异常"
@@ -89,9 +94,14 @@ data class ResultInfo(
         const val CMD_MYSELF_UPLOAD_AVATAR = 3001
 
         /**
+         * 刷新直播列表
+         */
+        const val CMD_REFRESH_LIVES = 4001
+
+        /**
          * 获取直播列表
          */
-        const val CMD_GET_LIVES = 4001
+        const val CMD_LOAD_MORE_LIVES = 4002
 
 
     }

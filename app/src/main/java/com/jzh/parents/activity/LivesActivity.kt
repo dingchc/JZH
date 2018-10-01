@@ -146,6 +146,39 @@ class LivesActivity() : BaseActivity() {
                         showToastError(resultInfo.tip)
                     }
                 }
+            // 刷新数据
+                ResultInfo.CMD_REFRESH_LIVES -> {
+
+                    // 刷新数据成功
+                    if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
+                        hiddenProgressDialog()
+                    }
+                    // 没有更多数据
+                    else if (resultInfo.code == ResultInfo.CODE_NO_MORE_DATA) {
+                        mDataBinding?.refreshLayout?.isEnableLoadmore = false
+                    }
+                    // 错误
+                    else {
+                        showToastError(resultInfo.tip)
+                    }
+
+                }
+            // 加载更多数据
+                ResultInfo.CMD_LOAD_MORE_LIVES -> {
+
+                    mDataBinding?.refreshLayout?.finishLoadmore()
+
+                    // 加载数据成功
+                    if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
+                    }
+                    // 没有更多数据
+                    else if (resultInfo.code == ResultInfo.CODE_NO_MORE_DATA) {
+                    }
+                    // 错误
+                    else {
+                        showToastError(resultInfo.tip)
+                    }
+                }
             }
         })
 
@@ -153,6 +186,8 @@ class LivesActivity() : BaseActivity() {
         mDataBinding?.refreshLayout?.setOnLoadmoreListener {
 
             AppLogger.i("* load more")
+
+            mViewModel?.loadMoreItemEntities(mStatusType, mCategoryId)
         }
 
     }
@@ -175,6 +210,7 @@ class LivesActivity() : BaseActivity() {
 
         mAdapter?.mListener = mAdapterListener
 
+        // 刷新数据
         mViewModel?.refreshItemEntities(mStatusType, mCategoryId)
     }
 

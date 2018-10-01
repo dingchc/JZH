@@ -51,6 +51,21 @@ class LivesRepository : BaseRepository() {
     }
 
     /**
+     * 加载更多直播数据
+     *
+     * @param statusType   状态类型
+     * @param categoryType 分类类型
+     * @param target       目标值
+     * @param resultInfo   结果返回
+     */
+    fun loadMoreItemEntities(statusType: Int, categoryType: Int, target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
+
+        mRemoteDataSource.loadMoreItemEntities(statusType, categoryType, target, resultInfo)
+    }
+
+
+
+    /**
      * 收藏一个直播
      *
      * @param liveInfo 直播

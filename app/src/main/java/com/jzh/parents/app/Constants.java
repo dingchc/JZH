@@ -85,9 +85,9 @@ public interface Constants {
     int HOME_LIVE_REVIEW_LIMIT = 3;
 
     /**
-     * 一页显示的个数：10个
+     * 一页显示的个数：5个
      */
-    int PAGE_CNT = 10;
+    int PAGE_CNT = 5;
 
     /**
      * wx的授权登录的action
