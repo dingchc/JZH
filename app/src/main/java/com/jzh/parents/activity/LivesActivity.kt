@@ -2,6 +2,7 @@ package com.jzh.parents.activity
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
@@ -122,6 +123,11 @@ class LivesActivity() : BaseActivity() {
                     mViewModel?.favoriteALive(liveInfo)
                 }
             }
+
+            override fun onClickSearch() {
+
+                startActivity(Intent(this@LivesActivity, SearchActivity::class.java))
+            }
         }
 
         // 错误返回
@@ -152,6 +158,11 @@ class LivesActivity() : BaseActivity() {
                     // 刷新数据成功
                     if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
                         hiddenProgressDialog()
+                    }
+                    // 没有数据
+                    else if (resultInfo.code == ResultInfo.CODE_NO_DATA) {
+
+                        // 显示没有数据
                     }
                     // 没有更多数据
                     else if (resultInfo.code == ResultInfo.CODE_NO_MORE_DATA) {

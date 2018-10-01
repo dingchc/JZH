@@ -63,6 +63,11 @@ class LivesAdapter(mContext: Context, private val mHeaderTitle: String = "", pri
         // 搜索:
             BaseLiveEntity.ItemTypeEnum.LIVE_SEARCH.ordinal -> {
                 holder.dataBinding as ItemLivesSearchBinding
+
+                holder.dataBinding.rlSearchArea.setOnClickListener {
+
+                    mListener?.onClickSearch()
+                }
             }
         // 其他
             else -> {
@@ -122,6 +127,11 @@ class LivesAdapter(mContext: Context, private val mHeaderTitle: String = "", pri
          * 点击了一条直播
          */
         fun onClickALive(liveInfo: LiveInfo)
+
+        /**
+         * 点击了搜索
+         */
+        fun onClickSearch()
 
         /**
          * 点击操作（contentType == 2 即将播放、 contentType == 3 往期回顾）

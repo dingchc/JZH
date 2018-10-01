@@ -54,6 +54,11 @@ data class ResultInfo(
         const val CODE_NO_MORE_DATA = -203
 
         /**
+         * 没有数据
+         */
+        const val CODE_NO_DATA = -204
+
+        /**
          * 信息：异常
          */
         const val TIP_EXCEPTION = "请求异常"

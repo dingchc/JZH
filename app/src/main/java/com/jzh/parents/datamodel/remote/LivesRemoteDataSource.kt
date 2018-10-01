@@ -11,6 +11,7 @@ import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.PreferenceUtil
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
 import com.jzh.parents.viewmodel.entity.LiveItemEntity
+import com.jzh.parents.viewmodel.entity.SearchEntity
 import com.jzh.parents.viewmodel.info.LiveInfo
 import com.jzh.parents.viewmodel.info.ResultInfo
 import com.tunes.library.wrapper.network.TSHttpController
@@ -42,6 +43,7 @@ class LivesRemoteDataSource : BaseRemoteDataSource() {
     fun refreshItemEntities(statusType: Int, categoryType: Int, target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
 
         page = 1
+
         loadPageData(page, statusType, categoryType, target, resultInfo)
     }
 
@@ -100,11 +102,13 @@ class LivesRemoteDataSource : BaseRemoteDataSource() {
 
                         if (showEntities == null) {
 
-                            AppLogger.i("* showEntities == null")
                             showEntities = mutableListOf()
                         }
 
                         val liveReadyList = liveListRes.liveList
+
+                        // 判断并添加搜索
+                        judgeToAddSearchEntity(statusType, categoryType, showEntities)
 
                         showEntities.addAll(composeLiveItemList(liveReadyList, liveReadyList?.size ?: 0, liveReadyList?.size ?: 0, false))
 
@@ -115,10 +119,13 @@ class LivesRemoteDataSource : BaseRemoteDataSource() {
 
                             AppLogger.i("* liveReadyList.size = ${liveReadyList.size}")
 
-                            if (liveReadyList.size < Constants.PAGE_CNT) {
-                                notifyResult(cmd = cmd, code = ResultInfo.CODE_NO_MORE_DATA, resultLiveData = resultInfo)
-                            } else {
+                            if (liveReadyList.size == Constants.PAGE_CNT) {
                                 notifyResult(cmd = cmd, code = liveListRes.code, resultLiveData = resultInfo)
+
+                            } else if (liveReadyList.isEmpty() && page == 1) {
+                                notifyResult(cmd = cmd, code = ResultInfo.CODE_NO_DATA, resultLiveData = resultInfo)
+                            } else {
+                                notifyResult(cmd = cmd, code = ResultInfo.CODE_NO_MORE_DATA, resultLiveData = resultInfo)
                             }
                         }
                     }
@@ -138,6 +145,17 @@ class LivesRemoteDataSource : BaseRemoteDataSource() {
 
             }
         })
+    }
+
+    /**
+     * 判断是否需要添加搜索条
+     */
+    private fun judgeToAddSearchEntity(statusType: Int, categoryType: Int, showEntities: MutableList<BaseLiveEntity>) {
+
+        // 已完成的才需要添加搜索
+        if (statusType == LiveInfo.LiveInfoEnum.TYPE_REVIEW.value && categoryType == 0 && page == 1) {
+            showEntities.add(SearchEntity())
+        }
     }
 
 
