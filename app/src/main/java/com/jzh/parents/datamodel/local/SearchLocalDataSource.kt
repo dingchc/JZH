@@ -69,7 +69,7 @@ class SearchLocalDataSource {
             if (keyWordData != null) {
                 keyWordList?.remove(keyWordData)
             }
-            
+
         } else {
 
             keyWordList = mutableListOf()

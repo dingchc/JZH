@@ -4,6 +4,8 @@ import android.app.Application
 import android.arch.lifecycle.MutableLiveData
 import com.jzh.parents.datamodel.repo.SearchRepository
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
+import com.jzh.parents.viewmodel.entity.LiveItemEntity
+import com.jzh.parents.viewmodel.info.LiveInfo
 import com.jzh.parents.viewmodel.info.ResultInfo
 
 /**
@@ -70,5 +72,34 @@ class SearchViewModel(app: Application) : BaseViewModel(app) {
     fun saveKeyWord(keyWord: String) {
 
         repo.saveKeyWord(keyWord)
+    }
+
+    /**
+     * 收藏一个直播
+     *
+     * @param liveInfo 直播
+     */
+    fun favoriteALive(liveInfo: LiveInfo) {
+        repo.favoriteALive(liveInfo, itemEntities, resultInfo)
+    }
+
+    /**
+     * 同步直播的预约状态
+     *
+     * @param liveId   直播Id
+     * @param openId   开放Id
+     * @param action   行为
+     */
+    fun syncSubscribedALive(liveId: Int, openId: String, action: String) {
+
+        repo.syncSubscribedALive(findALive(liveId), openId, action, itemEntities, resultInfo)
+    }
+
+    /**
+     * 查找一个直播
+     */
+    private fun findALive(liveId: Int): LiveInfo {
+
+        return (itemEntities.value?.find { it is LiveItemEntity && it.liveInfo.id == liveId } as LiveItemEntity).liveInfo
     }
 }

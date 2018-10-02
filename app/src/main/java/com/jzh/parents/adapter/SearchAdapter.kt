@@ -19,7 +19,7 @@ import com.jzh.parents.viewmodel.info.LiveInfo
  * @author ding
  * Created by Ding on 2018/8/27.
  */
-class SearchAdapter(mContext: Context, var mDataList: MutableList<BaseLiveEntity>?, var mListener : OnViewClick? = null) : RecyclerView.Adapter<InnerViewHolder>() {
+class SearchAdapter(mContext: Context, var mDataList: MutableList<BaseLiveEntity>?, var mListener: OnViewClick? = null) : RecyclerView.Adapter<InnerViewHolder>() {
 
     /**
      * 布局加载器
@@ -34,14 +34,20 @@ class SearchAdapter(mContext: Context, var mDataList: MutableList<BaseLiveEntity
 
         val viewType = getItemViewType(position)
 
-        AppLogger.i("viewType=" + viewType)
-
         when (viewType) {
 
         // 即将开播或往期回顾:
             BaseLiveEntity.ItemTypeEnum.LIVE_ITEM.ordinal -> {
                 holder.dataBinding as ItemHomeLiveItemBinding
                 holder.dataBinding.itemEntity = mDataList?.get(position) as LiveItemEntity
+
+                // 操作
+                holder.dataBinding.ivOperate.setOnClickListener {
+
+                    val liveInfo = (mDataList?.get(position) as LiveItemEntity).liveInfo
+
+                    mListener?.onClickOperate(liveInfo.contentType.value, liveInfo = liveInfo)
+                }
 
             }
         // 其他
@@ -88,7 +94,12 @@ class SearchAdapter(mContext: Context, var mDataList: MutableList<BaseLiveEntity
         /**
          * 点击了一条直播
          */
-        fun onClickALive(liveInfo : LiveInfo)
+        fun onClickALive(liveInfo: LiveInfo)
+
+        /**
+         * 点击操作（contentType == 2 即将播放、 contentType == 3 往期回顾）
+         */
+        fun onClickOperate(type: Int, liveInfo: LiveInfo)
     }
 
 }

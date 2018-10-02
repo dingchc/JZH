@@ -16,12 +16,16 @@ import com.jzh.parents.viewmodel.entity.BaseLiveEntity
 import android.arch.lifecycle.Observer
 import android.opengl.Visibility
 import android.text.TextUtils
+import com.jzh.parents.app.Constants
+import com.jzh.parents.app.JZHApplication
 import com.jzh.parents.datamodel.response.HotWordRes
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.PreferenceUtil
 import com.jzh.parents.viewmodel.info.LiveInfo
 import com.jzh.parents.viewmodel.info.ResultInfo
 import com.scwang.smartrefresh.header.MaterialHeader
+import com.tencent.mm.opensdk.modelbase.BaseResp
+import com.tencent.mm.opensdk.modelbiz.SubscribeMessage
 
 /**
  * 搜索
@@ -52,7 +56,16 @@ class SearchActivity : BaseActivity() {
     private var mAdapterListener: SearchAdapter.OnViewClick? = null
 
 
+    override fun onResume() {
+        super.onResume()
+
+        // 预约
+        processWxSubscribe()
+    }
+
     override fun initViews() {
+
+        setToolbarTitle(R.string.search)
 
         mViewModel = ViewModelProviders.of(this@SearchActivity).get(SearchViewModel::class.java)
 
@@ -85,6 +98,18 @@ class SearchActivity : BaseActivity() {
              * 点击了一条直播
              */
             override fun onClickALive(liveInfo: LiveInfo) {
+            }
+
+            override fun onClickOperate(type: Int, liveInfo: LiveInfo) {
+
+                // 未预约的直播
+                if (type == LiveInfo.LiveInfoEnum.TYPE_WILL.value && liveInfo.isSubscribed == Constants.TYPE_SUBSCRIBE_NO) {
+                    mViewModel?.subscribeALiveOnWx(liveInfo.id)
+                }
+                //未收藏的直播
+                else if (type == LiveInfo.LiveInfoEnum.TYPE_REVIEW.value && liveInfo.isFavorited == Constants.TYPE_FAVORITE_NO) {
+                    mViewModel?.favoriteALive(liveInfo)
+                }
             }
 
         }
@@ -334,5 +359,22 @@ class SearchActivity : BaseActivity() {
 
         mDataBinding = DataBindingUtil.inflate(layoutInflater, R.layout.activity_search, null, false)
         return mDataBinding!!.root
+    }
+
+    /**
+     * 处理微信预约
+     */
+    private fun processWxSubscribe() {
+
+        val wxResult: BaseResp? = JZHApplication.instance?.wxResult
+
+        if (wxResult is SubscribeMessage.Resp) {
+
+            if (!TextUtils.isEmpty(wxResult.openId)) {
+                mViewModel?.syncSubscribedALive(wxResult.scene, wxResult.openId ?: "", wxResult.action ?: "")
+            }
+
+            JZHApplication.instance?.wxResult = null
+        }
     }
 }

@@ -99,23 +99,6 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
      *
      * @param liveId 场景值
      */
-    fun subscribeALiveOnWx(liveId: Int) {
-
-        val wxApi = WXAPIFactory.createWXAPI(JZHApplication.instance, Constants.WX_APP_ID)
-        wxApi.registerApp(Constants.WX_APP_ID)
-
-        val req = SubscribeMessage.Req()
-        req.scene = liveId
-        req.templateID = Constants.WX_SUBSCRIBE_TEMPLATE_ID
-
-        wxApi.sendReq(req)
-    }
-
-    /**
-     * 去微信预约一个直播
-     *
-     * @param liveId 场景值
-     */
     fun gotoWxMiniProgram(liveId: Int) {
 
         val wxApi = WXAPIFactory.createWXAPI(JZHApplication.instance, Constants.WX_APP_ID)
