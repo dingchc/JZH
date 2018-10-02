@@ -1,14 +1,19 @@
 package com.jzh.parents.datamodel.remote
 
 import android.arch.lifecycle.MutableLiveData
+import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jzh.parents.app.Api
 import com.jzh.parents.app.Constants
+import com.jzh.parents.datamodel.data.LiveData
 import com.jzh.parents.datamodel.response.BaseRes
+import com.jzh.parents.datamodel.response.LiveListRes
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.PreferenceUtil
 import com.jzh.parents.utils.Util
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
+import com.jzh.parents.viewmodel.entity.LiveItemEntity
+import com.jzh.parents.viewmodel.entity.SearchEntity
 import com.jzh.parents.viewmodel.info.LiveInfo
 import com.jzh.parents.viewmodel.info.ResultInfo
 import com.tunes.library.wrapper.network.TSHttpController
@@ -145,5 +150,153 @@ abstract class BaseRemoteDataSource {
                 AppLogger.i(e?.message)
             }
         })
+    }
+
+    /**
+     * 处理直播列表结果
+     *
+     * @param page             页面
+     * @param json             json返回结果
+     * @param cmd              指令
+     * @param searchEntity     搜索实体
+     * @param isShowItemHeader 是否显示条目头
+     * @param target           目标
+     * @param resultInfo       结果
+     */
+    fun processLivesResult(page: Int, json: String?, cmd: Int, searchEntity: SearchEntity?, isShowItemHeader: Boolean = true, target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
+
+        val gson = Gson()
+
+        val liveListRes: LiveListRes? = gson.fromJson<LiveListRes>(json, object : TypeToken<LiveListRes>() {
+
+        }.type)
+
+        if (liveListRes != null) {
+
+            // 成功
+            if (liveListRes.code == ResultInfo.CODE_SUCCESS) {
+
+                var showEntities = target.value
+
+                if (showEntities == null) {
+
+                    showEntities = mutableListOf()
+                }
+
+                // 清空原始数据
+                if (page == 1) {
+                    showEntities.clear()
+                }
+
+                val liveReadyList = liveListRes.liveList
+
+                if (searchEntity != null) {
+                    showEntities.add(searchEntity)
+                }
+
+                showEntities.addAll(composeLiveItemList(page, liveReadyList, liveReadyList?.size ?: 0, liveReadyList?.size ?: 0, isShowItemHeader, false))
+
+                target.value = showEntities
+
+                // 通知结果，用于关闭加载对话框等
+                if (liveReadyList != null) {
+
+                    AppLogger.i("* liveReadyList.size = ${liveReadyList.size}")
+
+                    if (liveReadyList.size == Constants.PAGE_CNT) {
+                        notifyResult(cmd = cmd, code = liveListRes.code, resultLiveData = resultInfo)
+
+                    } else if (liveReadyList.isEmpty() && page == 1) {
+                        notifyResult(cmd = cmd, code = ResultInfo.CODE_NO_DATA, resultLiveData = resultInfo)
+                    } else {
+                        notifyResult(cmd = cmd, code = ResultInfo.CODE_NO_MORE_DATA, resultLiveData = resultInfo)
+                    }
+                }
+            }
+            // 失败
+            else {
+                notifyResult(cmd = cmd, code = liveListRes.code, tip = liveListRes.tip, resultLiveData = resultInfo)
+            }
+        } else {
+            notifyResult(cmd = cmd, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo)
+        }
+    }
+
+    /**
+     * 判断是否需要添加搜索条
+     *
+     * @param page         页面
+     * @param statusType   直播状态
+     * @param categoryType 分类
+     * @return 搜索实体
+     */
+    fun makeSearchEntity(page: Int, statusType: Int, categoryType: Int): SearchEntity? {
+
+        // 已完成的才需要添加搜索
+        if (statusType == LiveInfo.LiveInfoEnum.TYPE_REVIEW.value && categoryType == 0 && page == 1) {
+            return SearchEntity()
+        }
+
+        return null
+    }
+
+
+    /**
+     * 根据类型，组装并返回对应的直播列表
+     *
+     * @param page             页面
+     * @param liveDataList     返回的直播数据
+     * @param totalCnt         总数
+     * @param countLimit       显示条目限制
+     * @param isShowItemHeader 是否显示条目头
+     * @param isShowMore       是否显示更多
+     * @return 对应的直播列表
+     */
+    private fun composeLiveItemList(page: Int, liveDataList: List<LiveData>?, totalCnt: Int, countLimit: Int, isShowItemHeader: Boolean = true, isShowMore: Boolean = true): List<LiveItemEntity> {
+
+        val liveItemList = mutableListOf<LiveItemEntity>()
+
+        if (liveDataList != null) {
+
+            for ((index, value) in liveDataList.withIndex()) {
+
+                // 达到最大显示数，跳出
+                if (index == countLimit) {
+                    break
+                }
+
+                // 内容类型
+                val contentType = if (value.status == LiveInfo.LiveInfoEnum.TYPE_REVIEW.value) LiveInfo.LiveInfoEnum.TYPE_REVIEW else LiveInfo.LiveInfoEnum.TYPE_WILL
+
+                AppLogger.i("* ${value.id}, ${value.isFavorite}, ${value.isSubscribe}")
+
+                val liveInfo = LiveInfo(id = value.id, title = value.title ?: "", imageUrl = value.pics?.last()?.info ?: "", dateTime = value.startAt ?: "", look = value.look, comments = value.comments, isFavorited = value.isFavorite, isSubscribed = value.isSubscribe, liveCnt = totalCnt, contentType = contentType, isShowMore = isShowMore)
+
+                var liveItemEntity: LiveItemEntity
+
+                // 第一条
+                if (index == 0) {
+
+                    // 只有第一条带头
+                    if (page <= 1 && isShowItemHeader) {
+                        liveItemEntity = LiveItemEntity(liveInfo, LiveItemEntity.LiveItemEnum.ITEM_WITH_HEADER)
+                    } else {
+                        liveItemEntity = LiveItemEntity(liveInfo, LiveItemEntity.LiveItemEnum.ITEM_DEFAULT)
+                    }
+                }
+                // 最后一条
+                else if (index == countLimit - 1) {
+                    liveItemEntity = LiveItemEntity(liveInfo, LiveItemEntity.LiveItemEnum.ITEM_DEFAULT)
+                }
+                // 正常的
+                else {
+                    liveItemEntity = LiveItemEntity(liveInfo, LiveItemEntity.LiveItemEnum.ITEM_DEFAULT)
+                }
+
+                liveItemList.add(liveItemEntity)
+            }
+        }
+
+        return liveItemList
     }
 }

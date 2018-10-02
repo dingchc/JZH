@@ -74,6 +74,7 @@
 
         <!-- 直播条目信息 -->
         <android.support.v7.widget.CardView
+            android:id="@+id/item_live"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="18dp"

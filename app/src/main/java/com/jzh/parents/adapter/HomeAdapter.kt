@@ -72,6 +72,14 @@ class HomeAdapter(private var mContext: Context, var mDataList: MutableList<Base
 
                     mListener?.onClickOperate(liveInfo.contentType.value, liveInfo = liveInfo)
                 }
+
+                // 点击直播
+                holder.dataBinding.itemLive.setOnClickListener {
+
+                    val liveInfo = (mDataList?.get(position) as LiveItemEntity).liveInfo
+
+                    mListener?.onClickALive(liveInfo = liveInfo)
+                }
             }
         // 直播分类:
             BaseLiveEntity.ItemTypeEnum.LIVE_CATEGORY.ordinal -> {

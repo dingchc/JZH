@@ -104,9 +104,14 @@ data class ResultInfo(
         const val CMD_REFRESH_LIVES = 4001
 
         /**
-         * 获取直播列表
+         * 加载更多直播列表
          */
         const val CMD_LOAD_MORE_LIVES = 4002
+
+        /**
+         * 获取热词
+         */
+        const val CMD_GET_HOT_WORD = 4003
 
 
     }

@@ -4,6 +4,7 @@ import android.app.Application
 import android.arch.lifecycle.MutableLiveData
 import com.jzh.parents.datamodel.repo.SearchRepository
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
+import com.jzh.parents.viewmodel.info.ResultInfo
 
 /**
  * 搜索ViewModel
@@ -16,17 +17,17 @@ class SearchViewModel(app: Application) : BaseViewModel(app) {
     /**
      * 正在搜索的字符串
      */
-    private var searchingContent = MutableLiveData<String>()
+    var searchingContent = MutableLiveData<String>()
 
     /**
      * 数据条目
      */
-    private var itemEntities: MutableLiveData<MutableList<BaseLiveEntity>> = MutableLiveData<MutableList<BaseLiveEntity>>()
+    var itemEntities: MutableLiveData<MutableList<BaseLiveEntity>> = MutableLiveData<MutableList<BaseLiveEntity>>()
 
     /**
      * 是否点击了搜索
      */
-    private var isSearchable = MutableLiveData<Boolean>()
+    var isSearchable = MutableLiveData<Boolean>()
 
     /**
      * 数据仓库
@@ -35,48 +36,24 @@ class SearchViewModel(app: Application) : BaseViewModel(app) {
 
     init {
         isSearchable.value = true
-    }
 
-
-    /**
-     * 获取搜索的字符串的LiveData
-     */
-    fun getSearchingContent(): MutableLiveData<String> {
-        return searchingContent
+        resultInfo.value = ResultInfo()
     }
 
     /**
-     * 设置搜索的字符串的LiveData
+     * 根据关键词搜索
      */
-    fun setSearchingContent(input: String) {
+    fun searchLives(keyWord: String) {
 
-        return searchingContent.postValue(input)
+        repo.refreshLives(keyWord, itemEntities, resultInfo)
     }
 
     /**
-     * 获取是否可以搜索
+     * 加载数据
      */
-    fun getIsSearchable() : MutableLiveData<Boolean> {
-        return isSearchable
-    }
+    fun fetchHotWord() {
 
-    /**
-     * 设置是否可以搜索
-     */
-    fun setIsSearchable(searchable : Boolean) {
-        isSearchable.value = searchable
-    }
-
-    /**
-     * 返回条目实体
-     */
-    fun getItemEntities(): MutableLiveData<MutableList<BaseLiveEntity>> {
-
-        return itemEntities
-    }
-
-    fun loadSearchRecord() {
-
+        return repo.fetchHotWord(resultInfo)
     }
 
     /**

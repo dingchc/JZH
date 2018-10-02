@@ -15,6 +15,8 @@ import com.tencent.mm.opensdk.modelbiz.SubscribeMessage
 import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import java.net.URLEncoder
 import java.util.*
+import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram
+import android.R.attr.path
 
 
 /**
@@ -110,6 +112,24 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
     }
 
     /**
+     * 去微信预约一个直播
+     *
+     * @param liveId 场景值
+     */
+    fun gotoWxMiniProgram(liveId: Int) {
+
+        val wxApi = WXAPIFactory.createWXAPI(JZHApplication.instance, Constants.WX_APP_ID)
+        wxApi.registerApp(Constants.WX_APP_ID)
+
+        val req = WXLaunchMiniProgram.Req()
+        // 填小程序原始id
+        req.userName = "gh_46f85bd327bb"
+        // 可选打开 开发版，体验版和正式版
+        req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE
+        wxApi.sendReq(req)
+    }
+
+    /**
      * 收藏一个直播
      *
      * @param liveInfo 直播
@@ -125,7 +145,7 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
      * @param openId   开放Id
      * @param action   行为
      */
-    fun syncSubscribedALive(liveId: Int, openId : String, action: String) {
+    fun syncSubscribedALive(liveId: Int, openId: String, action: String) {
 
         repo.syncSubscribedALive(findALive(liveId), openId, action, itemEntities, resultInfo)
     }
@@ -133,7 +153,7 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
     /**
      * 查找一个直播
      */
-    private fun findALive(liveId : Int) : LiveInfo {
+    private fun findALive(liveId: Int): LiveInfo {
 
         return (itemEntities.value?.find { it is LiveItemEntity && it.liveInfo.id == liveId } as LiveItemEntity).liveInfo
     }

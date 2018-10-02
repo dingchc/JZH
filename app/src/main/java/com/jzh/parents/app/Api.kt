@@ -94,5 +94,11 @@ object Api {
      */
     const val URL_API_GET_LIVES = URL_API_LIVE_DOMAIN + "lives/list"
 
+    /**
+     * 地址：获取热词
+     */
+    const val URL_API_GET_HOT_WORD = URL_API_LIVE_DOMAIN + "lives/hotword"
+
+
 
 }

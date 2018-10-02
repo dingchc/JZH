@@ -123,6 +123,10 @@ class HomeActivity : BaseActivity() {
              * 点击了一条直播
              */
             override fun onClickALive(liveInfo: LiveInfo) {
+
+                AppLogger.i("liveInfo+${liveInfo}")
+
+                mViewModel?.gotoWxMiniProgram(liveInfo.id)
             }
 
             /**

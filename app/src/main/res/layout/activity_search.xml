@@ -67,8 +67,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:visibility="@{safeUnbox(viewModel.isSearchable) ? View.VISIBLE : View.GONE}"
-            android:layout_marginTop="14dp">
+            android:layout_marginTop="14dp"
+            android:visibility="@{safeUnbox(viewModel.isSearchable) ? View.VISIBLE : View.GONE}">
 
             <TextView
                 android:id="@+id/tv_hot_title"
@@ -89,13 +89,20 @@
 
         </RelativeLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_data"
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refresh_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:visibility="@{safeUnbox(viewModel.isSearchable) ? View.GONE : View.VISIBLE}"
-            />
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_data"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:visibility="@{safeUnbox(viewModel.isSearchable) ? View.GONE : View.VISIBLE}" />
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
 
     </LinearLayout>
 </layout>
