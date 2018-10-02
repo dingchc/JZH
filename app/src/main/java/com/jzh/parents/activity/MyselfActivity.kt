@@ -4,6 +4,7 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.view.View
 import com.jzh.parents.R
+import com.jzh.parents.app.Constants
 import com.jzh.parents.databinding.ActivityMyselfBinding
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.Util
@@ -73,10 +74,11 @@ class MyselfActivity : BaseActivity() {
      *
      * @param view 控件
      */
-    fun onSubcribeClick(view: View) {
+    fun onSubscribeClick(view: View) {
 
-        // 去收藏页面
-        val intent = Intent(this@MyselfActivity, FavoriteActivity::class.java)
+        // 去预约页面
+        val intent = Intent(this@MyselfActivity, MyLivesActivity::class.java)
+        intent.putExtra(Constants.EXTRA_MY_LIVES_PAGE_TYPE, Constants.MY_LIVES_PAGE_TYPE_SUBSCRIBE)
         startActivity(intent)
     }
 
@@ -88,7 +90,8 @@ class MyselfActivity : BaseActivity() {
     fun onFavoriteClick(view: View) {
 
         // 去收藏页面
-        val intent = Intent(this@MyselfActivity, FavoriteActivity::class.java)
+        val intent = Intent(this@MyselfActivity, MyLivesActivity::class.java)
+        intent.putExtra(Constants.EXTRA_MY_LIVES_PAGE_TYPE, Constants.MY_LIVES_PAGE_TYPE_FAVORITE)
         startActivity(intent)
     }
 

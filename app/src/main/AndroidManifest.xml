@@ -96,7 +96,7 @@
 
         <!-- 收藏页面 -->
         <activity
-            android:name=".activity.FavoriteActivity"
+            android:name=".activity.MyLivesActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>

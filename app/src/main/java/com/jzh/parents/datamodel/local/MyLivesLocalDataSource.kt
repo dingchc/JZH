@@ -9,17 +9,17 @@ import com.jzh.parents.viewmodel.info.LiveInfo
 
 /**
  *
- * 收藏列表
+ * 我的直播列表
  *
  * @author ding
  * Created by Ding on 2018/9/1.
  */
-class FavoriteLocalDataSource {
+class MyLivesLocalDataSource {
 
     /**
      * 加载数据
      */
-    fun loadItemEntities() : MutableList<BaseLiveEntity>? {
+    fun loadItemEntities(): MutableList<BaseLiveEntity>? {
 
         AppLogger.i("* loadItemEntities")
 

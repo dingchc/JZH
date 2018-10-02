@@ -145,6 +145,21 @@ public interface Constants {
     String EXTRA_LIVES_CATEGORY_TIP = "lives_category_tip";
 
     /**
+     * 我的列表-页面类型(我的收藏、我的预约)
+     */
+    String EXTRA_MY_LIVES_PAGE_TYPE = "lives_page_type";
+
+    /**
+     * 我的列表-页面类型-我的收藏
+     */
+    String MY_LIVES_PAGE_TYPE_FAVORITE = "my_lives_page_type_favorite";
+
+    /**
+     * 我的列表-页面类型-我的预约
+     */
+    String MY_LIVES_PAGE_TYPE_SUBSCRIBE = "my_lives_page_type_subscribe";
+
+    /**
      * wx的预约的直播action - 预约成功
      */
     String WX_SUBSCRIBE_ACTION_CONFIRM = "confirm";

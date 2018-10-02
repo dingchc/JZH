@@ -2,9 +2,7 @@ package com.jzh.parents.viewmodel
 
 import android.app.Application
 import android.arch.lifecycle.MutableLiveData
-import com.jzh.parents.datamodel.repo.FavoriteRepository
 import com.jzh.parents.datamodel.repo.MsgCenterRepository
-import com.jzh.parents.viewmodel.entity.BaseLiveEntity
 import com.jzh.parents.viewmodel.entity.MsgEntity
 
 /**
