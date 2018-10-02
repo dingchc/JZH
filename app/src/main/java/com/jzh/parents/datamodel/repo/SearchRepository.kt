@@ -25,11 +25,19 @@ class SearchRepository() : BaseRepository() {
     private val mRemoteDataSource = SearchRemoteDataSource()
 
     /**
-     * 加载数据
+     * 加载本地搜索关键字
      */
-    fun loadItemEntities(): MutableList<BaseLiveEntity>? {
+    fun loadHistoryKeyWord(): List<String>? {
 
-        return mLocalDataSource.loadItemEntities()
+        return mLocalDataSource.loadHistoryKeyWord()
+    }
+
+    /**
+     * 加载本地搜索关键字
+     */
+    fun saveKeyWord(keyWord: String) {
+
+        mLocalDataSource.saveKeyWord(keyWord)
     }
 
     /**

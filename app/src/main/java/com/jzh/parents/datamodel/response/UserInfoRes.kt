@@ -14,6 +14,7 @@ data class UserInfoRes(@SerializedName("output") val userInfo: UserInfo?) : Base
      * 班级信息
      */
     data class UserInfo(
+
             /**
              * 会员Id
              */

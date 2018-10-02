@@ -322,6 +322,16 @@ class Util {
         }
 
         /**
+         * 对象转json
+         */
+        fun <T> toJson(t: T, type: Type): String {
+
+            val gson = Gson()
+
+            return gson.toJson(t, type)
+        }
+
+        /**
          * 检查SD卡是否可用
          *
          * @return true 存在、 false 不存在

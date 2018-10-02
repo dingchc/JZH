@@ -1,10 +1,13 @@
 package com.jzh.parents.datamodel.local
 
+import android.text.TextUtils
+import com.google.gson.reflect.TypeToken
+import com.jzh.parents.app.Constants
+import com.jzh.parents.datamodel.data.KeyWordData
+import com.jzh.parents.datamodel.response.UserInfoRes
 import com.jzh.parents.utils.AppLogger
-import com.jzh.parents.viewmodel.entity.BaseLiveEntity
-import com.jzh.parents.viewmodel.entity.LiveItemEntity
-import com.jzh.parents.viewmodel.entity.SearchEntity
-import com.jzh.parents.viewmodel.info.LiveInfo
+import com.jzh.parents.utils.PreferenceUtil
+import com.jzh.parents.utils.Util
 
 /**
  * 加载实体
@@ -15,30 +18,72 @@ import com.jzh.parents.viewmodel.info.LiveInfo
 class SearchLocalDataSource {
 
     /**
-     * 加载数据
+     * 加载本地搜索关键字
      */
-    fun loadItemEntities(): MutableList<BaseLiveEntity>? {
+    fun loadHistoryKeyWord(): MutableList<String>? {
 
-        AppLogger.i("* loadItemEntities")
+        val json: String? = PreferenceUtil.instance.getSearchRecord()
 
-        // 即将直播
-        val liveItem1 = LiveInfo(title = "精彩111")
-        val liveEntity1 = LiveItemEntity(liveItem1)
+        AppLogger.i("* json = $json")
 
-        val liveItem2 = LiveInfo(title = "精彩222")
-        val liveEntity2 = LiveItemEntity(liveItem2)
+        if (!TextUtils.isEmpty(json)) {
 
-        val liveItem3 = LiveInfo(title = "精彩333")
-        val liveEntity3 = LiveItemEntity(liveItem3)
+            val keyWordList: List<KeyWordData>? = Util.fromJson(json!!, object : TypeToken<List<KeyWordData>>() {
 
-        val liveItem4 = LiveInfo(title = "精彩444")
-        val liveEntity4 = LiveItemEntity(liveItem4)
+            }.type)
 
-        // 搜索
-        val searchBarEntity = SearchEntity()
+            val list = mutableListOf<String>()
 
-        val entities = mutableListOf<BaseLiveEntity>(liveEntity1, liveEntity2, liveEntity3, liveEntity4)
+            keyWordList?.sortedBy { it.timeMillis }?.forEach {
+                list.add(it.keyWord)
+            }
+            return list
+        }
 
-        return entities
+        return null
+    }
+
+    /**
+     * 加载本地搜索关键字
+     */
+    fun saveKeyWord(keyWord: String) {
+
+        val json: String? = PreferenceUtil.instance.getSearchRecord()
+
+        var keyWordList: MutableList<KeyWordData>? = null
+
+        if (!TextUtils.isEmpty(json)) {
+
+            keyWordList = Util.fromJson(json!!, object : TypeToken<List<KeyWordData>>() {
+
+            }.type)
+
+            // 个数超了，去掉最前面的
+            if ((keyWordList?.size ?: 0) >= Constants.MAX_KEY_WORD_CNT) {
+
+                keyWordList?.removeAt(0)
+            }
+
+            // 如果已存在，删除
+            val keyWordData: KeyWordData? = keyWordList?.find { it.keyWord == keyWord }
+            if (keyWordData != null) {
+                keyWordList?.remove(keyWordData)
+            }
+            
+        } else {
+
+            keyWordList = mutableListOf()
+        }
+
+        keyWordList?.add(KeyWordData(keyWord, System.currentTimeMillis()))
+
+        val saveJson = Util.toJson(keyWordList, object : TypeToken<List<KeyWordData>>() {
+
+        }.type)
+
+        AppLogger.i("* save saveJson = $saveJson")
+        PreferenceUtil.instance.saveSearchRecord(saveJson)
+
+
     }
 }

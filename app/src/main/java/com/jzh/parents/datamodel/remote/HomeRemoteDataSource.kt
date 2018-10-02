@@ -66,9 +66,20 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
 
                 }.type)
 
-                AppLogger.i("userInfoRes=" + userInfoRes)
 
-                target.value = makeFunc(userInfoRes)
+                if (userInfoRes != null) {
+
+                    if (userInfoRes.code == ResultInfo.CODE_SUCCESS) {
+
+                        // 保存用户信息
+                        PreferenceUtil.instance.setCurrentUserId(userInfoRes.userInfo?.member ?: "")
+                        PreferenceUtil.instance.setCurrentUserJson(json)
+
+                        AppLogger.i("userInfoRes=" + userInfoRes)
+
+                        target.value = makeFunc(userInfoRes)
+                    }
+                }
             }
 
             override fun onException(e: Throwable?) {

@@ -90,6 +90,11 @@ public interface Constants {
     int PAGE_CNT = 5;
 
     /**
+     * 搜索关键词最大个数：5个
+     */
+    int MAX_KEY_WORD_CNT = 5;
+
+    /**
      * wx的授权登录的action
      */
     String ACTION_WX_AUTHORIZE = "com.jzh.parents.app.action.wx_authorize";

@@ -57,10 +57,18 @@ class SearchViewModel(app: Application) : BaseViewModel(app) {
     }
 
     /**
-     * 加载数据条目
+     * 加载本地搜索关键字
      */
-    fun loadItemEntitiesData() {
+    fun loadHistoryKeyWord(): List<String>? {
 
-        itemEntities.value = repo.loadItemEntities()
+        return repo.loadHistoryKeyWord()
+    }
+
+    /**
+     * 加载本地搜索关键字
+     */
+    fun saveKeyWord(keyWord: String) {
+
+        repo.saveKeyWord(keyWord)
     }
 }

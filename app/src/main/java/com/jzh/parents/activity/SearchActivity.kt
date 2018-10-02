@@ -13,14 +13,15 @@ import com.jzh.parents.databinding.ActivitySearchBinding
 import com.jzh.parents.utils.Util
 import com.jzh.parents.viewmodel.SearchViewModel
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
-import java.util.*
 import android.arch.lifecycle.Observer
+import android.opengl.Visibility
+import android.text.TextUtils
 import com.jzh.parents.datamodel.response.HotWordRes
 import com.jzh.parents.utils.AppLogger
+import com.jzh.parents.utils.PreferenceUtil
 import com.jzh.parents.viewmodel.info.LiveInfo
 import com.jzh.parents.viewmodel.info.ResultInfo
 import com.scwang.smartrefresh.header.MaterialHeader
-import com.scwang.smartrefresh.layout.api.RefreshHeader
 
 /**
  * 搜索
@@ -88,6 +89,12 @@ class SearchActivity : BaseActivity() {
 
         }
 
+        mDataBinding?.ivClearHistory?.setOnClickListener {
+
+            PreferenceUtil.instance.saveSearchRecord("")
+            addKeyWordRecord(null)
+        }
+
         // 错误返回
         mViewModel?.resultInfo?.observe(this@SearchActivity, Observer { resultInfo ->
 
@@ -100,7 +107,7 @@ class SearchActivity : BaseActivity() {
 
                         val hotWordRes: HotWordRes? = resultInfo.obj as HotWordRes
 
-                        addHotRecord(hotWordRes?.output ?: null)
+                        addHotRecord(hotWordRes?.output)
                         AppLogger.i("resultInfo.obj.output=${hotWordRes?.output?.size}")
                     }
                 }
@@ -110,6 +117,8 @@ class SearchActivity : BaseActivity() {
                     // 刷新数据成功
                     if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
                         hiddenProgressDialog()
+
+                        saveKeyWord()
                     }
                     // 没有数据
                     else if (resultInfo.code == ResultInfo.CODE_NO_DATA) {
@@ -119,11 +128,14 @@ class SearchActivity : BaseActivity() {
                     // 没有更多数据
                     else if (resultInfo.code == ResultInfo.CODE_NO_MORE_DATA) {
                         mDataBinding?.refreshLayout?.isEnableLoadmore = false
+                        saveKeyWord()
                     }
                     // 错误
                     else {
                         showToastError(resultInfo.tip)
                     }
+
+                    controlSearchArea(false)
 
                 }
             // 加载更多数据
@@ -149,7 +161,7 @@ class SearchActivity : BaseActivity() {
     override fun initData() {
 
         // 添加搜索记录
-        addSearchRecord()
+        addKeyWordRecord(mViewModel?.loadHistoryKeyWord())
 
         mAdapter = SearchAdapter(this@SearchActivity, null)
         mDataBinding?.rvData?.adapter = mAdapter
@@ -161,45 +173,78 @@ class SearchActivity : BaseActivity() {
     }
 
     /**
+     * 保存关键词
+     */
+    private fun saveKeyWord() {
+
+        val keyWord = mDataBinding?.layoutSearch?.edSearchBar?.text.toString()
+
+        mViewModel?.saveKeyWord(keyWord)
+    }
+
+    /**
      * 添加搜索记录
      */
-    private fun addSearchRecord() {
+    private fun addKeyWordRecord(keyWordList: List<String>?) {
 
-        for (j in 0..6) {
+        mDataBinding?.autoLayoutHistory?.removeAllViews()
 
-            val recordTextView = TextView(this@SearchActivity)
+        if (keyWordList != null) {
 
-            val i = Random().nextInt(5)
+            for (keyWord in keyWordList) {
 
-            if (i % 5 == 0) {
-                recordTextView.text = "超"
-            } else if (i % 5 == 1) {
-                recordTextView.text = "乐迪"
-            } else if (i % 5 == 2) {
-                recordTextView.text = "甲乙丙丁五级更深人贵"
-            } else if (i % 5 == 3) {
-                recordTextView.text = "超级飞侠"
-            } else {
-                recordTextView.text = "甲乙丙丁五级更深人贵"
+                val recordTextView = TextView(this@SearchActivity)
+
+                recordTextView.text = keyWord
+
+                recordTextView.textSize = 12.0f
+                recordTextView.setTextColor(ContextCompat.getColor(this@SearchActivity, R.color.font_black_search_title))
+                recordTextView.setBackgroundResource(R.drawable.round_bg_search_record)
+                recordTextView.setLines(1)
+                recordTextView.maxEms = 9
+
+                val padding = Util.dp2px(this@SearchActivity, 10.0f)
+                recordTextView.setPadding(padding, padding, padding, padding)
+
+                mDataBinding?.autoLayoutHistory?.addView(recordTextView)
+
+                // 设置容器的Margin
+                val layoutParams = recordTextView.layoutParams as ViewGroup.MarginLayoutParams
+                layoutParams.rightMargin = Util.dp2px(this@SearchActivity, 21.0f)
+                layoutParams.topMargin = Util.dp2px(this@SearchActivity, 20.0f)
+                recordTextView.layoutParams = layoutParams
+
+                // 点击事件
+                recordTextView.setOnClickListener {
+
+                    val searchContent = recordTextView.text.toString()
+                    mViewModel?.searchingContent?.value = searchContent
+                    mViewModel?.searchLives(searchContent)
+                }
+
             }
 
-            recordTextView.textSize = 12.0f
-            recordTextView.setTextColor(ContextCompat.getColor(this@SearchActivity, R.color.font_black_search_title))
-            recordTextView.setBackgroundResource(R.drawable.round_bg_search_record)
-            recordTextView.setLines(1)
-            recordTextView.maxEms = 9
+            if (keyWordList.isNotEmpty()) {
+                controlSearchHistoryTitle(true)
+            }
+        }
+        else {
+            controlSearchHistoryTitle(false)
+        }
+    }
 
-            val padding = Util.dp2px(this@SearchActivity, 10.0f)
-            recordTextView.setPadding(padding, padding, padding, padding)
+    /**
+     * 控制搜索历史的标题和清除按钮
+     * @param isShow true 显示、false 不显示
+     */
+    private fun controlSearchHistoryTitle(isShow: Boolean) {
 
-            mDataBinding?.autoLayoutHistory?.addView(recordTextView)
-
-            // 设置容器的Margin
-            val layoutParams = recordTextView.layoutParams as ViewGroup.MarginLayoutParams
-            layoutParams.rightMargin = Util.dp2px(this@SearchActivity, 21.0f)
-            layoutParams.topMargin = Util.dp2px(this@SearchActivity, 20.0f)
-            recordTextView.layoutParams = layoutParams
-
+        if (isShow) {
+            mDataBinding?.ivClearHistory?.visibility = View.VISIBLE
+            mDataBinding?.tvHistoryTitle?.visibility = View.VISIBLE
+        } else {
+            mDataBinding?.ivClearHistory?.visibility = View.GONE
+            mDataBinding?.tvHistoryTitle?.visibility = View.GONE
         }
     }
 
@@ -236,8 +281,9 @@ class SearchActivity : BaseActivity() {
                 // 点击事件
                 recordTextView.setOnClickListener {
 
-                    controlSearchArea(false)
-                    mViewModel?.searchLives(recordTextView.text.toString())
+                    val searchContent = recordTextView.text.toString()
+                    mViewModel?.searchingContent?.value = searchContent
+                    mViewModel?.searchLives(searchContent)
                 }
 
             }
@@ -250,6 +296,12 @@ class SearchActivity : BaseActivity() {
      * @param view 控件
      */
     fun onSearchCancelClick(view: View) {
+
+        // 添加本地搜索词
+        addKeyWordRecord(mViewModel?.loadHistoryKeyWord())
+
+        mDataBinding?.layoutSearch?.edSearchBar?.setText("")
+
         controlSearchArea(true)
     }
 
@@ -259,7 +311,15 @@ class SearchActivity : BaseActivity() {
      */
     fun onSearchClick(view: View) {
 
-        controlSearchArea(false)
+        val keyWord = mDataBinding?.layoutSearch?.edSearchBar?.text.toString()
+
+        if (TextUtils.isEmpty(keyWord)) {
+
+            AppLogger.e("keyword is null")
+            return
+        }
+
+        mViewModel?.searchLives(keyWord)
     }
 
     /**
