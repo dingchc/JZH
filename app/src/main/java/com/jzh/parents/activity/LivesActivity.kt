@@ -108,6 +108,10 @@ class LivesActivity() : BaseActivity() {
              * 点击了一条直播
              */
             override fun onClickALive(liveInfo: LiveInfo) {
+
+                AppLogger.i("liveInfo = $liveInfo")
+
+                mViewModel?.gotoWxMiniProgram(liveInfo.id)
             }
 
             override fun onClickOperate(type: Int, liveInfo: LiveInfo) {

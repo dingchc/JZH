@@ -95,24 +95,6 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
     }
 
     /**
-     * 去微信预约一个直播
-     *
-     * @param liveId 场景值
-     */
-    fun gotoWxMiniProgram(liveId: Int) {
-
-        val wxApi = WXAPIFactory.createWXAPI(JZHApplication.instance, Constants.WX_APP_ID)
-        wxApi.registerApp(Constants.WX_APP_ID)
-
-        val req = WXLaunchMiniProgram.Req()
-        // 填小程序原始id
-        req.userName = "gh_46f85bd327bb"
-        // 可选打开 开发版，体验版和正式版
-        req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE
-        wxApi.sendReq(req)
-    }
-
-    /**
      * 收藏一个直播
      *
      * @param liveInfo 直播

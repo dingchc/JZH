@@ -124,7 +124,7 @@ class HomeActivity : BaseActivity() {
              */
             override fun onClickALive(liveInfo: LiveInfo) {
 
-                AppLogger.i("liveInfo+${liveInfo}")
+                AppLogger.i("liveInfo = $liveInfo")
 
                 mViewModel?.gotoWxMiniProgram(liveInfo.id)
             }

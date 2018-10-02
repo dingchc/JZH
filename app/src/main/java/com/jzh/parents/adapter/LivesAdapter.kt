@@ -59,6 +59,14 @@ class LivesAdapter(mContext: Context, private val mHeaderTitle: String = "", pri
                     mListener?.onClickOperate(liveInfo.contentType.value, liveInfo = liveInfo)
                 }
 
+                // 点击直播
+                holder.dataBinding.itemLive.setOnClickListener {
+
+                    val liveInfo = (mDataList?.get(position) as LiveItemEntity).liveInfo
+
+                    mListener?.onClickALive(liveInfo = liveInfo)
+                }
+
             }
         // 搜索:
             BaseLiveEntity.ItemTypeEnum.LIVE_SEARCH.ordinal -> {

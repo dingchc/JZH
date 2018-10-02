@@ -49,6 +49,14 @@ class SearchAdapter(mContext: Context, var mDataList: MutableList<BaseLiveEntity
                     mListener?.onClickOperate(liveInfo.contentType.value, liveInfo = liveInfo)
                 }
 
+                // 点击直播
+                holder.dataBinding.itemLive.setOnClickListener {
+
+                    val liveInfo = (mDataList?.get(position) as LiveItemEntity).liveInfo
+
+                    mListener?.onClickALive(liveInfo = liveInfo)
+                }
+
             }
         // 其他
             else -> {
