@@ -3,6 +3,7 @@ package com.jzh.parents.datamodel.repo
 import android.arch.lifecycle.MutableLiveData
 import com.jzh.parents.datamodel.local.MyselfEditLocalDataSource
 import com.jzh.parents.datamodel.remote.MyselfEditRemoteDataSource
+import com.jzh.parents.datamodel.response.UserInfoRes
 import com.jzh.parents.viewmodel.info.ResultInfo
 import com.jzh.parents.viewmodel.info.UserInfo
 
@@ -27,9 +28,9 @@ class MyselfEditRepository : BaseRepository() {
     /**
      * 加载数据
      */
-    fun loadUserInfoEntity(): UserInfo? {
+    fun loadUserInfoEntity(): UserInfoRes? {
 
-        return mLocalDataSource.loadUserInfoEntity()
+        return mLocalDataSource.loadUserInfoRes()
     }
 
     /**

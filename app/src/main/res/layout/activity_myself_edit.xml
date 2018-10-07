@@ -32,22 +32,11 @@
                 android:id="@+id/item_avatar"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
-                app:rightImageUrl="@{viewModel.userInfo.avatarUrl}"
+                app:rightImageUrl="@{viewModel.userInfoRes.userInfo.headImg}"
                 android:paddingEnd="10dp"
                 android:paddingStart="10dp"
                 app:mc_hint="@string/avatar"
                 app:mc_mode="item_image" />
-
-            <!-- 昵称 -->
-            <com.jzh.parents.widget.MyselfContentItem
-                android:id="@+id/item_alias"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/item_height"
-                android:paddingEnd="10dp"
-                android:paddingStart="10dp"
-                app:rightText="@{viewModel.userInfo.alias}"
-                app:mc_hint="@string/alias"
-                />
 
             <!-- 手机号 -->
             <com.jzh.parents.widget.MyselfContentItem
@@ -58,7 +47,7 @@
                 android:paddingStart="10dp"
                 app:mc_hint="@string/phone"
                 app:mc_show_tap_arrow="true"
-                app:rightText="@{viewModel.userInfo.phone}" />
+                app:rightText="@{viewModel.userInfoRes.userInfo.mobile}" />
 
             <!-- 身份信息 -->
             <com.jzh.parents.widget.MyselfContentItem
@@ -69,7 +58,7 @@
                 android:paddingStart="10dp"
                 app:mc_hint="@string/role_info"
                 app:mc_show_tap_arrow="true"
-                app:rightText="@{viewModel.userInfo.roleName}" />
+                app:rightText="@{viewModel.roleName}" />
 
         </LinearLayout>
 

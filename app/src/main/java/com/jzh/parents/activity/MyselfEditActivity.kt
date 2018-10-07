@@ -100,9 +100,9 @@ class MyselfEditActivity : BaseActivity() {
                     // 成功
                     if (resultInfo.code == ResultInfo.CODE_SUCCESS && resultInfo.obj != null) {
                         hiddenProgressDialog()
-                        val userInfo = mViewModel?.userInfo?.value
-                        userInfo?.avatarUrl = (resultInfo.obj as OutputRes).output
-                        mViewModel?.userInfo?.value = userInfo
+//                        val userInfo = mViewModel?.userInfoRes?.value
+//                        userInfo = (resultInfo.obj as OutputRes).output
+//                        mViewModel?.userInfo?.value = userInfo
                     }
                     // 失败提示
                     else {

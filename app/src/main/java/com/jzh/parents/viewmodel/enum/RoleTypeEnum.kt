@@ -20,6 +20,21 @@ enum class RoleTypeEnum(val value: Int) {
     /**
      * 身份：其他
      */
-    ROLE_TYPE_OTHER(3),
+    ROLE_TYPE_OTHER(3);
+
+    /**
+     * 获取角色名称
+     */
+    fun getRoleTypeName(): String {
+
+        when (value) {
+
+            1 -> return "妈妈"
+
+            2 -> return "爸爸"
+
+            else -> return "其他"
+        }
+    }
 
 }
