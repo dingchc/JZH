@@ -464,4 +464,46 @@ class DialogContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
 
     }
 
+    /**
+     * 设置右侧控件的点击事件
+     */
+    fun setRightViewClickListener(listener: OnClickListener) {
+
+        if (mIsShowVerifyCode!!) {
+            mVerifyCodeTextView.setOnClickListener(listener)
+        }
+    }
+
+    /**
+     * 设置右侧控件的是否可以点击
+     *
+     * @param isEnable 是否可用
+     */
+    fun setRightViewIsEnable(isEnable: Boolean) {
+
+        if (mIsShowVerifyCode!!) {
+            mVerifyCodeTextView.isEnabled = isEnabled
+        }
+    }
+
+    /**
+     * 获取右侧文本内容
+     */
+    fun getRightViewText(): String {
+        return Util.getEmptyString(mVerifyCodeTextView?.text.toString())
+    }
+
+    /**
+     * 设置右侧文本内容
+     */
+    fun setRightViewText(input: String?) {
+
+        // 避免循环提示
+        if (mVerifyCodeTextView.text.toString() == input) {
+            return
+        }
+
+        mVerifyCodeTextView.text = input
+    }
+
 }

@@ -4,8 +4,10 @@ import android.app.Application
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
+import com.jzh.parents.app.Constants
 import com.jzh.parents.datamodel.repo.MyselfEditRepository
 import com.jzh.parents.datamodel.response.UserInfoRes
+import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.enum.RoleTypeEnum
 import com.jzh.parents.viewmodel.info.ResultInfo
 import com.jzh.parents.viewmodel.info.UserInfo
@@ -66,9 +68,26 @@ class MyselfEditViewModel(app: Application) : BaseViewModel(app) {
     })
 
     /**
+     * 短信验证码
+     */
+    val smsCode: MutableLiveData<String> = MutableLiveData()
+
+    /**
      * 倒计时
      */
-    val countDownTime: MutableLiveData<Int> = MutableLiveData()
+    val countDown: MutableLiveData<Int> = MutableLiveData()
+
+    /**
+     * 短信验证码显示
+     */
+    val smsShow: LiveData<String> = Transformations.map(countDown, { input ->
+
+        if (input < Constants.SMS_INTERVAL_TIME) {
+            "$input" + "s"
+        } else {
+            "获取验证码"
+        }
+    })
 
     /**
      * 数据仓库
@@ -103,5 +122,11 @@ class MyselfEditViewModel(app: Application) : BaseViewModel(app) {
         repo.uploadAvatar(filePath, userInfoRes, resultInfo)
     }
 
+    /**
+     * 获取验证码
+     */
+    fun fetchSmsCode() {
 
+        repo?.fetchSmsCode(newPhone.value ?: "", resultInfo)
+    }
 }

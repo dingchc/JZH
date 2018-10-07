@@ -43,4 +43,15 @@ class MyselfEditRepository : BaseRepository() {
     fun uploadAvatar(filePath: String, userInfoRes: MutableLiveData<UserInfoRes>, resultInfo: MutableLiveData<ResultInfo>) {
         mRemoteDataSource.uploadAvatar(filePath, userInfoRes, resultInfo)
     }
+
+    /**
+     * 获取验证码
+     *
+     * @param phoneNumber 手机号
+     * @param resultInfoLiveData 返回信息
+     */
+    fun fetchSmsCode(phoneNumber : String, resultInfoLiveData: MutableLiveData<ResultInfo>) {
+
+        mRemoteDataSource.fetchSmsCode(phoneNumber, resultInfoLiveData)
+    }
 }

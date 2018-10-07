@@ -27,7 +27,7 @@
 
         <!-- 手机号 -->
         <com.jzh.parents.widget.DialogContentItem
-            android:id="@+id/item_student_name"
+            android:id="@+id/item_phone"
             android:layout_width="300dp"
             android:layout_height="@dimen/item_height"
             android:background="@drawable/round_bg_white_with_border"
@@ -45,7 +45,7 @@
 
         <!-- 验证码 -->
         <com.jzh.parents.widget.DialogContentItem
-            android:id="@+id/item_select_role"
+            android:id="@+id/item_sms_code"
             android:layout_width="300dp"
             android:layout_height="@dimen/item_height"
             android:layout_marginTop="4dp"
@@ -54,6 +54,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:textSize="18sp"
+            app:contentText="@={viewModel.smsCode}"
+            app:rightViewText="@{viewModel.smsShow}"
             app:dc_hint="@string/input_code"
             app:dc_is_input_editable="true"
             app:dc_is_show_verify_code="true"

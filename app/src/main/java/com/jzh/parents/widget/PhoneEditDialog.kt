@@ -1,6 +1,7 @@
 package com.jzh.parents.widget
 
 import android.app.Dialog
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -8,11 +9,14 @@ import android.support.v7.app.AppCompatDialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import com.jzh.parents.R
 import com.jzh.parents.activity.MyselfEditActivity
 import com.jzh.parents.databinding.DialogEditPhoneBinding
-import com.jzh.parents.databinding.DialogEditRoleBinding
+import com.jzh.parents.utils.AppLogger
+import com.jzh.parents.utils.SmsCDTimer
 import com.jzh.parents.viewmodel.MyselfEditViewModel
+import com.jzh.parents.viewmodel.info.ResultInfo
 
 /**
  * 编辑手机号对话框
@@ -20,7 +24,12 @@ import com.jzh.parents.viewmodel.MyselfEditViewModel
  * @author ding
  * Created by Ding on 2018/9/8.
  */
-class PhoneEditDialog : AppCompatDialogFragment() {
+class PhoneEditDialog : AppCompatDialogFragment(), SmsCDTimer.OnSmsTickListener {
+
+    /**
+     * ViewModel
+     */
+    private var mViewModel : MyselfEditViewModel? = null
 
     /**
      * 数据绑定
@@ -32,12 +41,17 @@ class PhoneEditDialog : AppCompatDialogFragment() {
      */
     private var mListener: PhoneEditDialogClickListener? = null
 
+    override fun onStart() {
+        super.onStart()
 
-    /**
-     * 初始化的名字
-     */
-    private var mInitStudentName: String = ""
+        SmsCDTimer.addOnSmsTickListener(this)
+    }
 
+    override fun onStop() {
+
+        SmsCDTimer.removeOnSmsTickListener(this)
+        super.onStop()
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
@@ -65,20 +79,20 @@ class PhoneEditDialog : AppCompatDialogFragment() {
 
     private fun init() {
 
-        val viewModel = ViewModelProviders.of(context as MyselfEditActivity).get(MyselfEditViewModel::class.java)
+        mViewModel = ViewModelProviders.of(context as MyselfEditActivity).get(MyselfEditViewModel::class.java)
 
-        mDataBinding?.viewModel = viewModel
+        mDataBinding?.setLifecycleOwner(this@PhoneEditDialog)
+        mDataBinding?.viewModel = mViewModel
 
-        mInitStudentName = viewModel.studentName.value as String
+        // 是否可以发送短信验证码
+        if (SmsCDTimer.isSmsTimerStart()) {
+            enableFetchSmsView(false)
+        } else {
+            enableFetchSmsView(true)
+        }
 
-    }
+        mViewModel?.countDown?.value = SmsCDTimer.getCurrentCountDownTime()
 
-    /**
-     * 取消设定的值， 由于是双向绑定，值自动改变了，所以，设置为之前的值
-     */
-    private fun cancelChangedValue() {
-
-        mDataBinding?.viewModel?.studentName?.value = mInitStudentName
     }
 
     /**
@@ -99,12 +113,43 @@ class PhoneEditDialog : AppCompatDialogFragment() {
         // 取消
         cancelBtn.setOnClickListener {
 
-            cancelChangedValue()
-
             mListener?.onCancelClick()
 
             this@PhoneEditDialog.dismiss()
         }
+
+        // 短信验证码
+        mDataBinding?.itemSmsCode?.setRightViewClickListener(View.OnClickListener { v ->
+
+            mViewModel?.fetchSmsCode()
+        })
+
+        // 返回状态
+        mViewModel?.resultInfo?.observe(this@PhoneEditDialog, Observer {
+
+            resultInfo ->
+
+            AppLogger.i("* " + resultInfo + ", " + resultInfo?.code + ", " + resultInfo?.tip)
+
+            when (resultInfo?.cmd) {
+
+            // 短信验证码
+                ResultInfo.CMD_LOGIN_GET_SMS_CODE -> {
+
+                    // 成功
+                    if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
+
+                        SmsCDTimer.startSmsTimer()
+
+                    }
+                    // 失败
+                    else {
+                        Toast.makeText(context, resultInfo.tip, Toast.LENGTH_SHORT).show()
+//                        showToastError(resultInfo.tip)
+                    }
+                }
+            }
+        })
     }
 
     companion object {
@@ -130,6 +175,21 @@ class PhoneEditDialog : AppCompatDialogFragment() {
 
             return fragment
         }
+    }
+
+    /**
+     * 获取短信验证码控件是否可用
+     *
+     * @param isEnable 是否可用
+     */
+    private fun enableFetchSmsView(isEnable: Boolean) {
+
+        mDataBinding?.itemSmsCode?.setRightViewIsEnable(isEnable)
+    }
+
+    override fun onTimeTick(time: Int) {
+
+        mViewModel?.countDown?.value = time
     }
 
     /**
