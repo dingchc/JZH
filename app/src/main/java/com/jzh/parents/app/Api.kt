@@ -83,6 +83,11 @@ object Api {
      */
     const val URL_API_LOGIN_WITH_WX_AUTHORIZE = URL_API_LIVE_DOMAIN + "wx/login"
 
+    /**
+     * 地址：微信登录后进行注册
+     */
+    const val URL_API_REGISTER_WITH_WX_AUTHORIZE = URL_API_LIVE_DOMAIN + "wx/register"
+
 
     /**
      * 地址：上传头像
@@ -98,7 +103,6 @@ object Api {
      * 地址：获取热词
      */
     const val URL_API_GET_HOT_WORD = URL_API_LIVE_DOMAIN + "lives/hotword"
-
 
 
 }

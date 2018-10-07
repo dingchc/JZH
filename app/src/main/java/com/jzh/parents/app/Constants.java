@@ -110,6 +110,11 @@ public interface Constants {
     String EXTRA_WX_TOKEN = "wx_token";
 
     /**
+     * wx的openId
+     */
+    String EXTRA_WX_OPEN_ID = "wx_open_id";
+
+    /**
      * wx的预约的直播action
      */
     String EXTRA_WX_SUBSCRIBE_ACTION = "wx_subscribe_action";

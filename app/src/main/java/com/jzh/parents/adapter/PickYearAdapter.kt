@@ -15,7 +15,7 @@ import com.jzh.parents.utils.AppLogger
  * @author ding
  * Created by Ding on 2018/9/9.
  */
-class PickYearAdapter(mContext: Context, var mYearList: List<String>?, var mListener: OnItemClickListener? = null) : RecyclerView.Adapter<PickYearAdapter.MyViewHolder>() {
+class PickYearAdapter(mContext: Context, private var mYearList: List<String>?, var mListener: OnItemClickListener? = null) : RecyclerView.Adapter<PickYearAdapter.MyViewHolder>() {
 
     /**
      * 布局加载器

@@ -74,7 +74,7 @@ class PickYearDialog : BottomSheetDialogFragment() {
 
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-        val yearList = Util.getLearningYears().map { it -> it.toString() + " 年" }
+        val yearList = Util.getLearningYears().map { it -> it.toString() }
 
         // 创建年份适配器
         mAdapter = PickYearAdapter(context!!, yearList, object : PickYearAdapter.OnItemClickListener {

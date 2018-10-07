@@ -5,6 +5,7 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.view.View
 import com.jzh.parents.R
+import com.jzh.parents.app.Constants
 import com.jzh.parents.databinding.ActivityRegisterBinding
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.RegisterViewModel
@@ -29,6 +30,16 @@ class RegisterActivity : BaseActivity() {
      * 数据绑定
      */
     var mDataBinding: ActivityRegisterBinding? = null
+
+    /**
+     * 注册的OpenId
+     */
+    var mOpenId : String? = null
+
+    /**
+     * 入学学段
+     */
+    var mLearningSectionId : String? = null
 
     /**
      * 初始化组件
@@ -70,6 +81,8 @@ class RegisterActivity : BaseActivity() {
      */
     override fun initData() {
 
+        mOpenId = intent?.getStringExtra(Constants.EXTRA_WX_OPEN_ID)
+
     }
 
 
@@ -87,9 +100,11 @@ class RegisterActivity : BaseActivity() {
      */
     fun onRegisterBtnClick(view: View) {
 
-        startActivity(Intent(this@RegisterActivity, HomeActivity::class.java))
+//        startActivity(Intent(this@RegisterActivity, HomeActivity::class.java))
+//
+//        finishCompat()
 
-        finishCompat()
+        mViewModel?.register(mOpenId, mLearningSectionId ?: "")
     }
 
     /**
@@ -112,6 +127,7 @@ class RegisterActivity : BaseActivity() {
             override fun onPickedYear(year: String) {
 
                 mViewModel?.learningYear?.value = year
+
             }
         })
     }
@@ -138,6 +154,9 @@ class RegisterActivity : BaseActivity() {
 
                 AppLogger.i("* type=$type, desc=$desc")
                 mViewModel?.learningSection?.value = desc
+
+                mLearningSectionId = type.toString()
+
             }
 
             override fun onCancelClick() {

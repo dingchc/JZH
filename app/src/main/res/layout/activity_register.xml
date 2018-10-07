@@ -36,6 +36,7 @@
             android:layout_marginTop="60dp"
             android:textSize="18sp"
             app:rc_hint="@string/input_learning_section"
+            app:contentText="@={viewModel.learningSection}"
             app:rc_icon_src="@mipmap/icon_register_learning_section"
             />
 

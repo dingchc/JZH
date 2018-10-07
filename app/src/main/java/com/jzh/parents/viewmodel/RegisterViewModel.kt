@@ -6,6 +6,7 @@ import android.arch.lifecycle.MutableLiveData
 import com.jzh.parents.datamodel.repo.RegisterRepository
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.enum.RoleTypeEnum
+import com.jzh.parents.viewmodel.info.ResultInfo
 
 /**
  * 注册的ViewModel
@@ -46,14 +47,18 @@ class RegisterViewModel(app: Application) : BaseViewModel(app) {
     init {
         repo = RegisterRepository()
         selectRole.value = RoleTypeEnum.ROLE_TYPE_MOTHER.value
+
+        resultInfo.value = ResultInfo()
     }
 
     /**
      * 注册
+     *
+     * @param openId            开放Id
+     * @param learningSectionId 入学学段
      */
-    fun register() {
-        learningYear
-        repo?.register(learningSection.value.toString(), learningYear.value.toString(), studentName.value.toString(), selectRole.value.toString())
+    fun register(openId: String?, learningSectionId: String) {
+        repo?.register(openId, learningSectionId, learningYear.value.toString(), studentName.value.toString(), selectRole.value.toString(), resultInfo)
     }
 
     /**

@@ -110,11 +110,14 @@ class LoginActivity : BaseActivity() {
                     // 未填写资料
                     if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
 
-                        val authorize: WxAuthorizeRes? = resultInfo.obj as? WxAuthorizeRes
+                        val authorizeRes: WxAuthorizeRes? = resultInfo.obj as? WxAuthorizeRes
 
                         // 填写资料
-                        if (TextUtils.isEmpty(authorize?.authorize?.token)) {
-                            startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
+                        if (!TextUtils.isEmpty(authorizeRes?.authorize?.token)) {
+
+                            val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
+                            intent.putExtra(Constants.EXTRA_WX_OPEN_ID, authorizeRes?.authorize?.openId)
+                            startActivity(intent)
                             finishCompat()
                         }
                         // 进首页
