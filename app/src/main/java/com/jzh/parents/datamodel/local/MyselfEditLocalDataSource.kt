@@ -12,7 +12,7 @@ import com.jzh.parents.viewmodel.info.UserInfo
  * @author ding
  * Created by Ding on 2018/9/1.
  */
-class MyselfEditLocalDataSource {
+class MyselfEditLocalDataSource : BaseLocalDataSource() {
 
     /**
      * 加载数据

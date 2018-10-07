@@ -30,14 +30,6 @@ class LivesRepository : BaseRepository() {
     private val mRemoteDataSource: LivesRemoteDataSource = LivesRemoteDataSource()
 
     /**
-     * 加载数据
-     */
-    fun loadItemEntities(): MutableList<BaseLiveEntity>? {
-
-        return mLocalDataSource.loadItemEntities()
-    }
-
-    /**
      * 刷新直播数据
      *
      * @param statusType   状态类型

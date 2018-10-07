@@ -15,7 +15,7 @@ import com.jzh.parents.utils.Util
  * @author ding
  * Created by Ding on 2018/9/3.
  */
-class SearchLocalDataSource {
+class SearchLocalDataSource : BaseLocalDataSource() {
 
     /**
      * 加载本地搜索关键字

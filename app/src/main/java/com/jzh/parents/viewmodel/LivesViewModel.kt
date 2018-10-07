@@ -48,14 +48,6 @@ class LivesViewModel(app: Application) : BaseViewModel(app) {
     }
 
     /**
-     * 加载数据条目
-     */
-    fun loadItemEntitiesData() {
-
-        itemEntities.value = repo.loadItemEntities()
-    }
-
-    /**
      * 刷新直播数据
      *
      * @param statusType   状态类型

@@ -5,5 +5,5 @@ package com.jzh.parents.datamodel.local
  * @author ding
  * Created by Ding on 2018/8/20.
  */
-class RegisterLocalDataSource {
+class RegisterLocalDataSource : BaseLocalDataSource() {
 }

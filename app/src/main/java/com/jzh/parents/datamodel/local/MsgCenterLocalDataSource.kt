@@ -13,12 +13,12 @@ import com.jzh.parents.viewmodel.info.LiveInfo
  * @author ding
  * Created by Ding on 2018/9/1.
  */
-class MsgCenterLocalDataSource {
+class MsgCenterLocalDataSource : BaseLocalDataSource() {
 
     /**
      * 加载数据
      */
-    fun loadItemEntities() : MutableList<MsgEntity>? {
+    fun loadItemEntities(): MutableList<MsgEntity>? {
 
         AppLogger.i("* loadItemEntities")
 
