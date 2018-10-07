@@ -37,9 +37,10 @@ class MyselfEditRepository : BaseRepository() {
      * 上传头像
      *
      * @param filePath   文件路径
+     * @param userInfoRes 用户信息
      * @param resultInfo 结果
      */
-    fun uploadAvatar(filePath: String, resultInfo: MutableLiveData<ResultInfo>) {
-        mRemoteDataSource.uploadAvatar(filePath, resultInfo)
+    fun uploadAvatar(filePath: String, userInfoRes: MutableLiveData<UserInfoRes>, resultInfo: MutableLiveData<ResultInfo>) {
+        mRemoteDataSource.uploadAvatar(filePath, userInfoRes, resultInfo)
     }
 }

@@ -28,7 +28,7 @@ data class UserInfoRes(@SerializedName("output") val userInfo: UserInfo?) : Base
             /**
              * 头像地址
              */
-            @SerializedName("headimg") val headImg: String?,
+            @SerializedName("headimg") var headImg: String?,
 
             /**
              * 手机号

@@ -100,7 +100,7 @@ class MyselfEditViewModel(app: Application) : BaseViewModel(app) {
      */
     fun uploadAvatar(filePath: String) {
 
-        repo.uploadAvatar(filePath, resultInfo)
+        repo.uploadAvatar(filePath, userInfoRes, resultInfo)
     }
 
 
