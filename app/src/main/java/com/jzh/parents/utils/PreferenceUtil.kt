@@ -100,7 +100,6 @@ class PreferenceUtil private constructor() {
      * 设置token
      *
      * @param json   标识
-     * @param userId 用户标识
      */
     fun setCurrentUserJson(json: String?) {
 
@@ -122,7 +121,7 @@ class PreferenceUtil private constructor() {
     /**
      * 获取服务端返回的用户信息
      */
-    fun getUserInfoRes(userId: String): UserInfoRes? {
+    fun getUserInfoRes(): UserInfoRes? {
 
         val json = getCurrentUserJson()
 

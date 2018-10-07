@@ -1,13 +1,17 @@
 package com.jzh.parents.activity
 
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.view.View
 import com.jzh.parents.R
 import com.jzh.parents.app.Constants
 import com.jzh.parents.databinding.ActivityMyselfBinding
+import com.jzh.parents.datamodel.response.UserInfoRes
 import com.jzh.parents.utils.AppLogger
+import com.jzh.parents.utils.PreferenceUtil
 import com.jzh.parents.utils.Util
+import com.jzh.parents.viewmodel.MyselfViewModel
 import com.jzh.parents.widget.MyselfContentItem
 
 /**
@@ -19,6 +23,11 @@ import com.jzh.parents.widget.MyselfContentItem
 class MyselfActivity : BaseActivity() {
 
     /**
+     * 数据模型
+     */
+    private var mViewModel: MyselfViewModel? = null
+
+    /**
      * 数据绑定
      */
     private var mDataBinding: ActivityMyselfBinding? = null
@@ -27,6 +36,11 @@ class MyselfActivity : BaseActivity() {
      * 初始化组件
      */
     override fun initViews() {
+
+        mViewModel = ViewModelProviders.of(this).get(MyselfViewModel::class.java)
+
+        mDataBinding?.setLifecycleOwner(this@MyselfActivity)
+        mDataBinding?.viewModel = mViewModel
     }
 
     /**
@@ -42,7 +56,24 @@ class MyselfActivity : BaseActivity() {
      */
     override fun initData() {
 
-        showClassInfo()
+        loadUserInfo()
+    }
+
+    /**
+     * 加载用户信息
+     */
+    private fun loadUserInfo() {
+
+        val userInfoRes: UserInfoRes? = PreferenceUtil.instance.getUserInfoRes()
+
+        if (userInfoRes != null) {
+
+            showClassInfo(userInfoRes.userInfo?.classRoomList)
+
+            mViewModel?.avatarUrl?.value = userInfoRes.userInfo?.headImg ?: ""
+            mViewModel?.userId?.value = userInfoRes.userInfo?.member ?: ""
+            mViewModel?.userName?.value = userInfoRes.userInfo?.realName ?: ""
+        }
     }
 
     /**
@@ -115,47 +146,41 @@ class MyselfActivity : BaseActivity() {
 
     /**
      * 显示班级信息
+     *
+     * @param classRoomList 班级信息
      */
-    private fun showClassInfo() {
+    private fun showClassInfo(classRoomList: List<UserInfoRes.ClassRoom>?) {
 
-        mDataBinding?.layoutClassInfo?.visibility = View.VISIBLE
+        if (classRoomList != null && classRoomList.isNotEmpty()) {
 
-        val item1 = MyselfContentItem(this@MyselfActivity)
-        val item2 = MyselfContentItem(this@MyselfActivity)
+            mDataBinding?.layoutClassInfo?.visibility = View.VISIBLE
 
-        item1.setMode(1)
-        item1.setTitleText("一年级一班")
-        item1.setRightText(R.string.myself_exit_class)
+            classRoomList.forEach {
 
-        item2.setMode(1)
-        item2.setTitleText("一年级二班")
-        item2.setRightText(R.string.myself_exit_class)
+                val item1 = MyselfContentItem(this@MyselfActivity)
 
-        mDataBinding?.layoutClassInfo?.addView(item1)
-        mDataBinding?.layoutClassInfo?.addView(item2)
+                item1.setMode(1)
+                item1.setTitleText(it.name ?: "")
+                item1.setRightText(R.string.myself_exit_class)
 
-        val padding = Util.dp2px(this@MyselfActivity, 10.0f)
+                mDataBinding?.layoutClassInfo?.addView(item1)
 
-        item1.setPadding(padding, 0, padding, 0)
-        item2.setPadding(padding, 0, padding, 0)
+                val padding = Util.dp2px(this@MyselfActivity, 10.0f)
 
-        item1.layoutParams.height = resources.getDimensionPixelSize(R.dimen.item_height)
-        item2.layoutParams.height = resources.getDimensionPixelSize(R.dimen.item_height)
+                item1.setPadding(padding, 0, padding, 0)
 
-        item1.setOnRightClickListener(object : MyselfContentItem.OnRightClickListener {
-            override fun onRightViewClick() {
+                item1.layoutParams.height = resources.getDimensionPixelSize(R.dimen.item_height)
 
-                AppLogger.i("exit 1")
+                item1.setOnRightClickListener(object : MyselfContentItem.OnRightClickListener {
+                    override fun onRightViewClick() {
+
+                        AppLogger.i("exit 1")
+                    }
+                })
             }
-        })
 
-        item2.setOnRightClickListener(object : MyselfContentItem.OnRightClickListener {
-            override fun onRightViewClick() {
+        }
 
-                AppLogger.i("exit 2")
-
-            }
-        })
 
     }
 

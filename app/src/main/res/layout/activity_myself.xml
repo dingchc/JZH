@@ -26,7 +26,8 @@
                 android:layout_height="54dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="25dp"
-                android:src="@mipmap/ic_launcher"
+                bind:circleImage="@{viewModel.avatarUrl}"
+                bind:placeHolder="@{@drawable/ic_login}"
                 app:riv_border_color="@color/white"
                 app:riv_border_width="1dp"
                 app:riv_corner_radius="27dp" />
@@ -41,7 +42,19 @@
                 android:drawablePadding="6dp"
                 android:drawableRight="@mipmap/icon_vip"
                 android:gravity="center"
-                android:text="程一生妈妈"
+                android:text="@{viewModel.userName}"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_user_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_author"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:gravity="center"
+                android:text="@{@string/my_id(viewModel.userId)}"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 
