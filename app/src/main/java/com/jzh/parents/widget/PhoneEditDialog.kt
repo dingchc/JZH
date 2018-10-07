@@ -106,6 +106,9 @@ class PhoneEditDialog : AppCompatDialogFragment(), SmsCDTimer.OnSmsTickListener 
 
         // 确认
         confirmBtn.setOnClickListener {
+
+            mViewModel?.changePhone()
+
             mListener?.onConfirmClick()
             this@PhoneEditDialog.dismiss()
         }

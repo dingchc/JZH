@@ -108,5 +108,10 @@ object Api {
      */
     const val URL_API_SUBSCRIBE_LIST = URL_API_LIVE_DOMAIN + "subscribe/list"
 
+    /**
+     * 地址：变更手机号
+     */
+    const val URL_API_CHANGE_PHONE = URL_API_LIVE_DOMAIN + "user/phone"
+
 
 }

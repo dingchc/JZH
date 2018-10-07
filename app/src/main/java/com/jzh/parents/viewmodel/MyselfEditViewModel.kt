@@ -48,14 +48,14 @@ class MyselfEditViewModel(app: Application) : BaseViewModel(app) {
         it ->
         if (it != null) {
 
-            val studentName : String = it.userInfo?.realName ?: ""
+            val studentName: String = it.userInfo?.realName ?: ""
 
             when (it.userInfo?.roleId) {
 
-                // 妈妈
+            // 妈妈
                 RoleTypeEnum.ROLE_TYPE_MOTHER.value -> studentName + RoleTypeEnum.ROLE_TYPE_MOTHER.getRoleTypeName()
 
-                // 爸爸
+            // 爸爸
                 RoleTypeEnum.ROLE_TYPE_FATHER.value -> studentName + RoleTypeEnum.ROLE_TYPE_FATHER.getRoleTypeName()
 
                 else -> {
@@ -127,6 +127,14 @@ class MyselfEditViewModel(app: Application) : BaseViewModel(app) {
      */
     fun fetchSmsCode() {
 
-        repo?.fetchSmsCode(newPhone.value ?: "", resultInfo)
+        repo.fetchSmsCode(newPhone.value ?: "", resultInfo)
+    }
+
+    /**
+     * 更换手机号
+     */
+    fun changePhone() {
+
+        repo.changePhone(newPhone.value ?: "", smsCode.value ?: "", userInfoRes, resultInfo)
     }
 }

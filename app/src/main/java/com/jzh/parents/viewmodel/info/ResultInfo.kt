@@ -99,6 +99,16 @@ data class ResultInfo(
         const val CMD_MYSELF_UPLOAD_AVATAR = 3001
 
         /**
+         * 我：变更手机号
+         */
+        const val CMD_MYSELF_CHANGE_PHONE = 3002
+
+        /**
+         * 我：变更身份
+         */
+        const val CMD_MYSELF_CHANGE_ROLE = 3003
+
+        /**
          * 刷新直播列表
          */
         const val CMD_REFRESH_LIVES = 4001

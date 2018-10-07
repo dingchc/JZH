@@ -10,8 +10,10 @@ import com.jzh.parents.datamodel.response.WxAuthorizeRes
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.PreferenceUtil
 import com.jzh.parents.utils.Util
+import com.jzh.parents.viewmodel.entity.SearchEntity
 import com.jzh.parents.viewmodel.info.ResultInfo
 import com.tunes.library.wrapper.network.TSHttpController
+import com.tunes.library.wrapper.network.listener.TSHttpCallback
 import com.tunes.library.wrapper.network.listener.TSHttpProgressCallback
 import com.tunes.library.wrapper.network.model.TSBaseResponse
 import com.tunes.library.wrapper.network.model.TSUploadFileInfo
@@ -81,6 +83,37 @@ class MyselfEditRemoteDataSource : BaseRemoteDataSource() {
 
                 notifyResult(cmd = ResultInfo.CMD_MYSELF_UPLOAD_AVATAR, code = ResultInfo.CODE_EXCEPTION, tip = ResultInfo.TIP_EXCEPTION, resultLiveData = resultInfo)
 
+
+            }
+        })
+    }
+
+    /**
+     * 更换手机号
+     * @param phone       手机号
+     * @param smsCode     短信验证码
+     * @param userInfoRes 用户信息
+     * @param resultInfo  结果
+     */
+    fun changePhone(phone: String, smsCode: String, userInfoRes: MutableLiveData<UserInfoRes>, resultInfo: MutableLiveData<ResultInfo>) {
+
+        val paramsMap = TreeMap<String, String>()
+        paramsMap.put("token", PreferenceUtil.instance.getToken())
+        paramsMap.put("phone", phone)
+        paramsMap.put("code", smsCode)
+
+
+
+        TSHttpController.INSTANCE.doPut(Api.URL_API_CHANGE_PHONE, paramsMap, object : TSHttpCallback {
+            override fun onSuccess(res: TSBaseResponse?, json: String?) {
+
+                AppLogger.i("json=$json")
+            }
+
+            override fun onException(e: Throwable?) {
+                AppLogger.i(e?.message)
+
+                notifyResult(cmd = ResultInfo.CMD_MYSELF_CHANGE_PHONE, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo)
 
             }
         })
