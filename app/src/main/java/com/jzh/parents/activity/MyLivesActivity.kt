@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.jzh.parents.R
 import com.jzh.parents.adapter.FavoriteAdapter
+import com.jzh.parents.app.Constants
 import com.jzh.parents.databinding.ActivityMyLivesBinding
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.MyLivesViewModel
@@ -38,6 +39,11 @@ class MyLivesActivity : BaseActivity() {
      * 适配器监听
      */
     private var mAdapterListener: FavoriteAdapter.OnViewClick? = null
+
+    /**
+     * 页面类型
+     */
+    private var mPageType = 0
 
     /**
      * 初始化组件
@@ -121,7 +127,7 @@ class MyLivesActivity : BaseActivity() {
 
             AppLogger.i("* load more")
 
-//            mViewModel?.loadMoreItemEntities(mStatusType, mCategoryId)
+            mViewModel?.loadMoreItemEntities(mPageType)
         }
     }
 
@@ -130,12 +136,24 @@ class MyLivesActivity : BaseActivity() {
      */
     override fun initData() {
 
+        mPageType = intent.getIntExtra(Constants.EXTRA_MY_LIVES_PAGE_TYPE, Constants.MY_LIVES_PAGE_TYPE_FAVORITE)
+
         mAdapter = FavoriteAdapter(this@MyLivesActivity, null)
         mDataBinding?.rvData?.adapter = mAdapter
 
         mAdapter?.mListener = mAdapterListener
 
-        mViewModel?.refreshItemEntities(1)
+        mViewModel?.refreshItemEntities(mPageType)
+
+        // 更改页面标题-收藏讲座
+        if (mPageType == Constants.MY_LIVES_PAGE_TYPE_FAVORITE) {
+
+            setToolbarTitle(R.string.myself_favorite)
+        }
+        // 更改页面标题-预约讲座
+        else {
+            setToolbarTitle(R.string.subscribe_live)
+        }
     }
 
     /**

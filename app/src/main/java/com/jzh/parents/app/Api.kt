@@ -88,7 +88,6 @@ object Api {
      */
     const val URL_API_REGISTER_WITH_WX_AUTHORIZE = URL_API_LIVE_DOMAIN + "wx/register"
 
-
     /**
      * 地址：上传头像
      */
@@ -103,6 +102,11 @@ object Api {
      * 地址：获取热词
      */
     const val URL_API_GET_HOT_WORD = URL_API_LIVE_DOMAIN + "lives/hotword"
+
+    /**
+     * 地址：预约列表
+     */
+    const val URL_API_SUBSCRIBE_LIST = URL_API_LIVE_DOMAIN + "subscribe/list"
 
 
 }

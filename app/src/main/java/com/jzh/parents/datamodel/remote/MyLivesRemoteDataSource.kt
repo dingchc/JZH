@@ -67,12 +67,24 @@ class MyLivesRemoteDataSource : BaseRemoteDataSource() {
         paramsMap.put("count", Constants.PAGE_CNT.toString())
         paramsMap.put("page", page.toString())
 
+        var url = ""
+
+        // 收藏
+        if (pageType == Constants.MY_LIVES_PAGE_TYPE_FAVORITE) {
+
+            url = Api.URL_API_FAVORITES_LIST
+        }
+        // 预约
+        else {
+            url = Api.URL_API_SUBSCRIBE_LIST
+        }
+
         var cmd = ResultInfo.CMD_REFRESH_LIVES
         if (page > 1) {
             cmd = ResultInfo.CMD_LOAD_MORE_LIVES
         }
 
-        TSHttpController.INSTANCE.doGet(Api.URL_API_FAVORITES_LIST, paramsMap, object : TSHttpCallback {
+        TSHttpController.INSTANCE.doGet(url, paramsMap, object : TSHttpCallback {
             override fun onSuccess(res: TSBaseResponse?, json: String?) {
 
                 // 处理直播列表结果

@@ -157,12 +157,12 @@ public interface Constants {
     /**
      * 我的列表-页面类型-我的收藏
      */
-    String MY_LIVES_PAGE_TYPE_FAVORITE = "my_lives_page_type_favorite";
+    int MY_LIVES_PAGE_TYPE_FAVORITE = 1;
 
     /**
      * 我的列表-页面类型-我的预约
      */
-    String MY_LIVES_PAGE_TYPE_SUBSCRIBE = "my_lives_page_type_subscribe";
+    int MY_LIVES_PAGE_TYPE_SUBSCRIBE = 2;
 
     /**
      * wx的预约的直播action - 预约成功

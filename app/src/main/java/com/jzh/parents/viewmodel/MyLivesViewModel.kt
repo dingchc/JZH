@@ -33,13 +33,21 @@ class MyLivesViewModel(app: Application) : BaseViewModel(app) {
         resultInfo.value = ResultInfo()
     }
 
-
     /**
      * 获取页面数据
      *
      * @param pageType 页面类型
      */
     fun refreshItemEntities(pageType: Int) {
-        repo.refreshItemEntities(1, itemEntities, resultInfo)
+        repo.refreshItemEntities(pageType, itemEntities, resultInfo)
+    }
+
+    /**
+     * 加载更多页面数据
+     *
+     * @param pageType 页面类型
+     */
+    fun loadMoreItemEntities(pageType: Int) {
+        repo.loadMoreItemEntities(pageType, itemEntities, resultInfo)
     }
 }
