@@ -22,11 +22,6 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory
 class LivesViewModel(app: Application) : BaseViewModel(app) {
 
     /**
-     * 功能条数据实体
-     */
-    var funcEntity: MutableLiveData<FuncEntity> = MutableLiveData<FuncEntity>()
-
-    /**
      * 页面类型
      */
     var pageMode: MutableLiveData<Int> = MutableLiveData()

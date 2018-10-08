@@ -2,18 +2,22 @@ package com.jzh.parents.activity
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.jzh.parents.R
 import com.jzh.parents.adapter.FavoriteAdapter
 import com.jzh.parents.app.Constants
+import com.jzh.parents.app.JZHApplication
 import com.jzh.parents.databinding.ActivityMyLivesBinding
+import com.jzh.parents.databinding.LayoutNoMyselfLivesBinding
 import com.jzh.parents.datamodel.response.UserInfoRes
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.PreferenceUtil
 import com.jzh.parents.viewmodel.MyLivesViewModel
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
+import com.jzh.parents.viewmodel.info.LiveInfo
 import com.jzh.parents.viewmodel.info.ResultInfo
 import com.scwang.smartrefresh.header.MaterialHeader
 
@@ -94,6 +98,7 @@ class MyLivesActivity : BaseActivity() {
                     else if (resultInfo.code == ResultInfo.CODE_NO_DATA) {
 
                         // 显示没有数据
+                        showEmptyView()
                     }
                     // 没有更多数据
                     else if (resultInfo.code == ResultInfo.CODE_NO_MORE_DATA) {
@@ -131,6 +136,17 @@ class MyLivesActivity : BaseActivity() {
 
             mViewModel?.loadMoreItemEntities(mPageType)
         }
+
+        mDataBinding?.viewStubEmpty?.setOnInflateListener { stub, inflated ->
+            val binding: LayoutNoMyselfLivesBinding? = DataBindingUtil.bind(inflated)
+            binding?.viewModel = mViewModel
+
+            binding?.tvOperate?.setOnClickListener {
+
+                val type : Int = if (mPageType == Constants.MY_LIVES_PAGE_TYPE_FAVORITE) LiveInfo.LiveInfoEnum.TYPE_REVIEW.value else LiveInfo.LiveInfoEnum.TYPE_WILL.value
+                gotoLiveListPage(type)
+            }
+        }
     }
 
     /**
@@ -144,6 +160,8 @@ class MyLivesActivity : BaseActivity() {
         mDataBinding?.rvData?.adapter = mAdapter
 
         mAdapter?.mListener = mAdapterListener
+
+        mViewModel?.pageMode?.value = mPageType
 
         mViewModel?.refreshItemEntities(mPageType)
 
@@ -168,5 +186,48 @@ class MyLivesActivity : BaseActivity() {
         mDataBinding = DataBindingUtil.inflate(layoutInflater, R.layout.activity_my_lives, null, false)
 
         return mDataBinding!!.root
+    }
+
+    /**
+     * 显示空View
+     */
+    private fun showEmptyView() {
+
+        mDataBinding?.refreshLayout?.visibility = View.GONE
+
+        if (!mDataBinding?.viewStubEmpty?.isInflated!!) {
+
+            mDataBinding?.viewStubEmpty?.viewStub?.inflate()
+        }
+
+    }
+
+    /**
+     * 去直播列表页面
+     *
+     * @param type  类型
+     */
+    private fun gotoLiveListPage(type: Int = 0) {
+
+        val intent = Intent(this@MyLivesActivity, LivesActivity::class.java)
+        intent.putExtra(Constants.EXTRA_LIVES_STATUS_TYPE, type)
+        intent.putExtra(Constants.EXTRA_LIVES_CATEGORY_ID, 0)
+
+        var headerTitle = ""
+        var headerTip = ""
+
+        // 即将直播
+        if (type == LiveInfo.LiveInfoEnum.TYPE_WILL.value) {
+            headerTitle = JZHApplication.instance?.getString(R.string.home_live_will) ?: ""
+            headerTip = JZHApplication.instance?.getString(R.string.home_live_will_tip) ?: ""
+        } else if (type == LiveInfo.LiveInfoEnum.TYPE_REVIEW.value) {
+            headerTitle = JZHApplication.instance?.getString(R.string.home_live_review) ?: ""
+            headerTip = JZHApplication.instance?.getString(R.string.home_live_review_tip) ?: ""
+        }
+
+        intent.putExtra(Constants.EXTRA_LIVES_CATEGORY_NAME, headerTitle)
+        intent.putExtra(Constants.EXTRA_LIVES_CATEGORY_TIP, headerTip)
+
+        startActivity(intent)
     }
 }

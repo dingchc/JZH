@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.jzh.parents.app.Constants" />
+
+        <variable
+            name="viewModel"
+            type="com.jzh.parents.viewmodel.MyLivesViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="14dp"
+            android:drawableTop="@mipmap/icon_no_lives"
+            android:gravity="center_horizontal"
+            android:textSize="12sp"
+            android:textColor="@color/register_input_text_hint_color"
+            android:text="@{viewModel.pageMode == Constants.MY_LIVES_PAGE_TYPE_FAVORITE ? @string/tip_for_no_favorite : @string/tip_for_no_subscribe}" />
+
+        <TextView
+            android:id="@+id/tv_operate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="41dp"
+            android:background="@drawable/round_bg_white_with_border"
+            android:paddingBottom="2dp"
+            android:paddingLeft="21dp"
+            android:paddingRight="21dp"
+            android:paddingTop="2dp"
+            android:text="@{viewModel.pageMode == Constants.MY_LIVES_PAGE_TYPE_FAVORITE ? @string/myself_favorite : @string/subscribe_live}"
+            android:textColor="@color/login_btn_green"
+            android:textSize="12sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2" />
+
+    </LinearLayout>
+
+</layout>
+

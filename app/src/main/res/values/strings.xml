@@ -90,6 +90,8 @@
     <string name="change_phone_success">手机号已更改</string>
     <string name="change_info_success">信息已更改</string>
     <string name="process_doing">正在处理&#8230;</string>
+    <string name="tip_for_no_favorite">您还没有收藏讲座呀~ 快去收藏吧!</string>
+    <string name="tip_for_no_subscribe">您还没有预约讲座呀~ 快去预约吧!</string>
 
 
 
