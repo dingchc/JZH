@@ -65,8 +65,10 @@ class MyselfActivity : BaseActivity() {
 
             when (resultInfo?.cmd) {
 
-            // 上传头像
-                ResultInfo.CMD_MYSELF_UPLOAD_AVATAR -> {
+            // 退出班级
+                ResultInfo.CMD_MYSELF_QUIT_CLASSROOM -> {
+
+                    hiddenProgressDialog()
 
                     // 成功
                     if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
@@ -74,7 +76,6 @@ class MyselfActivity : BaseActivity() {
                     }
                     // 失败提示
                     else {
-                        hiddenProgressDialog()
                         showToastError(resultInfo.tip)
                     }
                 }
@@ -175,6 +176,8 @@ class MyselfActivity : BaseActivity() {
      */
     private fun showClassInfo(classRoomList: List<UserInfoRes.ClassRoom>?) {
 
+        mDataBinding?.layoutClassInfo?.removeAllViews()
+
         if (classRoomList != null && classRoomList.isNotEmpty()) {
 
             mDataBinding?.layoutClassInfo?.visibility = View.VISIBLE
@@ -205,6 +208,9 @@ class MyselfActivity : BaseActivity() {
                             override fun onConfirmClick() {
 
                                 AppLogger.i("class_id= ${it.class_id}, id = ${it.id}")
+
+                                showProgressDialog(getString(R.string.process_doing))
+                                mViewModel?.quitClassRoom(it.id)
                             }
 
                             override fun onCancelClick() {
@@ -216,8 +222,10 @@ class MyselfActivity : BaseActivity() {
             }
 
         }
-
-
+        // 没有班级
+        else {
+            mDataBinding?.layoutClassInfo?.visibility = View.GONE
+        }
     }
 
     /**

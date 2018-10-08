@@ -39,7 +39,7 @@ class MyselfRemoteDataSource : BaseRemoteDataSource() {
 
         val cmd = ResultInfo.CMD_MYSELF_QUIT_CLASSROOM
 
-        TSHttpController.INSTANCE.doPut(Api.URL_API_QUIT_CLASSROOM + "/" + id, paramsMap, object : TSHttpCallback {
+        TSHttpController.INSTANCE.doDelete(Api.URL_API_QUIT_CLASSROOM + "/" + id, paramsMap, object : TSHttpCallback {
             override fun onSuccess(res: TSBaseResponse?, json: String?) {
 
                 AppLogger.i("json=$json")
@@ -61,7 +61,7 @@ class MyselfRemoteDataSource : BaseRemoteDataSource() {
                         notifyResult(cmd = cmd, code = outputRes.code, tip = outputRes.tip, resultLiveData = resultInfo)
                     }
                 } else {
-                    notifyResult(cmd = cmd, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo)
+                    notifyResult(cmd = cmd, code = ResultInfo.CODE_EXCEPTION, tip = ResultInfo.TIP_EXCEPTION, resultLiveData = resultInfo)
                 }
             }
 
