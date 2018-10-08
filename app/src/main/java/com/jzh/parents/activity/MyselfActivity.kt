@@ -167,6 +167,21 @@ class MyselfActivity : BaseActivity() {
      */
     fun onLogoutClick(view: View) {
 
+        showTipDialog(getString(R.string.myself_logout), getString(R.string.confirm_to_logout), object : TipDialog.TipDialogClickListener {
+
+            override fun onConfirmClick() {
+
+                val intent = Intent(this@MyselfActivity, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+
+                startActivity(intent)
+                finish()
+            }
+
+            override fun onCancelClick() {
+
+            }
+        })
     }
 
     /**
@@ -206,8 +221,6 @@ class MyselfActivity : BaseActivity() {
                         showTipDialog(getString(R.string.myself_exit_class), getString(R.string.confirm_to_exit_class), object : TipDialog.TipDialogClickListener {
 
                             override fun onConfirmClick() {
-
-                                AppLogger.i("class_id= ${it.class_id}, id = ${it.id}")
 
                                 showProgressDialog(getString(R.string.process_doing))
                                 mViewModel?.quitClassRoom(it.id)
