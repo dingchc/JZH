@@ -19,6 +19,7 @@ import com.jzh.parents.datamodel.response.WxAuthorizeRes
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.LoginViewModel
 import com.jzh.parents.viewmodel.info.ResultInfo
+import com.jzh.parents.widget.TipDialog
 import com.tencent.mm.opensdk.modelbase.BaseResp
 import com.tencent.mm.opensdk.modelbiz.SubscribeMessage
 import com.tencent.mm.opensdk.modelmsg.SendAuth
@@ -113,7 +114,7 @@ class LoginActivity : BaseActivity() {
                         val authorizeRes: WxAuthorizeRes? = resultInfo.obj as? WxAuthorizeRes
 
                         // 填写资料
-                        if (!TextUtils.isEmpty(authorizeRes?.authorize?.token)) {
+                        if (TextUtils.isEmpty(authorizeRes?.authorize?.token)) {
 
                             val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
                             intent.putExtra(Constants.EXTRA_WX_OPEN_ID, authorizeRes?.authorize?.openId)
@@ -164,9 +165,6 @@ class LoginActivity : BaseActivity() {
         AppLogger.i("wxAuthorizeClick")
 
         mViewModel?.wxAuthorize()
-
-//        startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
-//        finish()
     }
 
     /**

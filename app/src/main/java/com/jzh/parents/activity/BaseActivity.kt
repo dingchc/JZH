@@ -26,10 +26,12 @@ import com.jzh.parents.app.Constants
 import com.jzh.parents.app.JZHApplication
 import com.jzh.parents.listener.IDialogCallback
 import com.jzh.parents.utils.*
+import com.jzh.parents.widget.PhoneEditDialog
 import com.jzh.parents.widget.TSProgressDialog
 import com.jzh.parents.widget.TSToolbar
 import com.jzh.parents.widget.swipe.PageSlidingPaneLayout
 import com.jzh.parents.widget.TSToolbar.ToolbarClickListener
+import com.jzh.parents.widget.TipDialog
 import com.tencent.mm.opensdk.modelbase.BaseResp
 import com.tencent.mm.opensdk.modelbiz.SubscribeMessage
 import java.io.File
@@ -906,6 +908,26 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
         } catch (e: Exception) {
             // I know ...
         }
+
+    }
+
+    /**
+     * 显示提示对话框
+     */
+    fun showTipDialog(title: String, content: String, listener: TipDialog.TipDialogClickListener) {
+
+        var dialog = supportFragmentManager.findFragmentByTag(TipDialog.TAG_FRAGMENT)
+
+        if (dialog == null) {
+            dialog = TipDialog.newInstance(title, content)
+        }
+
+        val tip = dialog as TipDialog
+
+        tip.show(supportFragmentManager, TipDialog.TAG_FRAGMENT)
+
+        // 点击回调
+        tip.mListener = listener
 
     }
 

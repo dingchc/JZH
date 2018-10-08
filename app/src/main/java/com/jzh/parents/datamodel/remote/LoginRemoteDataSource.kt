@@ -75,7 +75,7 @@ class LoginRemoteDataSource : BaseRemoteDataSource() {
 
                     // 成功
                     if (authorizeRes.code == ResultInfo.CODE_SUCCESS) {
-                        AppLogger.i("token=" + authorizeRes.authorize?.token + ", openId=" + authorizeRes.authorize?.openId)
+                        AppLogger.i("* token=" + authorizeRes.authorize?.token + ", openId=" + authorizeRes.authorize?.openId)
 
                         // 设置Token
                         if (!TextUtils.isEmpty(authorizeRes.authorize?.token)) {

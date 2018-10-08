@@ -155,6 +155,16 @@ public interface Constants {
     String EXTRA_MY_LIVES_PAGE_TYPE = "lives_page_type";
 
     /**
+     * 提示框标题
+     */
+    String EXTRA_TIP_DIALOG_TITLE = "tip_dialog_title";
+
+    /**
+     * 提示框内容
+     */
+    String EXTRA_TIP_DIALOG_CONTENT = "tip_dialog_content";
+
+    /**
      * 我的列表-页面类型-我的收藏
      */
     int MY_LIVES_PAGE_TYPE_FAVORITE = 1;

@@ -13,6 +13,7 @@ import com.jzh.parents.utils.PreferenceUtil
 import com.jzh.parents.utils.Util
 import com.jzh.parents.viewmodel.MyselfViewModel
 import com.jzh.parents.widget.MyselfContentItem
+import com.jzh.parents.widget.TipDialog
 
 /**
  * 我
@@ -175,6 +176,17 @@ class MyselfActivity : BaseActivity() {
                     override fun onRightViewClick() {
 
                         AppLogger.i("exit 1")
+
+                        showTipDialog("", "", object : TipDialog.TipDialogClickListener {
+
+                            override fun onConfirmClick() {
+
+                            }
+
+                            override fun onCancelClick() {
+
+                            }
+                        })
                     }
                 })
             }

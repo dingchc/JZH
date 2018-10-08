@@ -58,20 +58,13 @@ class RegisterRemoteDataSource : BaseRemoteDataSource() {
 
                     // 成功
                     if (outputRes.code == ResultInfo.CODE_SUCCESS) {
-                        AppLogger.i("token=" + outputRes.output)
+                        AppLogger.i("* token=" + outputRes.output)
 
-                        // 设置Token
-                        if (!TextUtils.isEmpty(outputRes.output)) {
-                            PreferenceUtil.instance.setToken(outputRes.output)
+                        PreferenceUtil.instance.setToken(outputRes.output)
+                        notifyResult(cmd = cmd, code = ResultInfo.CODE_SUCCESS, obj = outputRes, resultLiveData = resultInfo)
 
-                            notifyResult(cmd = cmd, code = ResultInfo.CODE_SUCCESS, obj = outputRes, resultLiveData = resultInfo)
-                        }
-                        // 失败
-                        else {
-                            notifyResult(cmd = cmd, code = outputRes.code, tip = outputRes.tip, resultLiveData = resultInfo)
-                        }
                     } else {
-                        notifyResult(cmd = cmd, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo)
+                        notifyResult(cmd = cmd, code = outputRes.code, tip = outputRes.tip, resultLiveData = resultInfo)
                     }
                 }
             }
@@ -79,7 +72,7 @@ class RegisterRemoteDataSource : BaseRemoteDataSource() {
             override fun onException(e: Throwable?) {
                 AppLogger.i(e?.message)
 
-                notifyResult(cmd = cmd, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo)
+                notifyResult(cmd = cmd, tip = ResultInfo.TIP_EXCEPTION, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo)
 
             }
         })

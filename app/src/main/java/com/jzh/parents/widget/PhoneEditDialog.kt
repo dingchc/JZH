@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatDialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import com.jzh.parents.R
 import com.jzh.parents.activity.MyselfEditActivity
 import com.jzh.parents.databinding.DialogEditPhoneBinding
