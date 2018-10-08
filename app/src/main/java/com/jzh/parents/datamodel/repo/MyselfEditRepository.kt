@@ -1,18 +1,10 @@
 package com.jzh.parents.datamodel.repo
 
 import android.arch.lifecycle.MutableLiveData
-import com.jzh.parents.app.Api
 import com.jzh.parents.datamodel.local.MyselfEditLocalDataSource
 import com.jzh.parents.datamodel.remote.MyselfEditRemoteDataSource
 import com.jzh.parents.datamodel.response.UserInfoRes
-import com.jzh.parents.utils.AppLogger
-import com.jzh.parents.utils.PreferenceUtil
 import com.jzh.parents.viewmodel.info.ResultInfo
-import com.jzh.parents.viewmodel.info.UserInfo
-import com.tunes.library.wrapper.network.TSHttpController
-import com.tunes.library.wrapper.network.listener.TSHttpCallback
-import com.tunes.library.wrapper.network.model.TSBaseResponse
-import java.util.*
 
 /**
  * 我-编辑信息的仓库
@@ -73,5 +65,17 @@ class MyselfEditRepository : BaseRepository() {
     fun changePhone(phone: String, smsCode: String, userInfoRes: MutableLiveData<UserInfoRes>, resultInfo: MutableLiveData<ResultInfo>) {
 
         mRemoteDataSource.changePhone(phone, smsCode, userInfoRes, resultInfo)
+    }
+
+    /**
+     * 更换角色及学生名字
+     *
+     * @param name          学生名字
+     * @param roleId        角色
+     * @param userInfoRes   用户信息
+     * @param resultInfo    结果
+     */
+    fun changeRoleAndName(name: String, roleId: Int, userInfoRes: MutableLiveData<UserInfoRes>, resultInfo: MutableLiveData<ResultInfo>) {
+        mRemoteDataSource.changeRoleAndName(name, roleId, userInfoRes, resultInfo)
     }
 }

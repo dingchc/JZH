@@ -74,6 +74,8 @@ class RoleEditDialog : AppCompatDialogFragment() {
 
         mDataBinding?.viewModel = viewModel
 
+        mDataBinding?.setLifecycleOwner(this)
+
         mInitRole = viewModel.selectRole.value as Int
 
         mInitStudentName = viewModel.studentName.value as String

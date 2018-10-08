@@ -86,6 +86,9 @@
     <string name="search">搜索</string>
     <string name="my_id">ID:%s</string>
     <string name="change_phone_success">手机号已更改</string>
+    <string name="change_info_success">信息已更改</string>
+    <string name="process_doing">正在处理&#8230;</string>
+
 
 
 

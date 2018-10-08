@@ -11,6 +11,7 @@ import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.PreferenceUtil
 import com.jzh.parents.utils.Util
 import com.jzh.parents.viewmodel.entity.SearchEntity
+import com.jzh.parents.viewmodel.enum.RoleTypeEnum
 import com.jzh.parents.viewmodel.info.ResultInfo
 import com.tunes.library.wrapper.network.TSHttpController
 import com.tunes.library.wrapper.network.listener.TSHttpCallback
@@ -191,6 +192,58 @@ class MyselfEditRemoteDataSource : BaseRemoteDataSource() {
     }
 
     /**
+     * 更换角色及学生名字
+     *
+     * @param name          学生名字
+     * @param roleId        角色
+     * @param userInfoRes   用户信息
+     * @param resultInfo    结果
+     */
+    fun changeRoleAndName(name: String, roleId: Int, userInfoRes: MutableLiveData<UserInfoRes>, resultInfo: MutableLiveData<ResultInfo>) {
+
+        val paramsMap = TreeMap<String, String>()
+        paramsMap.put("token", PreferenceUtil.instance.getToken())
+        paramsMap.put("realname", name)
+        paramsMap.put("role_id", roleId.toString())
+
+        val cmd = ResultInfo.CMD_MYSELF_CHANGE_ROLE
+
+        TSHttpController.INSTANCE.doPut(Api.URL_API_CHANGE_ROLE, paramsMap, object : TSHttpCallback {
+            override fun onSuccess(res: TSBaseResponse?, json: String?) {
+
+                AppLogger.i("json=$json")
+
+                val infoRes: UserInfoRes? = Util.fromJson<UserInfoRes>(json ?: "", object : TypeToken<UserInfoRes>() {
+                }.type)
+
+                if (infoRes != null) {
+
+                    // 成功
+                    if (infoRes.code == ResultInfo.CODE_SUCCESS) {
+
+                        saveUserRoleAndName(infoRes.userInfo?.roleId ?: RoleTypeEnum.ROLE_TYPE_OTHER.value, infoRes.userInfo?.realName, userInfoRes)
+
+                        notifyResult(cmd = cmd, code = infoRes.code, resultLiveData = resultInfo)
+                    }
+                    // 失败
+                    else {
+                        notifyResult(cmd = cmd, code = infoRes.code, tip = infoRes.tip, resultLiveData = resultInfo)
+                    }
+                } else {
+                    notifyResult(cmd = cmd, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo)
+                }
+            }
+
+            override fun onException(e: Throwable?) {
+                AppLogger.i(e?.message)
+
+                notifyResult(cmd = cmd, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo)
+
+            }
+        })
+    }
+
+    /**
      * 存储用户信息
      *
      * @param avatarUrl   头像地址
@@ -204,20 +257,14 @@ class MyselfEditRemoteDataSource : BaseRemoteDataSource() {
 
             userRes.userInfo?.headImg = avatarUrl ?: ""
 
-            val json = Util.toJson(userRes, object : TypeToken<UserInfoRes>() {
-
-            }.type)
-
-            PreferenceUtil.instance.setCurrentUserJson(json)
-
-            userInfoRes.value = userRes
+            saveUserInfo(userRes, userInfoRes)
         }
     }
 
     /**
-     * 存储用户信息
+     * 存储手机号
      *
-     * @param avatarUrl   头像地址
+     * @param phone       手机号
      * @param userInfoRes 用户信息
      */
     private fun saveUserNewPhone(phone: String?, userInfoRes: MutableLiveData<UserInfoRes>) {
@@ -228,13 +275,41 @@ class MyselfEditRemoteDataSource : BaseRemoteDataSource() {
 
             userRes.userInfo?.mobile = phone ?: ""
 
-            val json = Util.toJson(userRes, object : TypeToken<UserInfoRes>() {
-
-            }.type)
-
-            PreferenceUtil.instance.setCurrentUserJson(json)
-
-            userInfoRes.value = userRes
+            saveUserInfo(userRes, userInfoRes)
         }
+    }
+
+    /**
+     * 存储角色及学生名称
+     *
+     * @param roleId       手机号
+     * @param name        学生名称
+     * @param userInfoRes 用户信息
+     */
+    private fun saveUserRoleAndName(roleId: Int, name: String?, userInfoRes: MutableLiveData<UserInfoRes>) {
+
+        val userRes: UserInfoRes? = PreferenceUtil.instance.getUserInfoRes()
+
+        if (userRes != null) {
+
+            userRes.userInfo?.roleId = roleId
+            userRes.userInfo?.realName = name
+
+            saveUserInfo(userRes, userInfoRes)
+        }
+    }
+
+    /**
+     * 保存用户信息，通知数据变更
+     */
+    private fun saveUserInfo(userRes: UserInfoRes, userInfoRes: MutableLiveData<UserInfoRes>) {
+
+        val json = Util.toJson(userRes, object : TypeToken<UserInfoRes>() {
+
+        }.type)
+
+        PreferenceUtil.instance.setCurrentUserJson(json)
+
+        userInfoRes.value = userRes
     }
 }

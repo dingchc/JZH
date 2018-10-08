@@ -130,6 +130,23 @@ class MyselfEditActivity : BaseActivity() {
                     }
                     // 失败提示
                     else {
+                        resetData()
+                        hiddenProgressDialog()
+                        showToastError(resultInfo.tip)
+                    }
+                }
+            // 变更角色和名称
+                ResultInfo.CMD_MYSELF_CHANGE_ROLE -> {
+
+                    // 成功
+                    if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
+                        hiddenProgressDialog()
+                        showToastFinished(getString(R.string.change_info_success))
+                    }
+                    // 失败提示
+                    else {
+
+                        resetData()
                         hiddenProgressDialog()
                         showToastError(resultInfo.tip)
                     }
@@ -245,7 +262,8 @@ class MyselfEditActivity : BaseActivity() {
         // 点击回调
         roleEditDialog.setRoleEditDialogClickListener(object : RoleEditDialog.RoleEditDialogClickListener {
             override fun onConfirmClick() {
-                AppLogger.i("onConfirmClick" + mViewModel?.selectRole?.value + ", studentName=" + mViewModel?.studentName?.value)
+
+                mViewModel?.changeRoleAndName()
             }
 
             override fun onCancelClick() {
@@ -288,6 +306,8 @@ class MyselfEditActivity : BaseActivity() {
         phoneEditDialog.setPhoneEditDialogClickListener(object : PhoneEditDialog.PhoneEditDialogClickListener {
             override fun onConfirmClick() {
 
+                showProgressDialog(getString(R.string.process_doing))
+
                 mViewModel?.changePhone()
             }
 
@@ -300,6 +320,14 @@ class MyselfEditActivity : BaseActivity() {
             }
         })
 
+    }
+
+    /**
+     * 重置用户数据
+     */
+    private fun resetData() {
+
+        mViewModel?.loadUserInfo()
     }
 
     /**

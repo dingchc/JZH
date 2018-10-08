@@ -23,7 +23,7 @@ data class UserInfoRes(@SerializedName("output") val userInfo: UserInfo?) : Base
             /**
              * 名称
              */
-            @SerializedName("realname") val realName: String?,
+            @SerializedName("realname") var realName: String?,
 
             /**
              * 头像地址
@@ -38,7 +38,7 @@ data class UserInfoRes(@SerializedName("output") val userInfo: UserInfo?) : Base
             /**
              * 角色Id
              */
-            @SerializedName("role_id") val roleId: Int,
+            @SerializedName("role_id") var roleId: Int,
 
             /**
              * 学校Id

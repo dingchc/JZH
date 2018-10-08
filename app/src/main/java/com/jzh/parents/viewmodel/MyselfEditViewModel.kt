@@ -111,6 +111,7 @@ class MyselfEditViewModel(app: Application) : BaseViewModel(app) {
         studentName.value = userInfoRes.value?.userInfo?.realName
 
         newPhone.value = userInfoRes.value?.userInfo?.mobile
+
     }
 
     /**
@@ -136,5 +137,13 @@ class MyselfEditViewModel(app: Application) : BaseViewModel(app) {
     fun changePhone() {
 
         repo.changePhone(newPhone.value ?: "", smsCode.value ?: "", userInfoRes, resultInfo)
+    }
+
+    /**
+     * 更换角色及学生名字
+     *
+     */
+    fun changeRoleAndName() {
+        repo.changeRoleAndName(studentName.value ?: "", selectRole.value ?: RoleTypeEnum.ROLE_TYPE_OTHER.value, userInfoRes, resultInfo)
     }
 }
