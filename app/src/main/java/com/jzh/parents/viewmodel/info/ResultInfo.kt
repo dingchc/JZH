@@ -119,6 +119,11 @@ data class ResultInfo(
         const val CMD_MYSELF_CHANGE_ROLE = 3004
 
         /**
+         * 我：退出班级
+         */
+        const val CMD_MYSELF_QUIT_CLASSROOM = 3005
+
+        /**
          * 刷新直播列表
          */
         const val CMD_REFRESH_LIVES = 4001

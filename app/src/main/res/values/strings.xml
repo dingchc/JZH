@@ -52,6 +52,7 @@
     <string name="myself_feedback">意见反馈</string>
     <string name="myself_logout">退出登录</string>
     <string name="myself_exit_class">退出班级</string>
+    <string name="confirm_to_exit_class">您确定要退出班级吗？</string>
     <string name="avatar">头像</string>
     <string name="alias">昵称</string>
     <string name="phone">手机号</string>

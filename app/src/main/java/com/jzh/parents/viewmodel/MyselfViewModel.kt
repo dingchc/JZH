@@ -2,6 +2,9 @@ package com.jzh.parents.viewmodel
 
 import android.app.Application
 import android.arch.lifecycle.MutableLiveData
+import com.jzh.parents.datamodel.repo.MyselfRepository
+import com.jzh.parents.datamodel.response.UserInfoRes
+import com.jzh.parents.viewmodel.info.ResultInfo
 
 /**
  * 我的ViewModel
@@ -11,19 +14,35 @@ import android.arch.lifecycle.MutableLiveData
  */
 class MyselfViewModel(app: Application) : BaseViewModel(app) {
 
+    /**
+     * 个人信息
+     */
+    var userInfoRes: MutableLiveData<UserInfoRes> = MutableLiveData<UserInfoRes>()
 
     /**
-     * 用户Id
+     * 我的仓库
      */
-    val userId: MutableLiveData<String> = MutableLiveData()
+    val repo: MyselfRepository = MyselfRepository()
+
+    init {
+        resultInfo.value = ResultInfo()
+    }
 
     /**
-     * 用户名称
+     * 加载个人信息
      */
-    val userName: MutableLiveData<String> = MutableLiveData()
+    fun loadUserInfo() {
+        userInfoRes.value = repo.loadUserInfoEntity()
+    }
 
     /**
-     * 头像地址
+     * 退出班级
+     *
+     * @param id  班级绑定id
      */
-    val avatarUrl: MutableLiveData<String> = MutableLiveData()
+    fun quitClassRoom(id: Long) {
+
+        repo.quitClassRoom(id, userInfoRes, resultInfo)
+    }
+
 }

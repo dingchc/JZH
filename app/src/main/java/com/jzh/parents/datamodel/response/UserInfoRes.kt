@@ -68,7 +68,7 @@ data class UserInfoRes(@SerializedName("output") val userInfo: UserInfo?) : Base
             /**
              * 班级信息列表
              */
-            @SerializedName("classroom") val classRoomList: List<ClassRoom>?,
+            @SerializedName("classroom") val classRoomList: MutableList<ClassRoom>?,
 
             /**
              * 是否是VIP

@@ -1,5 +1,6 @@
 package com.jzh.parents.activity
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.databinding.DataBindingUtil
@@ -12,6 +13,7 @@ import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.PreferenceUtil
 import com.jzh.parents.utils.Util
 import com.jzh.parents.viewmodel.MyselfViewModel
+import com.jzh.parents.viewmodel.info.ResultInfo
 import com.jzh.parents.widget.MyselfContentItem
 import com.jzh.parents.widget.TipDialog
 
@@ -49,6 +51,36 @@ class MyselfActivity : BaseActivity() {
      */
     override fun initEvent() {
 
+        // 用户信息返回
+        mViewModel?.userInfoRes?.observe(this@MyselfActivity, Observer { userInfoRes ->
+
+            if (userInfoRes != null) {
+                showClassInfo(userInfoRes.userInfo?.classRoomList)
+            }
+
+        })
+
+        // 错误返回
+        mViewModel?.resultInfo?.observe(this@MyselfActivity, Observer { resultInfo ->
+
+            when (resultInfo?.cmd) {
+
+            // 上传头像
+                ResultInfo.CMD_MYSELF_UPLOAD_AVATAR -> {
+
+                    // 成功
+                    if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
+                        // do nothing
+                    }
+                    // 失败提示
+                    else {
+                        hiddenProgressDialog()
+                        showToastError(resultInfo.tip)
+                    }
+                }
+            }
+
+        })
 
     }
 
@@ -65,16 +97,7 @@ class MyselfActivity : BaseActivity() {
      */
     private fun loadUserInfo() {
 
-        val userInfoRes: UserInfoRes? = PreferenceUtil.instance.getUserInfoRes()
-
-        if (userInfoRes != null) {
-
-            showClassInfo(userInfoRes.userInfo?.classRoomList)
-
-            mViewModel?.avatarUrl?.value = userInfoRes.userInfo?.headImg ?: ""
-            mViewModel?.userId?.value = userInfoRes.userInfo?.member ?: ""
-            mViewModel?.userName?.value = userInfoRes.userInfo?.realName ?: ""
-        }
+        mViewModel?.loadUserInfo()
     }
 
     /**
@@ -158,29 +181,30 @@ class MyselfActivity : BaseActivity() {
 
             classRoomList.forEach {
 
-                val item1 = MyselfContentItem(this@MyselfActivity)
+                val item = MyselfContentItem(this@MyselfActivity)
 
-                item1.setMode(1)
-                item1.setTitleText(it.name ?: "")
-                item1.setRightText(R.string.myself_exit_class)
+                val className = (it.school ?: "") + (it.name ?: "")
 
-                mDataBinding?.layoutClassInfo?.addView(item1)
+                item.setMode(1)
+                item.setTitleText(className)
+                item.setRightText(R.string.myself_exit_class)
+
+                mDataBinding?.layoutClassInfo?.addView(item)
 
                 val padding = Util.dp2px(this@MyselfActivity, 10.0f)
 
-                item1.setPadding(padding, 0, padding, 0)
+                item.setPadding(padding, 0, padding, 0)
 
-                item1.layoutParams.height = resources.getDimensionPixelSize(R.dimen.item_height)
+                item.layoutParams.height = resources.getDimensionPixelSize(R.dimen.item_height)
 
-                item1.setOnRightClickListener(object : MyselfContentItem.OnRightClickListener {
+                item.setOnRightClickListener(object : MyselfContentItem.OnRightClickListener {
                     override fun onRightViewClick() {
 
-                        AppLogger.i("exit 1")
-
-                        showTipDialog("", "", object : TipDialog.TipDialogClickListener {
+                        showTipDialog(getString(R.string.myself_exit_class), getString(R.string.confirm_to_exit_class), object : TipDialog.TipDialogClickListener {
 
                             override fun onConfirmClick() {
 
+                                AppLogger.i("class_id= ${it.class_id}, id = ${it.id}")
                             }
 
                             override fun onCancelClick() {

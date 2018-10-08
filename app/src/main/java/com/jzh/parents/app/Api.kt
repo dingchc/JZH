@@ -123,5 +123,10 @@ object Api {
      */
     const val URL_API_CHANGE_ROLE = URL_API_LIVE_DOMAIN + "user/info"
 
+    /**
+     * 地址：退出班级
+     */
+    const val URL_API_QUIT_CLASSROOM = URL_API_LIVE_DOMAIN + "quit/classroom"
+
 
 }
