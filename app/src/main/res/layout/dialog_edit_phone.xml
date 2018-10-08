@@ -23,6 +23,7 @@
             android:layout_marginRight="10dp"
             android:text="@string/change_phone"
             android:textColor="@color/font_black"
+
             android:textSize="14sp" />
 
         <!-- 手机号 -->
@@ -40,7 +41,7 @@
             app:dc_hint="@string/input_phone"
             app:dc_is_input_editable="true"
             app:dc_show_tap_arrow="false"
-            app:contentText="@{viewModel.newPhone}"
+            app:contentText="@={viewModel.newPhone}"
             />
 
         <!-- 验证码 -->

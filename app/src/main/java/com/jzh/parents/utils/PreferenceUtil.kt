@@ -3,6 +3,7 @@ package com.jzh.parents.utils
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.Preference
+import android.text.TextUtils
 import com.google.gson.reflect.TypeToken
 import com.jzh.parents.app.JZHApplication
 import com.jzh.parents.datamodel.response.HotWordRes
@@ -125,9 +126,15 @@ class PreferenceUtil private constructor() {
 
         val json = getCurrentUserJson()
 
-        return Util.fromJson<UserInfoRes>(json, object : TypeToken<UserInfoRes>() {
+        val userInfoRes : UserInfoRes? = Util.fromJson<UserInfoRes>(json, object : TypeToken<UserInfoRes>() {
 
         }.type)
+
+        if (TextUtils.isEmpty(userInfoRes?.userInfo?.mobile)) {
+            userInfoRes?.userInfo?.mobile = ""
+        }
+
+        return userInfoRes
     }
 
     /**

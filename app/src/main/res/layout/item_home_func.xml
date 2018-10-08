@@ -27,7 +27,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 bind:circleImage="@{funcEntity.avatarUrl}"
-                bind:placeHolder="@{@drawable/ic_login}"
+                bind:placeHolder="@{@drawable/icon_avatar_default}"
                  />
 
             <LinearLayout

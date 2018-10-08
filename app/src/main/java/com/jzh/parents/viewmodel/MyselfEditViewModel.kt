@@ -110,7 +110,7 @@ class MyselfEditViewModel(app: Application) : BaseViewModel(app) {
 
         studentName.value = userInfoRes.value?.userInfo?.realName
 
-        newPhone.value = userInfoRes.value?.userInfo?.mobile
+        newPhone.value = userInfoRes.value?.userInfo?.mobile ?: ""
 
     }
 

@@ -503,7 +503,7 @@ class DialogContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
             return
         }
 
-        mVerifyCodeTextView.text = input
+        mVerifyCodeTextView?.text = input
     }
 
 }

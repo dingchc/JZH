@@ -379,6 +379,15 @@ class Util {
 
             return pattern.matcher(phoneNumber).find()
         }
+
+        /**
+         * SDcard是否可用
+         *
+         * @return true 可用、false 不可用
+         */
+        fun isSdcardExists(): Boolean {
+            return Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
+        }
     }
 
 

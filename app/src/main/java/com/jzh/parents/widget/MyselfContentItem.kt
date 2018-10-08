@@ -188,7 +188,7 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
         mUrl = url
 
         val options = RequestOptions()
-        options.circleCrop().placeholder(R.mipmap.icon_home_logo)
+        options.circleCrop().placeholder(R.mipmap.icon_avatar_default)
 
         Glide.with(context).load(mUrl).apply(options).into(mRightImageView)
     }
