@@ -1,15 +1,19 @@
 package com.jzh.parents.activity
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.text.TextUtils
 import android.view.View
 import com.jzh.parents.R
 import com.jzh.parents.app.Constants
 import com.jzh.parents.databinding.ActivityRegisterBinding
+import com.jzh.parents.datamodel.response.WxAuthorizeRes
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.RegisterViewModel
 import com.jzh.parents.viewmodel.bindadapter.TSDataBindingComponent
+import com.jzh.parents.viewmodel.info.ResultInfo
 import com.jzh.parents.widget.PickSectionDialog
 import com.jzh.parents.widget.PickYearDialog
 
@@ -73,6 +77,28 @@ class RegisterActivity : BaseActivity() {
             showPickYearDialog()
         }
 
+        mViewModel?.resultInfo?.observe(this@RegisterActivity, Observer { resultInfo ->
+
+            // 判断结果
+            when (resultInfo?.cmd) {
+
+            // 授权登录
+                ResultInfo.CMD_LOGIN_REGISTER -> {
+
+                    hiddenProgressDialog()
+
+                    // 未填写资料
+                    if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
+
+                        startActivity(Intent(this@RegisterActivity, HomeActivity::class.java))
+                        finishCompat()
+
+                    } else {
+                        showToastError(resultInfo.tip)
+                    }
+                }
+            }
+        })
 
     }
 

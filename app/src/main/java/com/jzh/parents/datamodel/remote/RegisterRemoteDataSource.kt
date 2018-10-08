@@ -6,6 +6,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jzh.parents.app.Api
 import com.jzh.parents.app.Constants
+import com.jzh.parents.datamodel.response.OutputRes
 import com.jzh.parents.datamodel.response.WxAuthorizeRes
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.PreferenceUtil
@@ -33,7 +34,7 @@ class RegisterRemoteDataSource : BaseRemoteDataSource() {
      * @param roleId 角色
      * @param resultInfo 返回结果
      */
-    fun register(openId : String?, learningSection: String, learningYear: String, studentName: String, roleId: String, resultInfo: MutableLiveData<ResultInfo>) {
+    fun register(openId: String?, learningSection: String, learningYear: String, studentName: String, roleId: String, resultInfo: MutableLiveData<ResultInfo>) {
 
         val paramsMap = TreeMap<String, String>()
         paramsMap.put("openid", openId ?: "")
@@ -42,42 +43,43 @@ class RegisterRemoteDataSource : BaseRemoteDataSource() {
         paramsMap.put("realname", studentName)
         paramsMap.put("role_id", roleId)
 
+        val cmd = ResultInfo.CMD_LOGIN_REGISTER
 
         TSHttpController.INSTANCE.doPost(Api.URL_API_REGISTER_WITH_WX_AUTHORIZE, paramsMap, object : TSHttpCallback {
             override fun onSuccess(res: TSBaseResponse?, json: String?) {
 
                 val gson = Gson()
 
-                val authorizeRes: WxAuthorizeRes? = gson.fromJson<WxAuthorizeRes>(json, object : TypeToken<WxAuthorizeRes>() {
+                val outputRes: OutputRes? = gson.fromJson<OutputRes>(json, object : TypeToken<OutputRes>() {
 
                 }.type)
 
-                if (authorizeRes != null) {
+                if (outputRes != null) {
 
                     // 成功
-                    if (authorizeRes.code == ResultInfo.CODE_SUCCESS) {
-                        AppLogger.i("token=" + authorizeRes.authorize?.token + ", openId=" + authorizeRes.authorize?.openId)
+                    if (outputRes.code == ResultInfo.CODE_SUCCESS) {
+                        AppLogger.i("token=" + outputRes.output)
 
                         // 设置Token
-                        if (!TextUtils.isEmpty(authorizeRes.authorize?.token)) {
-                            PreferenceUtil.instance.setToken(authorizeRes.authorize?.token)
-                        }
-                        notifyResult(cmd = ResultInfo.CMD_LOGIN_WX_LOGIN, code = ResultInfo.CODE_SUCCESS, obj = authorizeRes, resultLiveData = resultInfo)
-                    }
-                    // 失败
-                    else {
-                        notifyResult(cmd = ResultInfo.CMD_LOGIN_WX_LOGIN, code = authorizeRes.code, tip = authorizeRes.tip, resultLiveData = resultInfo)
-                    }
-                } else {
-                    notifyResult(cmd = ResultInfo.CMD_LOGIN_WX_LOGIN, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo)
-                }
+                        if (!TextUtils.isEmpty(outputRes.output)) {
+                            PreferenceUtil.instance.setToken(outputRes.output)
 
+                            notifyResult(cmd = cmd, code = ResultInfo.CODE_SUCCESS, obj = outputRes, resultLiveData = resultInfo)
+                        }
+                        // 失败
+                        else {
+                            notifyResult(cmd = cmd, code = outputRes.code, tip = outputRes.tip, resultLiveData = resultInfo)
+                        }
+                    } else {
+                        notifyResult(cmd = cmd, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo)
+                    }
+                }
             }
 
             override fun onException(e: Throwable?) {
                 AppLogger.i(e?.message)
 
-                notifyResult(cmd = ResultInfo.CMD_LOGIN_WX_LOGIN, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo)
+                notifyResult(cmd = cmd, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo)
 
             }
         })

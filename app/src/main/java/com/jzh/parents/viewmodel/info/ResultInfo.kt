@@ -84,6 +84,11 @@ data class ResultInfo(
         const val CMD_LOGIN_WX_LOGIN = 1004
 
         /**
+         * 注册
+         */
+        const val CMD_LOGIN_REGISTER = 1005
+
+        /**
          * 首页：预约
          */
         const val CMD_HOME_SUBSCRIBE = 2001
