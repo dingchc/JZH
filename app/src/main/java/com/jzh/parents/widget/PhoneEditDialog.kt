@@ -107,8 +107,6 @@ class PhoneEditDialog : AppCompatDialogFragment(), SmsCDTimer.OnSmsTickListener 
         // 确认
         confirmBtn.setOnClickListener {
 
-            mViewModel?.changePhone()
-
             mListener?.onConfirmClick()
             this@PhoneEditDialog.dismiss()
         }
@@ -143,12 +141,10 @@ class PhoneEditDialog : AppCompatDialogFragment(), SmsCDTimer.OnSmsTickListener 
                     if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
 
                         SmsCDTimer.startSmsTimer()
-
                     }
                     // 失败
                     else {
-                        Toast.makeText(context, resultInfo.tip, Toast.LENGTH_SHORT).show()
-//                        showToastError(resultInfo.tip)
+                        mListener?.onError(resultInfo.tip)
                     }
                 }
             }
@@ -209,6 +205,11 @@ class PhoneEditDialog : AppCompatDialogFragment(), SmsCDTimer.OnSmsTickListener 
          * 点击取消
          */
         fun onCancelClick()
+
+        /**
+         * 出错
+         */
+        fun onError(tip : String)
 
     }
 }

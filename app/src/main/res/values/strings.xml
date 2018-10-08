@@ -85,6 +85,8 @@
     <string name="upload_percent">正在上传&#8230;</string>
     <string name="search">搜索</string>
     <string name="my_id">ID:%s</string>
+    <string name="change_phone_success">手机号已更改</string>
+
 
 
 

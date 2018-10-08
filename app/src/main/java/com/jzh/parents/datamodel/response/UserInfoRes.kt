@@ -33,7 +33,7 @@ data class UserInfoRes(@SerializedName("output") val userInfo: UserInfo?) : Base
             /**
              * 手机号
              */
-            val mobile: String?,
+            var mobile: String?,
 
             /**
              * 角色Id

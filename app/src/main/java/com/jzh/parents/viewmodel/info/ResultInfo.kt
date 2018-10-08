@@ -104,9 +104,14 @@ data class ResultInfo(
         const val CMD_MYSELF_CHANGE_PHONE = 3002
 
         /**
+         * 我：修改头像
+         */
+        const val CMD_MYSELF_CHANGE_AVATAR = 3003
+
+        /**
          * 我：变更身份
          */
-        const val CMD_MYSELF_CHANGE_ROLE = 3003
+        const val CMD_MYSELF_CHANGE_ROLE = 3004
 
         /**
          * 刷新直播列表

@@ -113,5 +113,15 @@ object Api {
      */
     const val URL_API_CHANGE_PHONE = URL_API_LIVE_DOMAIN + "user/phone"
 
+    /**
+     * 地址：变更头像
+     */
+    const val URL_API_CHANGE_AVATAR = URL_API_LIVE_DOMAIN + "user/headimg"
+
+    /**
+     * 地址：变更身份
+     */
+    const val URL_API_CHANGE_ROLE = URL_API_LIVE_DOMAIN + "user/info"
+
 
 }

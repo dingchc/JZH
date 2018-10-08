@@ -40,7 +40,7 @@
             app:dc_hint="@string/input_phone"
             app:dc_is_input_editable="true"
             app:dc_show_tap_arrow="false"
-            app:contentText="@={viewModel.newPhone}"
+            app:contentText="@{viewModel.newPhone}"
             />
 
         <!-- 验证码 -->

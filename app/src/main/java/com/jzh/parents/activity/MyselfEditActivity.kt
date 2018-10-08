@@ -98,11 +98,35 @@ class MyselfEditActivity : BaseActivity() {
                 ResultInfo.CMD_MYSELF_UPLOAD_AVATAR -> {
 
                     // 成功
-                    if (resultInfo.code == ResultInfo.CODE_SUCCESS && resultInfo.obj != null) {
+                    if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
+                        // do nothing
+                    }
+                    // 失败提示
+                    else {
                         hiddenProgressDialog()
-//                        val userInfo = mViewModel?.userInfoRes?.value
-//                        userInfo = (resultInfo.obj as OutputRes).output
-//                        mViewModel?.userInfo?.value = userInfo
+                        showToastError(resultInfo.tip)
+                    }
+                }
+            // 变更头像
+                ResultInfo.CMD_MYSELF_CHANGE_AVATAR -> {
+
+                    // 成功
+                    if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
+                        hiddenProgressDialog()
+                    }
+                    // 失败提示
+                    else {
+                        hiddenProgressDialog()
+                        showToastError(resultInfo.tip)
+                    }
+                }
+            // 变更手机号
+                ResultInfo.CMD_MYSELF_CHANGE_PHONE -> {
+
+                    // 成功
+                    if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
+                        hiddenProgressDialog()
+                        showToastFinished(getString(R.string.change_phone_success))
                     }
                     // 失败提示
                     else {
@@ -111,6 +135,7 @@ class MyselfEditActivity : BaseActivity() {
                     }
                 }
             }
+
         })
     }
 
@@ -262,11 +287,16 @@ class MyselfEditActivity : BaseActivity() {
         // 点击回调
         phoneEditDialog.setPhoneEditDialogClickListener(object : PhoneEditDialog.PhoneEditDialogClickListener {
             override fun onConfirmClick() {
-                AppLogger.i("onConfirmClick" + mViewModel?.selectRole?.value + ", studentName=" + mViewModel?.studentName?.value)
+
+                mViewModel?.changePhone()
             }
 
             override fun onCancelClick() {
-                AppLogger.i("onCancelClick")
+            }
+
+            override fun onError(tip: String) {
+
+                showToastError(tip)
             }
         })
 
