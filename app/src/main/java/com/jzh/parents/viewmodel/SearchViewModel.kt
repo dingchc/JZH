@@ -102,4 +102,13 @@ class SearchViewModel(app: Application) : BaseViewModel(app) {
 
         return (itemEntities.value?.find { it is LiveItemEntity && it.liveInfo.id == liveId } as LiveItemEntity).liveInfo
     }
+
+    /**
+     * 取消收藏一个直播
+     *
+     * @param liveInfo 直播
+     */
+    fun cancelFavoriteALive(liveInfo: LiveInfo) {
+        repo.cancelFavoriteALive(liveInfo, itemEntities, resultInfo)
+    }
 }
