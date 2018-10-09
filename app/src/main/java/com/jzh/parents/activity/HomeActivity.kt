@@ -117,6 +117,8 @@ class HomeActivity : BaseActivity() {
              * 点击了头部（contentType == 2 即将播放、 contentType == 3 往期回顾）
              */
             override fun onClickFooter(type: Int) {
+
+                gotoLiveListPage(type, 0)
             }
 
             /**
@@ -151,6 +153,10 @@ class HomeActivity : BaseActivity() {
                 else if (type == LiveInfo.LiveInfoEnum.TYPE_REVIEW.value && liveInfo.isFavorited == Constants.TYPE_FAVORITE_NO) {
                     mViewModel?.favoriteALive(liveInfo)
                 }
+                //已收藏的直播
+                else if (type == LiveInfo.LiveInfoEnum.TYPE_REVIEW.value && liveInfo.isFavorited == Constants.TYPE_FAVORITE_YES) {
+                    mViewModel?.cancelFavoriteALive(liveInfo)
+                }
             }
 
             /**
@@ -184,7 +190,16 @@ class HomeActivity : BaseActivity() {
                         showToastError(resultInfo.tip)
                     }
                 }
+            // 取消收藏
+                ResultInfo.CMD_HOME_CANCEL_FAVORITE -> {
+
+                    if (resultInfo.code != ResultInfo.CODE_SUCCESS) {
+
+                        showToastError(resultInfo.tip)
+                    }
+                }
             }
+
         })
     }
 

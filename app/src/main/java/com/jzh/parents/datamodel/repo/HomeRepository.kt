@@ -41,10 +41,6 @@ class HomeRepository : BaseRepository() {
         return mLocalDataSource?.loadFuncEntity()
     }
 
-    fun loadItemEntities() {
-
-    }
-
     /**
      * 获取用户信息
      *
@@ -86,4 +82,16 @@ class HomeRepository : BaseRepository() {
     fun favoriteALive(liveInfo: LiveInfo, target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
         mRemoteDataSource?.favoriteALive(liveInfo, target, resultInfo)
     }
+
+    /**
+     * 取消收藏一个直播
+     *
+     * @param liveInfo 直播
+     * @param target   目标数据
+     * @param resultInfo 结果
+     */
+    fun cancelFavoriteALive(liveInfo: LiveInfo, target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
+        mRemoteDataSource?.cancelFavoriteALive(liveInfo, target, resultInfo)
+    }
+
 }

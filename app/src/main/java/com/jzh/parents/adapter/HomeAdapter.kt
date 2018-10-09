@@ -6,9 +6,11 @@ import android.databinding.ViewDataBinding
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import com.jzh.parents.R
 import com.jzh.parents.databinding.*
+import com.jzh.parents.listener.OnRecycleItemTouchListener
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
 import com.jzh.parents.viewmodel.entity.LiveItemEntity
@@ -60,9 +62,14 @@ class HomeAdapter(private var mContext: Context, var mDataList: MutableList<Base
                 val liveItem = mDataList?.get(position) as LiveItemEntity
                 holder.dataBinding.itemEntity = liveItem
 
-                // 全部
+                // Header全部
                 holder.dataBinding.tvAll.setOnClickListener {
                     mListener?.onClickHeader(liveItem.liveInfo.contentType.value)
+                }
+
+                // Footer全部
+                holder.dataBinding.tvViewAll.setOnClickListener {
+                    mListener?.onClickFooter(liveItem.liveInfo.contentType.value)
                 }
 
                 // 操作
@@ -100,6 +107,20 @@ class HomeAdapter(private var mContext: Context, var mDataList: MutableList<Base
                 val entity: HomeLiveTopPicksEntity = mDataList?.get(position) as HomeLiveTopPicksEntity
                 val topPicksAdapter = HomeTopPicksAdapter(mContext, entity.topPicksList)
                 holder.dataBinding.rvPicks.adapter = topPicksAdapter
+
+                holder.dataBinding.rvPicks.addOnItemTouchListener(OnRecycleItemTouchListener(holder.dataBinding.rvPicks, object : OnRecycleItemTouchListener.OnRecycleItemClickListener {
+
+                    override fun onClick(view: View?, pos: Int) {
+
+                        val liveInfo = entity.topPicksList[pos]
+
+                        mListener?.onClickALive(liveInfo = liveInfo)
+                    }
+
+                    override fun onLongClick(view: View?, position: Int) {
+
+                    }
+                }))
             }
         // 搜索:
             BaseLiveEntity.ItemTypeEnum.LIVE_SEARCH.ordinal -> {

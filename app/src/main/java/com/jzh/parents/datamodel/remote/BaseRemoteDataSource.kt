@@ -102,6 +102,54 @@ abstract class BaseRemoteDataSource {
     }
 
     /**
+     * 取消收藏
+     *
+     * @param liveInfo   直播
+     * @param target     目标数据
+     * @param resultInfo 结果
+     */
+    fun cancelFavoriteALive(liveInfo: LiveInfo, target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
+
+        val paramsMap = TreeMap<String, String>()
+
+        paramsMap.put("token", PreferenceUtil.instance.getToken())
+        paramsMap.put("id", liveInfo.id.toString())
+
+        TSHttpController.INSTANCE.doDelete(Api.URL_API_FAVORITES_LIST + "/" + liveInfo.id, paramsMap, object : TSHttpCallback {
+            override fun onSuccess(res: TSBaseResponse?, json: String?) {
+
+                AppLogger.i("json=$json")
+
+                val baseRes: BaseRes? = Util.fromJson<BaseRes>(json ?: "", object : TypeToken<BaseRes>() {
+
+                }.type)
+
+                // 成功
+                if (baseRes?.code == ResultInfo.CODE_SUCCESS) {
+
+                    // 通知数据变更了
+                    liveInfo.isFavorited = 0
+
+                    val liveList = target.value
+
+                    target.value = liveList
+                }
+                // 失败
+                else {
+
+                    notifyResult(cmd = ResultInfo.CMD_HOME_CANCEL_FAVORITE, code = baseRes?.code ?: 0, tip = baseRes?.tip, resultLiveData = resultInfo)
+                }
+            }
+
+            override fun onException(e: Throwable?) {
+                AppLogger.i(e?.message)
+                notifyResult(cmd = ResultInfo.CMD_HOME_CANCEL_FAVORITE, code = ResultInfo.CODE_EXCEPTION, tip = ResultInfo.TIP_EXCEPTION, resultLiveData = resultInfo)
+
+            }
+        })
+    }
+
+    /**
      * 同步直播的预约状态
      *
      * @param liveInfo   直播

@@ -99,6 +99,11 @@ data class ResultInfo(
         const val CMD_HOME_FAVORITE = 2002
 
         /**
+         * 首页：取消收藏
+         */
+        const val CMD_HOME_CANCEL_FAVORITE = 2003
+
+        /**
          * 我：上传头像
          */
         const val CMD_MYSELF_UPLOAD_AVATAR = 3001
