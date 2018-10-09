@@ -160,4 +160,12 @@ class PreferenceUtil private constructor() {
 
         return mPreference?.getString(KEY_SEARCH_RECORD + getCurrentUserId(), "") ?: ""
     }
+
+    /**
+     * 是否已登录
+     */
+    fun isAlreadyLogin() : Boolean {
+
+        return !TextUtils.isEmpty(getCurrentUserId())
+    }
 }

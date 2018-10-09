@@ -171,6 +171,8 @@ class MyselfActivity : BaseActivity() {
 
             override fun onConfirmClick() {
 
+                PreferenceUtil.instance.setCurrentUserId("")
+
                 val intent = Intent(this@MyselfActivity, LoginActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
 

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import com.jzh.parents.R
+import com.jzh.parents.utils.PreferenceUtil
 
 class SplashActivity : AppCompatActivity() {
 
@@ -14,9 +15,22 @@ class SplashActivity : AppCompatActivity() {
 
 
         Handler().postDelayed({
-            val intent = Intent(this@SplashActivity, LoginActivity::class.java)
 
-            startActivity(intent)
+            // 已登录
+            if (PreferenceUtil.instance.isAlreadyLogin()) {
+
+                val intent = Intent(this@SplashActivity, HomeActivity::class.java)
+
+                startActivity(intent)
+            }
+            // 未登录
+            else {
+
+                val intent = Intent(this@SplashActivity, LoginActivity::class.java)
+
+                startActivity(intent)
+            }
+
 
             finish()
         }, 3000L)
