@@ -18,6 +18,7 @@ import android.opengl.Visibility
 import android.text.TextUtils
 import com.jzh.parents.app.Constants
 import com.jzh.parents.app.JZHApplication
+import com.jzh.parents.databinding.LayoutNoSearchResultBinding
 import com.jzh.parents.datamodel.response.HotWordRes
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.PreferenceUtil
@@ -54,6 +55,11 @@ class SearchActivity : BaseActivity() {
      * 适配器监听
      */
     private var mAdapterListener: SearchAdapter.OnViewClick? = null
+
+    /**
+     * 空视图
+     */
+    private var mEmptyView : View? = null
 
 
     override fun onResume() {
@@ -146,13 +152,14 @@ class SearchActivity : BaseActivity() {
                     // 刷新数据成功
                     if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
                         hiddenProgressDialog()
-
+                        hiddenEmptyView()
                         saveKeyWord()
                     }
                     // 没有数据
                     else if (resultInfo.code == ResultInfo.CODE_NO_DATA) {
 
                         // 显示没有数据
+                        showEmptyView()
                     }
                     // 没有更多数据
                     else if (resultInfo.code == ResultInfo.CODE_NO_MORE_DATA) {
@@ -185,6 +192,13 @@ class SearchActivity : BaseActivity() {
                 }
             }
         })
+
+        // 空视图
+        mDataBinding?.viewStubEmpty?.setOnInflateListener { stub, inflated ->
+            val binding: LayoutNoSearchResultBinding? = DataBindingUtil.bind(inflated)
+            mEmptyView = inflated
+            binding?.viewModel = mViewModel
+        }
     }
 
     override fun initData() {
@@ -256,8 +270,7 @@ class SearchActivity : BaseActivity() {
             if (keyWordList.isNotEmpty()) {
                 controlSearchHistoryTitle(true)
             }
-        }
-        else {
+        } else {
             controlSearchHistoryTitle(false)
         }
     }
@@ -326,6 +339,8 @@ class SearchActivity : BaseActivity() {
      */
     fun onSearchCancelClick(view: View) {
 
+        hiddenEmptyView()
+
         // 添加本地搜索词
         addKeyWordRecord(mViewModel?.loadHistoryKeyWord())
 
@@ -339,6 +354,8 @@ class SearchActivity : BaseActivity() {
      * @param view 控件
      */
     fun onSearchClick(view: View) {
+
+        hiddenEmptyView()
 
         val keyWord = mDataBinding?.layoutSearch?.edSearchBar?.text.toString()
 
@@ -380,5 +397,31 @@ class SearchActivity : BaseActivity() {
 
             JZHApplication.instance?.wxResult = null
         }
+    }
+
+    /**
+     * 显示空View
+     */
+    private fun showEmptyView() {
+
+        mDataBinding?.refreshLayout?.visibility = View.GONE
+
+        if (!mDataBinding?.viewStubEmpty?.isInflated!!) {
+
+            mDataBinding?.viewStubEmpty?.viewStub?.inflate()
+        } else {
+            mEmptyView?.visibility = View.VISIBLE
+        }
+
+    }
+
+    /**
+     * 隐藏空View
+     */
+    private fun hiddenEmptyView() {
+
+        mDataBinding?.refreshLayout?.visibility = View.VISIBLE
+        mEmptyView?.visibility = View.GONE
+
     }
 }

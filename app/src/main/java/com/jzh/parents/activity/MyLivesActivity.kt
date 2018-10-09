@@ -137,6 +137,7 @@ class MyLivesActivity : BaseActivity() {
             mViewModel?.loadMoreItemEntities(mPageType)
         }
 
+        // 空视图
         mDataBinding?.viewStubEmpty?.setOnInflateListener { stub, inflated ->
             val binding: LayoutNoMyselfLivesBinding? = DataBindingUtil.bind(inflated)
             binding?.viewModel = mViewModel

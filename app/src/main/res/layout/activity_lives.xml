@@ -27,6 +27,11 @@
 
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
+        <ViewStub
+            android:id="@+id/view_stub_empty"
+            android:layout="@layout/layout_no_lives"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
