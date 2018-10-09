@@ -149,11 +149,11 @@ class HomeActivity : BaseActivity() {
                 if (type == LiveInfo.LiveInfoEnum.TYPE_WILL.value && liveInfo.isSubscribed == Constants.TYPE_SUBSCRIBE_NO) {
                     mViewModel?.subscribeALiveOnWx(liveInfo.id)
                 }
-                //未收藏的直播
+                //收藏直播
                 else if (type == LiveInfo.LiveInfoEnum.TYPE_REVIEW.value && liveInfo.isFavorited == Constants.TYPE_FAVORITE_NO) {
                     mViewModel?.favoriteALive(liveInfo)
                 }
-                //已收藏的直播
+                //取消收藏
                 else if (type == LiveInfo.LiveInfoEnum.TYPE_REVIEW.value && liveInfo.isFavorited == Constants.TYPE_FAVORITE_YES) {
                     mViewModel?.cancelFavoriteALive(liveInfo)
                 }

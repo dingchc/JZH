@@ -118,15 +118,17 @@ class LivesActivity() : BaseActivity() {
 
             override fun onClickOperate(type: Int, liveInfo: LiveInfo) {
 
-                AppLogger.i("* type=" + type + ", " + liveInfo.id)
-
                 // 未预约的直播
                 if (type == LiveInfo.LiveInfoEnum.TYPE_WILL.value && liveInfo.isSubscribed == Constants.TYPE_SUBSCRIBE_NO) {
                     mViewModel?.subscribeALiveOnWx(liveInfo.id)
                 }
-                //未收藏的直播
+                //收藏直播
                 else if (type == LiveInfo.LiveInfoEnum.TYPE_REVIEW.value && liveInfo.isFavorited == Constants.TYPE_FAVORITE_NO) {
                     mViewModel?.favoriteALive(liveInfo)
+                }
+                //取消收藏
+                else if (type == LiveInfo.LiveInfoEnum.TYPE_REVIEW.value && liveInfo.isFavorited == Constants.TYPE_FAVORITE_YES) {
+                    mViewModel?.cancelFavoriteALive(liveInfo)
                 }
             }
 
@@ -152,6 +154,14 @@ class LivesActivity() : BaseActivity() {
 
             // 收藏
                 ResultInfo.CMD_HOME_FAVORITE -> {
+
+                    if (resultInfo.code != ResultInfo.CODE_SUCCESS) {
+
+                        showToastError(resultInfo.tip)
+                    }
+                }
+            // 取消收藏
+                ResultInfo.CMD_HOME_CANCEL_FAVORITE -> {
 
                     if (resultInfo.code != ResultInfo.CODE_SUCCESS) {
 

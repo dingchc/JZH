@@ -80,4 +80,15 @@ class LivesRepository : BaseRepository() {
     fun syncSubscribedALive(liveInfo: LiveInfo, openId: String, action: String, target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
         mRemoteDataSource.syncSubscribedALive(liveInfo, openId, action, target, resultInfo)
     }
+
+    /**
+     * 取消收藏一个直播
+     *
+     * @param liveInfo 直播
+     * @param target   目标数据
+     * @param resultInfo 结果
+     */
+    fun cancelFavoriteALive(liveInfo: LiveInfo, target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
+        mRemoteDataSource.cancelFavoriteALive(liveInfo, target, resultInfo)
+    }
 }
