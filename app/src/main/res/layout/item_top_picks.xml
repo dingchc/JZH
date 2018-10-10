@@ -5,17 +5,20 @@
 
     <data>
 
+        <import type="com.jzh.parents.app.Constants"/>
+
         <variable
             name="liveInfo"
             type="com.jzh.parents.viewmodel.info.LiveInfo" />
     </data>
 
     <!-- 直播条目信息 -->
-    <android.support.v7.widget.CardView
+    <com.jzh.parents.widget.VipCardView
         android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
+        app:isShowVip="@{liveInfo.isVip == Constants.LIVE_IS_VIP}"
         app:cardCornerRadius="6dp">
 
         <LinearLayout
@@ -69,5 +72,5 @@
 
             </RelativeLayout>
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </com.jzh.parents.widget.VipCardView>
 </layout>

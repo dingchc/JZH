@@ -85,6 +85,11 @@ public interface Constants {
     int TYPE_FAVORITE_YES = 1;
 
     /**
+     * 直播是VIP
+     */
+    int LIVE_IS_VIP = 1;
+
+    /**
      * 首页显示即将播放的个数：2个
      */
     int HOME_LIVE_WILL_LIMIT = 2;

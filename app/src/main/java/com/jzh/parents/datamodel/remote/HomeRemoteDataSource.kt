@@ -310,7 +310,7 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
 
             homeConfigRes.output.recommendList.forEach {
 
-                val liveItem = LiveInfo(title = it.live?.title ?: "", imageUrl = it.pic?.info ?: "", look = it.live?.look ?: 0, recommendPos = it.pic?.position ?: 0)
+                val liveItem = LiveInfo(title = it.live?.title ?: "", imageUrl = it.pic?.info ?: "", look = it.live?.look ?: 0, isVip = it.live?.liveVip ?: 0, recommendPos = it.pic?.position ?: 0)
 
                 recommendList.add(liveItem)
             }
@@ -360,10 +360,9 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
                     break
                 }
 
-                AppLogger.i("* ${value.id}, ${value.isFavorite}, ${value.isSubscribe}")
+                AppLogger.i("* ${value.id}, ${value.isFavorite}, ${value.isSubscribe}, ${value.liveVIP}")
 
-
-                val liveInfo = LiveInfo(id = value.id, title = value.title ?: "", imageUrl = value.pics?.last()?.info ?: "", dateTime = value.startAt ?: "", look = value.look, comments = value.comments, isFavorited = value.isFavorite, isSubscribed = value.isSubscribe, liveCnt = totalCnt, contentType = contentType)
+                val liveInfo = LiveInfo(id = value.id, title = value.title ?: "", imageUrl = value.pics?.last()?.info ?: "", dateTime = value.startAt ?: "", look = value.look, comments = value.comments, isVip = value.liveVIP, isFavorited = value.isFavorite, isSubscribed = value.isSubscribe, liveCnt = totalCnt, contentType = contentType)
 
                 var liveItemEntity: LiveItemEntity
 

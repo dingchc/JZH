@@ -54,6 +54,11 @@ class LiveInfo(
         var isFavorited: Int = 0,
 
         /**
+         * 是否Vip（0 - 未收藏、1 - 已收藏）
+         */
+        var isVip: Int = 0,
+
+        /**
          * 是否免费（0 - 不免费、1 - 免费）
          */
         val isFree: Int = 0,
