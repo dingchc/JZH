@@ -59,7 +59,7 @@ class PhoneLoginViewModel(app: Application) : BaseViewModel(app) {
 
         resultInfo.value = ResultInfo()
 
-        phoneNumber.value = "15010233266"
+        phoneNumber.value = "13466531630"
     }
 
     /**

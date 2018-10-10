@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jzh.parents.R
+import com.jzh.parents.app.Constants
+import com.jzh.parents.databinding.ItemBottomOperateBinding
 import com.jzh.parents.databinding.ItemHomeLiveItemBinding
 import com.jzh.parents.databinding.ItemLivesSearchBinding
 import com.jzh.parents.utils.AppLogger
@@ -15,12 +17,12 @@ import com.jzh.parents.viewmodel.entity.LiveItemEntity
 import com.jzh.parents.viewmodel.info.LiveInfo
 
 /**
- * 直播列表的适配器
+ * 我的直播列表的适配器
  *
  * @author ding
  * Created by Ding on 2018/8/27.
  */
-class FavoriteAdapter(mContext: Context, var mDataList: MutableList<BaseLiveEntity>?, var mListener : OnViewClick? = null) : RecyclerView.Adapter<InnerViewHolder>() {
+class MyLivesAdapter(mContext: Context, var mPageType: Int = Constants.MY_LIVES_PAGE_TYPE_FAVORITE, var mDataList: MutableList<BaseLiveEntity>?, var mListener: OnViewClick? = null) : RecyclerView.Adapter<InnerViewHolder>() {
 
     /**
      * 布局加载器
@@ -44,6 +46,27 @@ class FavoriteAdapter(mContext: Context, var mDataList: MutableList<BaseLiveEnti
                 holder.dataBinding as ItemHomeLiveItemBinding
                 holder.dataBinding.itemEntity = mDataList?.get(position) as LiveItemEntity
 
+                // 点击直播
+                holder.dataBinding.itemLive.setOnClickListener {
+
+                    val liveInfo = (mDataList?.get(position) as LiveItemEntity).liveInfo
+
+                    mListener?.onClickALive(liveInfo = liveInfo)
+                }
+
+            }
+        // 操作实体:
+            BaseLiveEntity.ItemTypeEnum.LIVE_OPERATE.ordinal -> {
+                holder.dataBinding as ItemBottomOperateBinding
+                holder.dataBinding.pageMode = mPageType
+
+                // 类型
+                val type = if (mPageType == Constants.MY_LIVES_PAGE_TYPE_FAVORITE) LiveInfo.LiveInfoEnum.TYPE_REVIEW.value else LiveInfo.LiveInfoEnum.TYPE_WILL.value
+
+                holder.dataBinding.tvOperate.setOnClickListener {
+
+                    mListener?.onClickFooter(type)
+                }
             }
         // 其他
             else -> {
@@ -72,6 +95,12 @@ class FavoriteAdapter(mContext: Context, var mDataList: MutableList<BaseLiveEnti
                 val binding: ItemHomeLiveItemBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_live_item, parent, false)
                 return InnerViewHolder(binding)
             }
+        // 操作实体:
+            BaseLiveEntity.ItemTypeEnum.LIVE_OPERATE.ordinal -> {
+
+                val binding: ItemBottomOperateBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_bottom_operate, parent, false)
+                return InnerViewHolder(binding)
+            }
         // 其他
             else -> {
                 val binding: ItemHomeLiveItemBinding = DataBindingUtil.inflate(mInflater!!, R.layout.item_home_live_item, parent, false)
@@ -88,12 +117,12 @@ class FavoriteAdapter(mContext: Context, var mDataList: MutableList<BaseLiveEnti
         /**
          * 点击了一条直播
          */
-        fun onClickALive(liveInfo : LiveInfo)
+        fun onClickALive(liveInfo: LiveInfo)
 
         /**
          * 点击了头部（contentType == 3 收藏、 contentType == 4 预约）
          */
-        fun onClickFooter(type : Int)
+        fun onClickFooter(type: Int)
     }
 
 }

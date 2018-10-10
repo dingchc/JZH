@@ -48,5 +48,10 @@ abstract class BaseLiveEntity(var itemType: ItemTypeEnum = ItemTypeEnum.LIVE_ITE
          */
         LIVE_SEARCH,
 
+        /**
+         * 操作
+         */
+        LIVE_OPERATE,
+
     }
 }

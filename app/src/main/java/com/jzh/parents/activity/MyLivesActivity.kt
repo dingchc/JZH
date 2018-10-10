@@ -7,14 +7,12 @@ import android.databinding.DataBindingUtil
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.jzh.parents.R
-import com.jzh.parents.adapter.FavoriteAdapter
+import com.jzh.parents.adapter.MyLivesAdapter
 import com.jzh.parents.app.Constants
 import com.jzh.parents.app.JZHApplication
 import com.jzh.parents.databinding.ActivityMyLivesBinding
 import com.jzh.parents.databinding.LayoutNoMyselfLivesBinding
-import com.jzh.parents.datamodel.response.UserInfoRes
 import com.jzh.parents.utils.AppLogger
-import com.jzh.parents.utils.PreferenceUtil
 import com.jzh.parents.viewmodel.MyLivesViewModel
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
 import com.jzh.parents.viewmodel.info.LiveInfo
@@ -39,17 +37,12 @@ class MyLivesActivity : BaseActivity() {
     /**
      * 适配器
      */
-    private var mAdapter: FavoriteAdapter? = null
+    private var mAdapter: MyLivesAdapter? = null
 
     /**
      * 适配器监听
      */
-    private var mAdapterListener: FavoriteAdapter.OnViewClick? = null
-
-    /**
-     * 页面类型
-     */
-    private var mPageType = 0
+    private var mAdapterListener: MyLivesAdapter.OnViewClick? = null
 
     /**
      * 初始化组件
@@ -134,7 +127,7 @@ class MyLivesActivity : BaseActivity() {
 
             AppLogger.i("* load more")
 
-            mViewModel?.loadMoreItemEntities(mPageType)
+            mViewModel?.loadMoreItemEntities(mViewModel?.pageMode?.value ?: Constants.MY_LIVES_PAGE_TYPE_FAVORITE)
         }
 
         // 空视图
@@ -144,7 +137,22 @@ class MyLivesActivity : BaseActivity() {
 
             binding?.tvOperate?.setOnClickListener {
 
-                val type : Int = if (mPageType == Constants.MY_LIVES_PAGE_TYPE_FAVORITE) LiveInfo.LiveInfoEnum.TYPE_REVIEW.value else LiveInfo.LiveInfoEnum.TYPE_WILL.value
+                val pageType : Int = mViewModel?.pageMode?.value ?: Constants.MY_LIVES_PAGE_TYPE_FAVORITE
+                val type: Int = if (pageType == Constants.MY_LIVES_PAGE_TYPE_FAVORITE) LiveInfo.LiveInfoEnum.TYPE_REVIEW.value else LiveInfo.LiveInfoEnum.TYPE_WILL.value
+                gotoLiveListPage(type)
+            }
+        }
+
+        // Adapter的监听
+        mAdapterListener = object : MyLivesAdapter.OnViewClick {
+
+            override fun onClickALive(liveInfo: LiveInfo) {
+
+                mViewModel?.gotoWxMiniProgram(liveInfo.id)
+            }
+
+            override fun onClickFooter(type: Int) {
+
                 gotoLiveListPage(type)
             }
         }
@@ -155,19 +163,20 @@ class MyLivesActivity : BaseActivity() {
      */
     override fun initData() {
 
-        mPageType = intent.getIntExtra(Constants.EXTRA_MY_LIVES_PAGE_TYPE, Constants.MY_LIVES_PAGE_TYPE_FAVORITE)
+        val pageType = intent.getIntExtra(Constants.EXTRA_MY_LIVES_PAGE_TYPE, Constants.MY_LIVES_PAGE_TYPE_FAVORITE)
 
-        mAdapter = FavoriteAdapter(this@MyLivesActivity, null)
+        mViewModel?.pageMode?.value = pageType
+
+        mAdapter = MyLivesAdapter(this@MyLivesActivity, pageType, null)
+
         mDataBinding?.rvData?.adapter = mAdapter
 
         mAdapter?.mListener = mAdapterListener
 
-        mViewModel?.pageMode?.value = mPageType
-
-        mViewModel?.refreshItemEntities(mPageType)
+        mViewModel?.refreshItemEntities(pageType)
 
         // 更改页面标题-收藏讲座
-        if (mPageType == Constants.MY_LIVES_PAGE_TYPE_FAVORITE) {
+        if (pageType == Constants.MY_LIVES_PAGE_TYPE_FAVORITE) {
 
             setToolbarTitle(R.string.myself_favorite)
         }

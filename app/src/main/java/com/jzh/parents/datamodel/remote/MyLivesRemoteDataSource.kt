@@ -84,11 +84,14 @@ class MyLivesRemoteDataSource : BaseRemoteDataSource() {
             cmd = ResultInfo.CMD_LOAD_MORE_LIVES
         }
 
+        // 操作实体
+        val operateEntity = makeOperateEntity()
+
         TSHttpController.INSTANCE.doGet(url, paramsMap, object : TSHttpCallback {
             override fun onSuccess(res: TSBaseResponse?, json: String?) {
 
                 // 处理直播列表结果
-                processLivesResult(page = page, json = json, cmd = cmd, searchEntity = null, isShowItemHeader = false, target = target, resultInfo = resultInfo)
+                processLivesResult(page = page, json = json, cmd = cmd, searchEntity = null, operateEntity = operateEntity, isShowItemHeader = false, target = target, resultInfo = resultInfo)
             }
 
             override fun onException(e: Throwable?) {

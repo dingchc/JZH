@@ -14,6 +14,7 @@ import com.jzh.parents.utils.PreferenceUtil
 import com.jzh.parents.utils.Util
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
 import com.jzh.parents.viewmodel.entity.LiveItemEntity
+import com.jzh.parents.viewmodel.entity.OperateEntity
 import com.jzh.parents.viewmodel.entity.SearchEntity
 import com.jzh.parents.viewmodel.info.LiveInfo
 import com.jzh.parents.viewmodel.info.ResultInfo
@@ -208,11 +209,12 @@ abstract class BaseRemoteDataSource {
      * @param json             json返回结果
      * @param cmd              指令
      * @param searchEntity     搜索实体
+     * @param operateEntity    操作实体(位于列表末尾)
      * @param isShowItemHeader 是否显示条目头
      * @param target           目标
      * @param resultInfo       结果
      */
-    fun processLivesResult(page: Int, json: String?, cmd: Int, searchEntity: SearchEntity?, isShowItemHeader: Boolean = true, target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
+    fun processLivesResult(page: Int, json: String?, cmd: Int, searchEntity: SearchEntity? = null, operateEntity: OperateEntity? = null, isShowItemHeader: Boolean = true, target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
 
         val gson = Gson()
 
@@ -239,11 +241,22 @@ abstract class BaseRemoteDataSource {
 
                 val liveReadyList = liveListRes.liveList
 
+                // 搜索实体
                 if (searchEntity != null) {
                     showEntities.add(searchEntity)
                 }
 
+                // 删除之前的操作实体
+                if (page > 1 && showEntities.size > 1 && operateEntity != null) {
+                    showEntities.removeAt(showEntities.size - 1)
+                }
+
                 showEntities.addAll(composeLiveItemList(page, liveReadyList, liveReadyList?.size ?: 0, liveReadyList?.size ?: 0, isShowItemHeader, false))
+
+                // 添加操作实体
+                if (operateEntity != null) {
+                    showEntities.add(operateEntity)
+                }
 
                 target.value = showEntities
 
@@ -287,6 +300,16 @@ abstract class BaseRemoteDataSource {
         }
 
         return null
+    }
+
+    /**
+     * 构建操作实体
+     *
+     * @return 操作实体
+     */
+    fun makeOperateEntity(): OperateEntity? {
+
+        return OperateEntity()
     }
 
 
