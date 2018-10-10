@@ -45,6 +45,10 @@ class HomeAdapter(private var mContext: Context, var mDataList: MutableList<Base
 
                 holder.dataBinding as ItemHomeLivingBinding
                 holder.dataBinding.itemEntity = mDataList?.get(position) as HomeLiveNowEntity
+
+                holder.dataBinding?.btnEnter.setOnClickListener {
+
+                }
             }
         // Banner条目:
             BaseLiveEntity.ItemTypeEnum.LIVE_BANNER.ordinal -> {
@@ -235,6 +239,11 @@ class HomeAdapter(private var mContext: Context, var mDataList: MutableList<Base
      * 主页控件点击事件
      */
     interface OnViewClick {
+
+        /**
+         * 点击了正在直播
+         */
+        fun onClickLiving()
 
         /**
          * 点击了头部（contentType == 2 即将播放、 contentType == 3 往期回顾）

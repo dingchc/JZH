@@ -105,6 +105,10 @@ class HomeActivity : BaseActivity() {
         // 列表点击
         mAdapterListener = object : HomeAdapter.OnViewClick {
 
+            override fun onClickLiving() {
+                mViewModel?.gotoWxMiniProgram(-1)
+            }
+
             /**
              * 点击了头部（contentType == 2 即将播放、 contentType == 3 往期回顾）
              */

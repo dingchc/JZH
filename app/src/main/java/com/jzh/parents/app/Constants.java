@@ -20,6 +20,16 @@ public interface Constants {
     String WX_APP_SECRET = "9965a66de900edb09b08b97d7111fa0d";
 
     /**
+     * 跳转小程序的用户名
+     */
+    String WX_MINI_PROGRAM_USER_NAME = "gh_46f85bd327bb";
+
+    /**
+     * 跳转小程序的路径
+     */
+    String WX_MINI_PROGRAM_PATH = "/pages/live-home/home?source=1005&pos=list";
+
+    /**
      * 微信授权登录的渠道Id
      */
     String WX_AUTHORIZE_CHANNEL_ID = "20";

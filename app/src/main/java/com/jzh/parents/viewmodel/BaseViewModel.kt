@@ -49,11 +49,11 @@ abstract class BaseViewModel(app: Application) : AndroidViewModel(app) {
         val wxApi = WXAPIFactory.createWXAPI(JZHApplication.instance, Constants.WX_APP_ID)
         wxApi.registerApp(Constants.WX_APP_ID)
 
-        val path : String = if (liveId < 0) "/pages/live-home/home?source=1005&pos=list" else "/pages/live-home/home?source=1005&pos=list" + "&live_id=" + liveId
-        
+        val path : String = if (liveId < 0) Constants.WX_MINI_PROGRAM_PATH else Constants.WX_MINI_PROGRAM_PATH + "&live_id=" + liveId
+
         val req = WXLaunchMiniProgram.Req()
         // 填小程序原始id
-        req.userName = "gh_46f85bd327bb"
+        req.userName = Constants.WX_MINI_PROGRAM_USER_NAME
         req.path = path
         // 可选打开 开发版，体验版和正式版
         req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE
