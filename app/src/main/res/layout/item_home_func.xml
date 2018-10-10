@@ -63,6 +63,7 @@
                 android:layout_width="64dp"
                 android:layout_height="match_parent"
                 android:layout_toLeftOf="@id/tv_myself"
+                android:visibility="gone"
                 android:src="@mipmap/icon_home_living" />
 
             <TextView

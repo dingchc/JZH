@@ -11,11 +11,11 @@ import android.view.ViewGroup
 import com.jzh.parents.R
 import com.jzh.parents.databinding.*
 import com.jzh.parents.listener.OnRecycleItemTouchListener
-import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
 import com.jzh.parents.viewmodel.entity.LiveItemEntity
 import com.jzh.parents.viewmodel.entity.home.*
 import com.jzh.parents.viewmodel.info.LiveInfo
+import com.jzh.parents.widget.VisibleFrameLayout
 
 /**
  * 首页的适配器
@@ -46,8 +46,16 @@ class HomeAdapter(private var mContext: Context, var mDataList: MutableList<Base
                 holder.dataBinding as ItemHomeLivingBinding
                 holder.dataBinding.itemEntity = mDataList?.get(position) as HomeLiveNowEntity
 
-                holder.dataBinding?.btnEnter.setOnClickListener {
+                holder.dataBinding.btnEnter.setOnClickListener {
 
+                    mListener?.onClickLiving()
+                }
+
+                // 可见性监听
+                holder.dataBinding.layoutLiving.mListener = object : VisibleFrameLayout.OnFrameVisibilityChangeListener {
+                    override fun onVisibilityChanged(isVisibility: Boolean) {
+                        mListener?.onVisibilityChanged(isVisibility)
+                    }
                 }
             }
         // Banner条目:
@@ -276,6 +284,13 @@ class HomeAdapter(private var mContext: Context, var mDataList: MutableList<Base
          * @param category 分类
          */
         fun onClickCategory(category: HomeLiveCategoryEntity.LiveCategory)
+
+        /**
+         * 可见性变化
+         *
+         * @param visibility 可见性值
+         */
+        fun onVisibilityChanged(visibility: Boolean)
     }
 
 }

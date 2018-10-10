@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.view.View
 import com.jzh.parents.R
@@ -170,6 +171,25 @@ class HomeActivity : BaseActivity() {
 
                 gotoLiveListPage(0, category.categoryId, category.title)
             }
+
+            /**
+             * 可见性变化
+             *
+             * @param visibility 可见性值
+             */
+            override fun onVisibilityChanged(visibility: Boolean) {
+
+                val isLiving: Boolean = mViewModel?.isLiving() ?: false
+
+                // 如果正在直播
+                if (isLiving) {
+                    // 显示或隐藏正在直播
+                    mDataBinding?.layoutFunc?.ivLiving?.visibility = if (visibility) View.GONE else View.VISIBLE
+                }
+                else {
+                    mDataBinding?.layoutFunc?.ivLiving?.visibility = View.GONE
+                }
+            }
         }
 
         // 错误返回
@@ -203,8 +223,8 @@ class HomeActivity : BaseActivity() {
                     }
                 }
             }
-
         })
+
     }
 
     /**

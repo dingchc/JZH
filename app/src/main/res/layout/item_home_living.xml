@@ -11,7 +11,8 @@
 
     </data>
 
-    <FrameLayout
+    <com.jzh.parents.widget.VisibleFrameLayout
+        android:id="@+id/layout_living"
         android:layout_width="match_parent"
         android:layout_height="116dp"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
@@ -161,5 +162,5 @@
             </RelativeLayout>
         </LinearLayout>
 
-    </FrameLayout>
+    </com.jzh.parents.widget.VisibleFrameLayout>
 </layout>

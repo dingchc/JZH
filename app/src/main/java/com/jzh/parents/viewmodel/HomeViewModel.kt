@@ -2,21 +2,12 @@ package com.jzh.parents.viewmodel
 
 import android.app.Application
 import android.arch.lifecycle.MutableLiveData
-import com.jzh.parents.app.Constants
-import com.jzh.parents.app.JZHApplication
-import com.jzh.parents.datamodel.data.BannerData
 import com.jzh.parents.datamodel.repo.HomeRepository
-import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.entity.*
-import com.jzh.parents.viewmodel.entity.home.*
 import com.jzh.parents.viewmodel.info.LiveInfo
 import com.jzh.parents.viewmodel.info.ResultInfo
-import com.tencent.mm.opensdk.modelbiz.SubscribeMessage
-import com.tencent.mm.opensdk.openapi.WXAPIFactory
-import java.net.URLEncoder
-import java.util.*
-import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram
-import android.R.attr.path
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.Transformations
 
 
 /**
@@ -130,6 +121,15 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
      */
     fun cancelFavoriteALive(liveInfo: LiveInfo) {
         repo.cancelFavoriteALive(liveInfo, itemEntities, resultInfo)
+    }
+
+    /**
+     * 是否正在直播
+     */
+    fun isLiving(): Boolean {
+
+        return itemEntities.value?.find { it.itemType == BaseLiveEntity.ItemTypeEnum.LIVE_NOW } != null
+
     }
 
 }
