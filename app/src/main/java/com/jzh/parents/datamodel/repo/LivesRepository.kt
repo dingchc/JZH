@@ -89,6 +89,6 @@ class LivesRepository : BaseRepository() {
      * @param resultInfo 结果
      */
     fun cancelFavoriteALive(liveInfo: LiveInfo, target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
-        mRemoteDataSource.cancelFavoriteALive(liveInfo, target, resultInfo)
+        mRemoteDataSource.cancelFavoriteALive(liveInfo, false, target, resultInfo)
     }
 }

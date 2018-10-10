@@ -54,6 +54,14 @@ class MyLivesAdapter(mContext: Context, var mPageType: Int = Constants.MY_LIVES_
                     mListener?.onClickALive(liveInfo = liveInfo)
                 }
 
+                // 操作
+                holder.dataBinding.ivOperate.setOnClickListener {
+
+                    val liveInfo = (mDataList?.get(position) as LiveItemEntity).liveInfo
+
+                    mListener?.onClickOperate(liveInfo.contentType.value, liveInfo = liveInfo)
+                }
+
             }
         // 操作实体:
             BaseLiveEntity.ItemTypeEnum.LIVE_OPERATE.ordinal -> {
@@ -123,6 +131,11 @@ class MyLivesAdapter(mContext: Context, var mPageType: Int = Constants.MY_LIVES_
          * 点击了头部（contentType == 3 收藏、 contentType == 4 预约）
          */
         fun onClickFooter(type: Int)
+
+        /**
+         * 点击操作（contentType == 2 即将播放、 contentType == 3 往期回顾）
+         */
+        fun onClickOperate(type: Int, liveInfo: LiveInfo)
     }
 
 }

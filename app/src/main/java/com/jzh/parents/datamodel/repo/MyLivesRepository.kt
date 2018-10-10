@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import com.jzh.parents.datamodel.local.MyLivesLocalDataSource
 import com.jzh.parents.datamodel.remote.MyLivesRemoteDataSource
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
+import com.jzh.parents.viewmodel.info.LiveInfo
 import com.jzh.parents.viewmodel.info.ResultInfo
 
 /**
@@ -46,5 +47,16 @@ class MyLivesRepository : BaseRepository() {
     fun loadMoreItemEntities(pageType: Int, target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
 
         mRemoteDataSource.loadMoreItemEntities(pageType, target, resultInfo)
+    }
+
+    /**
+     * 取消收藏一个直播
+     *
+     * @param liveInfo 直播
+     * @param target   目标数据
+     * @param resultInfo 结果
+     */
+    fun cancelFavoriteALive(liveInfo: LiveInfo, target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
+        mRemoteDataSource.cancelFavoriteALive(liveInfo, true, target, resultInfo)
     }
 }

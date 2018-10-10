@@ -4,6 +4,7 @@ import android.app.Application
 import android.arch.lifecycle.MutableLiveData
 import com.jzh.parents.datamodel.repo.MyLivesRepository
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
+import com.jzh.parents.viewmodel.info.LiveInfo
 import com.jzh.parents.viewmodel.info.ResultInfo
 
 /**
@@ -49,5 +50,14 @@ class MyLivesViewModel(app: Application) : BaseViewModel(app) {
      */
     fun loadMoreItemEntities(pageType: Int) {
         repo.loadMoreItemEntities(pageType, itemEntities, resultInfo)
+    }
+
+    /**
+     * 取消收藏一个直播
+     *
+     * @param liveInfo 直播
+     */
+    fun cancelFavoriteALive(liveInfo: LiveInfo) {
+        repo.cancelFavoriteALive(liveInfo, itemEntities, resultInfo)
     }
 }

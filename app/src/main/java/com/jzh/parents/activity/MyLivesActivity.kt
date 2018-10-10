@@ -119,6 +119,19 @@ class MyLivesActivity : BaseActivity() {
                         showToastError(resultInfo.tip)
                     }
                 }
+            // 取消收藏
+                ResultInfo.CMD_HOME_CANCEL_FAVORITE -> {
+
+                    // 加载数据成功
+                    if (resultInfo.code == ResultInfo.CODE_NO_DATA) {
+                        showEmptyView()
+                    }
+                    // 错误
+                    else {
+                        showToastError(resultInfo.tip)
+                    }
+                }
+
             }
         })
 
@@ -154,6 +167,14 @@ class MyLivesActivity : BaseActivity() {
             override fun onClickFooter(type: Int) {
 
                 gotoLiveListPage(type)
+            }
+
+            override fun onClickOperate(type: Int, liveInfo: LiveInfo) {
+
+                //取消收藏
+                if (type == LiveInfo.LiveInfoEnum.TYPE_REVIEW.value && liveInfo.isFavorited == Constants.TYPE_FAVORITE_YES) {
+                    mViewModel?.cancelFavoriteALive(liveInfo)
+                }
             }
         }
     }

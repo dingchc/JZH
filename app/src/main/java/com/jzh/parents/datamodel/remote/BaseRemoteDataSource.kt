@@ -109,7 +109,7 @@ abstract class BaseRemoteDataSource {
      * @param target     目标数据
      * @param resultInfo 结果
      */
-    fun cancelFavoriteALive(liveInfo: LiveInfo, target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
+    fun cancelFavoriteALive(liveInfo: LiveInfo, isAutoRemoved: Boolean = false, target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
 
         val paramsMap = TreeMap<String, String>()
 
@@ -119,8 +119,6 @@ abstract class BaseRemoteDataSource {
         TSHttpController.INSTANCE.doDelete(Api.URL_API_FAVORITES_LIST + "/" + liveInfo.id, paramsMap, object : TSHttpCallback {
             override fun onSuccess(res: TSBaseResponse?, json: String?) {
 
-                AppLogger.i("json=$json")
-
                 val baseRes: BaseRes? = Util.fromJson<BaseRes>(json ?: "", object : TypeToken<BaseRes>() {
 
                 }.type)
@@ -128,12 +126,30 @@ abstract class BaseRemoteDataSource {
                 // 成功
                 if (baseRes?.code == ResultInfo.CODE_SUCCESS) {
 
-                    // 通知数据变更了
-                    liveInfo.isFavorited = 0
+                    // 是否自动删除List中的数据
+                    if (isAutoRemoved) {
 
-                    val liveList = target.value
+                        val liveList = target.value
 
-                    target.value = liveList
+                        val removeEntity: BaseLiveEntity? = liveList?.find { (it as LiveItemEntity).liveInfo == liveInfo }
+                        liveList?.remove(removeEntity)
+
+                        target.value = liveList
+
+                        if ((liveList?.size ?: 0) <= 1) {
+                            notifyResult(cmd = ResultInfo.CMD_HOME_CANCEL_FAVORITE, code = ResultInfo.CODE_NO_DATA, resultLiveData = resultInfo)
+                        }
+
+                    } else {
+
+                        // 通知数据变更了
+                        liveInfo.isFavorited = 0
+
+                        val liveList = target.value
+
+                        target.value = liveList
+                    }
+
                 }
                 // 失败
                 else {

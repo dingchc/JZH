@@ -78,4 +78,6 @@ class MyselfEditRepository : BaseRepository() {
     fun changeRoleAndName(name: String, roleId: Int, userInfoRes: MutableLiveData<UserInfoRes>, resultInfo: MutableLiveData<ResultInfo>) {
         mRemoteDataSource.changeRoleAndName(name, roleId, userInfoRes, resultInfo)
     }
+
+
 }

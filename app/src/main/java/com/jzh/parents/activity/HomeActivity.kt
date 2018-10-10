@@ -321,4 +321,9 @@ class HomeActivity : BaseActivity() {
         mDataBinding = DataBindingUtil.inflate(layoutInflater, R.layout.activity_home, null, false)
         return mDataBinding!!.root
     }
+
+    override fun onBackPressed() {
+
+        moveTaskToBack(false)
+    }
 }

@@ -360,8 +360,6 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
                     break
                 }
 
-                AppLogger.i("* ${value.id}, ${value.isFavorite}, ${value.isSubscribe}, ${value.liveVIP}")
-
                 val liveInfo = LiveInfo(id = value.id, title = value.title ?: "", imageUrl = value.pics?.last()?.info ?: "", dateTime = value.startAt ?: "", look = value.look, comments = value.comments, isVip = value.liveVIP, isFavorited = value.isFavorite, isSubscribed = value.isSubscribe, liveCnt = totalCnt, contentType = contentType)
 
                 var liveItemEntity: LiveItemEntity
