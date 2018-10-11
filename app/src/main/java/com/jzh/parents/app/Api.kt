@@ -133,5 +133,10 @@ object Api {
      */
     const val URL_API_REFRESH_TOKEN = URL_API_LIVE_DOMAIN + "token/refresh"
 
+    /**
+     * 地址：意见反馈
+     */
+    const val URL_API_FEEDBACK = URL_API_LIVE_DOMAIN + "feedback/create"
+
 
 }

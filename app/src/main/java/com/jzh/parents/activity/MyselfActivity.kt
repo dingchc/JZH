@@ -158,6 +158,8 @@ class MyselfActivity : BaseActivity() {
      */
     fun onFeedbackClick(view: View) {
 
+        val intent = Intent(this@MyselfActivity, FeedbackActivity::class.java)
+        startActivity(intent)
     }
 
     /**

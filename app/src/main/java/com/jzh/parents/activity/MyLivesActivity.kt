@@ -27,6 +27,9 @@ import com.scwang.smartrefresh.header.MaterialHeader
  */
 class MyLivesActivity : BaseActivity() {
 
+    /**
+     * 数据绑定
+     */
     private var mDataBinding: ActivityMyLivesBinding? = null
 
     /**

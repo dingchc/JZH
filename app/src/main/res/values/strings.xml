@@ -96,6 +96,8 @@
     <string name="tip_for_no_search_result">没有搜到相关内容,换个关键词试试吧!</string>
     <string name="tip_token_expired">登录已过期，请重新登录</string>
     <string name="title_token_expired">登录已过期</string>
+    <string name="submit_feedback">提交反馈</string>
+
 
 
 

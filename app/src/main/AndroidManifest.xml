@@ -133,6 +133,15 @@
             </intent-filter>
         </activity>
 
+        <!-- 意见反馈页面 -->
+        <activity
+            android:name=".activity.FeedbackActivity"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <!-- 微信回调 -->
         <activity
             android:name=".wxapi.WXEntryActivity"
