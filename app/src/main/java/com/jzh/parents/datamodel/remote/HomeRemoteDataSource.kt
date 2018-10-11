@@ -39,19 +39,21 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
      * 请求直播数据
      *
      * @param target 目标数据
+     * @param resultInfo 结果
      */
-    fun fetchHomeLiveData(target: MutableLiveData<MutableList<BaseLiveEntity>>) {
+    fun fetchHomeLiveData(target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
 
         // 获取首页配置
-        fetchCategoryAndTopPicks(target)
+        fetchCategoryAndTopPicks(target, resultInfo)
     }
 
     /**
      * 获取用户信息
      *
      * @param target 目标数据
+     * @param resultInfo 结果
      */
-    fun fetchUserInfo(target: MutableLiveData<FuncEntity>) {
+    fun fetchUserInfo(target: MutableLiveData<FuncEntity>, resultInfo: MutableLiveData<ResultInfo>) {
 
         val paramsMap = TreeMap<String, String>()
 
@@ -67,23 +69,25 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
                 }.type)
 
 
-                if (userInfoRes != null) {
+                if (userInfoRes != null && userInfoRes.code == ResultInfo.CODE_SUCCESS) {
 
-                    if (userInfoRes.code == ResultInfo.CODE_SUCCESS) {
+                    // 保存用户信息
+                    PreferenceUtil.instance.setCurrentUserId(userInfoRes.userInfo?.member ?: "")
+                    PreferenceUtil.instance.setCurrentUserJson(json)
 
-                        // 保存用户信息
-                        PreferenceUtil.instance.setCurrentUserId(userInfoRes.userInfo?.member ?: "")
-                        PreferenceUtil.instance.setCurrentUserJson(json)
+                    AppLogger.i("userInfoRes=" + userInfoRes)
 
-                        AppLogger.i("userInfoRes=" + userInfoRes)
+                    target.value = makeFunc(userInfoRes)
 
-                        target.value = makeFunc(userInfoRes)
-                    }
+                    notifyResult(cmd = ResultInfo.CMD_DEFAULT, code = ResultInfo.CODE_SUCCESS, tip = userInfoRes.tip, resultLiveData = resultInfo)
+                } else {
+                    notifyResult(cmd = ResultInfo.CMD_DEFAULT, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo)
                 }
             }
 
             override fun onException(e: Throwable?) {
                 AppLogger.i(e?.message)
+                notifyException(cmd = ResultInfo.CMD_DEFAULT, code = ResultInfo.CODE_EXCEPTION, tip = ResultInfo.TIP_EXCEPTION, resultLiveData = resultInfo, throwable = e)
             }
         })
     }
@@ -109,8 +113,9 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
      * 获取分类及热门推荐
      *
      * @param target 数据目标
+     * @param resultInfo 结果
      */
-    private fun fetchCategoryAndTopPicks(target: MutableLiveData<MutableList<BaseLiveEntity>>) {
+    private fun fetchCategoryAndTopPicks(target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
 
         val paramsMap = TreeMap<String, String>()
 
@@ -121,16 +126,22 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
 
                 AppLogger.i("json=$json")
 
-                val homeConfigRes: HomeConfigRes = Util.fromJson<HomeConfigRes>(json ?: "", object : TypeToken<HomeConfigRes>() {
+                val homeConfigRes: HomeConfigRes? = Util.fromJson<HomeConfigRes>(json ?: "", object : TypeToken<HomeConfigRes>() {
 
                 }.type)
 
-                // 获取直播条目数据
-                fetchLivesData(homeConfigRes, target)
+                if (homeConfigRes != null && homeConfigRes.code == ResultInfo.CODE_SUCCESS) {
+
+                    // 获取直播条目数据
+                    fetchLivesData(homeConfigRes, target, resultInfo)
+                } else {
+                    notifyResult(cmd = ResultInfo.CMD_DEFAULT, code = ResultInfo.CODE_EXCEPTION, tip = ResultInfo.TIP_EXCEPTION, resultLiveData = resultInfo)
+                }
             }
 
             override fun onException(e: Throwable?) {
                 AppLogger.i(e?.message)
+                notifyException(cmd = ResultInfo.CMD_DEFAULT, code = ResultInfo.CODE_EXCEPTION, tip = ResultInfo.TIP_EXCEPTION, resultLiveData = resultInfo, throwable = e)
             }
         })
     }
@@ -141,7 +152,7 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
      * @param homeConfigRes 配置数据（推荐或回顾）
      * @param target 数据目标
      */
-    private fun fetchLivesData(homeConfigRes: HomeConfigRes?, target: MutableLiveData<MutableList<BaseLiveEntity>>) {
+    private fun fetchLivesData(homeConfigRes: HomeConfigRes?, target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
 
         val paramsMap = TreeMap<String, String>()
         paramsMap.put("token", PreferenceUtil.instance.getToken())
@@ -149,17 +160,21 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
         TSHttpController.INSTANCE.doGet(Api.URL_API_HOME_LIVE_LIST, paramsMap, object : TSHttpCallback {
             override fun onSuccess(res: TSBaseResponse?, json: String?) {
 
-                val homeShowRes: HomeShowRes = Util.fromJson<HomeShowRes>(json ?: "", object : TypeToken<HomeShowRes>() {
+                val homeShowRes: HomeShowRes? = Util.fromJson<HomeShowRes>(json ?: "", object : TypeToken<HomeShowRes>() {
 
                 }.type)
 
-                AppLogger.i("json=${homeShowRes.code}, tip = ${homeShowRes.tip}, size = ${homeShowRes.output?.liveReadyList?.size}")
-
-                composeLiveEntities(homeConfigRes, homeShowRes, target)
+                if (homeShowRes != null && homeShowRes.code == ResultInfo.CODE_SUCCESS) {
+                    composeLiveEntities(homeConfigRes, homeShowRes, target)
+                    notifyResult(cmd = ResultInfo.CMD_DEFAULT, code = ResultInfo.CODE_SUCCESS, tip = ResultInfo.TIP_EXCEPTION, resultLiveData = resultInfo)
+                } else {
+                    notifyResult(cmd = ResultInfo.CMD_DEFAULT, code = ResultInfo.CODE_EXCEPTION, tip = ResultInfo.TIP_EXCEPTION, resultLiveData = resultInfo)
+                }
             }
 
             override fun onException(e: Throwable?) {
                 AppLogger.i(e?.message)
+                notifyException(cmd = ResultInfo.CMD_DEFAULT, code = ResultInfo.CODE_EXCEPTION, tip = ResultInfo.TIP_EXCEPTION, resultLiveData = resultInfo, throwable = e)
             }
         })
     }

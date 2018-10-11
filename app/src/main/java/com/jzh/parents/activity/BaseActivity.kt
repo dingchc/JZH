@@ -26,6 +26,7 @@ import com.jzh.parents.app.Constants
 import com.jzh.parents.app.JZHApplication
 import com.jzh.parents.listener.IDialogCallback
 import com.jzh.parents.utils.*
+import com.jzh.parents.viewmodel.info.ResultInfo
 import com.jzh.parents.widget.PhoneEditDialog
 import com.jzh.parents.widget.TSProgressDialog
 import com.jzh.parents.widget.TSToolbar
@@ -708,6 +709,67 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
         return uri
     }
 
+    /**
+     * 是否是Token错误
+     *
+     * @param resultInfo 信息返回
+     * @return true 是、false 否
+     */
+    fun isTokenError(resultInfo: ResultInfo?): Boolean {
+
+        var ret = false
+
+        when (resultInfo?.cmd) {
+
+        // token过期
+            ResultInfo.CMD_TOKEN_EXPIRED -> {
+                hiddenProgressDialog()
+                ret = true
+            }
+
+        // token失败
+            ResultInfo.CMD_TOKEN_FAILED -> {
+                onTokenFailed()
+                ret = true
+            }
+        }
+        return ret
+    }
+
+    /**
+     * token过期回调
+     */
+    fun onTokenExpired() {
+        AppLogger.i("token expired.")
+    }
+
+    /**
+     * token失效
+     */
+    private fun onTokenFailed() {
+
+        AppLogger.i("onTokenFailed")
+
+        if ((JZHApplication.instance?.isShowTokenDialog!!)) {
+            return
+        }
+
+        JZHApplication.instance?.isShowTokenDialog = true
+
+        showTipDialog(getString(R.string.title_token_expired), getString(R.string.tip_token_expired), object : TipDialog.TipDialogClickListener {
+
+            override fun onConfirmClick() {
+
+                JZHApplication.instance?.isShowTokenDialog = false
+                gotoLoginPage()
+            }
+
+            override fun onCancelClick() {
+                JZHApplication.instance?.isShowTokenDialog = false
+            }
+        })
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
@@ -922,13 +984,26 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
             dialog = TipDialog.newInstance(title, content)
         }
 
-        val tip = dialog as TipDialog
+        val tipDialog = dialog as TipDialog
 
-        tip.show(supportFragmentManager, TipDialog.TAG_FRAGMENT)
+        tipDialog.show(supportFragmentManager, TipDialog.TAG_FRAGMENT)
 
         // 点击回调
-        tip.mListener = listener
+        tipDialog.mListener = listener
+    }
 
+    /**
+     * 跳到登录页
+     */
+    fun gotoLoginPage() {
+
+        PreferenceUtil.instance.setCurrentUserId("")
+
+        val intent = Intent(this@BaseActivity, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+
+        startActivity(intent)
+        finish()
     }
 
 

@@ -72,8 +72,7 @@ class RegisterRemoteDataSource : BaseRemoteDataSource() {
             override fun onException(e: Throwable?) {
                 AppLogger.i(e?.message)
 
-                notifyResult(cmd = cmd, tip = ResultInfo.TIP_EXCEPTION, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo)
-
+                notifyException(cmd = cmd, tip = ResultInfo.TIP_EXCEPTION, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo, throwable = e)
             }
         })
     }

@@ -38,6 +38,8 @@ class PhoneLoginRemoteDataSource : BaseRemoteDataSource() {
         paramsMap.put("phone", phoneNumber)
         paramsMap.put("code", code)
 
+        val cmd = ResultInfo.CMD_LOGIN_SMS_LOGIN
+
         TSHttpController.INSTANCE.doPost(Api.URL_API_SMS_LOGIN, paramsMap, object : TSHttpCallback {
 
             override fun onSuccess(response: TSBaseResponse?, json: String?) {
@@ -51,15 +53,15 @@ class PhoneLoginRemoteDataSource : BaseRemoteDataSource() {
                     AppLogger.i("* outputRes.output=" + res?.output)
                     PreferenceUtil.instance.setToken(res?.output)
 
-                    notifyResult(ResultInfo.CMD_LOGIN_SMS_LOGIN, code = res?.code ?: 0, tip = res?.tip ?: "", obj = res, resultLiveData = resultInfoLiveData)
+                    notifyResult(cmd = cmd, code = res?.code ?: 0, tip = res?.tip ?: "", obj = res, resultLiveData = resultInfoLiveData)
                 }
             }
 
-            override fun onException(throwable: Throwable?) {
+            override fun onException(e: Throwable?) {
 
-                AppLogger.i("error msg =" + throwable?.message)
+                AppLogger.i("error msg =" + e?.message)
 
-                notifyResult(ResultInfo.CMD_LOGIN_SMS_LOGIN, ResultInfo.CODE_EXCEPTION, ResultInfo.TIP_EXCEPTION, resultLiveData = resultInfoLiveData)
+                notifyException(cmd = cmd, code = ResultInfo.CODE_EXCEPTION, tip = ResultInfo.TIP_EXCEPTION, resultLiveData = resultInfoLiveData, throwable = e)
 
             }
         })

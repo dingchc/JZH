@@ -18,6 +18,7 @@ import com.alibaba.sdk.android.push.CommonCallback
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory
 import com.alibaba.sdk.android.push.CloudPushService
 import com.jzh.parents.utils.FileLogUtil
+import com.jzh.parents.utils.PreferenceUtil
 import com.tencent.mm.opensdk.modelbase.BaseResp
 
 
@@ -32,6 +33,11 @@ class JZHApplication : Application() {
      * 微信返回结果
      */
     var wxResult: BaseResp? = null
+
+    /**
+     * 是否已显示Token过期对话框
+     */
+    var isShowTokenDialog : Boolean = false
 
     companion object {
 

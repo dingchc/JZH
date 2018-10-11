@@ -35,15 +35,6 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
      * 获取AccessToken
      * @param token 授权token
      */
-    fun wxGetAccessToken(token: String) {
-
-        repo.wxGetAccessToken(token)
-    }
-
-    /**
-     * 获取AccessToken
-     * @param token 授权token
-     */
     fun loginWithAuthorize(token: String) {
         repo.loginWithAuthorize(token, resultInfo)
     }

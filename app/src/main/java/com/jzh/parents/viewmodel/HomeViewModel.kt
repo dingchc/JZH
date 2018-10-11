@@ -62,19 +62,11 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
     }
 
     /**
-     * 加载功能条数据
-     */
-    fun loadFuncEntity() {
-
-        funcEntity.value = repo.loadFuncEntity()
-    }
-
-    /**
      * 请求直播数据
      */
     fun fetchHomeLiveData() {
 
-        repo.fetchHomeLiveData(itemEntities)
+        repo.fetchHomeLiveData(itemEntities, resultInfo)
     }
 
     /**
@@ -82,7 +74,7 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
      *
      */
     fun fetchUserInfo() {
-        repo.fetchUserInfo(funcEntity)
+        repo.fetchUserInfo(funcEntity, resultInfo)
     }
 
     /**

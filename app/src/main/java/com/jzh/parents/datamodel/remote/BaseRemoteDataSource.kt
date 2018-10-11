@@ -9,6 +9,7 @@ import com.jzh.parents.app.Constants
 import com.jzh.parents.datamodel.data.LiveData
 import com.jzh.parents.datamodel.response.BaseRes
 import com.jzh.parents.datamodel.response.LiveListRes
+import com.jzh.parents.datamodel.response.OutputRes
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.PreferenceUtil
 import com.jzh.parents.utils.Util
@@ -21,6 +22,7 @@ import com.jzh.parents.viewmodel.info.ResultInfo
 import com.tunes.library.wrapper.network.TSHttpController
 import com.tunes.library.wrapper.network.listener.TSHttpCallback
 import com.tunes.library.wrapper.network.model.TSBaseResponse
+import retrofit2.HttpException
 import java.util.*
 
 /**
@@ -41,7 +43,7 @@ abstract class BaseRemoteDataSource {
      * @param resultLiveData     结果的ResultInfo
      *
      */
-    fun notifyResult(cmd: Int = 0, code: Int = 200, tip: String? = "", obj: Any? = null, resultLiveData: MutableLiveData<ResultInfo>? = null) {
+    fun notifyResult(cmd: Int = 0, code: Int = ResultInfo.CODE_SUCCESS, tip: String? = "", obj: Any? = null, resultLiveData: MutableLiveData<ResultInfo>? = null) {
 
         val result = resultLiveData?.value
 
@@ -52,6 +54,68 @@ abstract class BaseRemoteDataSource {
 
         AppLogger.i("* " + result?.cmd + result?.code + ", " + result?.tip)
         resultLiveData?.value = result
+    }
+
+    /**
+     * 通知结果
+     *
+     * @param cmd                指令
+     * @param code               状态码
+     * @param tip                信息
+     * @param obj                数据
+     * @param resultLiveData     结果的ResultInfo
+     *
+     */
+    fun notifyException(cmd: Int = 0, code: Int = ResultInfo.CODE_EXCEPTION, tip: String? = "", obj: Any? = null, resultLiveData: MutableLiveData<ResultInfo>? = null, throwable: Throwable? = null) {
+
+        // token错误
+        if (is401Error(throwable)) {
+
+            // Token过期
+            if (isTokenExpired(throwable)) {
+                refreshToken()
+                notifyResult(ResultInfo.CMD_TOKEN_EXPIRED, ResultInfo.CODE_EXCEPTION, tip, obj, resultLiveData)
+            }
+            // Token失效
+            else {
+                notifyResult(ResultInfo.CMD_TOKEN_FAILED, ResultInfo.CODE_EXCEPTION, tip, obj, resultLiveData)
+            }
+        }
+        // 其他错误
+        else {
+            notifyResult(cmd, code, tip, obj, resultLiveData)
+        }
+    }
+
+    /**
+     * 刷新token
+     */
+    private fun refreshToken() {
+
+        val paramsMap = TreeMap<String, String>()
+        paramsMap.put("token", PreferenceUtil.instance.getToken())
+
+        TSHttpController.INSTANCE.doPost(Api.URL_API_REFRESH_TOKEN, paramsMap, object : TSHttpCallback {
+            override fun onSuccess(res: TSBaseResponse?, json: String?) {
+
+                AppLogger.i("**** json=$json")
+
+                val outputRes: OutputRes? = Util.fromJson<OutputRes>(json ?: "", object : TypeToken<OutputRes>() {
+
+                }.type)
+
+                // 成功
+                if (outputRes?.code == ResultInfo.CODE_SUCCESS) {
+
+                    PreferenceUtil.instance.setToken(outputRes.output)
+                }
+            }
+
+            override fun onException(e: Throwable?) {
+                AppLogger.i(e?.message)
+
+            }
+        })
     }
 
     /**
@@ -67,6 +131,8 @@ abstract class BaseRemoteDataSource {
 
         paramsMap.put("token", PreferenceUtil.instance.getToken())
         paramsMap.put("id", liveInfo.id.toString())
+
+        val cmd = ResultInfo.CMD_HOME_FAVORITE
 
         TSHttpController.INSTANCE.doPost(Api.URL_API_FAVORITES_LIST + "/" + liveInfo.id, paramsMap, object : TSHttpCallback {
             override fun onSuccess(res: TSBaseResponse?, json: String?) {
@@ -90,13 +156,13 @@ abstract class BaseRemoteDataSource {
                 // 失败
                 else {
 
-                    notifyResult(cmd = ResultInfo.CMD_HOME_FAVORITE, code = baseRes?.code ?: 0, tip = baseRes?.tip, resultLiveData = resultInfo)
+                    notifyResult(cmd = cmd, code = baseRes?.code ?: 0, tip = baseRes?.tip, resultLiveData = resultInfo)
                 }
             }
 
             override fun onException(e: Throwable?) {
                 AppLogger.i(e?.message)
-                notifyResult(cmd = ResultInfo.CMD_HOME_FAVORITE, code = ResultInfo.CODE_EXCEPTION, tip = ResultInfo.TIP_EXCEPTION, resultLiveData = resultInfo)
+                notifyException(cmd = cmd, code = ResultInfo.CODE_EXCEPTION, tip = ResultInfo.TIP_EXCEPTION, resultLiveData = resultInfo, throwable = e)
 
             }
         })
@@ -115,6 +181,8 @@ abstract class BaseRemoteDataSource {
 
         paramsMap.put("token", PreferenceUtil.instance.getToken())
         paramsMap.put("id", liveInfo.id.toString())
+
+        val cmd = ResultInfo.CMD_HOME_CANCEL_FAVORITE
 
         TSHttpController.INSTANCE.doDelete(Api.URL_API_FAVORITES_LIST + "/" + liveInfo.id, paramsMap, object : TSHttpCallback {
             override fun onSuccess(res: TSBaseResponse?, json: String?) {
@@ -137,7 +205,7 @@ abstract class BaseRemoteDataSource {
                         target.value = liveList
 
                         if ((liveList?.size ?: 0) <= 1) {
-                            notifyResult(cmd = ResultInfo.CMD_HOME_CANCEL_FAVORITE, code = ResultInfo.CODE_NO_DATA, resultLiveData = resultInfo)
+                            notifyResult(cmd = cmd, code = ResultInfo.CODE_NO_DATA, resultLiveData = resultInfo)
                         }
 
                     } else {
@@ -154,13 +222,13 @@ abstract class BaseRemoteDataSource {
                 // 失败
                 else {
 
-                    notifyResult(cmd = ResultInfo.CMD_HOME_CANCEL_FAVORITE, code = baseRes?.code ?: 0, tip = baseRes?.tip, resultLiveData = resultInfo)
+                    notifyResult(cmd = cmd, code = baseRes?.code ?: 0, tip = baseRes?.tip, resultLiveData = resultInfo)
                 }
             }
 
             override fun onException(e: Throwable?) {
                 AppLogger.i(e?.message)
-                notifyResult(cmd = ResultInfo.CMD_HOME_CANCEL_FAVORITE, code = ResultInfo.CODE_EXCEPTION, tip = ResultInfo.TIP_EXCEPTION, resultLiveData = resultInfo)
+                notifyException(cmd = cmd, code = ResultInfo.CODE_EXCEPTION, tip = ResultInfo.TIP_EXCEPTION, resultLiveData = resultInfo, throwable = e)
 
             }
         })
@@ -185,6 +253,7 @@ abstract class BaseRemoteDataSource {
         paramsMap.put("action", action)
         paramsMap.put("openid", openId)
 
+        val cmd = ResultInfo.CMD_HOME_SUBSCRIBE
 
         TSHttpController.INSTANCE.doPost(Api.URL_API_SUBSCRIBE_A_LIVE, paramsMap, object : TSHttpCallback {
             override fun onSuccess(res: TSBaseResponse?, json: String?) {
@@ -208,12 +277,15 @@ abstract class BaseRemoteDataSource {
                 // 失败
                 else {
 
-                    notifyResult(cmd = ResultInfo.CMD_HOME_SUBSCRIBE, code = baseRes?.code ?: 0, tip = baseRes?.tip, resultLiveData = resultInfo)
+                    notifyResult(cmd = cmd, code = baseRes?.code ?: 0, tip = baseRes?.tip, resultLiveData = resultInfo)
                 }
             }
 
             override fun onException(e: Throwable?) {
                 AppLogger.i(e?.message)
+
+                notifyException(cmd = cmd, code = ResultInfo.CODE_EXCEPTION, tip = ResultInfo.TIP_EXCEPTION, resultLiveData = resultInfo, throwable = e)
+
             }
         })
     }
@@ -422,5 +494,47 @@ abstract class BaseRemoteDataSource {
 
             }
         })
+    }
+
+    /**
+     * 是否是Token错误{"tip":"token faild"}、{"tip":"token expired"}
+     *
+     * @param throwable  HttpException异常
+     * @return true 是、false 否
+     */
+    private fun is401Error(throwable: Throwable?): Boolean {
+
+        return throwable is HttpException && throwable.code() == Constants.TOKEN_EXCEPTION
+    }
+
+    /**
+     * Token是否过期
+     *
+     * @param throwable  HttpException异常
+     * @return true 过期(刷新)、false 失效(登录)
+     */
+    private fun isTokenExpired(throwable: Throwable?): Boolean {
+
+        return throwable is HttpException && getHttpExceptionContent(throwable).contains("token expired")
+    }
+
+    /**
+     * 获取HttpException的内容
+     *
+     * @param exception HttpException异常
+     */
+    private fun getHttpExceptionContent(exception: HttpException): String {
+
+        var content = ""
+
+        try {
+            content = exception.response().errorBody()?.string() ?: ""
+            AppLogger.i("content=$content")
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        return content
     }
 }

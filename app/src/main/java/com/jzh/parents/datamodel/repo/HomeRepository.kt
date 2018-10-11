@@ -44,19 +44,22 @@ class HomeRepository : BaseRepository() {
     /**
      * 获取用户信息
      *
-     * @param target 目标数据
+     * @param target     目标数据
+     * @param resultInfo 结果
      */
-    fun fetchUserInfo(target: MutableLiveData<FuncEntity>) {
-        mRemoteDataSource?.fetchUserInfo(target)
+    fun fetchUserInfo(target: MutableLiveData<FuncEntity>, resultInfo: MutableLiveData<ResultInfo>) {
+        mRemoteDataSource?.fetchUserInfo(target, resultInfo)
     }
 
     /**
      * 请求直播数据
-     * @param target 数据目标
+     *
+     * @param target     数据目标
+     * @param resultInfo 结果
      */
-    fun fetchHomeLiveData(target: MutableLiveData<MutableList<BaseLiveEntity>>) {
+    fun fetchHomeLiveData(target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
 
-        mRemoteDataSource?.fetchHomeLiveData(target)
+        mRemoteDataSource?.fetchHomeLiveData(target, resultInfo)
     }
 
     /**

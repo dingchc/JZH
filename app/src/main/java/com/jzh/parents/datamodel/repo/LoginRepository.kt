@@ -38,15 +38,6 @@ class LoginRepository : BaseRepository() {
     /**
      * 获取AccessToken
      * @param token 授权token
-     */
-    fun wxGetAccessToken(token: String) {
-
-        mRemoteDataSource.wxGetAccessToken(token)
-    }
-
-    /**
-     * 获取AccessToken
-     * @param token 授权token
      * @param resultInfo 返回结果
      */
     fun loginWithAuthorize(token: String, resultInfo : MutableLiveData<ResultInfo>) {

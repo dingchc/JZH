@@ -64,6 +64,21 @@ data class ResultInfo(
         const val TIP_EXCEPTION = "请求异常"
 
         /**
+         * 首页：默认
+         */
+        const val CMD_DEFAULT = 0
+
+        /**
+         * Token过期
+         */
+        const val CMD_TOKEN_EXPIRED = 10
+
+        /**
+         * Token失效
+         */
+        const val CMD_TOKEN_FAILED = 11
+
+        /**
          * 获取短信验证码
          */
         const val CMD_LOGIN_GET_SMS_CODE = 1001

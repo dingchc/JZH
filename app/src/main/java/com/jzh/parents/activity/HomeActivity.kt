@@ -195,6 +195,13 @@ class HomeActivity : BaseActivity() {
         // 错误返回
         mViewModel?.resultInfo?.observe(this@HomeActivity, Observer { resultInfo ->
 
+
+            // 如果是token错误返回
+            if (isTokenError(resultInfo)) {
+
+                return@Observer
+            }
+
             when (resultInfo?.cmd) {
 
             // 预约
@@ -223,6 +230,8 @@ class HomeActivity : BaseActivity() {
                     }
                 }
             }
+
+            AppLogger.i("*3333")
         })
 
     }
@@ -274,9 +283,6 @@ class HomeActivity : BaseActivity() {
      * 初始化数据
      */
     override fun initData() {
-
-        // 加载功能条
-        mViewModel?.loadFuncEntity()
 
         // 加载列表
         val dataList: MutableList<BaseLiveEntity> = mutableListOf(HomeLiveNowEntity())

@@ -128,5 +128,10 @@ object Api {
      */
     const val URL_API_QUIT_CLASSROOM = URL_API_LIVE_DOMAIN + "quit/classroom"
 
+    /**
+     * 地址：刷新Token
+     */
+    const val URL_API_REFRESH_TOKEN = URL_API_LIVE_DOMAIN + "token/refresh"
+
 
 }

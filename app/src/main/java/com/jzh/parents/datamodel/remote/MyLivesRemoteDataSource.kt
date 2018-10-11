@@ -97,7 +97,7 @@ class MyLivesRemoteDataSource : BaseRemoteDataSource() {
             override fun onException(e: Throwable?) {
                 AppLogger.i(e?.message)
 
-                notifyResult(cmd = cmd, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo)
+                notifyException(cmd = cmd, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo, throwable = e)
 
             }
         })

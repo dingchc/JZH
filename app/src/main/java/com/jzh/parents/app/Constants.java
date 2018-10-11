@@ -55,14 +55,9 @@ public interface Constants {
     int MIN_YEAR_OF_LEANING = 1980;
 
     /**
-     * 请求成功
+     * Token失效
      */
-    int REQ_CODE_OK = 200;
-
-    /**
-     * 成功
-     */
-    int RET_CODE_OK = 0;
+    int TOKEN_EXCEPTION = 401;
 
     /**
      * 是否预约：否

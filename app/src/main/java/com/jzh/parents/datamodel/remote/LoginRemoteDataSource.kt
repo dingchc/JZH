@@ -62,6 +62,8 @@ class LoginRemoteDataSource : BaseRemoteDataSource() {
         paramsMap.put("code", token)
         paramsMap.put("tid", Constants.WX_AUTHORIZE_CHANNEL_ID)
 
+        val cmd = ResultInfo.CMD_LOGIN_WX_LOGIN
+
         TSHttpController.INSTANCE.doPost(Api.URL_API_LOGIN_WITH_WX_AUTHORIZE, paramsMap, object : TSHttpCallback {
             override fun onSuccess(res: TSBaseResponse?, json: String?) {
 
@@ -81,14 +83,14 @@ class LoginRemoteDataSource : BaseRemoteDataSource() {
                         if (!TextUtils.isEmpty(authorizeRes.authorize?.token)) {
                             PreferenceUtil.instance.setToken(authorizeRes.authorize?.token)
                         }
-                        notifyResult(cmd = ResultInfo.CMD_LOGIN_WX_LOGIN, code = ResultInfo.CODE_SUCCESS, obj = authorizeRes, resultLiveData = resultInfo)
+                        notifyResult(cmd = cmd, code = ResultInfo.CODE_SUCCESS, obj = authorizeRes, resultLiveData = resultInfo)
                     }
                     // 失败
                     else {
-                        notifyResult(cmd = ResultInfo.CMD_LOGIN_WX_LOGIN, code = authorizeRes.code, tip = authorizeRes.tip, resultLiveData = resultInfo)
+                        notifyResult(cmd = cmd, code = authorizeRes.code, tip = authorizeRes.tip, resultLiveData = resultInfo)
                     }
                 } else {
-                    notifyResult(cmd = ResultInfo.CMD_LOGIN_WX_LOGIN, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo)
+                    notifyResult(cmd = cmd, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo)
                 }
 
             }
@@ -96,62 +98,8 @@ class LoginRemoteDataSource : BaseRemoteDataSource() {
             override fun onException(e: Throwable?) {
                 AppLogger.i(e?.message)
 
-                notifyResult(cmd = ResultInfo.CMD_LOGIN_WX_LOGIN, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo)
+                notifyException(cmd = cmd, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo, throwable = e)
 
-            }
-        })
-    }
-
-    /**
-     * 获取AccessToken
-     * @param token 授权token
-     */
-    fun wxGetAccessToken(token: String) {
-
-        val paramsMap = TreeMap<String, String>()
-        paramsMap.put("appid", Constants.WX_APP_ID)
-        paramsMap.put("secret", Constants.WX_APP_SECRET)
-        paramsMap.put("code", token)
-        paramsMap.put("grant_type", "authorization_code")
-
-        TSHttpController.INSTANCE.doPost(Api.URL_WX_GET_ACCESS_TOKEN, paramsMap, object : TSHttpCallback {
-            override fun onSuccess(res: TSBaseResponse?, json: String?) {
-
-                val gson = Gson()
-
-                val tokenData = gson.fromJson<AccessTokenData>(json, object : TypeToken<AccessTokenData>() {
-
-                }.type)
-
-                AppLogger.i("accessToken=" + tokenData.accessToken + ", unionid=" + tokenData.unionid)
-
-                // 获取用户信息
-                wxGetUserInfo(tokenData.accessToken, tokenData.openid, tokenData.unionid)
-            }
-
-            override fun onException(e: Throwable?) {
-                AppLogger.i(e?.message)
-            }
-        })
-    }
-
-    /**
-     * 获取用户信息
-     */
-    private fun wxGetUserInfo(accessToken: String, openId: String, unionId: String) {
-
-        val paramsMap = TreeMap<String, String>()
-        paramsMap.put("access_token", accessToken)
-        paramsMap.put("openid", openId)
-
-        TSHttpController.INSTANCE.doPost(Api.URL_WX_GET_USER_INFO, paramsMap, object : TSHttpCallback {
-            override fun onSuccess(res: TSBaseResponse?, json: String?) {
-
-                AppLogger.i("json=" + json)
-            }
-
-            override fun onException(e: Throwable?) {
-                AppLogger.i(e?.message)
             }
         })
     }

@@ -1,6 +1,7 @@
 package com.jzh.parents.datamodel.response
 
 import com.jzh.parents.app.Constants
+import com.jzh.parents.viewmodel.info.ResultInfo
 
 /**
  * 响应类的父类
@@ -8,5 +9,5 @@ import com.jzh.parents.app.Constants
  * @author ding
  * Created by Ding on 2018/9/12.
  */
-open class BaseRes(val code : Int = Constants.REQ_CODE_OK, val tip : String = "") {
+open class BaseRes(val code : Int = ResultInfo.CODE_SUCCESS, val tip : String = "") {
 }
