@@ -97,6 +97,10 @@
     <string name="tip_token_expired">登录已过期，请重新登录</string>
     <string name="title_token_expired">登录已过期</string>
     <string name="submit_feedback">提交反馈</string>
+    <string name="hint_feedback">请您填写至少10个字的问题描述，以便我们为您提供更优的家决方案</string>
+    <string name="tip_feedback_input">请输入反馈内容</string>
+    <string name="submit_success">已提交</string>
+
 
 
 

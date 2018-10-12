@@ -25,9 +25,16 @@
             android:textSize="16sp" />
 
         <EditText
+            android:id="@+id/ed_content"
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:layout_marginTop="20dp"
+            android:gravity="top|start"
+            android:hint="@string/hint_feedback"
+            android:text="@={viewModel.content}"
+            android:textSize="12sp"
+            android:textColor="@color/font_black"
+            android:padding="10dp"
             android:background="@drawable/round_bg_white_with_border" />
 
         <com.jzh.parents.widget.TSButton
@@ -37,6 +44,7 @@
             android:text="@string/submit_feedback"
             android:textColor="@color/white"
             android:textSize="18sp"
+            android:onClick="onSubmitClick"
             app:corner="8dp"
             app:normal_color="@color/login_btn_green"
             app:pressed_color="@color/login_btn_green_dark" />
