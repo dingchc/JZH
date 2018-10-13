@@ -41,26 +41,12 @@ class NoRegisterDialog : AppCompatDialogFragment() {
      */
     private var mDataBinding: DialogNoRegisterBinding? = null
 
-    /**
-     * 标题
-     */
-    var mTitle: String? = null
-
-    /**
-     * 内容
-     */
-    var mContent: String? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
 
         setStyle(STYLE_NO_FRAME, 0)
-
-        mTitle = arguments?.getString(Constants.EXTRA_TIP_DIALOG_TITLE)
-        mContent = arguments?.getString(Constants.EXTRA_TIP_DIALOG_CONTENT)
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -156,14 +142,11 @@ class NoRegisterDialog : AppCompatDialogFragment() {
          *
          * @return Fragment
          */
-        fun newInstance(title: String, content: String): NoRegisterDialog {
+        fun newInstance(): NoRegisterDialog {
 
             val fragment = NoRegisterDialog()
 
             val bundle = Bundle()
-
-            bundle.putString(Constants.EXTRA_TIP_DIALOG_TITLE, title)
-            bundle.putString(Constants.EXTRA_TIP_DIALOG_CONTENT, content)
 
             fragment.arguments = bundle
 

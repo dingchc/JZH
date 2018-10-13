@@ -105,19 +105,8 @@
     <string name="mobile_no_register_tip">请使用微信登录或前往公众号“在线家长会”注册</string>
     <string name="long_press_for_save">长按图片保存二维码</string>
     <string name="use_wx_login">使用微信登录</string>
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <string name="tip_sdcard_no_more_space_for_save_image">存储空间不足，无法保存图片</string>
+    <string name="tip_file_exist">图片已存在相册中，无须再次保存</string>
 
 
 </resources>

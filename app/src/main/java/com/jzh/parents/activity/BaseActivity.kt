@@ -4,9 +4,11 @@ import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.support.annotation.StringRes
 import android.support.v4.app.ActivityOptionsCompat
@@ -20,6 +22,7 @@ import android.transition.Slide
 import android.transition.Transition
 import android.view.*
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.Toast
 import com.jzh.parents.R
 import com.jzh.parents.app.Constants
@@ -1004,6 +1007,81 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
 
         startActivity(intent)
         finish()
+    }
+
+    /**
+     * 保存图片
+     */
+    fun saveImage(url: String?, imageView: ImageView?) {
+
+        AppLogger.i("$ saveImage $")
+
+        if (TextUtils.isEmpty(url) || imageView == null) {
+            AppLogger.i("url is null or imageview is null")
+            return
+        }
+
+        // 权限检查
+        if (!checkPermission(MPermissionUtil.PermissionRequest.READ_WRITE_STORAGE)) {
+            return
+        }
+
+        val folder = Environment.getExternalStorageDirectory().toString() + "/dcim/Camera/"
+
+        // 检查是否存在sdcard
+        if (Environment.getExternalStorageState() != Environment.MEDIA_MOUNTED) {
+            showToastError(getString(R.string.tip_sdcard_cannot_use))
+            return
+        }
+
+        val dirFile = File(folder)
+        if (!dirFile.exists()) {
+            dirFile.mkdirs()
+        }
+
+        if (!Util.isExternalStorageEnough()) {
+            showToastError(getString(R.string.tip_sdcard_no_more_space_for_save_image))
+            return
+        }
+
+        val bitmapDrawable: BitmapDrawable
+
+        val bitmap: Bitmap?
+
+        if (imageView.drawable is BitmapDrawable) {
+            bitmapDrawable = imageView.drawable as BitmapDrawable
+            bitmap = bitmapDrawable.bitmap
+        } else {
+            return
+        }
+
+        var fileName = ""
+
+        if (fileName.indexOf(".") >= 0) {
+            fileName = fileName.substring(0, fileName.indexOf(".")) + ".jpg"
+        }
+
+        if (bitmap != null) {
+
+            val filePath = folder + fileName
+
+            val f = File(filePath)
+
+            if (f.exists()) {
+                showToastError(getString(R.string.tip_file_exist))
+                return
+            }
+
+            ImageUtils.saveBitmapToFile(filePath, bitmap)
+
+            val intent = Intent(
+                    Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
+            val uri = Uri.fromFile(File(filePath))
+
+            intent.data = uri
+            sendBroadcast(intent)
+
+        }
     }
 
 

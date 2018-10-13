@@ -162,16 +162,16 @@ class PhoneLoginActivity : BaseActivity(), SmsCDTimer.OnSmsTickListener {
     fun onSmsLoginClick(view: View) {
 
         // 显示未注册对话框
-//        showNoRegisterDialog("1231231", "123123123", object : NoRegisterDialog.DialogClickListener {
-//
-//            override fun onConfirmClick() {
-//
-//            }
-//
-//            override fun onCancelClick() {
-//
-//            }
-//        })
+        showNoRegisterDialog(object : NoRegisterDialog.DialogClickListener {
+
+            override fun onConfirmClick() {
+
+            }
+
+            override fun onCancelClick() {
+
+            }
+        })
 
         // 检查手机号
         if (!Util.checkPhoneNumberValid(mViewModel?.phoneNumber?.value)) {
@@ -198,12 +198,12 @@ class PhoneLoginActivity : BaseActivity(), SmsCDTimer.OnSmsTickListener {
     /**
      * 显示未注册对话框
      */
-    fun showNoRegisterDialog(title: String, content: String, listener: NoRegisterDialog.DialogClickListener) {
+    private fun showNoRegisterDialog(listener: NoRegisterDialog.DialogClickListener) {
 
         var dialog = supportFragmentManager.findFragmentByTag(NoRegisterDialog.TAG_FRAGMENT)
 
         if (dialog == null) {
-            dialog = NoRegisterDialog.newInstance(title, content)
+            dialog = NoRegisterDialog.newInstance()
         }
 
         val noRegisterDialog = dialog as NoRegisterDialog
@@ -213,6 +213,4 @@ class PhoneLoginActivity : BaseActivity(), SmsCDTimer.OnSmsTickListener {
         // 点击回调
         noRegisterDialog.mListener = listener
     }
-
-
 }

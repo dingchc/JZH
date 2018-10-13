@@ -4,16 +4,23 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.res.Resources
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.net.Uri
+import android.os.Build
 import android.os.Environment
+import android.os.StatFs
 import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
 import android.support.annotation.IdRes
 import android.support.v4.content.ContextCompat
 import android.text.TextUtils
+import android.widget.ImageView
+import android.widget.Toast
 import com.google.gson.Gson
 import com.jzh.parents.app.JZHApplication
 import com.jzh.parents.R
@@ -414,7 +421,6 @@ class Util {
                         res1.deleteCharAt(res1.length - 1)
                     }
 
-                    AppLogger.e("*mac= " + res1.toString())
                     return res1.toString()
                 }
             } catch (ex: Exception) {
@@ -422,6 +428,43 @@ class Util {
             }
 
             return "02:00:00:00:00:00"
+        }
+
+        /**
+         * 外部存储器存储空间是否充足
+         *
+         * @return true 充足、false 不充足
+         */
+        fun isExternalStorageEnough(): Boolean {
+
+            var ret = true
+
+            if (getUsableSpace(Environment
+                    .getExternalStorageDirectory()) < 1024 * 1024 * 30) {
+                ret = false
+            }
+
+            return ret
+        }
+
+        /**
+         * 获取可用存储空间
+         *
+         * @param path 路径
+         * @return 可用空间
+         */
+        private fun getUsableSpace(path: File): Long {
+            val stats = StatFs(path.path)
+            var availableBytes: Long = 0
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                availableBytes = stats.availableBytes
+            } else {
+                return path.usableSpace
+            }
+
+            AppLogger.i(AppLogger.TAG, "availableBytes=" + availableBytes)
+            return availableBytes
         }
     }
 

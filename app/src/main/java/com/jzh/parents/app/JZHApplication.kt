@@ -74,15 +74,13 @@ class JZHApplication : Application() {
         val pushService = PushServiceFactory.getCloudPushService()
         pushService.register(context, object : CommonCallback {
             override fun onSuccess(response: String) {
-                AppLogger.i("init cloudchannel success response=")
-                pushDeviceId = pushService.deviceId
+                AppLogger.i("init cloudchannel success response=" + pushService.deviceId)
             }
 
             override fun onFailed(errorCode: String, errorMessage: String) {
                 AppLogger.e("init cloudchannel failed -- errorcode:$errorCode -- errorMessage:$errorMessage")
             }
         })
-
     }
 
     /**

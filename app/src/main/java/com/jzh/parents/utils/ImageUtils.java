@@ -277,6 +277,44 @@ public class ImageUtils {
     }
 
     /**
+     * 图片存储文件
+     *
+     * @param path   路径
+     * @param bitmap 图片
+     * @return 图片
+     */
+    public static String saveBitmapToFile(String path, Bitmap bitmap) {
+
+        if (TextUtils.isEmpty(path)) {
+            return null;
+        }
+
+        OutputStream os = null;
+
+        try {
+            os = new FileOutputStream(path);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (os != null) {
+
+                try {
+                    os.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (bitmap != null && !bitmap.isRecycled()) {
+                bitmap.recycle();
+            }
+        }
+
+        return path;
+    }
+
+    /**
      * 读入路径图片，根据目前的宽、高，加载新的图片，并返回Bitmap
      *
      * @param path       图片路径

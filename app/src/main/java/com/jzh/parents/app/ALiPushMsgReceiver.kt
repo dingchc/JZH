@@ -16,7 +16,7 @@ class ALiPushMsgReceiver : MessageReceiver() {
     override fun onMessage(context: Context?, message: CPushMessage?) {
         super.onMessage(context, message)
 
-        AppLogger.i("* message=" + message)
+        AppLogger.i("* message ${message?.title}, ${message?.content}")
     }
 
     override fun onNotification(context: Context?, title: String?, summary: String?, extraMap: MutableMap<String, String>?) {
