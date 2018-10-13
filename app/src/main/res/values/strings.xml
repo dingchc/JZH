@@ -101,6 +101,11 @@
     <string name="tip_feedback_input">请输入反馈内容</string>
     <string name="submit_success">已提交</string>
 
+    <string name="mobile_no_register_title">家长您好，手机号无法匹配</string>
+    <string name="mobile_no_register_tip">请使用微信登录或前往公众号“在线家长会”注册</string>
+    <string name="long_press_for_save">长按图片保存二维码</string>
+    <string name="use_wx_login">使用微信登录</string>
+
 
 
 

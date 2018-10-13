@@ -20,6 +20,8 @@ import com.jzh.parents.utils.Util
 import com.jzh.parents.viewmodel.PhoneLoginViewModel
 import com.jzh.parents.viewmodel.bindadapter.TSDataBindingComponent
 import com.jzh.parents.viewmodel.info.ResultInfo
+import com.jzh.parents.widget.NoRegisterDialog
+import com.jzh.parents.widget.TipDialog
 import java.util.*
 
 /**
@@ -162,6 +164,18 @@ class PhoneLoginActivity : BaseActivity(), SmsCDTimer.OnSmsTickListener {
      */
     fun onSmsLoginClick(view: View) {
 
+        // 显示未注册对话框
+        showNoRegisterDialog("1231231", "123123123", object : NoRegisterDialog.DialogClickListener {
+
+            override fun onConfirmClick() {
+
+            }
+
+            override fun onCancelClick() {
+
+            }
+        })
+
         // 检查手机号
         if (!Util.checkPhoneNumberValid(mViewModel?.phoneNumber?.value)) {
             showToastError(getString(R.string.phone_number_is_invalid))
@@ -182,6 +196,25 @@ class PhoneLoginActivity : BaseActivity(), SmsCDTimer.OnSmsTickListener {
 
     override fun isSupportTransitionAnimation(): Boolean {
         return false
+    }
+
+    /**
+     * 显示未注册对话框
+     */
+    fun showNoRegisterDialog(title: String, content: String, listener: NoRegisterDialog.DialogClickListener) {
+
+        var dialog = supportFragmentManager.findFragmentByTag(NoRegisterDialog.TAG_FRAGMENT)
+
+        if (dialog == null) {
+            dialog = NoRegisterDialog.newInstance(title, content)
+        }
+
+        val noRegisterDialog = dialog as NoRegisterDialog
+
+        noRegisterDialog.show(supportFragmentManager, NoRegisterDialog.TAG_FRAGMENT)
+
+        // 点击回调
+        noRegisterDialog.mListener = listener
     }
 
 

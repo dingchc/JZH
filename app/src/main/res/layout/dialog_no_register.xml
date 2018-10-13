@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.jzh.parents.viewmodel.PhoneLoginViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/layout_content"
+            android:layout_width="match_parent"
+            android:layout_height="360dp"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="28dp"
+            android:layout_marginStart="28dp"
+            android:background="@drawable/round_bg_white"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:text="@string/mobile_no_register_title"
+                android:textColor="@color/font_black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="@string/mobile_no_register_tip"
+                android:textColor="@color/font_myself_class_title"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/iv_qr_code"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="25dp"
+                android:src="@mipmap/icon_qr_code" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@string/long_press_for_save"
+                android:textColor="@color/font_myself_class_title"
+                android:textSize="14sp" />
+
+            <com.jzh.parents.widget.TSButton
+                android:id="@+id/btn_use_wx_login"
+                android:layout_width="180dp"
+                android:layout_height="46dp"
+                android:layout_marginTop="28dp"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/use_wx_login"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:corner="8dp"
+                app:normal_color="@color/login_btn_green"
+                app:pressed_color="@color/login_btn_green_dark" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/btn_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:src="@mipmap/icon_dialog_close"/>
+
+    </RelativeLayout>
+
+
+</layout>
+
+
+
