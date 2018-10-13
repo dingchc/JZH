@@ -23,6 +23,7 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
 import java.lang.reflect.Type
+import java.net.NetworkInterface
 import java.util.*
 import java.util.regex.Pattern
 
@@ -387,6 +388,40 @@ class Util {
          */
         fun isSdcardExists(): Boolean {
             return Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
+        }
+
+        /**
+         * 获取网卡地址
+         *
+         * @return 网卡地址
+         */
+        fun getMacAddress(): String {
+            try {
+                val all = Collections.list(NetworkInterface.getNetworkInterfaces())
+                for (nif in all) {
+                    if (!nif.name.equals("wlan0", ignoreCase = true)) {
+                        continue
+                    }
+
+                    val macBytes = nif.hardwareAddress ?: return ""
+
+                    val res1 = StringBuilder()
+                    for (b in macBytes) {
+                        res1.append(String.format("%02X:", b))
+                    }
+
+                    if (res1.length > 0) {
+                        res1.deleteCharAt(res1.length - 1)
+                    }
+
+                    AppLogger.e("*mac= " + res1.toString())
+                    return res1.toString()
+                }
+            } catch (ex: Exception) {
+                AppLogger.e("error " + ex.message)
+            }
+
+            return "02:00:00:00:00:00"
         }
     }
 

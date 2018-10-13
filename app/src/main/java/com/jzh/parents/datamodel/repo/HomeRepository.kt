@@ -97,4 +97,14 @@ class HomeRepository : BaseRepository() {
         mRemoteDataSource?.cancelFavoriteALive(liveInfo, false, target, resultInfo)
     }
 
+    /**
+     * 设置设备id
+     *
+     * @param resultInfo 结果
+     *
+     */
+    fun syncDeviceId(resultInfo: MutableLiveData<ResultInfo>) {
+        mRemoteDataSource?.syncDeviceId(resultInfo)
+    }
+
 }

@@ -2,15 +2,18 @@ package com.jzh.parents.datamodel.remote
 
 import android.arch.lifecycle.MutableLiveData
 import android.text.TextUtils
+import com.alibaba.sdk.android.ams.common.util.Md5Util
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jzh.parents.app.Api
 import com.jzh.parents.app.Constants
+import com.jzh.parents.app.JZHApplication
 import com.jzh.parents.datamodel.data.LiveData
 import com.jzh.parents.datamodel.response.BaseRes
 import com.jzh.parents.datamodel.response.LiveListRes
 import com.jzh.parents.datamodel.response.OutputRes
 import com.jzh.parents.utils.AppLogger
+import com.jzh.parents.utils.MD5Util
 import com.jzh.parents.utils.PreferenceUtil
 import com.jzh.parents.utils.Util
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
@@ -277,6 +280,50 @@ abstract class BaseRemoteDataSource {
                 // 失败
                 else {
 
+                    notifyResult(cmd = cmd, code = baseRes?.code ?: 0, tip = baseRes?.tip, resultLiveData = resultInfo)
+                }
+            }
+
+            override fun onException(e: Throwable?) {
+                AppLogger.i(e?.message)
+
+                notifyException(cmd = cmd, code = ResultInfo.CODE_EXCEPTION, tip = ResultInfo.TIP_EXCEPTION, resultLiveData = resultInfo, throwable = e)
+
+            }
+        })
+    }
+
+    /**
+     * 设置设备id
+     *
+     * @param resultInfo 结果
+     *
+     */
+    fun syncDeviceId(resultInfo: MutableLiveData<ResultInfo>) {
+
+        val paramsMap = TreeMap<String, String>()
+
+        paramsMap.put("token", PreferenceUtil.instance.getToken())
+        paramsMap.put("device_id", JZHApplication.instance?.pushDeviceId ?: "")
+        paramsMap.put("client", Constants.DEVICE_TYPE_ANDROID)
+
+        val cmd = ResultInfo.CMD_DEVICE_ID
+
+        TSHttpController.INSTANCE.doPost(Api.URL_API_DEVICE_ID, paramsMap, object : TSHttpCallback {
+            override fun onSuccess(res: TSBaseResponse?, json: String?) {
+
+                AppLogger.i("json=$json")
+
+                val baseRes: BaseRes? = Util.fromJson<BaseRes>(json ?: "", object : TypeToken<BaseRes>() {
+
+                }.type)
+
+                // 成功
+                if (baseRes?.code == ResultInfo.CODE_SUCCESS) {
+                    notifyResult(cmd = cmd, code = ResultInfo.CODE_SUCCESS, resultLiveData = resultInfo)
+                }
+                // 失败
+                else {
                     notifyResult(cmd = cmd, code = baseRes?.code ?: 0, tip = baseRes?.tip, resultLiveData = resultInfo)
                 }
             }

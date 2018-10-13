@@ -124,4 +124,12 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
 
     }
 
+    /**
+     * 设置设备id
+     *
+     */
+    fun syncDeviceId() {
+        repo.syncDeviceId(resultInfo)
+    }
+
 }

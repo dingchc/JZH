@@ -83,7 +83,11 @@ class LoginRemoteDataSource : BaseRemoteDataSource() {
                         if (!TextUtils.isEmpty(authorizeRes.authorize?.token)) {
                             PreferenceUtil.instance.setToken(authorizeRes.authorize?.token)
                         }
+
                         notifyResult(cmd = cmd, code = ResultInfo.CODE_SUCCESS, obj = authorizeRes, resultLiveData = resultInfo)
+
+                        // 设置设备id
+                        syncDeviceId(resultInfo)
                     }
                     // 失败
                     else {

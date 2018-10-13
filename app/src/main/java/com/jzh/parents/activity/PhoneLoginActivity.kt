@@ -106,11 +106,8 @@ class PhoneLoginActivity : BaseActivity(), SmsCDTimer.OnSmsTickListener {
 
                     // 成功
                     if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
-
                         startActivity(Intent(this@PhoneLoginActivity, HomeActivity::class.java))
                         finishCompat()
-
-
                     }
                     // 失败
                     else {
@@ -165,16 +162,16 @@ class PhoneLoginActivity : BaseActivity(), SmsCDTimer.OnSmsTickListener {
     fun onSmsLoginClick(view: View) {
 
         // 显示未注册对话框
-        showNoRegisterDialog("1231231", "123123123", object : NoRegisterDialog.DialogClickListener {
-
-            override fun onConfirmClick() {
-
-            }
-
-            override fun onCancelClick() {
-
-            }
-        })
+//        showNoRegisterDialog("1231231", "123123123", object : NoRegisterDialog.DialogClickListener {
+//
+//            override fun onConfirmClick() {
+//
+//            }
+//
+//            override fun onCancelClick() {
+//
+//            }
+//        })
 
         // 检查手机号
         if (!Util.checkPhoneNumberValid(mViewModel?.phoneNumber?.value)) {

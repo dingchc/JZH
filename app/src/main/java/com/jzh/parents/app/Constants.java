@@ -70,6 +70,11 @@ public interface Constants {
     int TYPE_SUBSCRIBE_YES = 1;
 
     /**
+     * 设备类型:安卓-2
+     */
+    String DEVICE_TYPE_ANDROID = "2";
+
+    /**
      * 是否已收藏：否
      */
     int TYPE_FAVORITE_NO = 0;

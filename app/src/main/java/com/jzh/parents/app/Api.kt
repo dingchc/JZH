@@ -138,5 +138,8 @@ object Api {
      */
     const val URL_API_FEEDBACK = URL_API_LIVE_DOMAIN + "feedback/create"
 
-
+    /**
+     * 地址：设备id
+     */
+    const val URL_API_DEVICE_ID = URL_API_LIVE_DOMAIN + "user/deviceid"
 }

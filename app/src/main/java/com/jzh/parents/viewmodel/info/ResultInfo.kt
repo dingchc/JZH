@@ -104,6 +104,11 @@ data class ResultInfo(
         const val CMD_LOGIN_REGISTER = 1005
 
         /**
+         * 设备id
+         */
+        const val CMD_DEVICE_ID = 1006
+
+        /**
          * 首页：预约
          */
         const val CMD_HOME_SUBSCRIBE = 2001

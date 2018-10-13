@@ -37,7 +37,12 @@ class JZHApplication : Application() {
     /**
      * 是否已显示Token过期对话框
      */
-    var isShowTokenDialog : Boolean = false
+    var isShowTokenDialog: Boolean = false
+
+    /**
+     * 推送的设备id
+     */
+    var pushDeviceId: String? = null
 
     companion object {
 
@@ -51,7 +56,7 @@ class JZHApplication : Application() {
         TSHttpController.INSTANCE.setAppContext(this)
 
         // 初始化阿里云推送服务
-//        initPushService(this@JZHApplication)
+        initPushService(this@JZHApplication)
 
         // 监听异常
         setUncaughtExceptionHandler()
@@ -69,13 +74,15 @@ class JZHApplication : Application() {
         val pushService = PushServiceFactory.getCloudPushService()
         pushService.register(context, object : CommonCallback {
             override fun onSuccess(response: String) {
-                AppLogger.i("init cloudchannel success")
+                AppLogger.i("init cloudchannel success response=")
+                pushDeviceId = pushService.deviceId
             }
 
             override fun onFailed(errorCode: String, errorMessage: String) {
                 AppLogger.e("init cloudchannel failed -- errorcode:$errorCode -- errorMessage:$errorMessage")
             }
         })
+
     }
 
     /**
@@ -90,6 +97,4 @@ class JZHApplication : Application() {
             FileLogUtil.writeLogToFile(Log.getStackTraceString(ex))
         }
     }
-
-
 }

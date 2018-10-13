@@ -170,6 +170,9 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
                 } else {
                     notifyResult(cmd = ResultInfo.CMD_DEFAULT, code = ResultInfo.CODE_EXCEPTION, tip = ResultInfo.TIP_EXCEPTION, resultLiveData = resultInfo)
                 }
+
+                // 同步设备id
+                syncDeviceId(resultInfo)
             }
 
             override fun onException(e: Throwable?) {

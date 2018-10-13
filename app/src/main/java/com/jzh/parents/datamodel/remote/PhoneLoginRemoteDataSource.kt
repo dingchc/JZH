@@ -54,6 +54,9 @@ class PhoneLoginRemoteDataSource : BaseRemoteDataSource() {
                     PreferenceUtil.instance.setToken(res?.output)
 
                     notifyResult(cmd = cmd, code = res?.code ?: 0, tip = res?.tip ?: "", obj = res, resultLiveData = resultInfoLiveData)
+
+                    // 设置设备id
+                    syncDeviceId(resultInfoLiveData)
                 }
             }
 
