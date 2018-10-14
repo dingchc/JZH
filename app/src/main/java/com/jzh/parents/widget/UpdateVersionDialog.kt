@@ -54,12 +54,12 @@ class UpdateVersionDialog : AppCompatDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
-        val customDialog : Dialog = super.onCreateDialog(savedInstanceState)
+        val customDialog: Dialog = super.onCreateDialog(savedInstanceState)
 
         customDialog.setCancelable(false)
         customDialog.setCanceledOnTouchOutside(false)
 
-        customDialog.setOnKeyListener { _, keyCode, _ ->  keyCode == KeyEvent.KEYCODE_BACK }
+        customDialog.setOnKeyListener { _, keyCode, _ -> keyCode == KeyEvent.KEYCODE_BACK }
 
         val myLayoutInflater = LayoutInflater.from(context)
 
@@ -72,7 +72,7 @@ class UpdateVersionDialog : AppCompatDialogFragment() {
 
         return customDialog
     }
-    
+
     /**
      * 初始化控件
      */
@@ -80,6 +80,16 @@ class UpdateVersionDialog : AppCompatDialogFragment() {
 
         mDataBinding?.tvTitle?.text = getString(R.string.find_new_version, mVersionRes?.versionInfo?.version)
         mDataBinding?.tvContent?.text = mVersionRes?.versionInfo?.remarks
+
+        val isForce = mVersionRes?.versionInfo?.must ?: false
+
+        // 强制更新
+        if (isForce) {
+            mDataBinding?.tvConfirm?.text = getString(R.string.must_update)
+        }
+        else {
+            mDataBinding?.tvConfirm?.text = getString(R.string.confirm_update)
+        }
     }
 
     /**
@@ -95,11 +105,10 @@ class UpdateVersionDialog : AppCompatDialogFragment() {
         // 取消
         mDataBinding?.tvCancel?.setOnClickListener {
 
-            mListener?.onCancelClick()
+            mListener?.onCancelClick(mVersionRes?.versionInfo?.must ?: false)
 
             this@UpdateVersionDialog.dismiss()
         }
-
     }
 
     /**
@@ -116,9 +125,7 @@ class UpdateVersionDialog : AppCompatDialogFragment() {
                 val response = res as? TSResponse<String>
 
                 if (response != null) {
-
-                    AppLogger.i("json=${response.data}")
-
+                    mDataBinding?.tvConfirm?.text = getString(R.string.start_install)
                     mListener?.onReadyInstall(response.data)
                 }
             }
@@ -131,7 +138,7 @@ class UpdateVersionDialog : AppCompatDialogFragment() {
             override fun progress(current: Long, total: Long, isFinished: Boolean) {
 
                 val percent: Int = (current * 1.0f / total * 100).toInt()
-                val btnText = getString(R.string.confirm_update) + "($percent%)"
+                val btnText = getString(R.string.download_doing) + "($percent%)"
                 mDataBinding?.tvConfirm?.text = btnText
             }
         })
@@ -177,8 +184,9 @@ class UpdateVersionDialog : AppCompatDialogFragment() {
 
         /**
          * 点击取消
+         * @param 是否强制更新
          */
-        fun onCancelClick()
+        fun onCancelClick(isForce: Boolean)
 
     }
 }

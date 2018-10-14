@@ -9,6 +9,7 @@ import android.content.IntentFilter
 import android.databinding.DataBindingUtil
 import android.os.Build
 import android.os.Bundle
+import android.os.Process
 import android.support.v4.content.LocalBroadcastManager
 import android.text.TextUtils
 import android.view.View
@@ -218,8 +219,11 @@ class LoginActivity : BaseActivity() {
                 Util.installApk(this@LoginActivity, filePath)
             }
 
-            override fun onCancelClick() {
+            override fun onCancelClick(isForce: Boolean) {
 
+                if (isForce) {
+                    Process.killProcess(Process.myPid())
+                }
             }
         })
     }
