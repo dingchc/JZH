@@ -119,7 +119,6 @@ class LoginActivity : BaseActivity() {
                             val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
                             intent.putExtra(Constants.EXTRA_WX_OPEN_ID, authorizeRes?.authorize?.openId)
                             startActivity(intent)
-//                            finishCompat()
                         }
                         // 进首页
                         else {

@@ -11,12 +11,17 @@ import android.os.*
 import android.text.TextUtils
 import android.view.View
 import com.jzh.parents.R
+import com.jzh.parents.app.Constants
+import com.jzh.parents.app.JZHApplication
 import com.jzh.parents.databinding.ActivityPhoneLoginBinding
+import com.jzh.parents.datamodel.response.WxAuthorizeRes
 import com.jzh.parents.utils.*
 import com.jzh.parents.viewmodel.PhoneLoginViewModel
 import com.jzh.parents.viewmodel.bindadapter.TSDataBindingComponent
 import com.jzh.parents.viewmodel.info.ResultInfo
 import com.jzh.parents.widget.NoRegisterDialog
+import com.tencent.mm.opensdk.modelbase.BaseResp
+import com.tencent.mm.opensdk.modelmsg.SendAuth
 import java.io.File
 
 /**
@@ -59,6 +64,13 @@ class PhoneLoginActivity : BaseActivity(), SmsCDTimer.OnSmsTickListener {
         super.onCreate(savedInstanceState)
 
         SmsCDTimer.addOnSmsTickListener(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // 处理微信授权返回
+        processWxAuthorize()
     }
 
     override fun onDestroy() {
@@ -120,6 +132,47 @@ class PhoneLoginActivity : BaseActivity(), SmsCDTimer.OnSmsTickListener {
                     }
                     // 失败
                     else {
+                        showToastError(resultInfo.tip)
+                    }
+                }
+            // 微信授权
+                ResultInfo.CMD_LOGIN_WX_AUTHORIZE -> {
+
+                    hiddenProgressDialog()
+
+                    // 微信未安装
+                    if (resultInfo.code == ResultInfo.CODE_WX_IS_NOT_INSTALL) {
+                        showToastError(getString(R.string.wx_errcode_is_not_install))
+                    }
+                }
+
+            // 授权登录
+                ResultInfo.CMD_LOGIN_WX_LOGIN -> {
+
+                    hiddenProgressDialog()
+
+                    // 未填写资料
+                    if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
+
+                        val authorizeRes: WxAuthorizeRes? = resultInfo.obj as? WxAuthorizeRes
+
+                        // 填写资料
+                        if (TextUtils.isEmpty(authorizeRes?.authorize?.token)) {
+
+                            val intent = Intent(this@PhoneLoginActivity, RegisterActivity::class.java)
+                            intent.putExtra(Constants.EXTRA_WX_OPEN_ID, authorizeRes?.authorize?.openId)
+                            startActivity(intent)
+                        }
+                        // 进首页
+                        else {
+                            val intent = Intent(this@PhoneLoginActivity, HomeActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+
+                            startActivity(intent)
+                            finishCompat()
+                        }
+
+                    } else {
                         showToastError(resultInfo.tip)
                     }
                 }
@@ -202,6 +255,7 @@ class PhoneLoginActivity : BaseActivity(), SmsCDTimer.OnSmsTickListener {
 
             override fun onConfirmClick() {
 
+                mViewModel?.wxAuthorize()
             }
 
             override fun onCancelClick() {
@@ -304,5 +358,24 @@ class PhoneLoginActivity : BaseActivity(), SmsCDTimer.OnSmsTickListener {
     override fun callSaveImage() {
 
         saveQrCode()
+    }
+
+    /**
+     * 处理微信授权返回
+     */
+    private fun processWxAuthorize() {
+
+        val wxResult: BaseResp? = JZHApplication.instance?.wxResult
+
+        if (wxResult is SendAuth.Resp) {
+
+            showProgressDialog(getString(R.string.login_doing))
+
+            if (!TextUtils.isEmpty(wxResult.code)) {
+                mViewModel?.loginWithAuthorize(wxResult.code)
+            }
+
+            JZHApplication.instance?.wxResult = null
+        }
     }
 }

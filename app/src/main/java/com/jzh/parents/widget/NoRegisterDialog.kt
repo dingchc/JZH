@@ -125,6 +125,8 @@ class NoRegisterDialog : AppCompatDialogFragment() {
     private fun onUseWxLoginClick() {
 
         AppLogger.i("onUseWxLoginClick")
+        dismiss()
+        mListener?.onConfirmClick()
     }
 
     /**

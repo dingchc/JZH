@@ -48,14 +48,12 @@ class PhoneLoginViewModel(app: Application) : BaseViewModel(app) {
     /**
      * 数据仓库
      */
-    private var repo: PhoneLoginRepository? = null
+    private var repo: PhoneLoginRepository = PhoneLoginRepository()
 
     /**
      * 初始化
      */
     init {
-
-        repo = PhoneLoginRepository()
 
         resultInfo.value = ResultInfo()
 
@@ -68,14 +66,30 @@ class PhoneLoginViewModel(app: Application) : BaseViewModel(app) {
     fun fetchSmsCode() {
 
         AppLogger.i("resultInfo=" + resultInfo)
-        repo?.fetchSmsCode(phoneNumber.value ?: "", resultInfo)
+        repo.fetchSmsCode(phoneNumber.value ?: "", resultInfo)
     }
 
     /**
      * 短信登录
      */
     fun smsLogin() {
-        repo?.smsLogin(phoneNumber.value ?: "", smsCode.value ?: "", resultInfo)
+        repo.smsLogin(phoneNumber.value ?: "", smsCode.value ?: "", resultInfo)
+    }
+
+    /**
+     * 微信授权
+     */
+    fun wxAuthorize() {
+
+        repo.wxAuthorize(resultInfo)
+    }
+
+    /**
+     * 获取AccessToken
+     * @param token 授权token
+     */
+    fun loginWithAuthorize(token: String) {
+        repo.loginWithAuthorize(token, resultInfo)
     }
 
 }

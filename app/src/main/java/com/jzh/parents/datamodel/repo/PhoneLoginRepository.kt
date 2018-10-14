@@ -39,4 +39,22 @@ class PhoneLoginRepository : BaseRepository() {
         mRemoteDataSource.smsLogin(phoneNumber, code, resultInfoLiveData)
     }
 
+    /**
+     * 微信授权
+     */
+    fun wxAuthorize(resultInfo: MutableLiveData<ResultInfo>) {
+
+        mRemoteDataSource.wxAuthorize(resultInfo)
+    }
+
+    /**
+     * 获取AccessToken
+     * @param token 授权token
+     * @param resultInfo 返回结果
+     */
+    fun loginWithAuthorize(token: String, resultInfo : MutableLiveData<ResultInfo>) {
+
+        mRemoteDataSource.loginWithAuthorize(token, resultInfo)
+    }
+
 }
