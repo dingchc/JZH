@@ -45,6 +45,11 @@ class PreferenceUtil private constructor() {
          * 获取token
          */
         private const val KEY_SEARCH_RECORD = "search_record_"
+
+        /**
+         * 是否显示引导图
+         */
+        private const val KEY_IS_SHOW_GUIDE = "is_show_guide"
     }
 
     init {
@@ -167,5 +172,25 @@ class PreferenceUtil private constructor() {
     fun isAlreadyLogin() : Boolean {
 
         return !TextUtils.isEmpty(getCurrentUserId())
+    }
+
+    /**
+     * 设置是否显示引导页
+     *
+     * @param isShow true 显示、false 不显示
+     */
+    fun setIsShowGuidePage(isShow: Boolean) {
+        val editor = mPreference?.edit()
+        editor?.putBoolean(KEY_IS_SHOW_GUIDE, isShow)
+        editor?.apply()
+    }
+
+    /**
+     * 获取是否显示引导页
+     *
+     * @return true 显示、false 不显示
+     */
+    fun isShowGuidePage(): Boolean {
+        return mPreference?.getBoolean(KEY_IS_SHOW_GUIDE, true) ?: true
     }
 }

@@ -96,4 +96,17 @@
         <attr name="dc_is_show_verify_code" format="boolean" />
 
     </declare-styleable>
+
+    <!-- 页面指示器 -->
+    <declare-styleable name="TSPageIndicator">
+        <!-- 页面数量 -->
+        <attr name="dot_count" format="integer" />
+        <!-- 指示器间隔 -->
+        <attr name="dot_offset" format="dimension" />
+        <!-- 正常指示器图片 -->
+        <attr name="dot_drawable_normal" format="reference" />
+        <!-- 选中指示器图片 -->
+        <attr name="dot_drawable_selected" format="reference" />
+    </declare-styleable>
+
 </resources>

@@ -47,6 +47,15 @@
             </intent-filter>
         </activity>
 
+        <!-- 引导页面 -->
+        <activity
+            android:name=".activity.GuideActivity"
+            android:theme="@style/AppTheme.Guide">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <!-- 登录页面 -->
         <activity
             android:name=".activity.LoginActivity"

@@ -75,6 +75,8 @@ class LoginActivity : BaseActivity() {
 
         setToolbarTitle(R.string.login)
 
+        mToolbar?.leftIcon?.visibility = View.GONE
+
         mViewModel = ViewModelProviders.of(this@LoginActivity).get(LoginViewModel::class.java)
 
         mDataBinding?.setLifecycleOwner(this@LoginActivity)

@@ -23,6 +23,14 @@ class SplashActivity : AppCompatActivity() {
 
                 startActivity(intent)
             }
+            // 显示引导图
+            else if (PreferenceUtil.instance.isShowGuidePage()) {
+
+                PreferenceUtil.instance.setIsShowGuidePage(false)
+                val intent = Intent(this@SplashActivity, GuideActivity::class.java)
+
+                startActivity(intent)
+            }
             // 未登录
             else {
 
