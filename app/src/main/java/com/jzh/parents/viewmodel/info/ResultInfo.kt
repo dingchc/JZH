@@ -59,6 +59,11 @@ data class ResultInfo(
         const val CODE_NO_DATA = -204
 
         /**
+         * 手机号未注册
+         */
+        const val CODE_MOBILE_UN_RIGISTER = 10007
+
+        /**
          * 信息：异常
          */
         const val TIP_EXCEPTION = "请求异常"

@@ -40,7 +40,7 @@ class PhoneLoginActivity : BaseActivity(), SmsCDTimer.OnSmsTickListener {
     /**
      * 保存图片的资源
      */
-    private var saveDrawableRes : Int = 0
+    private var saveDrawableRes: Int = 0
 
 
     override fun initViews() {
@@ -109,6 +109,11 @@ class PhoneLoginActivity : BaseActivity(), SmsCDTimer.OnSmsTickListener {
                         startActivity(Intent(this@PhoneLoginActivity, HomeActivity::class.java))
                         finishCompat()
                     }
+                    // 手机未注册
+                    else if (resultInfo.code == ResultInfo.CODE_MOBILE_UN_RIGISTER) {
+
+                        processMobileUnRegister()
+                    }
                     // 失败
                     else {
                         showToastError(resultInfo.tip)
@@ -161,6 +166,33 @@ class PhoneLoginActivity : BaseActivity(), SmsCDTimer.OnSmsTickListener {
      */
     fun onSmsLoginClick(view: View) {
 
+        // 检查手机号
+        if (!Util.checkPhoneNumberValid(mViewModel?.phoneNumber?.value)) {
+            showToastError(getString(R.string.phone_number_is_invalid))
+            return
+        }
+
+        // 短信验证码
+        if (TextUtils.isEmpty(mViewModel?.smsCode?.value)) {
+            showToastError(getString(R.string.please_input_sms_code))
+            return
+        }
+
+        showProgressDialog(getString(R.string.login_doing))
+
+        mViewModel?.smsLogin()
+
+    }
+
+    override fun isSupportTransitionAnimation(): Boolean {
+        return false
+    }
+
+    /**
+     * 处理手机未注册
+     */
+    private fun processMobileUnRegister() {
+
         // 显示未注册对话框
         showNoRegisterDialog(object : NoRegisterDialog.DialogClickListener {
 
@@ -184,27 +216,6 @@ class PhoneLoginActivity : BaseActivity(), SmsCDTimer.OnSmsTickListener {
                 saveQrCode()
             }
         })
-
-        // 检查手机号
-        if (!Util.checkPhoneNumberValid(mViewModel?.phoneNumber?.value)) {
-            showToastError(getString(R.string.phone_number_is_invalid))
-            return
-        }
-
-        // 短信验证码
-        if (TextUtils.isEmpty(mViewModel?.smsCode?.value)) {
-            showToastError(getString(R.string.please_input_sms_code))
-            return
-        }
-
-        showProgressDialog(getString(R.string.login_doing))
-
-        mViewModel?.smsLogin()
-
-    }
-
-    override fun isSupportTransitionAnimation(): Boolean {
-        return false
     }
 
     /**
@@ -249,7 +260,7 @@ class PhoneLoginActivity : BaseActivity(), SmsCDTimer.OnSmsTickListener {
             return
         }
 
-        val drawable : Drawable? = Util.getDrawableCompat(saveDrawableRes)
+        val drawable: Drawable? = Util.getDrawableCompat(saveDrawableRes)
 
         val bitmapDrawable: BitmapDrawable
 

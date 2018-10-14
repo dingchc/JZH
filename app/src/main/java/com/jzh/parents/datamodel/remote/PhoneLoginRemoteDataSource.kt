@@ -50,13 +50,15 @@ class PhoneLoginRemoteDataSource : BaseRemoteDataSource() {
 
                     val res: OutputRes? = Util.fromJson<OutputRes>(json!!, object : TypeToken<OutputRes>() {}.type)
 
-                    AppLogger.i("* outputRes.output=" + res?.output)
-                    PreferenceUtil.instance.setToken(res?.output)
+                    if (res != null && res.code == ResultInfo.CODE_SUCCESS) {
+
+                        PreferenceUtil.instance.setToken(res.output)
+                        // 设置设备id
+                        syncDeviceId(resultInfoLiveData)
+                    }
 
                     notifyResult(cmd = cmd, code = res?.code ?: 0, tip = res?.tip ?: "", obj = res, resultLiveData = resultInfoLiveData)
 
-                    // 设置设备id
-                    syncDeviceId(resultInfoLiveData)
                 }
             }
 
