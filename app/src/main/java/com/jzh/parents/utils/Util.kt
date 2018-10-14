@@ -1,7 +1,9 @@
 package com.jzh.parents.utils
 
 import android.app.Activity
+import android.app.ActivityManager
 import android.app.AlertDialog
+import android.app.NotificationManager
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -13,6 +15,7 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
+import android.os.Process
 import android.os.StatFs
 import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
@@ -466,6 +469,56 @@ class Util {
             AppLogger.i(AppLogger.TAG, "availableBytes=" + availableBytes)
             return availableBytes
         }
+
+        /**
+         * 判断进程是否是为本地进程
+         *
+         * @param context 上下文
+         * @return true 本地、false 远程
+         */
+        fun isLocalProcess(context: Context?): Boolean {
+
+            if (context == null) {
+                return false
+            }
+
+            val processId = Process.myPid()
+
+            val processName = getProcessName(context, processId)
+
+            AppLogger.i("processId=$processId, processName=$processName")
+
+            return (!TextUtils.isEmpty(processName) && processName == context.packageName)
+        }
+
+        /**
+         * 获取进程名称
+         *
+         * @param context   上下文
+         * @param processId 进程id
+         * @return 进程名称
+         */
+        fun getProcessName(context: Context?, processId: Int): String {
+
+            var processName = ""
+
+            if (context == null) {
+                return processName
+            }
+
+            val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+
+            for (processInfo in activityManager.runningAppProcesses) {
+                if (processInfo != null && processInfo.pid == processId) {
+
+                    processName = processInfo.processName
+                    break
+                }
+            }
+
+            return processName
+        }
+
     }
 
 

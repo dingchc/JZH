@@ -19,6 +19,7 @@ import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory
 import com.alibaba.sdk.android.push.CloudPushService
 import com.jzh.parents.utils.FileLogUtil
 import com.jzh.parents.utils.PreferenceUtil
+import com.jzh.parents.utils.Util
 import com.tencent.mm.opensdk.modelbase.BaseResp
 
 
@@ -52,15 +53,21 @@ class JZHApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        instance = this@JZHApplication
-        TSHttpController.INSTANCE.setAppContext(this)
+        AppLogger.i("** onCreate")
+
+        if (Util.isLocalProcess(this@JZHApplication)) {
+
+            AppLogger.i("** isLocalProcess")
+
+            instance = this@JZHApplication
+            TSHttpController.INSTANCE.setAppContext(this)
+
+            // 监听异常
+            setUncaughtExceptionHandler()
+        }
 
         // 初始化阿里云推送服务
         initPushService(this@JZHApplication)
-
-        // 监听异常
-        setUncaughtExceptionHandler()
-
     }
 
     /**
