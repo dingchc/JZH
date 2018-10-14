@@ -49,7 +49,6 @@ import java.util.*
  */
 abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideListener, ToolbarClickListener {
 
-
     /**
      * 动画时长
      */
@@ -528,6 +527,11 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
 
             callChoosePicture()
         }
+        // 保存图片
+        else if (requestCode == MPermissionUtil.PermissionRequest.SAVE_IMAGE.requestCode) {
+
+            callSaveImage()
+        }
     }
 
     /**
@@ -649,6 +653,13 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
         startActivityForResult(intent, Constants.PHONE_ALBUM_REQUEST_CODE)
+    }
+
+    /**
+     * 保存图片
+     */
+    open fun callSaveImage() {
+
     }
 
     /**
@@ -1055,7 +1066,7 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
             return
         }
 
-        var fileName = ""
+        var fileName = Util.parseUrlName(url) ?: "temp"
 
         if (fileName.indexOf(".") >= 0) {
             fileName = fileName.substring(0, fileName.indexOf(".")) + ".jpg"
@@ -1074,14 +1085,21 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
 
             ImageUtils.saveBitmapToFile(filePath, bitmap)
 
-            val intent = Intent(
-                    Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
-            val uri = Uri.fromFile(File(filePath))
-
-            intent.data = uri
-            sendBroadcast(intent)
-
+            sendScanFileBroadcast(filePath)
         }
+    }
+
+    /**
+     * 发送扫描文件的广播
+     */
+    fun sendScanFileBroadcast(filePath: String) {
+
+        val intent = Intent(
+                Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
+        val uri = Uri.fromFile(File(filePath))
+
+        intent.data = uri
+        sendBroadcast(intent)
     }
 
 

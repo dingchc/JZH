@@ -498,7 +498,7 @@ class Util {
          * @param processId 进程id
          * @return 进程名称
          */
-        fun getProcessName(context: Context?, processId: Int): String {
+        private fun getProcessName(context: Context?, processId: Int): String {
 
             var processName = ""
 
@@ -517,6 +517,20 @@ class Util {
             }
 
             return processName
+        }
+
+        /**
+         * 获取Url的文件名
+         *
+         * @param url 路径
+         * @return 文件名
+         */
+        fun parseUrlName(url: String?): String? {
+            if (url == null || "" == url) {
+                return url
+            }
+            val start = url.lastIndexOf("/")
+            return url.substring(start + 1)
         }
 
     }

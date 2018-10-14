@@ -97,7 +97,7 @@ class NoRegisterDialog : AppCompatDialogFragment() {
 
         // 长按保存
         mDataBinding?.ivQrCode?.setOnLongClickListener {
-            AppLogger.i("save")
+            onSaveQrCodeClick()
             true
         }
 
@@ -110,6 +110,13 @@ class NoRegisterDialog : AppCompatDialogFragment() {
         mDataBinding?.btnClose?.setOnClickListener {
             onCloseClick()
         }
+    }
+
+    /**
+     * 点击保存
+     */
+    private fun onSaveQrCodeClick() {
+        mListener?.onSaveImage(R.mipmap.icon_qr_code)
     }
 
     /**
@@ -168,6 +175,11 @@ class NoRegisterDialog : AppCompatDialogFragment() {
          * 点击取消
          */
         fun onCancelClick()
+
+        /**
+         * 保存图片
+         */
+        fun onSaveImage(drawableId: Int);
 
     }
 }

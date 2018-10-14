@@ -107,6 +107,8 @@
     <string name="use_wx_login">使用微信登录</string>
     <string name="tip_sdcard_no_more_space_for_save_image">存储空间不足，无法保存图片</string>
     <string name="tip_file_exist">图片已存在相册中，无须再次保存</string>
+    <string name="tip_save_image_to_album">图片已保存到相册</string>
+
 
 
 </resources>

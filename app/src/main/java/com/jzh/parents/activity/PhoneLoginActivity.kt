@@ -4,25 +4,20 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.databinding.DataBindingUtil
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.Message
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
+import android.os.*
 import android.text.TextUtils
 import android.view.View
 import com.jzh.parents.R
 import com.jzh.parents.databinding.ActivityPhoneLoginBinding
-import com.jzh.parents.datamodel.response.OutputRes
-import com.jzh.parents.utils.AppLogger
-import com.jzh.parents.utils.PreferenceUtil
-import com.jzh.parents.utils.SmsCDTimer
-import com.jzh.parents.utils.Util
+import com.jzh.parents.utils.*
 import com.jzh.parents.viewmodel.PhoneLoginViewModel
 import com.jzh.parents.viewmodel.bindadapter.TSDataBindingComponent
 import com.jzh.parents.viewmodel.info.ResultInfo
 import com.jzh.parents.widget.NoRegisterDialog
-import com.jzh.parents.widget.TipDialog
-import java.util.*
+import java.io.File
 
 /**
  * 手机号登录
@@ -41,6 +36,11 @@ class PhoneLoginActivity : BaseActivity(), SmsCDTimer.OnSmsTickListener {
      * 数据绑定
      */
     var mDataBinding: ActivityPhoneLoginBinding? = null
+
+    /**
+     * 保存图片的资源
+     */
+    private var saveDrawableRes : Int = 0
 
 
     override fun initViews() {
@@ -171,6 +171,18 @@ class PhoneLoginActivity : BaseActivity(), SmsCDTimer.OnSmsTickListener {
             override fun onCancelClick() {
 
             }
+
+            override fun onSaveImage(drawableId: Int) {
+
+                saveDrawableRes = drawableId
+
+                // 权限检查
+                if (!checkPermission(MPermissionUtil.PermissionRequest.SAVE_IMAGE)) {
+                    return
+                }
+
+                saveQrCode()
+            }
         })
 
         // 检查手机号
@@ -212,5 +224,70 @@ class PhoneLoginActivity : BaseActivity(), SmsCDTimer.OnSmsTickListener {
 
         // 点击回调
         noRegisterDialog.mListener = listener
+    }
+
+    /**
+     * 保存QrCode图片
+     */
+    fun saveQrCode() {
+
+        val folder = Environment.getExternalStorageDirectory().toString() + "/dcim/Camera/"
+
+        // 检查是否存在sdcard
+        if (Environment.getExternalStorageState() != Environment.MEDIA_MOUNTED) {
+            showToastError(getString(R.string.tip_sdcard_cannot_use))
+            return
+        }
+
+        val dirFile = File(folder)
+        if (!dirFile.exists()) {
+            dirFile.mkdirs()
+        }
+
+        if (!Util.isExternalStorageEnough()) {
+            showToastError(getString(R.string.tip_sdcard_no_more_space_for_save_image))
+            return
+        }
+
+        val drawable : Drawable? = Util.getDrawableCompat(saveDrawableRes)
+
+        val bitmapDrawable: BitmapDrawable
+
+        val bitmap: Bitmap?
+
+        if (drawable is BitmapDrawable) {
+            bitmapDrawable = drawable
+            bitmap = bitmapDrawable.bitmap
+        } else {
+            return
+        }
+
+        val fileName = "QrCode.jpg"
+
+        if (bitmap != null) {
+
+            val filePath = folder + fileName
+
+            val f = File(filePath)
+
+            if (f.exists()) {
+                showToastError(getString(R.string.tip_file_exist))
+                return
+            }
+
+            ImageUtils.saveBitmapToFile(filePath, bitmap)
+
+            sendScanFileBroadcast(filePath)
+
+            showToastFinished(getString(R.string.tip_save_image_to_album))
+        }
+    }
+
+    /**
+     * 保存图片
+     */
+    override fun callSaveImage() {
+
+        saveQrCode()
     }
 }
