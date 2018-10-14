@@ -44,4 +44,13 @@ class LoginRepository : BaseRepository() {
 
         mRemoteDataSource.loginWithAuthorize(token, resultInfo)
     }
+
+    /**
+     * 检测客户端版本
+     * @param resultInfo 结果
+     */
+    fun checkAppVersion(resultInfo: MutableLiveData<ResultInfo>) {
+
+        mRemoteDataSource.checkAppVersion(resultInfo)
+    }
 }

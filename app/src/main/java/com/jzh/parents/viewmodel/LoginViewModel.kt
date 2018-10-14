@@ -38,4 +38,12 @@ class LoginViewModel(app: Application) : BaseViewModel(app) {
     fun loginWithAuthorize(token: String) {
         repo.loginWithAuthorize(token, resultInfo)
     }
+
+    /**
+     * 检测客户端版本
+     */
+    fun checkAppVersion() {
+
+        repo.checkAppVersion(resultInfo)
+    }
 }

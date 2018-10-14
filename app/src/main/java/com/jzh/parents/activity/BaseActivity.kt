@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.provider.Settings
 import android.support.annotation.StringRes
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.content.FileProvider
@@ -27,15 +28,13 @@ import android.widget.Toast
 import com.jzh.parents.R
 import com.jzh.parents.app.Constants
 import com.jzh.parents.app.JZHApplication
+import com.jzh.parents.datamodel.response.VersionRes
 import com.jzh.parents.listener.IDialogCallback
 import com.jzh.parents.utils.*
 import com.jzh.parents.viewmodel.info.ResultInfo
-import com.jzh.parents.widget.PhoneEditDialog
-import com.jzh.parents.widget.TSProgressDialog
-import com.jzh.parents.widget.TSToolbar
+import com.jzh.parents.widget.*
 import com.jzh.parents.widget.swipe.PageSlidingPaneLayout
 import com.jzh.parents.widget.TSToolbar.ToolbarClickListener
-import com.jzh.parents.widget.TipDialog
 import com.tencent.mm.opensdk.modelbase.BaseResp
 import com.tencent.mm.opensdk.modelbiz.SubscribeMessage
 import java.io.File
@@ -497,6 +496,23 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
                 showPermissionFailedDialog(getString(R.string.tip), getString(R.string.permission_rw_storage_to_settings))
                 return
             }
+        } else if (requestCode == MPermissionUtil.PermissionRequest.REQUEST_INSTALL.getRequestCode()) {
+
+            // 授权失败
+            if (!MPermissionUtil.hasAllPermissionsGranted(grantResults)) {
+                showPermissionFailedDialog(getString(R.string.tip), getString(R.string.permission_install_app), object : IDialogCallback {
+                    override fun onConfirm() {
+                        //  引导用户手动开启安装权限
+                        val intent = Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES)
+                        startActivityForResult(intent, Constants.GET_UNKNOWN_APP_SOURCES)
+                    }
+
+                    override fun onCancel() {
+
+                    }
+                })
+                return
+            }
         }
 
         // 保存图片
@@ -531,6 +547,11 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
         else if (requestCode == MPermissionUtil.PermissionRequest.SAVE_IMAGE.requestCode) {
 
             callSaveImage()
+        }
+        // 请求安装
+        else if (requestCode == MPermissionUtil.PermissionRequest.REQUEST_INSTALL.requestCode) {
+
+            callInstallApk()
         }
     }
 
@@ -660,6 +681,14 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
      */
     open fun callSaveImage() {
 
+    }
+
+    /**
+     * 请求安装
+     */
+    open fun callInstallApk() {
+
+        AppLogger.i("callInstallApk")
     }
 
     /**
@@ -1100,6 +1129,30 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
 
         intent.data = uri
         sendBroadcast(intent)
+    }
+
+    /**
+     * 显示版本更新对话框
+     *
+     * @param versionRes 版本信息
+     * @param listener   监听器
+     */
+    fun showUpdateVersionDialog(versionRes: VersionRes, listener: UpdateVersionDialog.DialogClickListener) {
+
+        var dialog = supportFragmentManager.findFragmentByTag(UpdateVersionDialog.TAG_FRAGMENT)
+
+        if (dialog == null) {
+            dialog = UpdateVersionDialog.newInstance(versionRes)
+        }
+
+        val updateVersionDialog = dialog as UpdateVersionDialog
+
+        updateVersionDialog.show(supportFragmentManager, UpdateVersionDialog.TAG_FRAGMENT)
+
+        // 点击回调
+        updateVersionDialog.mListener = listener
+
+
     }
 
 

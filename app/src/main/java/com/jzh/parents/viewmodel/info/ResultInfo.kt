@@ -173,6 +173,11 @@ data class ResultInfo(
          */
         const val CMD_GET_HOT_WORD = 4003
 
+        /**
+         * 检测客户端版本
+         */
+        const val CMD_CKECK_VERSION = 5001
+
 
     }
 

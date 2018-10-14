@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.databinding.DataBindingUtil
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.content.LocalBroadcastManager
 import android.text.TextUtils
@@ -15,14 +16,21 @@ import com.jzh.parents.R
 import com.jzh.parents.app.Constants
 import com.jzh.parents.app.JZHApplication
 import com.jzh.parents.databinding.ActivityLoginBinding
+import com.jzh.parents.datamodel.response.VersionRes
 import com.jzh.parents.datamodel.response.WxAuthorizeRes
 import com.jzh.parents.utils.AppLogger
+import com.jzh.parents.utils.DirUtil
+import com.jzh.parents.utils.MPermissionUtil
+import com.jzh.parents.utils.Util
 import com.jzh.parents.viewmodel.LoginViewModel
 import com.jzh.parents.viewmodel.info.ResultInfo
+import com.jzh.parents.widget.NoRegisterDialog
 import com.jzh.parents.widget.TipDialog
+import com.jzh.parents.widget.UpdateVersionDialog
 import com.tencent.mm.opensdk.modelbase.BaseResp
 import com.tencent.mm.opensdk.modelbiz.SubscribeMessage
 import com.tencent.mm.opensdk.modelmsg.SendAuth
+import java.io.File
 
 /**
  * 登录页面
@@ -132,6 +140,23 @@ class LoginActivity : BaseActivity() {
                         showToastError(resultInfo.tip)
                     }
                 }
+            // 版本检测
+                ResultInfo.CMD_CKECK_VERSION -> {
+
+                    AppLogger.i("version ${resultInfo.code}")
+
+                    if (resultInfo.code == ResultInfo.CODE_SUCCESS && resultInfo.obj != null) {
+
+                        val versionRes: VersionRes = resultInfo.obj as VersionRes
+
+                        versionRes.versionInfo?.update.let {
+                            if (versionRes.versionInfo?.update!!) {
+
+                                findNewVersion(versionRes)
+                            }
+                        }
+                    }
+                }
             }
         })
     }
@@ -141,6 +166,7 @@ class LoginActivity : BaseActivity() {
      */
     override fun initData() {
 
+        mViewModel?.checkAppVersion()
     }
 
     /**
@@ -178,5 +204,24 @@ class LoginActivity : BaseActivity() {
         startActivity(Intent(this@LoginActivity, PhoneLoginActivity::class.java))
     }
 
+    /**
+     * 发现新版本
+     *
+     * @param versionRes 版本信息
+     */
+    private fun findNewVersion(versionRes: VersionRes) {
+
+        showUpdateVersionDialog(versionRes, object : UpdateVersionDialog.DialogClickListener {
+
+            override fun onReadyInstall(filePath: String) {
+
+                Util.installApk(this@LoginActivity, filePath)
+            }
+
+            override fun onCancelClick() {
+
+            }
+        })
+    }
 
 }

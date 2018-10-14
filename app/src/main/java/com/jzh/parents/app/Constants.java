@@ -180,6 +180,11 @@ public interface Constants {
     String EXTRA_TIP_DIALOG_CONTENT = "tip_dialog_content";
 
     /**
+     * 版本升级
+     */
+    String EXTRA_UPDATE_VERSION_DIALOG_OBJ = "update_version_dialog_obj";
+
+    /**
      * 我的列表-页面类型-我的收藏
      */
     int MY_LIVES_PAGE_TYPE_FAVORITE = 1;
@@ -233,5 +238,10 @@ public interface Constants {
      * 微信预约的模板
      */
     String WX_SUBSCRIBE_TEMPLATE_ID = "qhcWtTQswPB0j3oVHgW_I_pyKLurGcw8k-wB4Kt20aw";
+
+    /**
+     * 请求位置来源的app
+     */
+    int GET_UNKNOWN_APP_SOURCES = 100;
 
 }

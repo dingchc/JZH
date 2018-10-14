@@ -9,10 +9,7 @@ import com.jzh.parents.app.Api
 import com.jzh.parents.app.Constants
 import com.jzh.parents.app.JZHApplication
 import com.jzh.parents.datamodel.data.LiveData
-import com.jzh.parents.datamodel.response.BaseRes
-import com.jzh.parents.datamodel.response.LiveListRes
-import com.jzh.parents.datamodel.response.OutputRes
-import com.jzh.parents.datamodel.response.WxAuthorizeRes
+import com.jzh.parents.datamodel.response.*
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.MD5Util
 import com.jzh.parents.utils.PreferenceUtil
@@ -91,6 +88,48 @@ abstract class BaseRemoteDataSource {
         else {
             notifyResult(cmd, code, tip, obj, resultLiveData)
         }
+    }
+
+    /**
+     * 检测客户端版本
+     * @param resultInfo 结果
+     */
+    fun checkAppVersion(resultInfo: MutableLiveData<ResultInfo>) {
+
+        val paramsMap = TreeMap<String, String>()
+        paramsMap.put("version", Util.getVerName(JZHApplication.instance!!))
+        paramsMap.put("type", Constants.DEVICE_TYPE_ANDROID)
+
+        val cmd = ResultInfo.CMD_CKECK_VERSION
+
+        TSHttpController.INSTANCE.doGet(Api.URL_API_CHECK_VERSION, paramsMap, object : TSHttpCallback {
+            override fun onSuccess(res: TSBaseResponse?, json: String?) {
+
+                val gson = Gson()
+
+                AppLogger.i("*version=$json")
+
+                val versionRes: VersionRes? = gson.fromJson<VersionRes>(json, object : TypeToken<VersionRes>() {
+
+                }.type)
+
+                // 测试
+                versionRes?.versionInfo?.update = true
+                versionRes?.versionInfo?.version = "1.1.2"
+                versionRes?.versionInfo?.must = true
+                versionRes?.versionInfo?.remarks = "1、UI重构;\n2、逻辑优化;"
+
+                versionRes?.versionInfo?.url = "http://files.eplus361.com/group2/M00/00/00/wKioXVjfYmiAeA6tADbc_efENRA478.apk"
+
+                notifyResult(cmd = cmd, code = versionRes?.code ?: ResultInfo.CODE_EXCEPTION, tip = versionRes?.tip, obj = versionRes, resultLiveData = resultInfo)
+            }
+
+            override fun onException(e: Throwable?) {
+                AppLogger.i(e?.message)
+
+                notifyException(cmd = cmd, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo, throwable = e)
+            }
+        })
     }
 
     /**
@@ -173,7 +212,6 @@ abstract class BaseRemoteDataSource {
             }
         })
     }
-
 
 
     /**

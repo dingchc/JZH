@@ -41,7 +41,9 @@ public class MPermissionUtil {
         // 位置
         LOCATION(1008, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
         // 保存图片
-        SAVE_IMAGE(1009, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        SAVE_IMAGE(1009, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE),
+        // 保存图片
+        REQUEST_INSTALL(1010, Manifest.permission.REQUEST_INSTALL_PACKAGES);
 
         private int requestCode;
         private String[] permissions;

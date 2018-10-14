@@ -1,10 +1,19 @@
 package com.jzh.parents.utils;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
+import android.support.v4.content.FileProvider;
+import android.text.TextUtils;
 
+import com.jzh.parents.app.Constants;
 import com.jzh.parents.app.JZHApplication;
 
 import java.io.File;
+
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 /**
  * SD卡目录创建工具类

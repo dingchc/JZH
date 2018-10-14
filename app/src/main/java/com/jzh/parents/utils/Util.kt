@@ -7,6 +7,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -21,6 +22,7 @@ import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
 import android.support.annotation.IdRes
 import android.support.v4.content.ContextCompat
+import android.support.v4.content.FileProvider
 import android.text.TextUtils
 import android.widget.ImageView
 import android.widget.Toast
@@ -531,6 +533,55 @@ class Util {
             }
             val start = url.lastIndexOf("/")
             return url.substring(start + 1)
+        }
+
+        /**
+         * 当前版本名称
+         */
+        fun getVerName(context: Context): String {
+            var verName = ""
+            try {
+                verName = context.packageManager.getPackageInfo(context.packageName, 0).versionName
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            return verName
+        }
+
+        /**
+         * 安装APK文件
+         *
+         * @param context 上下文
+         * @param apkPath 路径
+         */
+        fun installApk(context: Context, apkPath: String) {
+
+            var intent = Intent()
+
+            if (TextUtils.isEmpty(apkPath)) {
+                return
+            }
+
+            val uri: Uri
+
+            val file = File(apkPath)
+            // android N
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                uri = FileProvider.getUriForFile(context, Constants.PROVIDER_AUTHORIZE, file)
+                AppLogger.i("uri=" + uri)
+
+                intent = intent.setAction(Intent.ACTION_VIEW)
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            } else {
+                intent = intent.setAction(Intent.ACTION_VIEW)
+                uri = Uri.fromFile(file)
+                intent.flags = FLAG_ACTIVITY_NEW_TASK
+            }
+
+            intent.setDataAndType(uri,
+                    "application/vnd.android.package-archive")
+            context.startActivity(intent)
         }
 
     }

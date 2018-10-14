@@ -9,16 +9,6 @@ package com.jzh.parents.app
 object Api {
 
     /**
-     * 地址：微信获取AccessToken
-     */
-    const val URL_WX_GET_ACCESS_TOKEN = "https://api.weixin.qq.com/sns/oauth2/access_token"
-
-    /**
-     * 地址：微信获取用户信息
-     */
-    const val URL_WX_GET_USER_INFO = "https://api.weixin.qq.com/sns/userinfo"
-
-    /**
      * 地址：SCHEMAS
      */
     private const val URL_API_LIVE_DOMAIN = "https://m.nxdev.cn/api/"
@@ -142,4 +132,9 @@ object Api {
      * 地址：设备id
      */
     const val URL_API_DEVICE_ID = URL_API_LIVE_DOMAIN + "user/deviceid"
+
+    /**
+     * 地址：版本检测
+     */
+    const val URL_API_CHECK_VERSION = URL_API_LIVE_DOMAIN + "version"
 }

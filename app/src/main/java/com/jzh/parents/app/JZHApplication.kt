@@ -88,6 +88,8 @@ class JZHApplication : Application() {
                 AppLogger.e("init cloudchannel failed -- errorcode:$errorCode -- errorMessage:$errorMessage")
             }
         })
+
+        pushService.setDebug(false)
     }
 
     /**
