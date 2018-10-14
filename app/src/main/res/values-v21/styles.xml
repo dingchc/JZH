@@ -11,6 +11,7 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="android:actionBarSize">@dimen/top_total_height</item>
         <item name="android:screenOrientation">portrait</item>
+        <item name="android:windowDisablePreview">true</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

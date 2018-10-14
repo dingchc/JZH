@@ -119,7 +119,7 @@ class LoginActivity : BaseActivity() {
                             val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
                             intent.putExtra(Constants.EXTRA_WX_OPEN_ID, authorizeRes?.authorize?.openId)
                             startActivity(intent)
-                            finishCompat()
+//                            finishCompat()
                         }
                         // 进首页
                         else {
@@ -175,7 +175,6 @@ class LoginActivity : BaseActivity() {
         AppLogger.i("loginByPhoneClick")
 
         startActivity(Intent(this@LoginActivity, PhoneLoginActivity::class.java))
-        finish()
     }
 
 

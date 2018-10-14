@@ -90,7 +90,10 @@ class RegisterActivity : BaseActivity() {
                     // 未填写资料
                     if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
 
-                        startActivity(Intent(this@RegisterActivity, HomeActivity::class.java))
+                        val intent = Intent(this@RegisterActivity, HomeActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+
+                        startActivity(intent)
                         finishCompat()
 
                     } else {
@@ -125,10 +128,6 @@ class RegisterActivity : BaseActivity() {
      * 点击注册按钮
      */
     fun onRegisterBtnClick(view: View) {
-
-//        startActivity(Intent(this@RegisterActivity, HomeActivity::class.java))
-//
-//        finishCompat()
 
         mViewModel?.register(mOpenId, mLearningSectionId ?: "")
     }

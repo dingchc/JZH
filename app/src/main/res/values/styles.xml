@@ -10,6 +10,7 @@
         <item name="windowNoTitle">true</item>
         <item name="android:actionBarSize">@dimen/top_total_height</item>
         <item name="android:screenOrientation">portrait</item>
+        <item name="android:windowDisablePreview">true</item>
     </style>
 
     <!--Splash界面-->

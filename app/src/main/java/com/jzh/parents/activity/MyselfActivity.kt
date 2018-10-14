@@ -239,6 +239,10 @@ class MyselfActivity : BaseActivity() {
         }
     }
 
+    override fun isSupportTransitionAnimation(): Boolean {
+        return false
+    }
+
     /**
      * 获取设置contentView
      *

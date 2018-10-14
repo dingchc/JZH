@@ -106,7 +106,11 @@ class PhoneLoginActivity : BaseActivity(), SmsCDTimer.OnSmsTickListener {
 
                     // 成功
                     if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
-                        startActivity(Intent(this@PhoneLoginActivity, HomeActivity::class.java))
+
+                        val intent = Intent(this@PhoneLoginActivity, HomeActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+
+                        startActivity(intent)
                         finishCompat()
                     }
                     // 手机未注册
