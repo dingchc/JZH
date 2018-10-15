@@ -72,6 +72,11 @@ dependencies {
     // 微信
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.1.4'
 
+    // 刷新
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.2-alpha-8'
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.2-alpha-8'
+
+    // Room DB
+    implementation 'android.arch.persistence.room:runtime:1.1.1'
+    kapt "android.arch.persistence.room:compiler:1.1.1"
 }

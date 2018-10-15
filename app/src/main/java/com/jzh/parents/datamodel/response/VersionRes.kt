@@ -36,5 +36,5 @@ data class VersionRes(@SerializedName("output") val versionInfo: VersionInfo?) :
             /**
              * 版本简介摘要
              */
-            var remarks: String?)
+            var remarks: String?) : Serializable
 }
