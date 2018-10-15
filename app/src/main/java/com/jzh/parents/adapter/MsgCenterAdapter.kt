@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jzh.parents.R
 import com.jzh.parents.databinding.ItemMsgBinding
+import com.jzh.parents.db.entry.MessageEntry
 import com.jzh.parents.viewmodel.entity.MsgEntity
 import com.jzh.parents.viewmodel.info.LiveInfo
 
@@ -16,7 +17,7 @@ import com.jzh.parents.viewmodel.info.LiveInfo
  * @author ding
  * Created by Ding on 2018/8/27.
  */
-class MsgCenterAdapter(mContext: Context, var mDataList: MutableList<MsgEntity>?, var mListener : OnViewClick? = null) : RecyclerView.Adapter<InnerViewHolder>() {
+class MsgCenterAdapter(mContext: Context, var mDataList: MutableList<MessageEntry>?, var mListener: OnViewClick? = null) : RecyclerView.Adapter<InnerViewHolder>() {
 
     /**
      * 布局加载器
@@ -30,7 +31,7 @@ class MsgCenterAdapter(mContext: Context, var mDataList: MutableList<MsgEntity>?
     override fun onBindViewHolder(holder: InnerViewHolder, position: Int) {
 
         holder.dataBinding as ItemMsgBinding
-        holder.dataBinding.itemEntity = mDataList?.get(position) as MsgEntity
+        holder.dataBinding.itemEntity = mDataList?.get(position) as MessageEntry
     }
 
 
@@ -51,9 +52,9 @@ class MsgCenterAdapter(mContext: Context, var mDataList: MutableList<MsgEntity>?
 
 
         /**
-         * 点击了一条直播
+         * 点击了一条消息
          */
-        fun onClickAMsg(liveInfo : LiveInfo)
+        fun onClickAMsg(messageEntry: MessageEntry)
     }
 
 }

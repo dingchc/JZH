@@ -328,8 +328,8 @@ class HomeActivity : BaseActivity() {
         return mDataBinding!!.root
     }
 
-//    override fun onBackPressed() {
-//
-//        moveTaskToBack(false)
-//    }
+    override fun onBackPressed() {
+
+        moveTaskToBack(false)
+    }
 }

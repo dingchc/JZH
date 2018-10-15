@@ -9,9 +9,7 @@
         <!-- 直播数据 -->
         <variable
             name="itemEntity"
-            type="com.jzh.parents.viewmodel.entity.MsgEntity" />
-
-
+            type="com.jzh.parents.db.entry.MessageEntry" />
 
     </data>
 
@@ -47,7 +45,7 @@
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:maxLines="2"
-                    android:text="@string/tip_ops_permission"
+                    android:text="@{itemEntity.title}"
                     android:textColor="@color/font_black"
                     android:textSize="14sp" />
 
@@ -63,7 +61,7 @@
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:maxLines="3"
-                    android:text="@string/tip_ops_permission"
+                    android:text="@{itemEntity.desc}"
                     android:textColor="@color/font_black"
                     android:textSize="12sp" />
 

@@ -9,10 +9,14 @@ import com.jzh.parents.R
 import com.jzh.parents.adapter.LivesAdapter
 import com.jzh.parents.adapter.MsgCenterAdapter
 import com.jzh.parents.databinding.ActivityMsgCenterBinding
+import com.jzh.parents.db.entry.MessageEntry
+import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.LivesViewModel
 import com.jzh.parents.viewmodel.MsgCenterViewModel
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
 import com.jzh.parents.viewmodel.entity.MsgEntity
+import com.jzh.parents.viewmodel.info.ResultInfo
+import com.scwang.smartrefresh.header.MaterialHeader
 
 /**
  * 消息中心
@@ -47,11 +51,17 @@ class MsgCenterActivity : BaseActivity() {
      */
     override fun initViews() {
 
+        setToolbarTitle(R.string.home_msg_center)
+
         mViewModel = ViewModelProviders.of(this@MsgCenterActivity).get(MsgCenterViewModel::class.java)
 
         mDataBinding?.setLifecycleOwner(this)
 
         mDataBinding?.rvData?.layoutManager = LinearLayoutManager(this@MsgCenterActivity, LinearLayoutManager.VERTICAL, false)
+
+        mDataBinding?.refreshLayout?.refreshHeader = MaterialHeader(this@MsgCenterActivity)
+        mDataBinding?.refreshLayout?.isEnableLoadmore = true
+        mDataBinding?.refreshLayout?.isEnableRefresh = true
     }
 
     /**
@@ -59,11 +69,76 @@ class MsgCenterActivity : BaseActivity() {
      */
     override fun initEvent() {
 
-        mViewModel?.getItemEntities()?.observe(this@MsgCenterActivity, Observer<MutableList<MsgEntity>> {
+        // 数据变化
+        mViewModel?.itemEntities?.observe(this@MsgCenterActivity, Observer<MutableList<MessageEntry>> {
 
             itemEntities -> mAdapter?.mDataList = itemEntities
             mAdapter?.notifyDataSetChanged()
         })
+
+        // 错误返回
+        mViewModel?.resultInfo?.observe(this@MsgCenterActivity, Observer { resultInfo ->
+
+            when (resultInfo?.cmd) {
+
+            // 刷新数据
+                ResultInfo.CMD_REFRESH_LIVES -> {
+
+                    mDataBinding?.refreshLayout?.finishRefresh()
+
+                    // 刷新数据成功
+                    if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
+                        hiddenProgressDialog()
+                    }
+                    // 没有数据
+                    else if (resultInfo.code == ResultInfo.CODE_NO_DATA) {
+                        // 显示没有数据
+//                        showEmptyView()
+                    }
+                    // 没有更多数据
+                    else if (resultInfo.code == ResultInfo.CODE_NO_MORE_DATA) {
+                        mDataBinding?.refreshLayout?.isEnableLoadmore = false
+                    }
+                    // 错误
+                    else {
+                        showToastError(resultInfo.tip)
+                    }
+
+                }
+            // 加载更多数据
+                ResultInfo.CMD_LOAD_MORE_LIVES -> {
+
+                    mDataBinding?.refreshLayout?.finishLoadmore()
+
+                    // 加载数据成功
+                    if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
+                    }
+                    // 没有更多数据
+                    else if (resultInfo.code == ResultInfo.CODE_NO_MORE_DATA) {
+                    }
+                    // 错误
+                    else {
+                        showToastError(resultInfo.tip)
+                    }
+                }
+            }
+        })
+
+        // 刷新数据
+        mDataBinding?.refreshLayout?.setOnRefreshListener {
+
+            AppLogger.i("* refresh")
+
+            mViewModel?.refreshData()
+        }
+
+        // 加载更多
+        mDataBinding?.refreshLayout?.setOnLoadmoreListener {
+
+            AppLogger.i("* load more")
+
+            mViewModel?.loadMoreData()
+        }
     }
 
     /**
@@ -76,7 +151,7 @@ class MsgCenterActivity : BaseActivity() {
 
         mAdapter?.mListener = mAdapterListener
 
-        mViewModel?.loadItemEntitiesData()
+        mViewModel?.refreshData()
     }
 
     /**

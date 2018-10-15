@@ -11,6 +11,11 @@ import com.google.gson.annotations.SerializedName
 data class PushMessageRes(
 
         /**
+         * 消息id
+         */
+        var messageId : String,
+
+        /**
          * 图片地址
          */
         val image: String?,

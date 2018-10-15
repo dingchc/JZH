@@ -3,7 +3,9 @@ package com.jzh.parents.viewmodel
 import android.app.Application
 import android.arch.lifecycle.MutableLiveData
 import com.jzh.parents.datamodel.repo.MsgCenterRepository
+import com.jzh.parents.db.entry.MessageEntry
 import com.jzh.parents.viewmodel.entity.MsgEntity
+import com.jzh.parents.viewmodel.info.ResultInfo
 
 /**
  * 消息中心
@@ -16,27 +18,31 @@ class MsgCenterViewModel(app: Application) : BaseViewModel(app) {
     /**
      * 数据条目
      */
-    private var itemEntities: MutableLiveData<MutableList<MsgEntity>> = MutableLiveData<MutableList<MsgEntity>>()
+    var itemEntities: MutableLiveData<MutableList<MessageEntry>> = MutableLiveData<MutableList<MessageEntry>>()
 
     /**
      * 数据仓库
      */
     private val repo = MsgCenterRepository()
 
+    init {
+        resultInfo.value = ResultInfo()
+    }
+
 
     /**
-     * 返回条目实体
+     * 刷新消息列表
      */
-    fun getItemEntities() : MutableLiveData<MutableList<MsgEntity>> {
+    fun refreshData() {
 
-        return itemEntities
+        repo.refreshData(itemEntities, resultInfo)
     }
 
     /**
-     * 加载数据条目
+     * 加载更多数据
      */
-    fun loadItemEntitiesData() {
+    fun loadMoreData() {
 
-        itemEntities.value = repo.loadItemEntities()
+        repo.loadMoreData(itemEntities, resultInfo)
     }
 }

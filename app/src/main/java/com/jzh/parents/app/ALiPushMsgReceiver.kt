@@ -6,6 +6,8 @@ import com.alibaba.sdk.android.push.MessageReceiver
 import com.alibaba.sdk.android.push.notification.CPushMessage
 import com.google.gson.reflect.TypeToken
 import com.jzh.parents.datamodel.response.PushMessageRes
+import com.jzh.parents.db.DbController
+import com.jzh.parents.db.entry.MessageEntry
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.Util
 
@@ -20,13 +22,20 @@ class ALiPushMsgReceiver : MessageReceiver() {
     override fun onMessage(context: Context?, message: CPushMessage?) {
         super.onMessage(context, message)
 
-        AppLogger.i("* message ${message?.title}, ${message?.content}")
+        AppLogger.i("* message id = ${message?.messageId}, ${message?.title}, ${message?.content}")
 
         // 内容不为空
-        if (TextUtils.isEmpty(message?.content)) {
+        if (!TextUtils.isEmpty(message?.content)) {
 
             val pushMsg: PushMessageRes? = Util.fromJson(message?.content ?: "", object : TypeToken<PushMessageRes>() {
             }.type)
+
+            pushMsg.let {
+
+                pushMsg?.messageId = message?.messageId ?: ""
+
+                DbController.INSTANCE.messageDb.insert(MessageEntry(messageId = pushMsg?.messageId ?: "", image = pushMsg?.image, title = pushMsg?.title, desc = pushMsg?.desc, type = pushMsg?.type ?: 0, appId = pushMsg?.appId, link = pushMsg?.link, startAt = pushMsg?.startAt ?: 0))
+            }
         }
     }
 
