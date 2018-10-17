@@ -113,14 +113,6 @@ abstract class BaseRemoteDataSource {
 
                 }.type)
 
-                // 测试
-                versionRes?.versionInfo?.update = true
-                versionRes?.versionInfo?.version = "1.1.2"
-                versionRes?.versionInfo?.must = false
-                versionRes?.versionInfo?.remarks = "1、UI重构;\n2、逻辑优化;"
-
-                versionRes?.versionInfo?.url = "http://files.eplus361.com/group2/M00/00/00/wKioXVjfYmiAeA6tADbc_efENRA478.apk"
-
                 notifyResult(cmd = cmd, code = versionRes?.code ?: ResultInfo.CODE_EXCEPTION, tip = versionRes?.tip, obj = versionRes, resultLiveData = resultInfo)
             }
 

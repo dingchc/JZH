@@ -205,11 +205,11 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
         // 制作即将直播
         makeLiveWillItems(homeShowRes, showEntities)
 
-        // 制作直播分类
-        makeLiveCategoryItem(homeConfigRes, showEntities)
-
         // 推荐直播
         makeLiveRecommendItems(homeConfigRes, showEntities)
+
+        // 制作直播分类
+        makeLiveCategoryItem(homeConfigRes, showEntities)
 
         // 制作精彩回放直播
         makeLiveReviewItems(homeShowRes, showEntities)
