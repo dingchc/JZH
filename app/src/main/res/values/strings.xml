@@ -45,7 +45,7 @@
     <string name="home_search_bar_hint">请输入搜索关键词</string>
     <string name="home_search_hint">找不到想看的讲座？试试搜索一下</string>
     <string name="home_logo_tip">(C)2018 All rights reserved</string>
-    <string name="check_all_review_live">查看全部往期作品</string>
+    <string name="check_all_review_live">查看全部往期讲座</string>
     <string name="check_all_will_live">查看全部即将开播讲座</string>
     <string name="search_history">搜索记录</string>
     <string name="search_hot">热门搜索</string>

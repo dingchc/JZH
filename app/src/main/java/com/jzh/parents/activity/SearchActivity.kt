@@ -213,6 +213,14 @@ class SearchActivity : BaseActivity() {
             }
         })
 
+        // 加载更多
+        mDataBinding?.refreshLayout?.setOnLoadmoreListener {
+
+            AppLogger.i("* load more")
+
+            mViewModel?.loadMoreLives()
+        }
+
         // 空视图
         mDataBinding?.viewStubEmpty?.setOnInflateListener { stub, inflated ->
             val binding: LayoutNoSearchResultBinding? = DataBindingUtil.bind(inflated)
@@ -282,7 +290,8 @@ class SearchActivity : BaseActivity() {
 
                     val searchContent = recordTextView.text.toString()
                     mViewModel?.searchingContent?.value = searchContent
-                    mViewModel?.searchLives(searchContent)
+                    mDataBinding?.refreshLayout?.isEnableLoadmore = true
+                    mViewModel?.searchLives()
                 }
 
             }
@@ -344,8 +353,9 @@ class SearchActivity : BaseActivity() {
                 recordTextView.setOnClickListener {
 
                     val searchContent = recordTextView.text.toString()
+                    mDataBinding?.refreshLayout?.isEnableLoadmore = true
                     mViewModel?.searchingContent?.value = searchContent
-                    mViewModel?.searchLives(searchContent)
+                    mViewModel?.searchLives()
                 }
 
             }
@@ -377,6 +387,8 @@ class SearchActivity : BaseActivity() {
 
         hiddenEmptyView()
 
+        mDataBinding?.refreshLayout?.isEnableLoadmore = true
+
         val keyWord = mDataBinding?.layoutSearch?.edSearchBar?.text.toString()
 
         if (TextUtils.isEmpty(keyWord)) {
@@ -385,7 +397,7 @@ class SearchActivity : BaseActivity() {
             return
         }
 
-        mViewModel?.searchLives(keyWord)
+        mViewModel?.searchLives()
     }
 
     /**

@@ -45,9 +45,18 @@ class SearchViewModel(app: Application) : BaseViewModel(app) {
     /**
      * 根据关键词搜索
      */
-    fun searchLives(keyWord: String) {
+    fun searchLives() {
 
-        repo.refreshLives(keyWord, itemEntities, resultInfo)
+        repo.refreshLives(searchingContent.value ?: "", itemEntities, resultInfo)
+    }
+
+    /**
+     * 加载更多直播数据
+     */
+    fun loadMoreLives() {
+
+        repo.loadMoreLives(searchingContent.value ?: "", itemEntities, resultInfo)
+
     }
 
     /**
