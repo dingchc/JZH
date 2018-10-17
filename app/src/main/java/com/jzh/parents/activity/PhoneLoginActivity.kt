@@ -85,7 +85,9 @@ class PhoneLoginActivity : BaseActivity(), SmsCDTimer.OnSmsTickListener {
         // 短信验证码
         mDataBinding?.itemSmsCode?.setRightViewClickListener(View.OnClickListener { v ->
 
-            mViewModel?.fetchSmsCode()
+            if (!SmsCDTimer.isSmsTimerStart()) {
+                mViewModel?.fetchSmsCode()
+            }
         })
 
         // 返回状态

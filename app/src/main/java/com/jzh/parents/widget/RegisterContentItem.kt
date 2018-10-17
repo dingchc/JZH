@@ -9,6 +9,8 @@ import android.databinding.InverseBindingMethods
 import android.databinding.adapters.ListenerUtil
 import android.graphics.drawable.Drawable
 import android.text.Editable
+import android.text.InputFilter
+import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.Gravity
@@ -38,6 +40,16 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
      * 是否可编辑
      */
     private var mIsInputEditable: Boolean? = false
+
+    /**
+     * 可编辑数据长度
+     */
+    private var mIsInputMaxLength: Int = 0
+
+    /**
+     * 输入框输入类型
+     */
+    private var mIsInputType: Int = 0
 
     /**
      * 是否可选择
@@ -141,6 +153,9 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
             val typedArray: TypedArray? = resources.obtainAttributes(attributeSet, R.styleable.RegisterContentItem)
 
             mIsInputEditable = typedArray?.getBoolean(R.styleable.RegisterContentItem_rc_is_input_editable, false)
+            mIsInputMaxLength = typedArray?.getInteger(R.styleable.RegisterContentItem_rc_is_input_max_length, 0) ?: 0
+            mIsInputType = typedArray?.getInteger(R.styleable.RegisterContentItem_rc_is_input_type, 0) ?: 0
+
             mShowTapArrow = typedArray?.getBoolean(R.styleable.RegisterContentItem_rc_show_tap_arrow, true)
             mIsOptional = typedArray?.getBoolean(R.styleable.RegisterContentItem_rc_is_optional, false)
 
@@ -372,6 +387,16 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
         // 设置是否可输入
         if (!mIsInputEditable!!) {
             mInputEditText.isEnabled = false
+        }
+
+        // 输入长度
+        if (mIsInputMaxLength > 0) {
+            mInputEditText.filters = arrayOf(InputFilter.LengthFilter(mIsInputMaxLength))
+        }
+
+        // 输入类型
+        if (mIsInputType == 1) {
+            mInputEditText.inputType = InputType.TYPE_CLASS_NUMBER
         }
 
         addView(mInputEditText)

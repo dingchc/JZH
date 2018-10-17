@@ -40,6 +40,7 @@
             app:dc_hint="@string/input_student_name"
             app:dc_is_input_editable="true"
             app:dc_show_tap_arrow="false"
+            app:dc_is_input_max_length="4"
             app:contentText="@={viewModel.studentName}"
             />
 

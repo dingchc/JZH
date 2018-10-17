@@ -14,6 +14,7 @@ import com.jzh.parents.activity.MyselfEditActivity
 import com.jzh.parents.databinding.DialogEditPhoneBinding
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.SmsCDTimer
+import com.jzh.parents.utils.Util
 import com.jzh.parents.viewmodel.MyselfEditViewModel
 import com.jzh.parents.viewmodel.info.ResultInfo
 
@@ -121,7 +122,16 @@ class PhoneEditDialog : AppCompatDialogFragment(), SmsCDTimer.OnSmsTickListener 
         // 短信验证码
         mDataBinding?.itemSmsCode?.setRightViewClickListener(View.OnClickListener { v ->
 
-            mViewModel?.fetchSmsCode()
+            // 检查手机号
+            if (!Util.checkPhoneNumberValid(mViewModel?.newPhone?.value)) {
+                mListener?.onError(getString(R.string.phone_number_is_invalid))
+                return@OnClickListener
+            }
+
+            // 如果未开始可获取验证码
+            if (!SmsCDTimer.isSmsTimerStart()) {
+                mViewModel?.fetchSmsCode()
+            }
         })
 
         // 返回状态

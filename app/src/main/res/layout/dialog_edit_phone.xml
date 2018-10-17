@@ -23,7 +23,6 @@
             android:layout_marginRight="10dp"
             android:text="@string/change_phone"
             android:textColor="@color/font_black"
-
             android:textSize="14sp" />
 
         <!-- 手机号 -->
@@ -39,6 +38,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             app:dc_hint="@string/input_phone"
+            app:dc_is_input_max_length="11"
+            app:dc_is_input_type="number"
             app:dc_is_input_editable="true"
             app:dc_show_tap_arrow="false"
             app:contentText="@={viewModel.newPhone}"
@@ -57,6 +58,8 @@
             android:textSize="18sp"
             app:contentText="@={viewModel.smsCode}"
             app:rightViewText="@{viewModel.smsShow}"
+            app:dc_is_input_type="number"
+            app:dc_is_input_max_length="6"
             app:dc_hint="@string/input_code"
             app:dc_is_input_editable="true"
             app:dc_is_show_verify_code="true"

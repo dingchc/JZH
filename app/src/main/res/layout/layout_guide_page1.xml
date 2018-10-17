@@ -24,12 +24,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="33dp"
         android:src="@mipmap/img_guide_page1_img_left"/>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="33dp"
+        android:layout_marginBottom="66dp"
+        android:scaleType="matrix"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:src="@mipmap/img_guide_page1_img_right"/>

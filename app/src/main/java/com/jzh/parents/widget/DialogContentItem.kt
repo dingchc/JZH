@@ -9,6 +9,8 @@ import android.databinding.InverseBindingMethods
 import android.databinding.adapters.ListenerUtil
 import android.graphics.drawable.Drawable
 import android.text.Editable
+import android.text.InputFilter
+import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.Gravity
@@ -37,6 +39,16 @@ class DialogContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
      * 是否可编辑
      */
     private var mIsInputEditable: Boolean? = false
+
+    /**
+     * 可编辑数据长度
+     */
+    private var mIsInputMaxLength: Int = 0
+
+    /**
+     * 输入框输入类型
+     */
+    private var mIsInputType: Int = 0
 
     /**
      * 是否显示验证码
@@ -135,6 +147,9 @@ class DialogContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
             val typedArray: TypedArray? = resources.obtainAttributes(attributeSet, R.styleable.DialogContentItem)
 
             mIsInputEditable = typedArray?.getBoolean(R.styleable.DialogContentItem_dc_is_input_editable, false)
+            mIsInputMaxLength = typedArray?.getInteger(R.styleable.DialogContentItem_dc_is_input_max_length, 0) ?: 0
+            mIsInputType = typedArray?.getInteger(R.styleable.DialogContentItem_dc_is_input_type, 0) ?: 0
+
             mShowTapArrow = typedArray?.getBoolean(R.styleable.DialogContentItem_dc_show_tap_arrow, true)
             mIsOptional = typedArray?.getBoolean(R.styleable.DialogContentItem_dc_is_optional, false)
 
@@ -332,6 +347,16 @@ class DialogContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
             mInputEditText.isEnabled = false
         }
 
+        // 输入长度
+        if (mIsInputMaxLength > 0) {
+            mInputEditText.filters = arrayOf(InputFilter.LengthFilter(mIsInputMaxLength))
+        }
+
+        // 输入类型
+        if (mIsInputType == 1) {
+            mInputEditText.inputType = InputType.TYPE_CLASS_NUMBER
+        }
+
         addView(mInputEditText)
 
         val layoutParam = mInputEditText.layoutParams as LayoutParams
@@ -503,7 +528,7 @@ class DialogContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
             return
         }
 
-        mVerifyCodeTextView?.text = input
+        mVerifyCodeTextView.text = input
     }
 
 }

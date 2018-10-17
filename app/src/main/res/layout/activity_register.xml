@@ -66,6 +66,7 @@
             android:layout_marginTop="4dp"
             android:textSize="18sp"
             app:rc_hint="@string/input_student_name"
+            app:rc_is_input_max_length="4"
             app:rc_icon_src="@mipmap/icon_register_name"
             app:rc_is_input_editable="true"
             app:rc_show_tap_arrow="false"

@@ -21,6 +21,14 @@
         <!-- 是否输入可编辑 -->
         <attr name="rc_is_input_editable" format="boolean" />
 
+        <!-- 可编辑的输入长度 -->
+        <attr name="rc_is_input_max_length" format="integer" />
+
+        <!-- 输入类型 -->
+        <attr name="rc_is_input_type" format="enum">
+            <enum name="number" value="1" />
+        </attr>
+
         <!-- 是否输入可选择 -->
         <attr name="rc_is_optional" format="boolean" />
 
@@ -83,6 +91,15 @@
         <!-- 是否输入可编辑 -->
         <attr name="dc_is_input_editable" format="boolean" />
 
+        <!-- 可编辑的输入长度 -->
+        <attr name="dc_is_input_max_length" format="integer" />
+
+        <!-- 输入类型 -->
+        <attr name="dc_is_input_type" format="enum">
+            <enum name="number" value="1" />
+        </attr>
+
+
         <!-- 是否输入可选择 -->
         <attr name="dc_is_optional" format="boolean" />
 
@@ -94,6 +111,7 @@
 
         <!-- 是否显示右侧验证码 -->
         <attr name="dc_is_show_verify_code" format="boolean" />
+
 
     </declare-styleable>
 
