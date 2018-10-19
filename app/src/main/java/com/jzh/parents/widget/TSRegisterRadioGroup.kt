@@ -15,7 +15,7 @@ class TSRegisterRadioGroup(context: Context, attributeSet: AttributeSet?) : Radi
     /**
      * 勾选的值
      */
-    private var mCheckedValue: Int = 0
+    private var mCheckedValue: Int = -1
 
     constructor(context: Context) : this(context, null) {
 

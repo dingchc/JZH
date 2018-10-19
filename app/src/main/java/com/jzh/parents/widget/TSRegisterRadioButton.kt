@@ -42,6 +42,11 @@ class TSRegisterRadioButton(context: Context, attributeSet: AttributeSet?, defSt
 
     }
 
+    constructor(context: Context, value : Int) : this(context) {
+
+        mValue = value
+    }
+
     constructor(context: Context, attributeSet: AttributeSet?) : this(context, attributeSet, 0) {
 
     }

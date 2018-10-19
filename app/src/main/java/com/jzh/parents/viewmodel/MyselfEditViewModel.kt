@@ -52,6 +52,9 @@ class MyselfEditViewModel(app: Application) : BaseViewModel(app) {
 
             when (it.userInfo?.roleId) {
 
+            // 教师
+                RoleTypeEnum.ROLE_TYPE_TEACHER.value -> studentName + RoleTypeEnum.ROLE_TYPE_TEACHER.getRoleTypeName()
+
             // 妈妈
                 RoleTypeEnum.ROLE_TYPE_MOTHER.value -> studentName + RoleTypeEnum.ROLE_TYPE_MOTHER.getRoleTypeName()
 

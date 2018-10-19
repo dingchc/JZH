@@ -16,6 +16,7 @@ import android.util.AttributeSet
 import android.view.Gravity
 import android.widget.*
 import com.jzh.parents.R
+import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.Util
 import com.jzh.parents.viewmodel.enum.RoleTypeEnum
 
@@ -93,7 +94,7 @@ class DialogContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
     /**
      * RadioGroup选择的条目的值
      */
-    private var mCheckedValue: Int? = null
+    private var mCheckedValue: Int? = -1
 
     /**
      * 文本变化监听
@@ -388,19 +389,20 @@ class DialogContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
         mRadioGroup!!.orientation = RadioGroup.HORIZONTAL
         addView(mRadioGroup)
 
-        val childRadioBtnArray = arrayOf(TSRegisterRadioButton(context), TSRegisterRadioButton(context), TSRegisterRadioButton(context))
+        val childRadioBtnArray = arrayOf(TSRegisterRadioButton(context, RoleTypeEnum.ROLE_TYPE_MOTHER.value), TSRegisterRadioButton(context, RoleTypeEnum.ROLE_TYPE_FATHER.value), TSRegisterRadioButton(context, RoleTypeEnum.ROLE_TYPE_OTHER.value))
 
         for ((index, radioBtn) in childRadioBtnArray.withIndex()) {
 
             radioBtn.gravity = Gravity.CENTER
             // 设置Radio标记的值
-            radioBtn.setValue(index + 1)
             mRadioGroup!!.addView(radioBtn)
             val lp = radioBtn.layoutParams
             lp.width = Util.dp2px(context, 52.0f)
             lp.height = Util.dp2px(context, 30.0f)
             radioBtn.isClickable = true
             radioBtn.textSize = 12.0f
+
+            AppLogger.i("* radioBtn.getValue()=${radioBtn.getValue()}")
 
             when (radioBtn.getValue()) {
             // 妈妈
@@ -419,7 +421,6 @@ class DialogContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
                     lp as MarginLayoutParams
                     lp.leftMargin = Util.dp2px(context, TSRegisterRadioButton.MARGIN_DIMEN)
                 }
-
             }
         }
 

@@ -448,13 +448,12 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
         mRadioGroup!!.orientation = RadioGroup.HORIZONTAL
         addView(mRadioGroup)
 
-        val childRadioBtnArray = arrayOf(TSRegisterRadioButton(context), TSRegisterRadioButton(context), TSRegisterRadioButton(context))
+        val childRadioBtnArray = arrayOf(TSRegisterRadioButton(context, RoleTypeEnum.ROLE_TYPE_MOTHER.value), TSRegisterRadioButton(context, RoleTypeEnum.ROLE_TYPE_FATHER.value), TSRegisterRadioButton(context, RoleTypeEnum.ROLE_TYPE_OTHER.value))
 
         for ((index, radioBtn) in childRadioBtnArray.withIndex()) {
 
             radioBtn.gravity = Gravity.CENTER
             // 设置Radio标记的值
-            radioBtn.setValue(index + 1)
             mRadioGroup!!.addView(radioBtn)
             val lp = radioBtn.layoutParams
             lp.width = Util.dp2px(context, TSRegisterRadioButton.WIDTH_DIMEN)

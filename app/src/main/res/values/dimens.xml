@@ -9,5 +9,6 @@
     <dimen name="btn_height">52dp</dimen>
     <dimen name="item_height">52dp</dimen>
     <dimen name="divider_line_dimen">1dp</dimen>
+    <dimen name="start_train_badge_dimen">20dp</dimen>
 
 </resources>
