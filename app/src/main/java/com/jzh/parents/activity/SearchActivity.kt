@@ -288,6 +288,7 @@ class SearchActivity : BaseActivity() {
                 // 点击事件
                 recordTextView.setOnClickListener {
 
+                    hiddenKeyboard()
                     val searchContent = recordTextView.text.toString()
                     mViewModel?.searchingContent?.value = searchContent
                     mDataBinding?.refreshLayout?.isEnableLoadmore = true
@@ -352,6 +353,7 @@ class SearchActivity : BaseActivity() {
                 // 点击事件
                 recordTextView.setOnClickListener {
 
+                    hiddenKeyboard()
                     val searchContent = recordTextView.text.toString()
                     mDataBinding?.refreshLayout?.isEnableLoadmore = true
                     mViewModel?.searchingContent?.value = searchContent
@@ -384,6 +386,8 @@ class SearchActivity : BaseActivity() {
      * @param view 控件
      */
     fun onSearchClick(view: View) {
+
+        hiddenKeyboard()
 
         hiddenEmptyView()
 

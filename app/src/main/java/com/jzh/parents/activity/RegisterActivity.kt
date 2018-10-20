@@ -11,6 +11,7 @@ import com.jzh.parents.app.Constants
 import com.jzh.parents.databinding.ActivityRegisterBinding
 import com.jzh.parents.datamodel.response.WxAuthorizeRes
 import com.jzh.parents.utils.AppLogger
+import com.jzh.parents.utils.Util
 import com.jzh.parents.viewmodel.RegisterViewModel
 import com.jzh.parents.viewmodel.bindadapter.TSDataBindingComponent
 import com.jzh.parents.viewmodel.info.ResultInfo
@@ -129,6 +130,24 @@ class RegisterActivity : BaseActivity() {
      */
     fun onRegisterBtnClick(view: View) {
 
+        // 入学学段
+        if (TextUtils.isEmpty(mViewModel?.learningSection?.value)) {
+            showToastError(getString(R.string.input_learning_section))
+            return
+        }
+
+        // 入学年份
+        if (TextUtils.isEmpty(mViewModel?.learningYear?.value)) {
+            showToastError(getString(R.string.input_learning_year))
+            return
+        }
+
+        // 姓名
+        if (TextUtils.isEmpty(mViewModel?.studentName?.value)) {
+            showToastError(getString(R.string.input_student_name))
+            return
+        }
+
         mViewModel?.register(mOpenId, mLearningSectionId ?: "")
     }
 
@@ -137,11 +156,15 @@ class RegisterActivity : BaseActivity() {
      */
     private fun showPickYearDialog() {
 
+        if (TextUtils.isEmpty(mLearningSectionId)) {
+            return
+        }
+
         var dialog = supportFragmentManager.findFragmentByTag(PickYearDialog.TAG_FRAGMENT)
 
         if (dialog == null) {
 
-            dialog = PickYearDialog.newInstance()
+            dialog = PickYearDialog.newInstance(Util.parseInt(mLearningSectionId))
         }
 
         val pickYearDialog = dialog as PickYearDialog
@@ -177,11 +200,11 @@ class RegisterActivity : BaseActivity() {
 
             override fun onPickedSection(type: Int, desc: String) {
 
-                AppLogger.i("* type=$type, desc=$desc")
                 mViewModel?.learningSection?.value = desc
 
                 mLearningSectionId = type.toString()
 
+                mViewModel?.learningYear?.value = ""
             }
 
             override fun onCancelClick() {

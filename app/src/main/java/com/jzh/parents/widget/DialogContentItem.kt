@@ -348,14 +348,24 @@ class DialogContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
             mInputEditText.isEnabled = false
         }
 
+        val filterArray = mutableListOf<InputFilter>()
+
         // 输入长度
         if (mIsInputMaxLength > 0) {
-            mInputEditText.filters = arrayOf(InputFilter.LengthFilter(mIsInputMaxLength))
+            filterArray.add(InputFilter.LengthFilter(mIsInputMaxLength))
         }
 
         // 输入类型
         if (mIsInputType == 1) {
             mInputEditText.inputType = InputType.TYPE_CLASS_NUMBER
+        }
+        // 输入中文
+        else if (mIsInputType == 2) {
+            filterArray.add(Util.getChineseFilter())
+        }
+
+        if (filterArray.isNotEmpty()) {
+            mInputEditText.filters = filterArray.toTypedArray()
         }
 
         addView(mInputEditText)

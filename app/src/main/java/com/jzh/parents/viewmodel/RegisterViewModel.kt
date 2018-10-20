@@ -60,12 +60,4 @@ class RegisterViewModel(app: Application) : BaseViewModel(app) {
     fun register(openId: String?, learningSectionId: String) {
         repo?.register(openId, learningSectionId, learningYear.value.toString(), studentName.value.toString(), selectRole.value.toString(), resultInfo)
     }
-
-    /**
-     * 打印信息
-     */
-    fun print() {
-
-        AppLogger.i("" + learningSection.value + ", " + learningYear.value + ", " + studentName.value + ", " + selectRole.value)
-    }
 }

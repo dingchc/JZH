@@ -76,7 +76,7 @@
                 android:drawableTop="@mipmap/icon_home_mine"
                 android:gravity="center_horizontal"
                 android:background="@drawable/item_selector"
-                android:text="@string/home_mine"
+                android:text="@string/myself"
                 android:textSize="9sp" />
 
             <TextView

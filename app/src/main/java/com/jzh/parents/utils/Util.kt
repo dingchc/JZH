@@ -23,6 +23,8 @@ import android.support.annotation.DrawableRes
 import android.support.annotation.IdRes
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
+import android.text.InputFilter
+import android.text.Spanned
 import android.text.TextUtils
 import android.widget.ImageView
 import android.widget.Toast
@@ -31,6 +33,8 @@ import com.jzh.parents.app.JZHApplication
 import com.jzh.parents.R
 import com.jzh.parents.app.Constants
 import com.jzh.parents.listener.IDialogCallback
+import com.jzh.parents.viewmodel.enum.RoleTypeEnum
+import com.jzh.parents.widget.PickSectionDialog
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
@@ -315,13 +319,85 @@ class Util {
         /**
          * 获取年份列表
          */
-        fun getLearningYears(): List<Int> {
+        fun getLearningYears(section: Int): List<Int> {
+
+            AppLogger.i("* section=$section")
 
             val calendar: Calendar = Calendar.getInstance()
 
             calendar.timeInMillis = System.currentTimeMillis()
 
-            return Constants.MIN_YEAR_OF_LEANING.rangeTo(calendar.get(Calendar.YEAR)).toList()
+            var minus = 0
+
+            minus = when (section) {
+
+                PickSectionDialog.LearningSectionEnum.SECTION_PRESCHOOL.value -> 5
+                PickSectionDialog.LearningSectionEnum.SECTION_PRIMARY.value -> 5
+                PickSectionDialog.LearningSectionEnum.SECTION_JUNIOR.value -> 2
+                PickSectionDialog.LearningSectionEnum.SECTION_SENIOR.value -> 2
+                else -> 0
+            }
+
+            val startYear = calendar.get(Calendar.YEAR) - minus
+
+            return startYear.rangeTo(calendar.get(Calendar.YEAR)).toList()
+        }
+
+        /**
+         * 获取中文过滤
+         */
+        fun getChineseFilter(): InputFilter {
+
+            return object : InputFilter {
+
+                override fun filter(source: CharSequence?, start: Int, end: Int, dest: Spanned?, dstart: Int, dend: Int): CharSequence? {
+
+                    for (i in start until end) {
+                        if (!isChinese(source?.get(i)!!)) {
+                            return ""
+                        }
+                    }
+                    return null
+                }
+            }
+        }
+
+        /**
+         * 是否是中文
+         * || ub == Character.UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS
+         * || ub == Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION
+         */
+        private fun isChinese(c: Char): Boolean {
+            val ub = Character.UnicodeBlock.of(c)
+            if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS
+                    || ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS
+                    || ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A
+                    || ub == Character.UnicodeBlock.GENERAL_PUNCTUATION
+                    ) {
+                return true;
+            }
+            return false;
+        }
+
+        /**
+         * 解析整型字符串
+         *
+         * @param value 字符串
+         * @return 数值
+         */
+        fun parseInt(value: String?): Int {
+
+            var ret = 0
+
+            try {
+                if (!TextUtils.isEmpty(value)) {
+                    ret = Integer.parseInt(value)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            return ret
         }
 
         /**
@@ -582,6 +658,23 @@ class Util {
             intent.setDataAndType(uri,
                     "application/vnd.android.package-archive")
             context.startActivity(intent)
+        }
+
+        /**
+         * 获取角色名称
+         */
+        fun getRoleName(roleId: Int): String {
+
+            return when (roleId) {
+
+                RoleTypeEnum.ROLE_TYPE_TEACHER.value -> "教师"
+
+                RoleTypeEnum.ROLE_TYPE_MOTHER.value -> "妈妈"
+
+                RoleTypeEnum.ROLE_TYPE_FATHER.value -> "爸爸"
+
+                else -> "其他"
+            }
         }
 
     }

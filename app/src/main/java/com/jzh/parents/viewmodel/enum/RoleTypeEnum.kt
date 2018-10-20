@@ -36,11 +36,11 @@ enum class RoleTypeEnum(val value: Int) {
 
         when (value) {
 
-            3 -> return "教师"
+            ROLE_TYPE_TEACHER.value -> return "教师"
 
-            2 -> return "妈妈"
+            ROLE_TYPE_MOTHER.value -> return "妈妈"
 
-            1 -> return "爸爸"
+            ROLE_TYPE_FATHER.value -> return "爸爸"
 
             else -> return "其他"
         }

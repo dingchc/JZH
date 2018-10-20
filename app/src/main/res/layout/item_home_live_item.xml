@@ -67,7 +67,7 @@
                 android:drawablePadding="2dp"
                 android:drawableRight="@mipmap/icon_home_live_more"
                 android:gravity="center_vertical"
-                android:text="@{@string/all_with_count(itemEntity.liveInfo.liveCnt)}"
+                android:text="@{itemEntity.liveInfo.contentType == LiveInfoEnum.TYPE_WILL ? @string/all_with_count(itemEntity.liveInfo.liveCnt) : @string/all}"
                 android:textColor="@color/font_gray"
                 android:textSize="12sp"
                 android:visibility="@{itemEntity.liveInfo.isShowMore ? View.VISIBLE : View.GONE}" />

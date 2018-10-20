@@ -37,6 +37,7 @@
             android:paddingRight="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            app:dc_is_input_type="chinese"
             app:dc_hint="@string/input_student_name"
             app:dc_is_input_editable="true"
             app:dc_show_tap_arrow="false"

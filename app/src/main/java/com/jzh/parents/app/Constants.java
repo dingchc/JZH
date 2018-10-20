@@ -185,6 +185,11 @@ public interface Constants {
     String EXTRA_UPDATE_VERSION_DIALOG_OBJ = "update_version_dialog_obj";
 
     /**
+     * 注册学段
+     */
+    String EXTRA_REGISTER_SECTION = "register_section";
+
+    /**
      * 我的列表-页面类型-我的收藏
      */
     int MY_LIVES_PAGE_TYPE_FAVORITE = 1;

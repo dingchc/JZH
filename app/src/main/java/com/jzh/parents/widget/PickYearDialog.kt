@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.FrameLayout
 import com.jzh.parents.R
 import com.jzh.parents.adapter.PickYearAdapter
+import com.jzh.parents.app.Constants
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.Util
 
@@ -33,6 +34,17 @@ class PickYearDialog : BottomSheetDialogFragment() {
     private var mListener: OnPickAYearListener? = null
 
     private var mBehavior: BottomSheetBehavior<View>? = null
+
+    /**
+     * 开始年份
+     */
+    private var mSection: Int = PickSectionDialog.LearningSectionEnum.SECTION_PRESCHOOL.value
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        mSection = arguments?.getInt(Constants.EXTRA_REGISTER_SECTION) ?: PickSectionDialog.LearningSectionEnum.SECTION_PRESCHOOL.value
+    }
 
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -74,7 +86,7 @@ class PickYearDialog : BottomSheetDialogFragment() {
 
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-        val yearList = Util.getLearningYears().map { it -> it.toString() }
+        val yearList = Util.getLearningYears(mSection).map { it -> it.toString() }
 
         // 创建年份适配器
         mAdapter = PickYearAdapter(context!!, yearList, object : PickYearAdapter.OnItemClickListener {
@@ -94,8 +106,6 @@ class PickYearDialog : BottomSheetDialogFragment() {
      * @param rootView 根试图
      */
     private fun initEvent(rootView: View) {
-
-        AppLogger.i("View = " + rootView)
 
     }
 
@@ -119,14 +129,16 @@ class PickYearDialog : BottomSheetDialogFragment() {
         /**
          * 选择弹窗
          *
+         * @param section 学段
          * @return Fragment
          */
-        fun newInstance(): PickYearDialog {
+        fun newInstance(section: Int): PickYearDialog {
 
             val fragment = PickYearDialog()
 
             val bundle = Bundle()
 
+            bundle.putInt(Constants.EXTRA_REGISTER_SECTION, section)
             fragment.arguments = bundle
 
             return fragment

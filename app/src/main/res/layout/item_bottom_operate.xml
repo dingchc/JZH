@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="4dp"
+        android:paddingBottom="20dp"
         android:orientation="vertical">
 
         <TextView
@@ -22,11 +23,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/round_bg_gray_click_more"
-            android:paddingBottom="2dp"
-            android:paddingLeft="21dp"
-            android:paddingRight="21dp"
-            android:paddingTop="2dp"
-            android:text="@{pageMode == Constants.MY_LIVES_PAGE_TYPE_FAVORITE ? @string/myself_favorite : @string/subscribe_live}"
+            android:paddingBottom="4dp"
+            android:paddingLeft="9dp"
+            android:paddingRight="9dp"
+            android:paddingTop="4dp"
+            android:text="@{pageMode == Constants.MY_LIVES_PAGE_TYPE_FAVORITE ? @string/myself_favorite_more : @string/subscribe_more_live}"
             android:textColor="@color/login_btn_green"
             android:textSize="12sp" />
 

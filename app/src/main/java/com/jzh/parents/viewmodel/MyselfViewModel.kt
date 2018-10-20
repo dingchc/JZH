@@ -4,6 +4,7 @@ import android.app.Application
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
+import android.text.TextUtils
 import com.jzh.parents.datamodel.repo.MyselfRepository
 import com.jzh.parents.datamodel.response.UserInfoRes
 import com.jzh.parents.viewmodel.enum.RoleTypeEnum
@@ -49,6 +50,17 @@ class MyselfViewModel(app: Application) : BaseViewModel(app) {
             }
         } else {
             RoleTypeEnum.ROLE_TYPE_OTHER.getRoleTypeName()
+        }
+    })
+
+    /**
+     * 显示我的会员id
+     */
+    val showMemberId: LiveData<String> = Transformations.map(userInfoRes, { it ->
+        if (!TextUtils.isEmpty(it.userInfo?.member) && (it.userInfo?.member?.length ?: 0) >= 8) {
+            it.userInfo?.member?.substring(0, 4) + " " + it.userInfo?.member?.substring(4)
+        } else {
+            it.userInfo?.member ?: ""
         }
     })
 

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">家长会在线</string>
-    <string name="input_learning_section">请选择学段</string>
+    <string name="input_learning_section">请选择学龄段</string>
     <string name="input_learning_year">请选择入学年份</string>
     <string name="input_student_name">请输入学生姓名</string>
     <string name="input_select_role">您的身份?</string>
@@ -52,6 +52,7 @@
     <string name="subscribe_live">预约讲座</string>
     <string name="myself_favorite">收藏讲座</string>
     <string name="myself_feedback">意见反馈</string>
+    <string name="myself">我的</string>
     <string name="myself_logout">退出登录</string>
     <string name="myself_exit_class">退出班级</string>
     <string name="confirm_to_exit_class">您确定要退出班级吗？</string>
@@ -79,6 +80,7 @@
     <string name="count_for_look">%1$d 收听</string>
     <string name="count_for_comment">%1$d 评论</string>
     <string name="all_with_count">全部(%1$d)</string>
+    <string name="all">全部</string>
     <string name="tip_sdcard_cannot_use">sd卡不可用</string>
     <string name="login_by_phone">手机号登录</string>
     <string name="input_phone_number">请输入手机号</string>
@@ -115,7 +117,8 @@
     <string name="confirm_update">确定更新</string>
     <string name="must_update">强制更新</string>
     <string name="start_install">开始安装&#8230;</string>
-
+    <string name="myself_favorite_more">收藏更多讲座</string>
+    <string name="subscribe_more_live">预约更多讲座</string>
 
 
 </resources>

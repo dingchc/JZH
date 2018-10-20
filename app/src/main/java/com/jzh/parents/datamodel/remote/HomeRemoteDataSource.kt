@@ -20,6 +20,7 @@ import com.jzh.parents.viewmodel.entity.home.HomeBannerEntity
 import com.jzh.parents.viewmodel.entity.home.HomeLiveCategoryEntity
 import com.jzh.parents.viewmodel.entity.home.HomeLiveNowEntity
 import com.jzh.parents.viewmodel.entity.home.HomeLiveTopPicksEntity
+import com.jzh.parents.viewmodel.enum.RoleTypeEnum
 import com.jzh.parents.viewmodel.info.LiveInfo
 import com.jzh.parents.viewmodel.info.ResultInfo
 import com.tunes.library.wrapper.network.TSHttpController
@@ -106,7 +107,9 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
             className = userInfoRes.userInfo.classRoomList.first().name ?: ""
         }
 
-        return FuncEntity(name = userInfoRes?.userInfo?.realName ?: "", avatarUrl = userInfoRes?.userInfo?.headImg ?: "", className = className, isVip = userInfoRes?.userInfo?.isVip ?: 0)
+        val showName =  userInfoRes?.userInfo?.realName + Util.getRoleName(userInfoRes?.userInfo?.roleId ?: 0)
+
+        return FuncEntity(name = showName, avatarUrl = userInfoRes?.userInfo?.headImg ?: "", className = className, isVip = userInfoRes?.userInfo?.isVip ?: 0)
     }
 
     /**
@@ -328,7 +331,7 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
 
             homeConfigRes.output.recommendList.forEach {
 
-                val liveItem = LiveInfo(title = it.live?.title ?: "", imageUrl = it.pic?.info ?: "", look = it.live?.look ?: 0, isVip = it.live?.liveVip ?: 0, recommendPos = it.pic?.position ?: 0)
+                val liveItem = LiveInfo(title = it.keyword ?: "", imageUrl = it.pic?.info ?: "", look = it.live?.look ?: 0, isVip = it.live?.liveVip ?: 0, recommendPos = it.pic?.position ?: 0)
 
                 recommendList.add(liveItem)
             }

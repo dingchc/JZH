@@ -1,6 +1,7 @@
 package com.jzh.parents.activity
 
 import android.app.Activity
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
@@ -22,6 +23,7 @@ import android.transition.Fade
 import android.transition.Slide
 import android.transition.Transition
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.Toast
@@ -1153,9 +1155,22 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
 
         // 点击回调
         updateVersionDialog.mListener = listener
+    }
 
+    // 关闭键盘
+    fun hiddenKeyboard() {
+        val imm = this
+                .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager ?: return
+        try {
+            val window = this.currentFocus ?: return
+            imm.hideSoftInputFromWindow(window.windowToken,
+                    InputMethodManager.HIDE_NOT_ALWAYS)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
     }
+
 
 
 }

@@ -44,6 +44,8 @@ class MyselfActivity : BaseActivity() {
 
         mDataBinding?.setLifecycleOwner(this@MyselfActivity)
         mDataBinding?.viewModel = mViewModel
+
+        setToolbarTitle(R.string.myself)
     }
 
     /**
