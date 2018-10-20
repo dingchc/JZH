@@ -1,6 +1,8 @@
 package com.jzh.parents.app
 
 import android.content.Context
+import android.content.Intent
+import android.support.v4.content.LocalBroadcastManager
 import android.text.TextUtils
 import com.alibaba.sdk.android.push.MessageReceiver
 import com.alibaba.sdk.android.push.notification.CPushMessage
@@ -22,8 +24,6 @@ class ALiPushMsgReceiver : MessageReceiver() {
     override fun onMessage(context: Context?, message: CPushMessage?) {
         super.onMessage(context, message)
 
-        AppLogger.i("* message id = ${message?.messageId}, ${message?.title}, ${message?.content}")
-
         // 内容不为空
         if (!TextUtils.isEmpty(message?.content)) {
 
@@ -35,6 +35,9 @@ class ALiPushMsgReceiver : MessageReceiver() {
                 pushMsg?.messageId = message?.messageId ?: ""
 
                 DbController.INSTANCE.messageDb.insert(MessageEntry(messageId = pushMsg?.messageId ?: "", image = pushMsg?.image, title = pushMsg?.title, desc = pushMsg?.desc, type = pushMsg?.type ?: 0, appId = pushMsg?.appId, link = pushMsg?.link, startAt = pushMsg?.startAt ?: 0))
+
+                // 提醒新消息
+                notifyNewMsg()
             }
         }
     }
@@ -43,6 +46,19 @@ class ALiPushMsgReceiver : MessageReceiver() {
         super.onNotification(context, title, summary, extraMap)
 
         AppLogger.i("* message=$title, summary=$summary")
+
+    }
+
+    /**
+     * 提醒新消息
+     */
+    private fun notifyNewMsg() {
+
+        val intent = Intent()
+        intent.action = Constants.ACTION_NEW_MSG
+
+        LocalBroadcastManager.getInstance(JZHApplication.instance!!).sendBroadcast(intent)
+
 
     }
 }

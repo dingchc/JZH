@@ -210,6 +210,11 @@ public interface Constants {
     String WX_SUBSCRIBE_ACTION_CANCEL = "cancel";
 
     /**
+     * 新消息提醒
+     */
+    String ACTION_NEW_MSG = "com.jzh.parents.app.action.new_msg";
+
+    /**
      * 拍照
      */
     int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;

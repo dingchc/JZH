@@ -125,7 +125,7 @@ public class ImageText extends LinearLayout {
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         titleTextView.setLayoutParams(tvParams);
         tvParams.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
-        tvParams.topMargin = Util.Companion.dp2px(context, 3);
+        tvParams.topMargin = Util.Companion.dp2px(context, 1);
         this.titleTextView.setTextSize(14);
         titleTextView.setGravity(Gravity.CENTER_HORIZONTAL);
         this.titleTextView.setTextColor(Color.BLACK);
@@ -141,7 +141,7 @@ public class ImageText extends LinearLayout {
         // 显示红点
         if (isShowNotify) {
             int right = iconImageView.getRight() + 4;
-            int top = iconImageView.getTop() - 4;
+            int top = iconImageView.getTop() + 4;
             int radius = 10;
             canvas.drawCircle(right, top, radius, paint);
         }
