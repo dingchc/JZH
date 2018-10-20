@@ -27,8 +27,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 bind:circleImage="@{funcEntity.avatarUrl}"
-                bind:placeHolder="@{@drawable/icon_avatar_default}"
-                 />
+                bind:placeHolder="@{@drawable/icon_avatar_default}" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -43,7 +42,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawablePadding="4dp"
-                    android:drawableRight="@mipmap/icon_vip"
+                    android:drawableRight="@{funcEntity.isVip == 1 ? @drawable/icon_vip : null}"
                     android:text="@{funcEntity.name}"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
@@ -63,8 +62,8 @@
                 android:layout_width="64dp"
                 android:layout_height="match_parent"
                 android:layout_toLeftOf="@id/tv_myself"
-                android:visibility="gone"
-                android:src="@mipmap/icon_home_living" />
+                android:src="@mipmap/icon_home_living"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_myself"
@@ -72,10 +71,10 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/tv_msg_center"
+                android:background="@drawable/item_selector"
                 android:drawablePadding="1dp"
                 android:drawableTop="@mipmap/icon_home_mine"
                 android:gravity="center_horizontal"
-                android:background="@drawable/item_selector"
                 android:text="@string/myself"
                 android:textSize="9sp" />
 
@@ -85,9 +84,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:background="@drawable/item_selector"
                 android:drawablePadding="1dp"
                 android:drawableTop="@mipmap/icon_home_msg_center"
-                android:background="@drawable/item_selector"
                 android:gravity="center_horizontal"
                 android:text="@string/home_msg_center"
                 android:textSize="9sp" />

@@ -40,7 +40,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="9dp"
                 android:drawablePadding="6dp"
-                android:drawableRight="@mipmap/icon_vip"
+                android:drawableRight="@{viewModel.userInfoRes.userInfo.isVip == 1 ? @drawable/icon_vip : null}"
                 android:gravity="center"
                 android:text="@{viewModel.roleName}"
                 android:textColor="@color/white"
