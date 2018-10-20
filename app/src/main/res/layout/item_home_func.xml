@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:bind="http://schemas.android.com/apk/res-auto">
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -65,6 +66,7 @@
                 android:src="@mipmap/icon_home_living"
                 android:visibility="gone" />
 
+            <!--
             <TextView
                 android:id="@+id/tv_myself"
                 android:layout_width="47dp"
@@ -77,6 +79,18 @@
                 android:gravity="center_horizontal"
                 android:text="@string/myself"
                 android:textSize="9sp" />
+                -->
+            <com.jzh.parents.widget.ImageText
+                android:id="@+id/tv_myself"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@+id/tv_msg_center"
+                android:background="#FF0000"
+                app:it_src="@mipmap/icon_home_mine"
+                app:it_text="@string/myself"
+                app:it_view_width="52dp"
+                app:it_text_size="9sp"
+                app:it_text_color="#4A4A4A"/>
 
             <TextView
                 android:id="@+id/tv_msg_center"

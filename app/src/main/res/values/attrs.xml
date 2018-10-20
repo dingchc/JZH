@@ -129,4 +129,14 @@
         <attr name="dot_drawable_selected" format="reference" />
     </declare-styleable>
 
+    <!-- 上图片下文字 -->
+    <declare-styleable name="ImageText">
+        <attr name="it_src" format="reference" />
+        <attr name="it_text" format="reference|string" />
+        <attr name="it_text_color" format="reference|color" />
+        <attr name="it_text_size" format="dimension" />
+        <attr name="it_image_size" format="dimension" />
+        <attr name="it_view_width" format="dimension" />
+    </declare-styleable>
+
 </resources>
