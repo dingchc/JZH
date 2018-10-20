@@ -33,4 +33,6 @@
     <color name="home_yellow">#FFFFC600</color>
     <color name="myself_divider_line">#FFD8D8D8</color>
     <color name="font_myself_class_title">#FF666666</color>
+    <color name="red">#FF0000</color>
+
 </resources>
