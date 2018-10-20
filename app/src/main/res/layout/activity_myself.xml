@@ -97,12 +97,14 @@
 
             <!-- 消息中心 -->
             <com.jzh.parents.widget.MyselfContentItem
+                android:id="@+id/item_msg_center"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/item_height"
                 android:paddingEnd="10dp"
                 android:paddingStart="10dp"
                 android:onClick="onMsgCenterClick"
                 app:mc_hint="@string/home_msg_center"
+                app:mc_mode="item_msg"
                 app:mc_icon_src="@mipmap/icon_myself_msg_center"
                 app:mc_show_tap_arrow="true" />
 

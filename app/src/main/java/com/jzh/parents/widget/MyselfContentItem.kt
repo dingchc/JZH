@@ -64,6 +64,11 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
     private val mRightImageView = ImageView(context)
 
     /**
+     * 右侧提醒
+     */
+    private val mRightBadgeView = BadgeView(context)
+
+    /**
      * 画笔
      */
     private val mPaint: Paint = Paint()
@@ -202,7 +207,7 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
         gravity = Gravity.CENTER_VERTICAL
 
         // 默认模式
-        if (mMode == 0) {
+        if (mMode == 0 || mMode == 3) {
             // 图标
             addIcon()
         }
@@ -214,7 +219,10 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
         if (mMode == 2) {
             addRightImage()
         }
-        else {
+        if (mMode == 3) {
+            addRightNotifyIcon()
+            addRightTextView()
+        } else {
             // 右侧文本
             addRightTextView()
         }
@@ -317,6 +325,32 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
 
     }
 
+    /**
+     * 添加右侧提醒
+     */
+    private fun addRightNotifyIcon() {
+
+        addView(mRightBadgeView)
+
+        mRightBadgeView.layoutParams.apply {
+
+            val dimen = Util.dp2px(context, 14.0f)
+            width = dimen
+            height = dimen
+        }
+
+        mRightBadgeView.setNumber(0)
+    }
+
+    /**
+     * 设置新消息
+     *
+     * @param msgCnt 消息数量
+     */
+    fun showNewMsg(msgCnt: Int) {
+        mRightBadgeView.setNumber(msgCnt)
+    }
+
     override fun onTouchEvent(event: MotionEvent?): Boolean {
 
         when (event?.action) {
@@ -356,7 +390,7 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
      */
     private fun isShowRowFeedback(): Boolean {
 
-        return mShowTapArrow!! && TextUtils.isEmpty(mRightTextView.text) && mMode == 0
+        return mShowTapArrow!! && TextUtils.isEmpty(mRightTextView.text) && (mMode == 0 || mMode == 3)
     }
 
     /**

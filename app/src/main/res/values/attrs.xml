@@ -79,6 +79,8 @@
             <enum name="item_class" value="1" />
             <!-- 图片 -->
             <enum name="item_image" value="2" />
+            <!-- 消息提醒 -->
+            <enum name="item_msg" value="3" />
         </attr>
 
     </declare-styleable>

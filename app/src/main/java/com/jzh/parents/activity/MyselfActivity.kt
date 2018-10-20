@@ -2,8 +2,13 @@ package com.jzh.parents.activity
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.databinding.DataBindingUtil
+import android.os.Bundle
+import android.support.v4.content.LocalBroadcastManager
 import android.view.View
 import com.jzh.parents.R
 import com.jzh.parents.app.Constants
@@ -34,6 +39,32 @@ class MyselfActivity : BaseActivity() {
      * 数据绑定
      */
     private var mDataBinding: ActivityMyselfBinding? = null
+
+    /**
+     * 广播
+     */
+    private val mReceiver : BroadcastReceiver = object : BroadcastReceiver() {
+
+        override fun onReceive(context: Context?, intent: Intent?) {
+
+            if (Constants.ACTION_NEW_MSG == intent?.action) {
+                mDataBinding?.itemMsgCenter?.showNewMsg(1)
+            }
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val intentFilter = IntentFilter(Constants.ACTION_NEW_MSG)
+        LocalBroadcastManager.getInstance(this@MyselfActivity).registerReceiver(mReceiver, intentFilter)
+    }
+
+    override fun onDestroy() {
+
+        LocalBroadcastManager.getInstance(this@MyselfActivity).unregisterReceiver(mReceiver)
+        super.onDestroy()
+    }
 
     /**
      * 初始化组件
