@@ -30,7 +30,7 @@
             android:gravity="center_horizontal"
             android:textSize="12sp"
             android:textColor="@color/register_input_text_hint_color"
-            android:text="@{viewModel.pageMode == Constants.MY_LIVES_PAGE_TYPE_FAVORITE ? @string/tip_for_no_favorite : @string/tip_for_no_subscribe}" />
+            android:text="@{safeUnbox(viewModel.pageMode) == Constants.MY_LIVES_PAGE_TYPE_FAVORITE ? @string/tip_for_no_favorite : @string/tip_for_no_subscribe}" />
 
         <TextView
             android:id="@+id/tv_operate"
@@ -43,7 +43,7 @@
             android:paddingLeft="21dp"
             android:paddingRight="21dp"
             android:paddingTop="2dp"
-            android:text="@{viewModel.pageMode == Constants.MY_LIVES_PAGE_TYPE_FAVORITE ? @string/myself_favorite : @string/subscribe_live}"
+            android:text="@{safeUnbox(viewModel.pageMode) == Constants.MY_LIVES_PAGE_TYPE_FAVORITE ? @string/myself_favorite : @string/subscribe_live}"
             android:textColor="@color/login_btn_green"
             android:textSize="12sp" />
 

@@ -97,7 +97,7 @@ class JZHApplication : Application() {
      */
     private fun setUncaughtExceptionHandler() {
 
-        Thread.currentThread().uncaughtExceptionHandler = Thread.UncaughtExceptionHandler { thread, ex ->
+        Thread.currentThread().uncaughtExceptionHandler = Thread.UncaughtExceptionHandler { _, ex ->
             AppLogger.i("dcc", "uncaughtException" + ex.toString())
             ex.printStackTrace()
 

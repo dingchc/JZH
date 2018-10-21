@@ -95,7 +95,6 @@ class BadgeView : View {
         super.onDraw(canvas)
 
         val centerX = width.toFloat() / 2
-        val centerY = height.toFloat() / 2
         val radius = height.toFloat() / 2
 
         // 画背景

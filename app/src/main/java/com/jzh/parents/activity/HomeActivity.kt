@@ -19,6 +19,7 @@ import com.jzh.parents.app.Constants
 import com.jzh.parents.app.JZHApplication
 import com.jzh.parents.databinding.ActivityHomeBinding
 import com.jzh.parents.utils.AppLogger
+import com.jzh.parents.utils.Util
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
 import com.jzh.parents.viewmodel.entity.home.HomeLiveNowEntity
 import com.jzh.parents.viewmodel.HomeViewModel
@@ -26,6 +27,7 @@ import com.jzh.parents.viewmodel.bindadapter.TSDataBindingComponent
 import com.jzh.parents.viewmodel.entity.home.HomeLiveCategoryEntity
 import com.jzh.parents.viewmodel.info.LiveInfo
 import com.jzh.parents.viewmodel.info.ResultInfo
+import com.scwang.smartrefresh.header.MaterialHeader
 import com.tencent.mm.opensdk.modelbase.BaseResp
 import com.tencent.mm.opensdk.modelbiz.SubscribeMessage
 
@@ -104,6 +106,10 @@ class HomeActivity : BaseActivity() {
 
 
         mDataBinding?.rvData?.layoutManager = LinearLayoutManager(this@HomeActivity, LinearLayoutManager.VERTICAL, false)
+
+        mDataBinding?.refreshLayout?.refreshHeader = MaterialHeader(this@HomeActivity)
+        mDataBinding?.refreshLayout?.isEnableLoadmore = false
+        mDataBinding?.refreshLayout?.isEnableRefresh = true
     }
 
     /**
@@ -112,14 +118,13 @@ class HomeActivity : BaseActivity() {
     override fun initEvent() {
 
         // 列表数据
-        mViewModel?.getItemEntities()?.observe(this@HomeActivity, Observer<MutableList<BaseLiveEntity>> {
+        mViewModel?.itemEntities?.observe(this@HomeActivity, Observer<MutableList<BaseLiveEntity>> {
 
             itemEntities ->
+
+            mDataBinding?.refreshLayout?.finishRefresh()
             mAdapter?.mDataList = itemEntities
             mAdapter?.notifyDataSetChanged()
-
-            AppLogger.i("* list changed... " + itemEntities)
-
         })
 
         // 点击了我
@@ -222,6 +227,13 @@ class HomeActivity : BaseActivity() {
                     mDataBinding?.layoutFunc?.ivLiving?.visibility = View.GONE
                 }
             }
+
+            override fun onBannerClick(url: String?) {
+
+                if (!TextUtils.isEmpty(url)) {
+                    gotoH5Page(url ?: "")
+                }
+            }
         }
 
         // 错误返回
@@ -262,9 +274,23 @@ class HomeActivity : BaseActivity() {
                     }
                 }
             }
-
-            AppLogger.i("*3333")
         })
+
+        // 刷新
+        mDataBinding?.refreshLayout?.setOnRefreshListener {
+
+            if (Util.isNetworkAvailable()) {
+
+                // 拉取用户信息
+                mViewModel?.fetchUserInfo()
+
+                // 拉取直播数据
+                mViewModel?.fetchHomeLiveData()
+            }
+            else {
+                mDataBinding?.refreshLayout?.finishRefresh(500)
+            }
+        }
 
     }
 
@@ -317,7 +343,7 @@ class HomeActivity : BaseActivity() {
     override fun initData() {
 
         // 加载列表
-        val dataList: MutableList<BaseLiveEntity> = mutableListOf(HomeLiveNowEntity())
+        val dataList: MutableList<BaseLiveEntity> = mutableListOf()
 
         mAdapter = HomeAdapter(this@HomeActivity, dataList)
         mDataBinding?.rvData?.adapter = mAdapter

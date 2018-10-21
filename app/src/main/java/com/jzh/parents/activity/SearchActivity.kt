@@ -222,7 +222,7 @@ class SearchActivity : BaseActivity() {
         }
 
         // 空视图
-        mDataBinding?.viewStubEmpty?.setOnInflateListener { stub, inflated ->
+        mDataBinding?.viewStubEmpty?.setOnInflateListener { _, inflated ->
             val binding: LayoutNoSearchResultBinding? = DataBindingUtil.bind(inflated)
             mEmptyView = inflated
             binding?.viewModel = mViewModel
@@ -371,6 +371,8 @@ class SearchActivity : BaseActivity() {
      */
     fun onSearchCancelClick(view: View) {
 
+        AppLogger.i("view=$view")
+
         hiddenEmptyView()
 
         // 添加本地搜索词
@@ -386,6 +388,8 @@ class SearchActivity : BaseActivity() {
      * @param view 控件
      */
     fun onSearchClick(view: View) {
+
+        AppLogger.i("view=$view")
 
         hiddenKeyboard()
 

@@ -67,7 +67,7 @@ class MyLivesRemoteDataSource : BaseRemoteDataSource() {
         paramsMap.put("count", Constants.PAGE_CNT.toString())
         paramsMap.put("page", page.toString())
 
-        var url = ""
+        var url : String
 
         // 收藏
         if (pageType == Constants.MY_LIVES_PAGE_TYPE_FAVORITE) {

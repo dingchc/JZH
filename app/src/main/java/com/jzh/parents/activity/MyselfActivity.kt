@@ -145,7 +145,7 @@ class MyselfActivity : BaseActivity() {
      * @param view 控件
      */
     fun onEditClick(view: View) {
-
+        AppLogger.i("view=$view")
         // 去消息中心页面
         val intent = Intent(this@MyselfActivity, MyselfEditActivity::class.java)
         startActivity(intent)
@@ -157,7 +157,7 @@ class MyselfActivity : BaseActivity() {
      * @param view 控件
      */
     fun onMsgCenterClick(view: View) {
-
+        AppLogger.i("view=$view")
         // 去消息中心页面
         val intent = Intent(this@MyselfActivity, MsgCenterActivity::class.java)
         startActivity(intent)
@@ -169,7 +169,7 @@ class MyselfActivity : BaseActivity() {
      * @param view 控件
      */
     fun onSubscribeClick(view: View) {
-
+        AppLogger.i("view=$view")
         // 去预约页面
         val intent = Intent(this@MyselfActivity, MyLivesActivity::class.java)
         intent.putExtra(Constants.EXTRA_MY_LIVES_PAGE_TYPE, Constants.MY_LIVES_PAGE_TYPE_SUBSCRIBE)
@@ -182,7 +182,7 @@ class MyselfActivity : BaseActivity() {
      * @param view 控件
      */
     fun onFavoriteClick(view: View) {
-
+        AppLogger.i("view=$view")
         // 去收藏页面
         val intent = Intent(this@MyselfActivity, MyLivesActivity::class.java)
         intent.putExtra(Constants.EXTRA_MY_LIVES_PAGE_TYPE, Constants.MY_LIVES_PAGE_TYPE_FAVORITE)
@@ -195,7 +195,7 @@ class MyselfActivity : BaseActivity() {
      * @param view 控件
      */
     fun onFeedbackClick(view: View) {
-
+        AppLogger.i("view=$view")
         val intent = Intent(this@MyselfActivity, FeedbackActivity::class.java)
         startActivity(intent)
     }
@@ -206,6 +206,8 @@ class MyselfActivity : BaseActivity() {
      * @param view 控件
      */
     fun onLogoutClick(view: View) {
+
+        AppLogger.i("view=$view")
 
         showTipDialog(getString(R.string.myself_logout), getString(R.string.confirm_to_logout), object : TipDialog.TipDialogClickListener {
 

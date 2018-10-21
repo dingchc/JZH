@@ -160,13 +160,13 @@ class Util {
          */
         fun showPermissionFailedDialog(activity: Activity, title: String, message: String, dialogCallback: IDialogCallback?) {
 
-            AlertDialog.Builder(activity).setTitle(title).setMessage(message).setPositiveButton(R.string.confirm, DialogInterface.OnClickListener { dialog, which ->
+            AlertDialog.Builder(activity).setTitle(title).setMessage(message).setPositiveButton(R.string.confirm, DialogInterface.OnClickListener { _, _ ->
                 if (dialogCallback != null) {
                     dialogCallback.onConfirm()
                 } else {
                     MPermissionUtil.goSettingAppDetail(activity)
                 }
-            }).setNegativeButton(R.string.cancel, DialogInterface.OnClickListener { dialog, which ->
+            }).setNegativeButton(R.string.cancel, DialogInterface.OnClickListener { _, _ ->
                 if (dialogCallback != null) {
                     dialogCallback.onCancel()
                 }
@@ -181,7 +181,7 @@ class Util {
          */
         fun showOpsPermissionDenyDialog(activity: Activity, title: String, message: String) {
 
-            AlertDialog.Builder(activity).setTitle(title).setMessage(message).setPositiveButton(R.string.confirm, DialogInterface.OnClickListener { dialog, which -> }).setCancelable(false).show()
+            AlertDialog.Builder(activity).setTitle(title).setMessage(message).setPositiveButton(R.string.confirm, DialogInterface.OnClickListener { _, _ -> }).setCancelable(false).show()
         }
 
         /**
@@ -328,9 +328,7 @@ class Util {
 
             calendar.timeInMillis = System.currentTimeMillis()
 
-            var minus = 0
-
-            minus = when (section) {
+            val minus = when (section) {
 
                 PickSectionDialog.LearningSectionEnum.SECTION_PRESCHOOL.value -> 5
                 PickSectionDialog.LearningSectionEnum.SECTION_PRIMARY.value -> 5
@@ -537,7 +535,7 @@ class Util {
          */
         private fun getUsableSpace(path: File): Long {
             val stats = StatFs(path.path)
-            var availableBytes: Long = 0
+            val availableBytes: Long
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
                 availableBytes = stats.availableBytes

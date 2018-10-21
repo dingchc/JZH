@@ -53,8 +53,8 @@ class HomeAdapter(private var mContext: Context, var mDataList: MutableList<Base
 
                 // 可见性监听
                 holder.dataBinding.layoutLiving.mListener = object : VisibleFrameLayout.OnFrameVisibilityChangeListener {
-                    override fun onVisibilityChanged(isVisibility: Boolean) {
-                        mListener?.onVisibilityChanged(isVisibility)
+                    override fun onVisibilityChanged(visibility: Boolean) {
+                        mListener?.onVisibilityChanged(visibility)
                     }
                 }
             }
@@ -66,6 +66,12 @@ class HomeAdapter(private var mContext: Context, var mDataList: MutableList<Base
 
                 holder.dataBinding.bannerPage.setAdList(bannerEntity.bannerList)
                 holder.dataBinding.bannerPage.addChildrenViews()
+
+                holder.dataBinding.bannerPage.setBannerClickListener {
+
+                    pos -> mListener?.onBannerClick(bannerEntity.bannerList[pos].linkUrl)
+
+                }
             }
         // 即将开播或往期回顾:
             BaseLiveEntity.ItemTypeEnum.LIVE_ITEM.ordinal -> {
@@ -291,6 +297,12 @@ class HomeAdapter(private var mContext: Context, var mDataList: MutableList<Base
          * @param visibility 可见性值
          */
         fun onVisibilityChanged(visibility: Boolean)
+
+        /**
+         * 点击了Banner图
+         * @param url 地址
+         */
+        fun onBannerClick(url: String?)
     }
 
 }

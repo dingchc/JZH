@@ -394,7 +394,7 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        onPermissionsResult(requestCode, permissions, grantResults)
+        onPermissionsResult(requestCode, grantResults)
     }
 
     /**
@@ -434,10 +434,9 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
      * 处理权限请求的返回
      *
      * @param requestCode  请求code
-     * @param permissions  权限（暂时保留）
      * @param grantResults 权限结果
      */
-    fun onPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    fun onPermissionsResult(requestCode: Int, grantResults: IntArray) {
 
         AppLogger.i("requestCode=" + requestCode)
 
@@ -1173,7 +1172,7 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
     // 关闭键盘
     fun hiddenKeyboard() {
         val imm = this
-                .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager ?: return
+                .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         try {
             val window = this.currentFocus ?: return
             imm.hideSoftInputFromWindow(window.windowToken,

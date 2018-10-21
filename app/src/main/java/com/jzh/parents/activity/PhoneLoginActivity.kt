@@ -83,7 +83,7 @@ class PhoneLoginActivity : BaseActivity(), SmsCDTimer.OnSmsTickListener {
     override fun initEvent() {
 
         // 短信验证码
-        mDataBinding?.itemSmsCode?.setRightViewClickListener(View.OnClickListener { v ->
+        mDataBinding?.itemSmsCode?.setRightViewClickListener(View.OnClickListener { _ ->
 
             if (!SmsCDTimer.isSmsTimerStart()) {
                 mViewModel?.fetchSmsCode()
@@ -224,6 +224,8 @@ class PhoneLoginActivity : BaseActivity(), SmsCDTimer.OnSmsTickListener {
      * @param view 控件
      */
     fun onSmsLoginClick(view: View) {
+
+        AppLogger.i("view=$view")
 
         // 检查手机号
         if (!Util.checkPhoneNumberValid(mViewModel?.phoneNumber?.value)) {

@@ -20,12 +20,12 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
     /**
      * 功能条数据实体
      */
-    private var funcEntity: MutableLiveData<FuncEntity> = MutableLiveData<FuncEntity>()
+    var funcEntity: MutableLiveData<FuncEntity> = MutableLiveData<FuncEntity>()
 
     /**
      * 主页的条目
      */
-    private var itemEntities: MutableLiveData<MutableList<BaseLiveEntity>> = MutableLiveData<MutableList<BaseLiveEntity>>()
+    var itemEntities: MutableLiveData<MutableList<BaseLiveEntity>> = MutableLiveData<MutableList<BaseLiveEntity>>()
 
     /**
      * 数据仓库
@@ -35,30 +35,6 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
     init {
         // 初始化
         resultInfo.value = ResultInfo()
-    }
-
-    /**
-     * 获取条目List
-     */
-    fun getItemEntities(): MutableLiveData<MutableList<BaseLiveEntity>> {
-
-        return itemEntities
-    }
-
-    /**
-     * 设置条目List
-     */
-    fun setItemEntities(entities: MutableList<BaseLiveEntity>) {
-
-        itemEntities.value = entities
-    }
-
-    /**
-     * 获取功能条数据
-     */
-    fun getFuncEntity(): MutableLiveData<FuncEntity> {
-
-        return funcEntity
     }
 
     /**

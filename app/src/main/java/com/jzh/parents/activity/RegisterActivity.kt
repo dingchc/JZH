@@ -130,6 +130,8 @@ class RegisterActivity : BaseActivity() {
      */
     fun onRegisterBtnClick(view: View) {
 
+        AppLogger.i("view=$view")
+
         // 入学学段
         if (TextUtils.isEmpty(mViewModel?.learningSection?.value)) {
             showToastError(getString(R.string.input_learning_section))

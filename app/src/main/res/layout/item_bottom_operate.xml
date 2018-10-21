@@ -27,7 +27,7 @@
             android:paddingLeft="9dp"
             android:paddingRight="9dp"
             android:paddingTop="4dp"
-            android:text="@{pageMode == Constants.MY_LIVES_PAGE_TYPE_FAVORITE ? @string/myself_favorite_more : @string/subscribe_more_live}"
+            android:text="@{safeUnbox(pageMode) == Constants.MY_LIVES_PAGE_TYPE_FAVORITE ? @string/myself_favorite_more : @string/subscribe_more_live}"
             android:textColor="@color/login_btn_green"
             android:textSize="12sp" />
 

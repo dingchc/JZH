@@ -7,6 +7,7 @@ import android.text.TextUtils
 import android.view.View
 import com.jzh.parents.R
 import com.jzh.parents.databinding.ActivityFeedbackBinding
+import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.FeedbackViewModel
 import com.jzh.parents.viewmodel.info.ResultInfo
 
@@ -76,6 +77,7 @@ class FeedbackActivity : BaseActivity() {
      */
     fun onSubmitClick(view: View) {
 
+        AppLogger.i("view=$view")
         if (TextUtils.isEmpty(mViewModel?.content?.value)) {
             showToastError(getString(R.string.tip_feedback_input))
             return

@@ -189,9 +189,7 @@ class LoginActivity : BaseActivity() {
      * 微信授权等
      */
     fun wxAuthorizeClick(view: View?) {
-
-        AppLogger.i("wxAuthorizeClick")
-
+        AppLogger.i("view=$view")
         mViewModel?.wxAuthorize()
     }
 
@@ -200,8 +198,7 @@ class LoginActivity : BaseActivity() {
      */
     fun loginByPhoneClick(view: View?) {
 
-        AppLogger.i("loginByPhoneClick")
-
+        AppLogger.i("view=$view")
         startActivity(Intent(this@LoginActivity, PhoneLoginActivity::class.java))
     }
 

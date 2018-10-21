@@ -50,7 +50,7 @@ class SearchLocalDataSource : BaseLocalDataSource() {
 
         val json: String? = PreferenceUtil.instance.getSearchRecord()
 
-        var keyWordList: MutableList<KeyWordData>? = null
+        var keyWordList: MutableList<KeyWordData>?
 
         if (!TextUtils.isEmpty(json)) {
 

@@ -80,19 +80,6 @@ class WebViewActivity : BaseActivity() {
                     }
                 }
 
-                override fun onReceivedError(webView: WebView, errorCode: Int, description: String, failingUrl: String) {
-                    super.onReceivedError(webView, errorCode, description, failingUrl)
-
-                    AppLogger.i("* description=$description")
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        return
-                    }
-                    webView.visibility = View.GONE
-                    mDataBinding?.lyH5LoadError?.lyLoadError?.visibility = View.VISIBLE
-
-                }
-
                 override fun onReceivedError(webView: WebView, request: WebResourceRequest, error: WebResourceError) {
                     super.onReceivedError(webView, request, error)
 

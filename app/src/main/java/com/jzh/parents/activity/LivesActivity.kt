@@ -218,7 +218,7 @@ class LivesActivity() : BaseActivity() {
         }
 
         // 空视图
-        mDataBinding?.viewStubEmpty?.setOnInflateListener { stub, inflated ->
+        mDataBinding?.viewStubEmpty?.setOnInflateListener { _, inflated ->
             val binding: LayoutNoLivesBinding? = DataBindingUtil.bind(inflated)
             binding?.viewModel = mViewModel
         }
