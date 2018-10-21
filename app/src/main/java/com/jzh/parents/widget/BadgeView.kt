@@ -131,6 +131,8 @@ class BadgeView : View {
         visibility = if (number > 0) VISIBLE else INVISIBLE
 
         requestLayout()
+
+        invalidate()
     }
 
 

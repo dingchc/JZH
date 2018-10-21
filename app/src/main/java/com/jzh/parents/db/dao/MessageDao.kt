@@ -1,9 +1,6 @@
 package com.jzh.parents.db.dao
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.OnConflictStrategy
-import android.arch.persistence.room.Query
+import android.arch.persistence.room.*
 import com.jzh.parents.db.entry.MessageEntry
 
 /**
@@ -20,24 +17,36 @@ interface MessageDao {
      * @param messageEntries 消息列表
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertMessageArray(messageEntries: Array<MessageEntry>)
+    fun insertMessageArray(messageEntries: Array<MessageEntry>)
 
     /**
      * 插入消息数据
      * @param message 消息
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertMessage(message: MessageEntry)
+    fun insertMessage(message: MessageEntry)
+
+    /**
+     * 更新消息
+     */
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    fun updateMessageArray(messageEntries: Array<MessageEntry>)
 
     /**
      * 刷新消息
      */
     @Query("select * from Message ORDER BY start_at DESC LIMIT 5")
-    abstract fun refreshMessages(): List<MessageEntry>
+    fun refreshMessages(): List<MessageEntry>
 
     /**
      * 加载更多消息
      */
     @Query("select * from Message where start_at < :startTime ORDER BY start_at DESC LIMIT 5")
-    abstract fun loadMoreMessages(startTime : Long): List<MessageEntry>
+    fun loadMoreMessages(startTime : Long): List<MessageEntry>
+
+    /**
+     * 获取未读消息数量
+     */
+    @Query("select * from Message where is_read = 0")
+    fun loadUnreadMsg(): List<MessageEntry>
 }

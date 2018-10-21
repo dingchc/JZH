@@ -132,4 +132,11 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
         repo.syncDeviceId(resultInfo)
     }
 
+    /**
+     * 获取未读消息数量
+     */
+    fun getUnreadMsgCnt() : Int {
+
+        return repo.getUnreadMsgCnt()
+    }
 }

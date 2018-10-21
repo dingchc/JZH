@@ -55,12 +55,13 @@ public class DbController {
             db = null;
         }
 
-        // .addMigrations(BaseRoomDatabase.migrations)
+        //
 
         JZHApplication app = JZHApplication.Companion.getInstance();
 
+        //.addMigrations(BaseRoomDatabase.migrations)
         if (app != null) {
-            db = Room.databaseBuilder(app, BaseRoomDatabase.class, composeDbName).allowMainThreadQueries().fallbackToDestructiveMigration().build();
+            db = Room.databaseBuilder(app, BaseRoomDatabase.class, composeDbName).fallbackToDestructiveMigration().allowMainThreadQueries().build();
         }
     }
 

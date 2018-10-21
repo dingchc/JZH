@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import com.jzh.parents.datamodel.local.MyselfLocalDataSource
 import com.jzh.parents.datamodel.remote.MyselfRemoteDataSource
 import com.jzh.parents.datamodel.response.UserInfoRes
+import com.jzh.parents.db.DbController
 import com.jzh.parents.viewmodel.info.ResultInfo
 
 /**
@@ -43,6 +44,14 @@ class MyselfRepository : BaseRepository() {
     fun quitClassRoom(id: Long, userInfoRes: MutableLiveData<UserInfoRes>, resultInfo: MutableLiveData<ResultInfo>) {
 
         mRemoteDataSource.quitClassRoom(id, userInfoRes, resultInfo)
+    }
+
+    /**
+     * 获取未读消息数量
+     */
+    fun getUnreadMsgCnt() : Int {
+
+        return mLocalDataSource.getUnreadMsgCnt()
     }
 
 }

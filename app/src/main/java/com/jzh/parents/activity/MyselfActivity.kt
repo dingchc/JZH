@@ -48,7 +48,7 @@ class MyselfActivity : BaseActivity() {
         override fun onReceive(context: Context?, intent: Intent?) {
 
             if (Constants.ACTION_NEW_MSG == intent?.action) {
-                mDataBinding?.itemMsgCenter?.showNewMsg(1)
+                showNewMsg()
             }
         }
     }
@@ -58,6 +58,11 @@ class MyselfActivity : BaseActivity() {
 
         val intentFilter = IntentFilter(Constants.ACTION_NEW_MSG)
         LocalBroadcastManager.getInstance(this@MyselfActivity).registerReceiver(mReceiver, intentFilter)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        showNewMsg()
     }
 
     override fun onDestroy() {
@@ -286,5 +291,14 @@ class MyselfActivity : BaseActivity() {
         mDataBinding = DataBindingUtil.inflate(layoutInflater, R.layout.activity_myself, null, false)
 
         return mDataBinding!!.root
+    }
+
+    /**
+     * 显示新消息
+     */
+    private fun showNewMsg() {
+
+        mDataBinding?.itemMsgCenter?.showNewMsg(mViewModel?.getUnreadMsgCnt() ?: 0)
+
     }
 }

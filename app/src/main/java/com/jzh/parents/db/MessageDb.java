@@ -88,4 +88,15 @@ public class MessageDb {
         return mDao.loadMoreMessages(startTime);
 
     }
+
+    /**
+     * 加载未读消息
+     *
+     * @return 消息
+     */
+    public List<MessageEntry> loadUnreadMsg() {
+
+        return mDao.loadUnreadMsg();
+
+    }
 }

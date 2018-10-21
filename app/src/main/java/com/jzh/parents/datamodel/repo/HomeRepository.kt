@@ -19,27 +19,13 @@ class HomeRepository : BaseRepository() {
     /**
      * 本地数据源
      */
-    private var mLocalDataSource: HomeLocalDataSource? = null
+    private var mLocalDataSource: HomeLocalDataSource = HomeLocalDataSource()
 
     /**
      * 远程数据源
      */
-    private var mRemoteDataSource: HomeRemoteDataSource? = null
+    private var mRemoteDataSource: HomeRemoteDataSource = HomeRemoteDataSource()
 
-    init {
-        mLocalDataSource = HomeLocalDataSource()
-        mRemoteDataSource = HomeRemoteDataSource()
-    }
-
-
-    /**
-     * 返回功能栏数据
-     */
-    fun loadFuncEntity(): FuncEntity? {
-
-        // 功能条
-        return mLocalDataSource?.loadFuncEntity()
-    }
 
     /**
      * 获取用户信息
@@ -48,7 +34,7 @@ class HomeRepository : BaseRepository() {
      * @param resultInfo 结果
      */
     fun fetchUserInfo(target: MutableLiveData<FuncEntity>, resultInfo: MutableLiveData<ResultInfo>) {
-        mRemoteDataSource?.fetchUserInfo(target, resultInfo)
+        mRemoteDataSource.fetchUserInfo(target, resultInfo)
     }
 
     /**
@@ -59,7 +45,7 @@ class HomeRepository : BaseRepository() {
      */
     fun fetchHomeLiveData(target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
 
-        mRemoteDataSource?.fetchHomeLiveData(target, resultInfo)
+        mRemoteDataSource.fetchHomeLiveData(target, resultInfo)
     }
 
     /**
@@ -72,7 +58,7 @@ class HomeRepository : BaseRepository() {
      * @param resultInfo 结果
      */
     fun syncSubscribedALive(liveInfo: LiveInfo, openId: String, action: String, target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
-        mRemoteDataSource?.syncSubscribedALive(liveInfo, openId, action, target, resultInfo)
+        mRemoteDataSource.syncSubscribedALive(liveInfo, openId, action, target, resultInfo)
     }
 
     /**
@@ -83,7 +69,7 @@ class HomeRepository : BaseRepository() {
      * @param resultInfo 结果
      */
     fun favoriteALive(liveInfo: LiveInfo, target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
-        mRemoteDataSource?.favoriteALive(liveInfo, target, resultInfo)
+        mRemoteDataSource.favoriteALive(liveInfo, target, resultInfo)
     }
 
     /**
@@ -94,7 +80,7 @@ class HomeRepository : BaseRepository() {
      * @param resultInfo 结果
      */
     fun cancelFavoriteALive(liveInfo: LiveInfo, target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
-        mRemoteDataSource?.cancelFavoriteALive(liveInfo, false, target, resultInfo)
+        mRemoteDataSource.cancelFavoriteALive(liveInfo, false, target, resultInfo)
     }
 
     /**
@@ -104,7 +90,15 @@ class HomeRepository : BaseRepository() {
      *
      */
     fun syncDeviceId(resultInfo: MutableLiveData<ResultInfo>) {
-        mRemoteDataSource?.syncDeviceId(resultInfo)
+        mRemoteDataSource.syncDeviceId(resultInfo)
+    }
+
+    /**
+     * 获取未读消息数量
+     */
+    fun getUnreadMsgCnt() : Int {
+
+        return mLocalDataSource.getUnreadMsgCnt()
     }
 
 }

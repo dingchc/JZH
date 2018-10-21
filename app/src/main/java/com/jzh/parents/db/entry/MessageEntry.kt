@@ -61,4 +61,11 @@ data class MessageEntry(
          * 时间
          */
         @ColumnInfo(name = "start_at")
-        val startAt: Long)
+        val startAt: Long,
+
+        /**
+         * 0 - 未读，1 - 已读
+         */
+        @ColumnInfo(name = "is_read")
+        val isRead: Int = 0
+)

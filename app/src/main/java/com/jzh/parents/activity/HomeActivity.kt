@@ -65,7 +65,7 @@ class HomeActivity : BaseActivity() {
         override fun onReceive(context: Context?, intent: Intent?) {
 
             if (Constants.ACTION_NEW_MSG == intent?.action) {
-                mDataBinding?.layoutFunc?.tvMsgCenter?.setIsShowNotify(true)
+                showHasNewMsg()
             }
         }
     }
@@ -73,6 +73,7 @@ class HomeActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
 
+        showHasNewMsg()
         // 预约
         processWxSubscribe()
     }
@@ -362,5 +363,15 @@ class HomeActivity : BaseActivity() {
     override fun onBackPressed() {
 
         moveTaskToBack(false)
+    }
+
+    /**
+     * 显示有新消息
+     */
+    private fun showHasNewMsg() {
+
+        if ((mViewModel?.getUnreadMsgCnt() ?: 0) > 0) {
+            mDataBinding?.layoutFunc?.tvMsgCenter?.setIsShowNotify(true)
+        }
     }
 }

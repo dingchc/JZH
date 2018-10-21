@@ -90,4 +90,12 @@ class MyselfViewModel(app: Application) : BaseViewModel(app) {
         repo.quitClassRoom(id, userInfoRes, resultInfo)
     }
 
+    /**
+     * 获取未读消息数量
+     */
+    fun getUnreadMsgCnt() : Int {
+
+        return repo.getUnreadMsgCnt()
+    }
+
 }

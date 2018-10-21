@@ -2,6 +2,7 @@ package com.jzh.parents.datamodel.local
 
 import android.arch.lifecycle.MutableLiveData
 import com.jzh.parents.datamodel.response.UserInfoRes
+import com.jzh.parents.db.DbController
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.PreferenceUtil
 import com.jzh.parents.viewmodel.info.ResultInfo
@@ -13,6 +14,16 @@ import com.jzh.parents.viewmodel.info.ResultInfo
  * Created by Ding on 2018/10/7.
  */
 abstract class BaseLocalDataSource {
+
+    /**
+     * 获取未读消息数量
+     *
+     * @return 未读消息数
+     */
+    fun getUnreadMsgCnt() : Int {
+
+        return DbController.INSTANCE.messageDb.loadUnreadMsg()?.size ?: 0
+    }
 
     /**
      * 加载用户数据

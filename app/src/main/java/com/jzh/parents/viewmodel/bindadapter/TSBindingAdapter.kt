@@ -9,8 +9,10 @@ import com.bumptech.glide.request.RequestOptions
 import com.jzh.parents.R
 import com.jzh.parents.app.Constants
 import com.jzh.parents.utils.AppLogger
+import com.jzh.parents.utils.DateUtils
 import com.jzh.parents.viewmodel.entity.LiveItemEntity
 import com.jzh.parents.viewmodel.info.LiveInfo
+import java.util.*
 
 /**
  * 绑定适配器
@@ -81,6 +83,16 @@ class TSBindingAdapter {
             }
 
             imageView.setBackgroundResource(drawableResId)
+        }
+
+        /**
+         * 显示时间
+         */
+        @BindingAdapter(value="bind:textWithTime")
+        fun showMsgTime(textView: TextView, time : Long) {
+
+            val date = Date(time)
+            textView.text = DateUtils.formatDateString(date, DateUtils.YYYYMMDDHHMM)
         }
     }
 }
