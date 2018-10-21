@@ -38,7 +38,7 @@ class MsgCenterLocalDataSource : BaseLocalDataSource() {
 
                 // 设置为已读
                 DbController.INSTANCE.messageDb.updateMessageReadState(queryMessageList)
-                
+
                 notifyResult(cmd = cmd, code = ResultInfo.CODE_SUCCESS, resultLiveData = resultInfo)
             }
             // 没有数据

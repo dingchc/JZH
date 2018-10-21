@@ -1054,6 +1054,19 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
     }
 
     /**
+     * 跳到H5页
+     */
+    fun gotoH5Page(url : String) {
+
+        PreferenceUtil.instance.setCurrentUserId("")
+
+        val intent = Intent(this@BaseActivity, WebViewActivity::class.java)
+        intent.putExtra(Constants.EXTRA_PAGE_URL, url)
+
+        startActivity(intent)
+    }
+
+    /**
      * 保存图片
      */
     fun saveImage(url: String?, imageView: ImageView?) {

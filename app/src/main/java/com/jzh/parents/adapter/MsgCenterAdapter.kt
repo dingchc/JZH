@@ -32,6 +32,11 @@ class MsgCenterAdapter(mContext: Context, var mDataList: MutableList<MessageEntr
 
         holder.dataBinding as ItemMsgBinding
         holder.dataBinding.itemEntity = mDataList?.get(position) as MessageEntry
+
+        // 查看详情
+        holder.dataBinding.ivDetail.setOnClickListener {
+            mListener?.onClickAMsg(mDataList?.get(position) as MessageEntry)
+        }
     }
 
 

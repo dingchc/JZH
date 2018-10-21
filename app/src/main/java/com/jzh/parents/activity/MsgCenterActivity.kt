@@ -44,7 +44,7 @@ class MsgCenterActivity : BaseActivity() {
     /**
      * 适配器监听
      */
-    private var mAdapterListener : MsgCenterAdapter.OnViewClick? = null
+    private var mAdapterListener: MsgCenterAdapter.OnViewClick? = null
 
     /**
      * 初始化组件
@@ -72,7 +72,8 @@ class MsgCenterActivity : BaseActivity() {
         // 数据变化
         mViewModel?.itemEntities?.observe(this@MsgCenterActivity, Observer<MutableList<MessageEntry>> {
 
-            itemEntities -> mAdapter?.mDataList = itemEntities
+            itemEntities ->
+            mAdapter?.mDataList = itemEntities
             mAdapter?.notifyDataSetChanged()
         })
 
@@ -127,17 +128,38 @@ class MsgCenterActivity : BaseActivity() {
         // 刷新数据
         mDataBinding?.refreshLayout?.setOnRefreshListener {
 
-            AppLogger.i("* refresh")
-
             mViewModel?.refreshData()
         }
 
         // 加载更多
         mDataBinding?.refreshLayout?.setOnLoadmoreListener {
 
-            AppLogger.i("* load more")
-
             mViewModel?.loadMoreData()
+        }
+
+        // 点击了一条消息
+        mAdapterListener = object : MsgCenterAdapter.OnViewClick {
+            override fun onClickAMsg(messageEntry: MessageEntry) {
+
+                when (messageEntry.type) {
+
+                // 原生
+                    1 -> {
+
+                    }
+                // 小程序
+                    2 -> {
+
+                        mViewModel?.gotoWxMiniProgram(-1)
+                    }
+                // h5
+                    3 -> {
+                        gotoH5Page(messageEntry.link ?: "")
+                    }
+                    else -> {
+                    }
+                }
+            }
         }
     }
 

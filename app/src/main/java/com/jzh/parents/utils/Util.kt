@@ -13,6 +13,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -675,6 +676,22 @@ class Util {
 
                 else -> "其他"
             }
+        }
+
+        /**
+         * 检查网络是否可用
+         *
+         * @return true 可用， false 不可用
+         */
+        fun isNetworkAvailable(): Boolean {
+
+            val connManager = JZHApplication.instance?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+            return if (Util.checkObjNotNull(connManager) && Util.checkObjNotNull(
+                    connManager.activeNetworkInfo)) {
+                connManager.activeNetworkInfo.isAvailable
+            } else false
+
         }
 
     }

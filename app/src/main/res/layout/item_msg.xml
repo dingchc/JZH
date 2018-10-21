@@ -92,6 +92,7 @@
                         android:textSize="11sp" />
 
                     <ImageView
+                        android:id="@+id/iv_detail"
                         android:layout_width="84dp"
                         android:layout_height="24dp"
                         android:layout_gravity="center_vertical"

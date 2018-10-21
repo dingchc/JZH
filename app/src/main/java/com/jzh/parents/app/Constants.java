@@ -190,6 +190,11 @@ public interface Constants {
     String EXTRA_REGISTER_SECTION = "register_section";
 
     /**
+     * Url地址
+     */
+    public static final String EXTRA_PAGE_URL = "page_url";
+
+    /**
      * 我的列表-页面类型-我的收藏
      */
     int MY_LIVES_PAGE_TYPE_FAVORITE = 1;

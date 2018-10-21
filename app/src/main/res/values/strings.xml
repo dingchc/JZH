@@ -119,6 +119,10 @@
     <string name="start_install">开始安装&#8230;</string>
     <string name="myself_favorite_more">收藏更多讲座</string>
     <string name="subscribe_more_live">预约更多讲座</string>
+    <string name="load_web_failed">加载失败</string>
+    <string name="tip_reload">重新加载</string>
+    <string name="web_title">详情页</string>
+
 
 
 </resources>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout  xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/ly_load_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/btn_height"
+            android:gravity="center"
+            android:text="@string/load_web_failed"
+            android:textColor="@color/gray"
+            android:textSize="18sp" />
+
+
+        <com.jzh.parents.widget.TSButton xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/btn_re_load"
+            android:layout_width="300dp"
+            android:layout_height="@dimen/btn_height"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:text="@string/tip_reload"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:corner="8dp"
+            app:normal_color="@color/login_btn_green"
+            app:pressed_color="@color/login_btn_green_dark"/>
+    </LinearLayout>
+
+</layout>
+

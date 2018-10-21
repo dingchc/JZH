@@ -373,5 +373,9 @@ class HomeActivity : BaseActivity() {
         if ((mViewModel?.getUnreadMsgCnt() ?: 0) > 0) {
             mDataBinding?.layoutFunc?.tvMsgCenter?.setIsShowNotify(true)
         }
+        else {
+            mDataBinding?.layoutFunc?.tvMsgCenter?.setIsShowNotify(false)
+
+        }
     }
 }
