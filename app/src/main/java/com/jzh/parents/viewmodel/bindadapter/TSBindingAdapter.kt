@@ -31,7 +31,7 @@ class TSBindingAdapter {
          * @param imageView
          * @param url
          */
-        @BindingAdapter(value = *arrayOf("bind:circleImage", "bind:placeHolder"), requireAll = false)
+        @BindingAdapter(value = *arrayOf("circleImage", "placeHolder"), requireAll = false)
         fun loadCircleImage(@NotNull imageView: ImageView, url: String?, holderId: Drawable?) {
 
             Glide.with(imageView.context).load(url).apply(RequestOptions().circleCrop().placeholder(holderId)).into(imageView)
@@ -42,7 +42,7 @@ class TSBindingAdapter {
          * @param imageView
          * @param url
          */
-        @BindingAdapter(value = *arrayOf("bind:image", "bind:placeHolder"), requireAll = false)
+        @BindingAdapter(value = *arrayOf("image", "placeHolder"), requireAll = false)
         fun loadImage(@NotNull imageView: ImageView, url: String?, holderId: Drawable?) {
 
             Glide.with(imageView.context).load(url).apply(RequestOptions().placeholder(holderId)).into(imageView)
@@ -53,7 +53,7 @@ class TSBindingAdapter {
          * @param imageView
          * @param liveInfo 实体
          */
-        @BindingAdapter(value = "bind:srcByType")
+        @BindingAdapter(value = "srcByType")
         fun showImageByType(@NotNull imageView: ImageView, liveInfo: LiveInfo?) {
 
             val drawableResId = when (liveInfo?.contentType) {
@@ -90,7 +90,7 @@ class TSBindingAdapter {
         /**
          * 显示时间
          */
-        @BindingAdapter(value="bind:textWithTime")
+        @BindingAdapter(value="textWithTime")
         fun showMsgTime(@NotNull textView: TextView, time : Long) {
 
             val date = Date(time)
