@@ -67,5 +67,5 @@ data class MessageEntry(
          * 0 - 未读，1 - 已读
          */
         @ColumnInfo(name = "is_read")
-        val isRead: Int = 0
+        var isRead: Int = 0
 )

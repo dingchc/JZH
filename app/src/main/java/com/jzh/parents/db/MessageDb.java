@@ -67,6 +67,31 @@ public class MessageDb {
     }
 
     /**
+     * 更新消息的未读状态
+     * @param messageEntryList 消息列表
+     */
+    public void updateMessageReadState(List<MessageEntry> messageEntryList) {
+
+        if (messageEntryList != null) {
+
+
+            mDb.beginTransaction();
+
+            MessageEntry[] entries = new MessageEntry[messageEntryList.size()];
+            messageEntryList.toArray(entries);
+
+            for (MessageEntry messageEntry : entries) {
+                messageEntry.setRead(1);
+            }
+
+            mDao.updateMessageArray(entries);
+
+            mDb.setTransactionSuccessful();
+            mDb.endTransaction();
+        }
+    }
+
+    /**
      * 加载消息
      *
      * @return 消息

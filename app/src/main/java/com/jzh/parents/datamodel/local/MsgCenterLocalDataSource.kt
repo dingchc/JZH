@@ -35,6 +35,10 @@ class MsgCenterLocalDataSource : BaseLocalDataSource() {
 
             // 非空
             if (queryMessageList.isNotEmpty()) {
+
+                // 设置为已读
+                DbController.INSTANCE.messageDb.updateMessageReadState(queryMessageList)
+                
                 notifyResult(cmd = cmd, code = ResultInfo.CODE_SUCCESS, resultLiveData = resultInfo)
             }
             // 没有数据
@@ -63,6 +67,9 @@ class MsgCenterLocalDataSource : BaseLocalDataSource() {
         if (queryMessageList != null) {
 
             if (queryMessageList.isNotEmpty()) {
+
+                // 设置为已读
+                DbController.INSTANCE.messageDb.updateMessageReadState(queryMessageList)
 
                 val originList = targetList.value
 
