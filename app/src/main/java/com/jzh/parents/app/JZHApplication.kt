@@ -2,6 +2,8 @@ package com.jzh.parents.app
 
 import android.app.Application
 import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
@@ -9,7 +11,6 @@ import android.os.Process
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.JsonParser
-import com.jzh.parents.utils.AppLogger
 import com.tunes.library.wrapper.network.TSHttpController
 import com.tunes.library.wrapper.network.listener.TSHttpCallback
 import com.tunes.library.wrapper.network.model.TSBaseResponse
@@ -17,9 +18,7 @@ import java.util.*
 import com.alibaba.sdk.android.push.CommonCallback
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory
 import com.alibaba.sdk.android.push.CloudPushService
-import com.jzh.parents.utils.FileLogUtil
-import com.jzh.parents.utils.PreferenceUtil
-import com.jzh.parents.utils.Util
+import com.jzh.parents.utils.*
 import com.tencent.mm.opensdk.modelbase.BaseResp
 
 
@@ -45,6 +44,11 @@ class JZHApplication : Application() {
      */
     var pushDeviceId: String? = null
 
+    /**
+     * 通知
+     */
+    var notificationProxy : NotificationProxy? = null
+
     companion object {
 
         var instance: JZHApplication? = null
@@ -62,12 +66,28 @@ class JZHApplication : Application() {
             instance = this@JZHApplication
             TSHttpController.INSTANCE.setAppContext(this)
 
+            notificationProxy = NotificationProxy(this)
+
+            // 创建通知渠道
+            NotificationProxy.createNotificationChannel()
+
             // 监听异常
             setUncaughtExceptionHandler()
         }
 
         // 初始化阿里云推送服务
         initPushService(this@JZHApplication)
+    }
+
+    /**
+     * 显示通知
+     *
+     * @param title   标题
+     * @param content 内容
+     */
+    fun showNotification(notificationId: Int, title: String, content: String, bitmap : Bitmap? = null, intent : Intent? = null) {
+
+        notificationProxy?.showNotification(notificationId, title, content, bitmap, intent)
     }
 
     /**

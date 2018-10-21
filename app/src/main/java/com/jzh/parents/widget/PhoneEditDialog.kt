@@ -120,7 +120,7 @@ class PhoneEditDialog : AppCompatDialogFragment(), SmsCDTimer.OnSmsTickListener 
         }
 
         // 短信验证码
-        mDataBinding?.itemSmsCode?.setRightViewClickListener(View.OnClickListener { v ->
+        mDataBinding?.itemSmsCode?.setRightViewClickListener(View.OnClickListener { _ ->
 
             // 检查手机号
             if (!Util.checkPhoneNumberValid(mViewModel?.newPhone?.value)) {

@@ -460,7 +460,7 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
 
         val childRadioBtnArray = arrayOf(TSRegisterRadioButton(context, RoleTypeEnum.ROLE_TYPE_MOTHER.value), TSRegisterRadioButton(context, RoleTypeEnum.ROLE_TYPE_FATHER.value), TSRegisterRadioButton(context, RoleTypeEnum.ROLE_TYPE_OTHER.value))
 
-        for ((index, radioBtn) in childRadioBtnArray.withIndex()) {
+        for (radioBtn in childRadioBtnArray) {
 
             radioBtn.gravity = Gravity.CENTER
             // 设置Radio标记的值
@@ -576,7 +576,7 @@ class RegisterContentItem(context: Context, attributeSet: AttributeSet?, defStyl
     fun setRightViewIsEnable(isEnable: Boolean) {
 
         if (mIsShowVerifyCode!!) {
-            mVerifyCodeTextView?.isEnabled = isEnabled
+            mVerifyCodeTextView?.isEnabled = isEnable
         }
     }
 

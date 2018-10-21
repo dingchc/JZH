@@ -2,6 +2,7 @@ package com.jzh.parents.viewmodel.bindadapter
 
 import android.databinding.BindingAdapter
 import android.graphics.drawable.Drawable
+import android.support.annotation.NonNull
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
@@ -12,6 +13,7 @@ import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.DateUtils
 import com.jzh.parents.viewmodel.entity.LiveItemEntity
 import com.jzh.parents.viewmodel.info.LiveInfo
+import org.jetbrains.annotations.NotNull
 import java.util.*
 
 /**
@@ -30,7 +32,7 @@ class TSBindingAdapter {
          * @param url
          */
         @BindingAdapter(value = *arrayOf("bind:circleImage", "bind:placeHolder"), requireAll = false)
-        fun loadCircleImage(imageView: ImageView, url: String?, holderId: Drawable?) {
+        fun loadCircleImage(@NotNull imageView: ImageView, url: String?, holderId: Drawable?) {
 
             Glide.with(imageView.context).load(url).apply(RequestOptions().circleCrop().placeholder(holderId)).into(imageView)
         }
@@ -41,7 +43,7 @@ class TSBindingAdapter {
          * @param url
          */
         @BindingAdapter(value = *arrayOf("bind:image", "bind:placeHolder"), requireAll = false)
-        fun loadImage(imageView: ImageView, url: String?, holderId: Drawable?) {
+        fun loadImage(@NotNull imageView: ImageView, url: String?, holderId: Drawable?) {
 
             Glide.with(imageView.context).load(url).apply(RequestOptions().placeholder(holderId)).into(imageView)
         }
@@ -49,10 +51,10 @@ class TSBindingAdapter {
         /**
          * 加载图片
          * @param imageView
-         * @param itemEntity 实体
+         * @param liveInfo 实体
          */
         @BindingAdapter(value = "bind:srcByType")
-        fun showImageByType(imageView: ImageView, liveInfo: LiveInfo?) {
+        fun showImageByType(@NotNull imageView: ImageView, liveInfo: LiveInfo?) {
 
             val drawableResId = when (liveInfo?.contentType) {
 
@@ -89,7 +91,7 @@ class TSBindingAdapter {
          * 显示时间
          */
         @BindingAdapter(value="bind:textWithTime")
-        fun showMsgTime(textView: TextView, time : Long) {
+        fun showMsgTime(@NotNull textView: TextView, time : Long) {
 
             val date = Date(time)
             textView.text = DateUtils.formatDateString(date, DateUtils.YYYYMMDDHHMM)

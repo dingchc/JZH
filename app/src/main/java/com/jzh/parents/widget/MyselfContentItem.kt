@@ -123,9 +123,9 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
 
             mRightTextStringResId = typedArray?.getResourceId(R.styleable.MyselfContentItem_mc_right_text, 0) as Int
 
-            mHintStringResId = typedArray?.getResourceId(R.styleable.MyselfContentItem_mc_hint, 0)
+            mHintStringResId = typedArray.getResourceId(R.styleable.MyselfContentItem_mc_hint, 0)
 
-            mMode = typedArray?.getInt(R.styleable.MyselfContentItem_mc_mode, 0) as Int
+            mMode = typedArray.getInt(R.styleable.MyselfContentItem_mc_mode, 0)
 
             typedArray.recycle()
         }

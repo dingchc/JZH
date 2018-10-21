@@ -47,6 +47,8 @@ class ALiPushMsgReceiver : MessageReceiver() {
 
         AppLogger.i("* message=$title, summary=$summary")
 
+        JZHApplication.instance?.showNotification(100, title ?: "", summary ?: "", null, null)
+
     }
 
     /**

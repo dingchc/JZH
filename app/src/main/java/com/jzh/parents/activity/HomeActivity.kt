@@ -388,7 +388,7 @@ class HomeActivity : BaseActivity() {
 
     override fun onBackPressed() {
 
-        moveTaskToBack(false)
+        moveTaskToBack(true)
     }
 
     /**

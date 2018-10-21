@@ -68,7 +68,7 @@ class PickYearDialog : BottomSheetDialogFragment() {
         initView(rootView)
 
         // 初始化事件
-        initEvent(rootView)
+        initEvent()
 
         //圆角边的关键
         (rootView.parent as View).setBackgroundColor(Color.TRANSPARENT)
@@ -103,9 +103,8 @@ class PickYearDialog : BottomSheetDialogFragment() {
 
     /**
      * 初始化事件
-     * @param rootView 根试图
      */
-    private fun initEvent(rootView: View) {
+    private fun initEvent() {
 
     }
 

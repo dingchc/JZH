@@ -259,4 +259,9 @@ public interface Constants {
      */
     int GET_UNKNOWN_APP_SOURCES = 100;
 
+    /**
+     * 通知渠道
+     */
+    String NOTIFICATION_CHANNEL_ID_LIVE = "live";
+
 }
