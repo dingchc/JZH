@@ -2,8 +2,13 @@ package com.jzh.parents.activity
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.databinding.DataBindingUtil
+import android.os.Bundle
+import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.jzh.parents.R
@@ -15,6 +20,7 @@ import com.jzh.parents.databinding.LayoutNoMyselfLivesBinding
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.MyLivesViewModel
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
+import com.jzh.parents.viewmodel.entity.LiveItemEntity
 import com.jzh.parents.viewmodel.info.LiveInfo
 import com.jzh.parents.viewmodel.info.ResultInfo
 import com.scwang.smartrefresh.header.MaterialHeader
@@ -46,6 +52,35 @@ class MyLivesActivity : BaseActivity() {
      * 适配器监听
      */
     private var mAdapterListener: MyLivesAdapter.OnViewClick? = null
+
+    /**
+     * 广播
+     */
+    private val mReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+
+        override fun onReceive(context: Context?, intent: Intent?) {
+
+            // 直播收藏或预约
+            if (Constants.ACTION_LIVE_OPERATED == intent?.action) {
+
+
+            }
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val intentFilter = IntentFilter()
+        intentFilter.addAction(Constants.ACTION_LIVE_OPERATED)
+        LocalBroadcastManager.getInstance(this@MyLivesActivity).registerReceiver(mReceiver, intentFilter)
+    }
+
+    override fun onDestroy() {
+
+        LocalBroadcastManager.getInstance(this@MyLivesActivity).unregisterReceiver(mReceiver)
+        super.onDestroy()
+    }
 
     /**
      * 初始化组件
@@ -153,7 +188,7 @@ class MyLivesActivity : BaseActivity() {
 
             binding?.tvOperate?.setOnClickListener {
 
-                val pageType : Int = mViewModel?.pageMode?.value ?: Constants.MY_LIVES_PAGE_TYPE_FAVORITE
+                val pageType: Int = mViewModel?.pageMode?.value ?: Constants.MY_LIVES_PAGE_TYPE_FAVORITE
                 val type: Int = if (pageType == Constants.MY_LIVES_PAGE_TYPE_FAVORITE) LiveInfo.LiveInfoEnum.TYPE_REVIEW.value else LiveInfo.LiveInfoEnum.TYPE_WILL.value
                 gotoLiveListPage(type)
             }
@@ -263,5 +298,35 @@ class MyLivesActivity : BaseActivity() {
         intent.putExtra(Constants.EXTRA_LIVES_CATEGORY_TIP, headerTip)
 
         startActivity(intent)
+    }
+
+    private fun processOperate() {
+
+        val liveId: String = intent.getStringExtra(Constants.EXTRA_LIVE_ID)
+
+        val itemEntity: BaseLiveEntity? = mViewModel?.itemEntities?.value?.find {
+
+            if (it is LiveItemEntity) {
+                it.liveInfo.id.toString() == liveId
+            } else {
+                false
+            }
+        }
+
+        itemEntity.let {
+            val itemList: MutableList<BaseLiveEntity>? = mViewModel?.itemEntities?.value
+            itemEntity as LiveItemEntity
+
+            // 如果将要播放的
+            if (itemEntity.liveInfo.contentType == LiveInfo.LiveInfoEnum.TYPE_WILL) {
+                itemEntity.liveInfo.isSubscribed = 1
+            }
+            // 已播出的
+            else if (itemEntity.liveInfo.contentType == LiveInfo.LiveInfoEnum.TYPE_REVIEW) {
+                itemEntity.liveInfo.isFavorited = 1
+            }
+
+            mViewModel?.itemEntities?.value = itemList
+        }
     }
 }

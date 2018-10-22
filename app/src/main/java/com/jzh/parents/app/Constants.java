@@ -225,6 +225,16 @@ public interface Constants {
     String ACTION_USER_INFO_CHANGED = "com.jzh.parents.app.action.user_info_changed";
 
     /**
+     * 直播被操作了
+     */
+    String ACTION_LIVE_OPERATED = "com.jzh.parents.app.action.live_operated";
+
+    /**
+     * 直播id
+     */
+    String EXTRA_LIVE_ID = "live_id";
+
+    /**
      * 拍照
      */
     int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;

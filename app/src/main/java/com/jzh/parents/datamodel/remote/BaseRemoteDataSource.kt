@@ -271,6 +271,8 @@ abstract class BaseRemoteDataSource {
                     val liveList = target.value
 
                     target.value = liveList
+
+                    notifyResult(cmd = cmd, code = ResultInfo.CODE_SUCCESS, obj = liveInfo.id,resultLiveData = resultInfo)
                 }
                 // 失败
                 else {
@@ -392,6 +394,9 @@ abstract class BaseRemoteDataSource {
                     val liveList = target.value
 
                     target.value = liveList
+
+                    notifyResult(cmd = cmd, code = ResultInfo.CODE_SUCCESS, obj = liveInfo.id,resultLiveData = resultInfo)
+
                 }
                 // 失败
                 else {

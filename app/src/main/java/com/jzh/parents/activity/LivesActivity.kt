@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.View
@@ -111,8 +112,6 @@ class LivesActivity() : BaseActivity() {
              */
             override fun onClickALive(liveInfo: LiveInfo) {
 
-                AppLogger.i("liveInfo = $liveInfo")
-
                 mViewModel?.gotoWxMiniProgram(liveInfo.id)
             }
 
@@ -146,18 +145,33 @@ class LivesActivity() : BaseActivity() {
             // 预约
                 ResultInfo.CMD_HOME_SUBSCRIBE -> {
 
+                    // 失败
                     if (resultInfo.code != ResultInfo.CODE_SUCCESS) {
 
                         showToastError(resultInfo.tip)
+                    }
+                    // 成功
+                    else if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
+
+                        resultInfo.obj.let {
+                            sendBroadcastWhenOperated(resultInfo.obj.toString())
+                        }
                     }
                 }
 
             // 收藏
                 ResultInfo.CMD_HOME_FAVORITE -> {
 
+                    // 失败
                     if (resultInfo.code != ResultInfo.CODE_SUCCESS) {
 
                         showToastError(resultInfo.tip)
+                    }
+                    // 成功
+                    else if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
+                        resultInfo.obj.let {
+                            sendBroadcastWhenOperated(resultInfo.obj.toString())
+                        }
                     }
                 }
             // 取消收藏
@@ -211,8 +225,6 @@ class LivesActivity() : BaseActivity() {
 
         // 加载更多
         mDataBinding?.refreshLayout?.setOnLoadmoreListener {
-
-            AppLogger.i("* load more")
 
             mViewModel?.loadMoreItemEntities(mStatusType, mCategoryId)
         }
@@ -269,6 +281,18 @@ class LivesActivity() : BaseActivity() {
 
             JZHApplication.instance?.wxResult = null
         }
+    }
+
+    /**
+     * 用户信息变更了，发送广播
+     *
+     * @param liveId 直播id
+     */
+    private fun sendBroadcastWhenOperated(liveId: String) {
+
+        val intent = Intent(Constants.ACTION_LIVE_OPERATED)
+        intent.putExtra(Constants.EXTRA_LIVE_ID, liveId)
+        LocalBroadcastManager.getInstance(this@LivesActivity).sendBroadcast(intent)
     }
 
     /**
