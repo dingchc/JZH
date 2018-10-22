@@ -672,7 +672,7 @@ class Util {
 
                 RoleTypeEnum.ROLE_TYPE_FATHER.value -> "爸爸"
 
-                else -> "其他"
+                else -> "家长"
             }
         }
 

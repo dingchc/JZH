@@ -42,7 +42,7 @@ enum class RoleTypeEnum(val value: Int) {
 
             ROLE_TYPE_FATHER.value -> return "爸爸"
 
-            else -> return "其他"
+            else -> return "家长"
         }
     }
 

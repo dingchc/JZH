@@ -220,6 +220,11 @@ public interface Constants {
     String ACTION_NEW_MSG = "com.jzh.parents.app.action.new_msg";
 
     /**
+     * 用户信息变更了
+     */
+    String ACTION_USER_INFO_CHANGED = "com.jzh.parents.app.action.user_info_changed";
+
+    /**
      * 拍照
      */
     int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;

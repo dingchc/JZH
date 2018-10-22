@@ -219,7 +219,8 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
         if (mMode == 2) {
             addRightImage()
         }
-        if (mMode == 3) {
+        // 消息
+        else if (mMode == 3) {
             addRightNotifyIcon()
             addRightTextView()
         } else {

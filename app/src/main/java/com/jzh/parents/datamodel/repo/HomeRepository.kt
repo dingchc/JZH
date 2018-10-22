@@ -3,6 +3,7 @@ package com.jzh.parents.datamodel.repo
 import android.arch.lifecycle.MutableLiveData
 import com.jzh.parents.datamodel.local.HomeLocalDataSource
 import com.jzh.parents.datamodel.remote.HomeRemoteDataSource
+import com.jzh.parents.datamodel.response.UserInfoRes
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
 import com.jzh.parents.viewmodel.entity.FuncEntity
 import com.jzh.parents.viewmodel.info.LiveInfo
@@ -35,6 +36,16 @@ class HomeRepository : BaseRepository() {
      */
     fun fetchUserInfo(target: MutableLiveData<FuncEntity>, resultInfo: MutableLiveData<ResultInfo>) {
         mRemoteDataSource.fetchUserInfo(target, resultInfo)
+    }
+
+    /**
+     * 获取用户信息
+     *
+     * @param target 目标数据
+     */
+    fun loadUserInfo(target: MutableLiveData<FuncEntity>) {
+
+        mLocalDataSource.loadUserInfo(target)
     }
 
     /**

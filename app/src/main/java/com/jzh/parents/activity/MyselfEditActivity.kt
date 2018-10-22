@@ -2,9 +2,12 @@ package com.jzh.parents.activity
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.support.v4.content.LocalBroadcastManager
 import android.view.View
 import com.jzh.parents.R
+import com.jzh.parents.app.Constants
 import com.jzh.parents.databinding.ActivityMyselfEditBinding
 import com.jzh.parents.datamodel.response.OutputRes
 import com.jzh.parents.utils.AppLogger
@@ -113,6 +116,7 @@ class MyselfEditActivity : BaseActivity() {
                     // 成功
                     if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
                         hiddenProgressDialog()
+                        sendBroadcastWhenUserInfoChanged()
                     }
                     // 失败提示
                     else {
@@ -126,6 +130,7 @@ class MyselfEditActivity : BaseActivity() {
                     // 成功
                     if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
                         hiddenProgressDialog()
+                        sendBroadcastWhenUserInfoChanged()
                         showToastFinished(getString(R.string.change_phone_success))
                     }
                     // 失败提示
@@ -141,6 +146,7 @@ class MyselfEditActivity : BaseActivity() {
                     // 成功
                     if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
                         hiddenProgressDialog()
+                        sendBroadcastWhenUserInfoChanged()
                         showToastFinished(getString(R.string.change_info_success))
                     }
                     // 失败提示
@@ -328,6 +334,14 @@ class MyselfEditActivity : BaseActivity() {
     private fun resetData() {
 
         mViewModel?.loadUserInfo()
+    }
+
+    /**
+     * 用户信息变更了，发送广播
+     */
+    private fun sendBroadcastWhenUserInfoChanged() {
+
+        LocalBroadcastManager.getInstance(this@MyselfEditActivity).sendBroadcast(Intent(Constants.ACTION_USER_INFO_CHANGED))
     }
 
     /**

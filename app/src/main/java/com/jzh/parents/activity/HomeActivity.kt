@@ -66,8 +66,13 @@ class HomeActivity : BaseActivity() {
 
         override fun onReceive(context: Context?, intent: Intent?) {
 
+            // 新消息
             if (Constants.ACTION_NEW_MSG == intent?.action) {
                 showHasNewMsg()
+            }
+            // 用户信息变更了
+            else if (Constants.ACTION_USER_INFO_CHANGED == intent?.action) {
+                mViewModel?.loadUserInfo()
             }
         }
     }
@@ -83,7 +88,9 @@ class HomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val intentFilter = IntentFilter(Constants.ACTION_NEW_MSG)
+        val intentFilter = IntentFilter()
+        intentFilter.addAction(Constants.ACTION_NEW_MSG)
+        intentFilter.addAction(Constants.ACTION_USER_INFO_CHANGED)
         LocalBroadcastManager.getInstance(this@HomeActivity).registerReceiver(mReceiver, intentFilter)
     }
 

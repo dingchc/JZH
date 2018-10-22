@@ -412,21 +412,20 @@ class DialogContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
             radioBtn.isClickable = true
             radioBtn.textSize = 12.0f
 
-            AppLogger.i("* radioBtn.getValue()=${radioBtn.getValue()}")
-
             when (radioBtn.getValue()) {
             // 妈妈
                 RoleTypeEnum.ROLE_TYPE_MOTHER.value -> {
-                    radioBtn.setText(R.string.role_mother)
+                    radioBtn.text = RoleTypeEnum.ROLE_TYPE_MOTHER.getRoleTypeName()
                 }
             // 爸爸
                 RoleTypeEnum.ROLE_TYPE_FATHER.value -> {
-                    radioBtn.setText(R.string.role_father)
+                    radioBtn.text = RoleTypeEnum.ROLE_TYPE_FATHER.getRoleTypeName()
                     lp as MarginLayoutParams
                     lp.leftMargin = Util.dp2px(context, TSRegisterRadioButton.MARGIN_DIMEN)
                 }
             // 其他
                 RoleTypeEnum.ROLE_TYPE_OTHER.value -> {
+                    // 选项是其他
                     radioBtn.setText(R.string.role_other)
                     lp as MarginLayoutParams
                     lp.leftMargin = Util.dp2px(context, TSRegisterRadioButton.MARGIN_DIMEN)

@@ -54,6 +54,14 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
     }
 
     /**
+     * 获取用户信息
+     */
+    fun loadUserInfo() {
+
+        repo.loadUserInfo(funcEntity)
+    }
+
+    /**
      * 收藏一个直播
      *
      * @param liveInfo 直播
@@ -111,7 +119,7 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
     /**
      * 获取未读消息数量
      */
-    fun getUnreadMsgCnt() : Int {
+    fun getUnreadMsgCnt(): Int {
 
         return repo.getUnreadMsgCnt()
     }
