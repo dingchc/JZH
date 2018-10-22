@@ -204,7 +204,11 @@ class MyselfEditRemoteDataSource : BaseRemoteDataSource() {
         val paramsMap = TreeMap<String, String>()
         paramsMap.put("token", PreferenceUtil.instance.getToken())
         paramsMap.put("realname", name)
-        paramsMap.put("role_id", roleId.toString())
+
+        // 教师不传角色
+        if (roleId != RoleTypeEnum.ROLE_TYPE_TEACHER.value) {
+            paramsMap.put("role_id", roleId.toString())
+        }
 
         val cmd = ResultInfo.CMD_MYSELF_CHANGE_ROLE
 

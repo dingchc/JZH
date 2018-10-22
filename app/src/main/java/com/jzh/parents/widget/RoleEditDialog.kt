@@ -13,6 +13,7 @@ import com.jzh.parents.R
 import com.jzh.parents.activity.MyselfEditActivity
 import com.jzh.parents.databinding.DialogEditRoleBinding
 import com.jzh.parents.viewmodel.MyselfEditViewModel
+import com.jzh.parents.viewmodel.enum.RoleTypeEnum
 
 /**
  * 编辑身份对话框
@@ -80,6 +81,10 @@ class RoleEditDialog : AppCompatDialogFragment() {
 
         mInitStudentName = viewModel.studentName.value as String
 
+        // 如果是教师角色
+        if (viewModel.userInfoRes.value?.userInfo?.roleId == RoleTypeEnum.ROLE_TYPE_TEACHER.value) {
+            mDataBinding?.itemSelectRole?.visibility = View.GONE
+        }
     }
 
     /**

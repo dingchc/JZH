@@ -13,8 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingStart="@dimen/activity_horizontal_margin"
-        android:paddingEnd="@dimen/activity_horizontal_margin">
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -48,8 +48,8 @@
             android:layout_marginTop="80dp"
             android:onClick="wxAuthorizeClick"
             android:text="@string/wx_login"
-            android:textSize="18sp"
             android:textColor="@color/white"
+            android:textSize="18sp"
             app:corner="8dp"
             app:normal_color="@color/login_btn_green"
             app:pressed_color="@color/login_btn_green_dark" />
@@ -59,11 +59,24 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
+            android:onClick="loginByPhoneClick"
             android:text="@string/login_by_phone"
             android:textColor="@color/green"
-            android:onClick="loginByPhoneClick"
             android:textSize="12sp" />
 
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="30dp"
+            android:text="@string/login_addition"
+            android:textColor="@color/light_gray"
+            android:textSize="12sp" />
     </LinearLayout>
 
 </layout>
