@@ -666,7 +666,7 @@ class Util {
 
             return when (roleId) {
 
-                RoleTypeEnum.ROLE_TYPE_TEACHER.value -> "教师"
+                RoleTypeEnum.ROLE_TYPE_TEACHER.value -> "老师"
 
                 RoleTypeEnum.ROLE_TYPE_MOTHER.value -> "妈妈"
 

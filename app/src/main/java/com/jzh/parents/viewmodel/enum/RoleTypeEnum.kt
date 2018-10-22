@@ -34,13 +34,13 @@ enum class RoleTypeEnum(val value: Int) {
      */
     fun getRoleTypeName(): String {
 
-        when (value) {
+        return when (value) {
 
-            ROLE_TYPE_TEACHER.value -> return "教师"
+            ROLE_TYPE_TEACHER.value -> "老师"
 
-            ROLE_TYPE_MOTHER.value -> return "妈妈"
+            ROLE_TYPE_MOTHER.value -> "妈妈"
 
-            ROLE_TYPE_FATHER.value -> return "爸爸"
+            ROLE_TYPE_FATHER.value -> "爸爸"
 
             else -> return "家长"
         }

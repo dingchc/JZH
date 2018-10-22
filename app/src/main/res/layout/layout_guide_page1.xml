@@ -15,6 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/title"
+        android:layout_above="@+id/iv_right_bottom"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="29dp"
         android:src="@mipmap/img_guide_page1_desc"/>
@@ -28,10 +29,10 @@
         android:src="@mipmap/img_guide_page1_img_left"/>
 
     <ImageView
+        android:id="@+id/iv_right_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="66dp"
-        android:scaleType="matrix"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:src="@mipmap/img_guide_page1_img_right"/>

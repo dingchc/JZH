@@ -17,9 +17,11 @@
         android:layout_below="@id/title"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="29dp"
+        android:layout_above="@+id/iv_bottom"
         android:src="@mipmap/img_guide_page2_desc"/>
 
     <ImageView
+        android:id="@+id/iv_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
