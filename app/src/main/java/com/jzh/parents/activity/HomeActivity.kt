@@ -62,7 +62,7 @@ class HomeActivity : BaseActivity() {
     /**
      * 广播
      */
-    private val mReceiver : BroadcastReceiver = object : BroadcastReceiver() {
+    private val mReceiver: BroadcastReceiver = object : BroadcastReceiver() {
 
         override fun onReceive(context: Context?, intent: Intent?) {
 
@@ -106,6 +106,9 @@ class HomeActivity : BaseActivity() {
     override fun initViews() {
 
         setToolbarTitle(R.string.app_name)
+
+        // 隐藏做成返回按钮
+        mToolbar?.leftIcon?.visibility = View.GONE
 
         mViewModel = ViewModelProviders.of(this@HomeActivity).get(HomeViewModel::class.java)
         mDataBinding?.viewModel = mViewModel
@@ -175,8 +178,6 @@ class HomeActivity : BaseActivity() {
              */
             override fun onClickALive(liveInfo: LiveInfo) {
 
-                AppLogger.i("liveInfo = $liveInfo")
-
                 mViewModel?.gotoWxMiniProgram(liveInfo.id)
             }
 
@@ -229,8 +230,7 @@ class HomeActivity : BaseActivity() {
                 if (isLiving) {
                     // 显示或隐藏正在直播
                     mDataBinding?.layoutFunc?.ivLiving?.visibility = if (visibility) View.GONE else View.VISIBLE
-                }
-                else {
+                } else {
                     mDataBinding?.layoutFunc?.ivLiving?.visibility = View.GONE
                 }
             }
@@ -293,8 +293,7 @@ class HomeActivity : BaseActivity() {
 
                 // 拉取直播数据
                 mViewModel?.fetchHomeLiveData()
-            }
-            else {
+            } else {
                 mDataBinding?.refreshLayout?.finishRefresh(500)
             }
         }
@@ -405,8 +404,7 @@ class HomeActivity : BaseActivity() {
 
         if ((mViewModel?.getUnreadMsgCnt() ?: 0) > 0) {
             mDataBinding?.layoutFunc?.tvMsgCenter?.setIsShowNotify(true)
-        }
-        else {
+        } else {
             mDataBinding?.layoutFunc?.tvMsgCenter?.setIsShowNotify(false)
 
         }
