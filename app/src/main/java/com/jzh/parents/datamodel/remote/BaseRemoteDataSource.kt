@@ -337,6 +337,8 @@ abstract class BaseRemoteDataSource {
                         val liveList = target.value
 
                         target.value = liveList
+
+                        notifyResult(cmd = cmd, code = ResultInfo.CODE_NO_DATA, obj = liveInfo.id, resultLiveData = resultInfo)
                     }
 
                 }

@@ -177,9 +177,14 @@ class LivesActivity() : BaseActivity() {
             // 取消收藏
                 ResultInfo.CMD_HOME_CANCEL_FAVORITE -> {
 
+                    // 失败
                     if (resultInfo.code != ResultInfo.CODE_SUCCESS) {
 
                         showToastError(resultInfo.tip)
+                    }
+                    // 成功
+                    else if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
+                        sendBroadcastWhenOperated(resultInfo.obj.toString())
                     }
                 }
             // 刷新数据

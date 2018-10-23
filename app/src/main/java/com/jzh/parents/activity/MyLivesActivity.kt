@@ -63,7 +63,7 @@ class MyLivesActivity : BaseActivity() {
             // 直播收藏或预约
             if (Constants.ACTION_LIVE_OPERATED == intent?.action) {
 
-
+                mViewModel?.refreshItemEntities(mViewModel?.pageMode?.value ?: 0)
             }
         }
     }
@@ -175,8 +175,6 @@ class MyLivesActivity : BaseActivity() {
 
         // 加载更多
         mDataBinding?.refreshLayout?.setOnLoadmoreListener {
-
-            AppLogger.i("* load more")
 
             mViewModel?.loadMoreItemEntities(mViewModel?.pageMode?.value ?: Constants.MY_LIVES_PAGE_TYPE_FAVORITE)
         }
@@ -298,35 +296,5 @@ class MyLivesActivity : BaseActivity() {
         intent.putExtra(Constants.EXTRA_LIVES_CATEGORY_TIP, headerTip)
 
         startActivity(intent)
-    }
-
-    private fun processOperate() {
-
-        val liveId: String = intent.getStringExtra(Constants.EXTRA_LIVE_ID)
-
-        val itemEntity: BaseLiveEntity? = mViewModel?.itemEntities?.value?.find {
-
-            if (it is LiveItemEntity) {
-                it.liveInfo.id.toString() == liveId
-            } else {
-                false
-            }
-        }
-
-        itemEntity.let {
-            val itemList: MutableList<BaseLiveEntity>? = mViewModel?.itemEntities?.value
-            itemEntity as LiveItemEntity
-
-            // 如果将要播放的
-            if (itemEntity.liveInfo.contentType == LiveInfo.LiveInfoEnum.TYPE_WILL) {
-                itemEntity.liveInfo.isSubscribed = 1
-            }
-            // 已播出的
-            else if (itemEntity.liveInfo.contentType == LiveInfo.LiveInfoEnum.TYPE_REVIEW) {
-                itemEntity.liveInfo.isFavorited = 1
-            }
-
-            mViewModel?.itemEntities?.value = itemList
-        }
     }
 }
