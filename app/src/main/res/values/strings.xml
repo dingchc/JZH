@@ -122,6 +122,8 @@
     <string name="load_web_failed">加载失败</string>
     <string name="tip_reload">重新加载</string>
     <string name="web_title">详情页</string>
+    <string name="tip_input_right_phone_or_code">请填写正确的手机号或验证码</string>
+
 
 
 

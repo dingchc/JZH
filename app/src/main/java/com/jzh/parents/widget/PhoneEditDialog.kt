@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatDialogFragment
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
@@ -29,7 +30,7 @@ class PhoneEditDialog : AppCompatDialogFragment(), SmsCDTimer.OnSmsTickListener 
     /**
      * ViewModel
      */
-    private var mViewModel : MyselfEditViewModel? = null
+    private var mViewModel: MyselfEditViewModel? = null
 
     /**
      * 数据绑定
@@ -107,6 +108,12 @@ class PhoneEditDialog : AppCompatDialogFragment(), SmsCDTimer.OnSmsTickListener 
         // 确认
         confirmBtn.setOnClickListener {
 
+            // 检查验证码
+            if (TextUtils.isEmpty(mViewModel?.smsCode?.value) || (mViewModel?.smsCode?.value?.length ?: 0) < 6) {
+                mDataBinding?.tvError?.visibility = View.VISIBLE
+                return@setOnClickListener
+            }
+
             mListener?.onConfirmClick()
             this@PhoneEditDialog.dismiss()
         }
@@ -124,7 +131,7 @@ class PhoneEditDialog : AppCompatDialogFragment(), SmsCDTimer.OnSmsTickListener 
 
             // 检查手机号
             if (!Util.checkPhoneNumberValid(mViewModel?.newPhone?.value)) {
-                mListener?.onError(getString(R.string.phone_number_is_invalid))
+                mDataBinding?.tvError?.visibility = View.VISIBLE
                 return@OnClickListener
             }
 
@@ -218,7 +225,7 @@ class PhoneEditDialog : AppCompatDialogFragment(), SmsCDTimer.OnSmsTickListener 
         /**
          * 出错
          */
-        fun onError(tip : String)
+        fun onError(tip: String)
 
     }
 }

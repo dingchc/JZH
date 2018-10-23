@@ -47,6 +47,7 @@
                 android:paddingStart="10dp"
                 app:mc_hint="@string/phone"
                 app:mc_show_tap_arrow="true"
+                app:mc_mode="item_right_text"
                 app:rightText="@{viewModel.userInfoRes.userInfo.mobile}" />
 
             <!-- 身份信息 -->

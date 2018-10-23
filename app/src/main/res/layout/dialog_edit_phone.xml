@@ -65,6 +65,22 @@
             app:dc_is_show_verify_code="true"
             app:dc_show_tap_arrow="false" />
 
+        <TextView
+            android:id="@+id/tv_error"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="3dp"
+            android:gravity="center_vertical"
+            android:drawableLeft="@mipmap/icon_error_tip"
+            android:drawablePadding="5dp"
+            android:textColor="#FC0D2B"
+            android:textSize="12sp"
+            android:visibility="gone"
+            android:text="@string/tip_input_right_phone_or_code"
+            />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"

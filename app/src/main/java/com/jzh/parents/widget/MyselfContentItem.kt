@@ -279,6 +279,7 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
 
         mRightTextView.setTextColor(Color.parseColor("#26D6B9"))
         mRightTextView.textSize = 14.0f
+        mRightTextView.minWidth = Util.dp2px(context, 20.0f)
         mRightTextView.gravity = Gravity.RIGHT
 
         // 添加箭头

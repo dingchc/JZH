@@ -96,7 +96,6 @@ class MyselfEditActivity : BaseActivity() {
         mViewModel?.resultInfo?.observe(this@MyselfEditActivity, Observer { resultInfo ->
 
             when (resultInfo?.cmd) {
-
             // 上传头像
                 ResultInfo.CMD_MYSELF_UPLOAD_AVATAR -> {
 
@@ -126,7 +125,7 @@ class MyselfEditActivity : BaseActivity() {
                 }
             // 变更手机号
                 ResultInfo.CMD_MYSELF_CHANGE_PHONE -> {
-
+                    hiddenKeyboard()
                     // 成功
                     if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
                         hiddenProgressDialog()
@@ -142,7 +141,7 @@ class MyselfEditActivity : BaseActivity() {
                 }
             // 变更角色和名称
                 ResultInfo.CMD_MYSELF_CHANGE_ROLE -> {
-
+                    hiddenKeyboard()
                     // 成功
                     if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
                         hiddenProgressDialog()
