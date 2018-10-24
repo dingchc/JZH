@@ -64,6 +64,12 @@ object Api {
     const val URL_API_GET_USER_INFO = URL_API_LIVE_DOMAIN + "user/base"
 
     /**
+     * 地址：获取短信验证码
+     */
+    const val URL_API_GET_USER_SMS = URL_API_LIVE_DOMAIN + "user/sms"
+
+
+    /**
      * 地址：获取OSS配置信息
      */
     const val URL_API_GET_OSS_CONFIG = URL_API_LIVE_DOMAIN + "uploadsign"

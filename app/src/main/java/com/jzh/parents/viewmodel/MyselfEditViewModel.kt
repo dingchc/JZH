@@ -131,7 +131,7 @@ class MyselfEditViewModel(app: Application) : BaseViewModel(app) {
      */
     fun fetchSmsCode() {
 
-        repo.fetchSmsCode(newPhone.value ?: "", resultInfo)
+        repo.fetchUserSmsCode(newPhone.value ?: "", resultInfo)
     }
 
     /**

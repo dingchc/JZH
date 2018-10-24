@@ -108,6 +108,11 @@ class PhoneLoginActivity : BaseActivity(), SmsCDTimer.OnSmsTickListener {
                         SmsCDTimer.startSmsTimer()
 
                     }
+                    // 手机未注册
+                    else if (resultInfo.code == ResultInfo.CODE_MOBILE_UN_RIGISTER) {
+
+                        processMobileUnRegister()
+                    }
                     // 失败
                     else {
                         showToastError(resultInfo.tip)

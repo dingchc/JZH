@@ -49,9 +49,9 @@ class MyselfEditRepository : BaseRepository() {
      * @param phoneNumber 手机号
      * @param resultInfoLiveData 返回信息
      */
-    fun fetchSmsCode(phoneNumber: String, resultInfoLiveData: MutableLiveData<ResultInfo>) {
+    fun fetchUserSmsCode(phoneNumber: String, resultInfoLiveData: MutableLiveData<ResultInfo>) {
 
-        mRemoteDataSource.fetchSmsCode(phoneNumber, resultInfoLiveData)
+        mRemoteDataSource.fetchUserSmsCode(phoneNumber, resultInfoLiveData)
     }
 
     /**

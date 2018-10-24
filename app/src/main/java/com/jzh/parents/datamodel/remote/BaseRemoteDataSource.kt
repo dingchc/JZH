@@ -667,6 +667,44 @@ abstract class BaseRemoteDataSource {
     }
 
     /**
+     * 获取修改用户手机号的验证码
+     *
+     * @param phoneNumber        手机号
+     * @param resultInfoLiveData 返回信息
+     */
+    fun fetchUserSmsCode(phoneNumber: String, resultInfoLiveData: MutableLiveData<ResultInfo>) {
+
+        val paramsMap = TreeMap<String, String>()
+
+        paramsMap.put("phone", phoneNumber)
+        paramsMap.put("token", PreferenceUtil.instance.getToken())
+
+
+        TSHttpController.INSTANCE.doPost(Api.URL_API_GET_USER_SMS, paramsMap, object : TSHttpCallback {
+
+            override fun onSuccess(response: TSBaseResponse?, json: String?) {
+
+                AppLogger.i("json=" + json)
+
+                if (!TextUtils.isEmpty(json)) {
+
+                    val res: BaseRes? = Util.fromJson<BaseRes>(json!!, object : TypeToken<BaseRes>() {}.type)
+
+                    notifyResult(ResultInfo.CMD_LOGIN_GET_SMS_CODE, code = res?.code ?: 0, tip = res?.tip ?: "", resultLiveData = resultInfoLiveData)
+                }
+            }
+
+            override fun onException(throwable: Throwable?) {
+
+                AppLogger.i("error msg =" + throwable?.message)
+
+                notifyException(ResultInfo.CMD_LOGIN_GET_SMS_CODE, ResultInfo.CODE_EXCEPTION, ResultInfo.TIP_EXCEPTION, resultLiveData = resultInfoLiveData, throwable = throwable)
+
+            }
+        })
+    }
+
+    /**
      * 是否是Token错误{"tip":"token faild"}、{"tip":"token expired"}
      *
      * @param throwable  HttpException异常
