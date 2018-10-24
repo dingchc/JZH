@@ -785,7 +785,7 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
     /**
      * token过期回调
      */
-    fun onTokenExpired() {
+    open fun onTokenExpired() {
         AppLogger.i("token expired.")
     }
 

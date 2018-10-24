@@ -35,6 +35,8 @@ object TokenUtil {
         }
 
         isRefresh = true
+
+        TSHttpController.INSTANCE.cancelAllRequest()
         AppLogger.i("* do refreshing")
 
         val paramsMap = TreeMap<String, String>()
@@ -56,6 +58,7 @@ object TokenUtil {
                 }
 
                 isRefresh = false
+                remoteDataSource?.notifyResult(cmd = ResultInfo.CMD_REFRESH_TOKEN, code = ResultInfo.CODE_SUCCESS, resultLiveData = resultLiveData)
             }
 
             override fun onException(e: Throwable?) {

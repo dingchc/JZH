@@ -57,7 +57,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation 'com.github.dingchc:tunes-network:v1.0.7'
+    implementation 'com.github.dingchc:tunes-network:v1.0.8'
 
     kapt "android.arch.lifecycle:compiler:1.1.1"
     kapt 'com.android.databinding:compiler:3.1.4'
@@ -70,7 +70,7 @@ dependencies {
     implementation 'com.makeramen:roundedimageview:2.3.0'
 
     // 微信
-    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.1.4'
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.1.6'
 
     // 刷新
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.2-alpha-8'

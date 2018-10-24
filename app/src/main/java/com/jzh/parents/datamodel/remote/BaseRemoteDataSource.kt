@@ -303,7 +303,7 @@ abstract class BaseRemoteDataSource {
 
                         target.value = liveList
 
-                        notifyResult(cmd = cmd, code = ResultInfo.CODE_NO_DATA, obj = liveInfo.id, resultLiveData = resultInfo)
+                        notifyResult(cmd = cmd, code = ResultInfo.CODE_SUCCESS, obj = liveInfo.id, resultLiveData = resultInfo)
                     }
 
                 }

@@ -269,17 +269,37 @@ class HomeActivity : BaseActivity() {
             // 收藏
                 ResultInfo.CMD_HOME_FAVORITE -> {
 
+                    // 失败
                     if (resultInfo.code != ResultInfo.CODE_SUCCESS) {
 
                         showToastError(resultInfo.tip)
+                    }
+                    // 收藏成功
+                    else if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
+                        showToastFinished(getString(R.string.favorite_success))
                     }
                 }
             // 取消收藏
                 ResultInfo.CMD_HOME_CANCEL_FAVORITE -> {
 
+                    // 失败
                     if (resultInfo.code != ResultInfo.CODE_SUCCESS) {
 
                         showToastError(resultInfo.tip)
+                    }
+                    // 取消收藏成功
+                    else if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
+                        showToastFinished(getString(R.string.cancle_favorite_success))
+                    }
+                }
+            //刷新token成功
+                ResultInfo.CMD_REFRESH_TOKEN -> {
+
+                    if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
+
+                        AppLogger.i("* auto refresh")
+                        mDataBinding?.refreshLayout?.finishRefresh()
+                        mDataBinding?.refreshLayout?.autoRefresh()
                     }
                 }
             }
