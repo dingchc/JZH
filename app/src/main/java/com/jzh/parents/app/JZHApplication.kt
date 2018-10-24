@@ -110,6 +110,7 @@ class JZHApplication : Application() {
         })
 
         pushService.setDebug(false)
+        pushService.setLogLevel(CloudPushService.LOG_OFF)
     }
 
     /**

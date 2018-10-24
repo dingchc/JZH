@@ -10,10 +10,7 @@ import com.jzh.parents.app.Constants
 import com.jzh.parents.app.JZHApplication
 import com.jzh.parents.datamodel.data.LiveData
 import com.jzh.parents.datamodel.response.*
-import com.jzh.parents.utils.AppLogger
-import com.jzh.parents.utils.MD5Util
-import com.jzh.parents.utils.PreferenceUtil
-import com.jzh.parents.utils.Util
+import com.jzh.parents.utils.*
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
 import com.jzh.parents.viewmodel.entity.LiveItemEntity
 import com.jzh.parents.viewmodel.entity.OperateEntity
@@ -76,7 +73,7 @@ abstract class BaseRemoteDataSource {
 
             // Token过期
             if (isTokenExpired(throwable)) {
-                refreshToken()
+                TokenUtil.refreshToken(resultLiveData, this@BaseRemoteDataSource)
                 notifyResult(ResultInfo.CMD_TOKEN_EXPIRED, ResultInfo.CODE_EXCEPTION, tip, obj, resultLiveData)
             }
             // Token失效
@@ -205,38 +202,6 @@ abstract class BaseRemoteDataSource {
         })
     }
 
-
-    /**
-     * 刷新token
-     */
-    private fun refreshToken() {
-
-        val paramsMap = TreeMap<String, String>()
-        paramsMap.put("token", PreferenceUtil.instance.getToken())
-
-        TSHttpController.INSTANCE.doPost(Api.URL_API_REFRESH_TOKEN, paramsMap, object : TSHttpCallback {
-            override fun onSuccess(res: TSBaseResponse?, json: String?) {
-
-                AppLogger.i("**** json=$json")
-
-                val outputRes: OutputRes? = Util.fromJson<OutputRes>(json ?: "", object : TypeToken<OutputRes>() {
-
-                }.type)
-
-                // 成功
-                if (outputRes?.code == ResultInfo.CODE_SUCCESS) {
-
-                    PreferenceUtil.instance.setToken(outputRes.output)
-                }
-            }
-
-            override fun onException(e: Throwable?) {
-                AppLogger.i(e?.message)
-
-            }
-        })
-    }
-
     /**
      * 收藏一个直播
      *
@@ -272,7 +237,7 @@ abstract class BaseRemoteDataSource {
 
                     target.value = liveList
 
-                    notifyResult(cmd = cmd, code = ResultInfo.CODE_SUCCESS, obj = liveInfo.id,resultLiveData = resultInfo)
+                    notifyResult(cmd = cmd, code = ResultInfo.CODE_SUCCESS, obj = liveInfo.id, resultLiveData = resultInfo)
                 }
                 // 失败
                 else {
@@ -397,7 +362,7 @@ abstract class BaseRemoteDataSource {
 
                     target.value = liveList
 
-                    notifyResult(cmd = cmd, code = ResultInfo.CODE_SUCCESS, obj = liveInfo.id,resultLiveData = resultInfo)
+                    notifyResult(cmd = cmd, code = ResultInfo.CODE_SUCCESS, obj = liveInfo.id, resultLiveData = resultInfo)
 
                 }
                 // 失败

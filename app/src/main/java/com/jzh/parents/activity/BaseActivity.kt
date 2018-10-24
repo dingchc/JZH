@@ -39,6 +39,7 @@ import com.jzh.parents.widget.swipe.PageSlidingPaneLayout
 import com.jzh.parents.widget.TSToolbar.ToolbarClickListener
 import com.tencent.mm.opensdk.modelbase.BaseResp
 import com.tencent.mm.opensdk.modelbiz.SubscribeMessage
+import com.tunes.library.wrapper.network.TSHttpController
 import java.io.File
 import java.util.*
 
@@ -768,6 +769,7 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
         // token过期
             ResultInfo.CMD_TOKEN_EXPIRED -> {
                 hiddenProgressDialog()
+                onTokenExpired()
                 ret = true
             }
 

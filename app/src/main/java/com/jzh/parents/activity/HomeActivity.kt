@@ -247,6 +247,8 @@ class HomeActivity : BaseActivity() {
         mViewModel?.resultInfo?.observe(this@HomeActivity, Observer { resultInfo ->
 
 
+            AppLogger.i("resultInfo=$resultInfo")
+
             // 如果是token错误返回
             if (isTokenError(resultInfo)) {
 

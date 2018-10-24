@@ -114,6 +114,11 @@ data class ResultInfo(
         const val CMD_DEVICE_ID = 1006
 
         /**
+         * 刷新Token
+         */
+        const val CMD_REFRESH_TOKEN = 1007
+
+        /**
          * 首页：预约
          */
         const val CMD_HOME_SUBSCRIBE = 2001
