@@ -293,6 +293,9 @@ abstract class BaseRemoteDataSource {
                         if ((liveList?.size ?: 0) <= 1) {
                             notifyResult(cmd = cmd, code = ResultInfo.CODE_NO_DATA, resultLiveData = resultInfo)
                         }
+                        else {
+                            notifyResult(cmd = cmd, code = ResultInfo.CODE_SUCCESS, obj = liveInfo.id, resultLiveData = resultInfo)
+                        }
 
                     } else {
 
