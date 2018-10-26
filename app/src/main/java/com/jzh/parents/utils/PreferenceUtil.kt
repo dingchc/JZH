@@ -50,6 +50,12 @@ class PreferenceUtil private constructor() {
          * 是否显示引导图
          */
         private const val KEY_IS_SHOW_GUIDE = "is_show_guide"
+
+
+        /**
+         * 推送的设备id
+         */
+        private const val KEY_PUSH_DEVICE_ID = "device_id"
     }
 
     init {
@@ -192,5 +198,27 @@ class PreferenceUtil private constructor() {
      */
     fun isShowGuidePage(): Boolean {
         return mPreference?.getBoolean(KEY_IS_SHOW_GUIDE, true) ?: true
+    }
+
+    /**
+     * 设置设备id
+     *
+     * @param deviceId 标识
+     */
+    fun setPushDeviceId(deviceId: String?) {
+
+        val editor = mPreference?.edit()
+
+        editor?.putString(KEY_PUSH_DEVICE_ID, Util.getEmptyString(deviceId))
+
+        editor?.apply()
+    }
+
+    /**
+     * 获取设备id
+     */
+    fun getPushDeviceId(): String {
+
+        return mPreference?.getString(KEY_PUSH_DEVICE_ID, "") ?: ""
     }
 }

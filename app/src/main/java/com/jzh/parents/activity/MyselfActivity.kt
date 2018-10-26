@@ -18,6 +18,7 @@ import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.PreferenceUtil
 import com.jzh.parents.utils.Util
 import com.jzh.parents.viewmodel.MyselfViewModel
+import com.jzh.parents.viewmodel.enum.RoleTypeEnum
 import com.jzh.parents.viewmodel.info.ResultInfo
 import com.jzh.parents.widget.MyselfContentItem
 import com.jzh.parents.widget.TipDialog
@@ -238,6 +239,8 @@ class MyselfActivity : BaseActivity() {
 
         mDataBinding?.layoutClassInfo?.removeAllViews()
 
+        val roleId : Int = mViewModel?.userInfoRes?.value?.userInfo?.roleId ?: 0
+
         if (classRoomList != null && classRoomList.isNotEmpty()) {
 
             mDataBinding?.layoutClassInfo?.visibility = View.VISIBLE
@@ -260,23 +263,29 @@ class MyselfActivity : BaseActivity() {
 
                 item.layoutParams.height = resources.getDimensionPixelSize(R.dimen.item_height)
 
-                item.setOnRightClickListener(object : MyselfContentItem.OnRightClickListener {
-                    override fun onRightViewClick() {
+                // 老师不能退出班级
+                if (roleId == RoleTypeEnum.ROLE_TYPE_TEACHER.value) {
+                    item.setOnRightTextGone()
+                }
+                else {
+                    item.setOnRightClickListener(object : MyselfContentItem.OnRightClickListener {
+                        override fun onRightViewClick() {
 
-                        showTipDialog(getString(R.string.myself_exit_class), getString(R.string.confirm_to_exit_class), object : TipDialog.TipDialogClickListener {
+                            showTipDialog(getString(R.string.myself_exit_class), getString(R.string.confirm_to_exit_class), object : TipDialog.TipDialogClickListener {
 
-                            override fun onConfirmClick() {
+                                override fun onConfirmClick() {
 
-                                showProgressDialog(getString(R.string.process_doing))
-                                mViewModel?.quitClassRoom(it.id)
-                            }
+                                    showProgressDialog(getString(R.string.process_doing))
+                                    mViewModel?.quitClassRoom(it.id)
+                                }
 
-                            override fun onCancelClick() {
+                                override fun onCancelClick() {
 
-                            }
-                        })
-                    }
-                })
+                                }
+                            })
+                        }
+                    })
+                }
             }
 
         }

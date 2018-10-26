@@ -102,6 +102,7 @@ class JZHApplication : Application() {
         pushService.register(context, object : CommonCallback {
             override fun onSuccess(response: String) {
                 AppLogger.i("init cloudchannel success response=" + pushService.deviceId)
+                PreferenceUtil.instance.setPushDeviceId(pushService.deviceId)
             }
 
             override fun onFailed(errorCode: String, errorMessage: String) {

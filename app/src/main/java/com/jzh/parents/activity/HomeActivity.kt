@@ -18,6 +18,7 @@ import com.jzh.parents.adapter.HomeAdapter
 import com.jzh.parents.app.Constants
 import com.jzh.parents.app.JZHApplication
 import com.jzh.parents.databinding.ActivityHomeBinding
+import com.jzh.parents.datamodel.response.VersionRes
 import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.Util
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
@@ -308,6 +309,23 @@ class HomeActivity : BaseActivity() {
                         mDataBinding?.refreshLayout?.autoRefresh()
                     }
                 }
+            // 版本检测
+                ResultInfo.CMD_CKECK_VERSION -> {
+
+                    AppLogger.i("version ${resultInfo.code}")
+
+                    if (resultInfo.code == ResultInfo.CODE_SUCCESS && resultInfo.obj != null) {
+
+                        val versionRes: VersionRes = resultInfo.obj as VersionRes
+
+                        versionRes.versionInfo?.update.let {
+                            if (versionRes.versionInfo?.update!!) {
+
+                                findNewVersion(versionRes)
+                            }
+                        }
+                    }
+                }
             }
         })
 
@@ -389,6 +407,10 @@ class HomeActivity : BaseActivity() {
 
         // 拉取直播数据
         mViewModel?.fetchHomeLiveData()
+
+        // 检查版本
+        mViewModel?.checkAppVersion()
+
     }
 
     /**

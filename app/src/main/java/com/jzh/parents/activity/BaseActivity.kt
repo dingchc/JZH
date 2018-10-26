@@ -10,6 +10,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.Process
 import android.provider.MediaStore
 import android.provider.Settings
 import android.support.annotation.StringRes
@@ -1185,6 +1186,27 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
 
     }
 
+    /**
+     * 发现新版本
+     *
+     * @param versionRes 版本信息
+     */
+    fun findNewVersion(versionRes: VersionRes) {
 
+        showUpdateVersionDialog(versionRes, object : UpdateVersionDialog.DialogClickListener {
+
+            override fun onReadyInstall(filePath: String) {
+
+                Util.installApk(this@BaseActivity, filePath)
+            }
+
+            override fun onCancelClick(isForce: Boolean) {
+
+                if (isForce) {
+                    Process.killProcess(Process.myPid())
+                }
+            }
+        })
+    }
 
 }

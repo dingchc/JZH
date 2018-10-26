@@ -395,7 +395,7 @@ abstract class BaseRemoteDataSource {
         val paramsMap = TreeMap<String, String>()
 
         paramsMap.put("token", PreferenceUtil.instance.getToken())
-        paramsMap.put("device_id", JZHApplication.instance?.pushDeviceId ?: "")
+        paramsMap.put("device_id", PreferenceUtil.instance.getPushDeviceId())
         paramsMap.put("client", Constants.DEVICE_TYPE_ANDROID)
 
         val cmd = ResultInfo.CMD_DEVICE_ID

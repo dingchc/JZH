@@ -201,28 +201,4 @@ class LoginActivity : BaseActivity() {
         AppLogger.i("view=$view")
         startActivity(Intent(this@LoginActivity, PhoneLoginActivity::class.java))
     }
-
-    /**
-     * 发现新版本
-     *
-     * @param versionRes 版本信息
-     */
-    private fun findNewVersion(versionRes: VersionRes) {
-
-        showUpdateVersionDialog(versionRes, object : UpdateVersionDialog.DialogClickListener {
-
-            override fun onReadyInstall(filePath: String) {
-
-                Util.installApk(this@LoginActivity, filePath)
-            }
-
-            override fun onCancelClick(isForce: Boolean) {
-
-                if (isForce) {
-                    Process.killProcess(Process.myPid())
-                }
-            }
-        })
-    }
-
 }

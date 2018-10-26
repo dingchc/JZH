@@ -12,6 +12,7 @@ import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.MotionEvent
+import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -422,6 +423,13 @@ class MyselfContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
      */
     fun setOnRightClickListener(listener: OnRightClickListener) {
         mRightListener = listener
+    }
+
+    /**
+     * 设置右侧文本不可见
+     */
+    fun setOnRightTextGone() {
+        mRightTextView.visibility = View.GONE
     }
 
     /**

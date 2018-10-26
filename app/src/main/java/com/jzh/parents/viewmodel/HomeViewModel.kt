@@ -123,4 +123,12 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
 
         return repo.getUnreadMsgCnt()
     }
+
+    /**
+     * 检测客户端版本
+     */
+    fun checkAppVersion() {
+
+        repo.checkAppVersion(resultInfo)
+    }
 }
