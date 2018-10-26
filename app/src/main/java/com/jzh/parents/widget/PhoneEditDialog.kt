@@ -57,6 +57,8 @@ class PhoneEditDialog : AppCompatDialogFragment(), SmsCDTimer.OnSmsTickListener 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
         val customDialog = super.onCreateDialog(savedInstanceState)
+        customDialog.setCancelable(false)
+        customDialog.setCanceledOnTouchOutside(false)
 
         val myLayoutInflater = LayoutInflater.from(context)
         mDataBinding = DataBindingUtil.inflate(myLayoutInflater, R.layout.dialog_edit_phone, null, false)

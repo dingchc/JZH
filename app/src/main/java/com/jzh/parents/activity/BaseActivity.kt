@@ -792,7 +792,7 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
     /**
      * token失效
      */
-    private fun onTokenFailed() {
+    open fun onTokenFailed() {
 
         AppLogger.i("onTokenFailed")
 

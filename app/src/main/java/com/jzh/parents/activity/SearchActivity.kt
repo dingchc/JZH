@@ -84,7 +84,6 @@ class SearchActivity : BaseActivity() {
         mDataBinding?.refreshLayout?.refreshHeader = MaterialHeader(this@SearchActivity)
         mDataBinding?.refreshLayout?.isEnableLoadmore = true
         mDataBinding?.refreshLayout?.isEnableRefresh = false
-
     }
 
     override fun initEvent() {
@@ -96,6 +95,25 @@ class SearchActivity : BaseActivity() {
             mAdapter?.mDataList = itemEntities
             mAdapter?.notifyDataSetChanged()
         })
+
+        // 检测搜索
+        mViewModel?.searchingContent?.observe(this@SearchActivity, Observer {
+            searchContent ->
+            if (TextUtils.isEmpty(searchContent)) {
+                mDataBinding?.layoutSearch?.ivSearchClear?.visibility = View.GONE
+                mDataBinding?.layoutSearch?.ivSearch?.visibility = View.VISIBLE
+            }
+            else {
+                mDataBinding?.layoutSearch?.ivSearchClear?.visibility = View.VISIBLE
+            }
+        })
+
+        /**
+         * 清除按钮
+         */
+        mDataBinding?.layoutSearch?.ivSearchClear?.setOnClickListener {
+            mViewModel?.searchingContent?.value = ""
+        }
 
         // 适配器事件监听器
         mAdapterListener = object : SearchAdapter.OnViewClick {

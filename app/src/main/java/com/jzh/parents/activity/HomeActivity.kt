@@ -150,6 +150,12 @@ class HomeActivity : BaseActivity() {
             startActivity(intent)
         }
 
+        // 点击了我
+        mDataBinding?.layoutFunc?.ivLiving?.setOnClickListener {
+
+            mViewModel?.gotoWxMiniProgram(-1)
+        }
+
         // 列表点击
         mAdapterListener = object : HomeAdapter.OnViewClick {
 
@@ -429,6 +435,16 @@ class HomeActivity : BaseActivity() {
         } else {
             mDataBinding?.layoutFunc?.tvMsgCenter?.setIsShowNotify(false)
 
+        }
+    }
+
+    /**
+     * token失败
+     */
+    override fun onTokenFailed() {
+        super.onTokenFailed()
+        if (mDataBinding?.refreshLayout?.isRefreshing ?: false) {
+            mDataBinding?.refreshLayout?.finishRefresh()
         }
     }
 }

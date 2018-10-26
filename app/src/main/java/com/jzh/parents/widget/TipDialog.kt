@@ -3,6 +3,7 @@ package com.jzh.parents.widget
 import android.app.Dialog
 import android.os.Bundle
 import android.support.v7.app.AppCompatDialogFragment
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
@@ -44,6 +45,10 @@ class TipDialog : AppCompatDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
         val customDialog = super.onCreateDialog(savedInstanceState)
+        customDialog.setCancelable(false)
+        customDialog.setCanceledOnTouchOutside(false)
+
+        customDialog.setOnKeyListener { _, keyCode, _ -> keyCode == KeyEvent.KEYCODE_BACK }
 
         val myLayoutInflater = LayoutInflater.from(context)
 

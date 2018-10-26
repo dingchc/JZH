@@ -123,7 +123,7 @@ class UpdateVersionDialog : AppCompatDialogFragment() {
             override fun onSuccess(res: TSBaseResponse?, json: String?) {
 
                 if (res != null) {
-                    val response = res as TSResponse<String>
+                    val response = res as? TSResponse<String>
 
                     if (response != null) {
                         mDataBinding?.tvConfirm?.text = getString(R.string.start_install)

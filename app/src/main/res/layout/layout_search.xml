@@ -2,7 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.jzh.parents.viewmodel.SearchViewModel" />
@@ -17,17 +19,34 @@
         android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/ed_search_bar"
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="36dp"
-            android:layout_weight="1"
-            android:background="@drawable/round_bg_search_bar"
-            android:gravity="center_vertical|left"
-            android:hint="@string/home_search_bar_hint"
-            android:paddingLeft="4dp"
-            android:text="@={viewModel.searchingContent}"
-            android:textSize="12sp" />
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/ed_search_bar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/round_bg_search_bar"
+                android:gravity="center_vertical|left"
+                android:hint="@string/home_search_bar_hint"
+                android:paddingLeft="4dp"
+                android:text="@={viewModel.searchingContent}"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/iv_search_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:visibility="gone"
+                android:src="@mipmap/icon_search_clear" />
+
+        </RelativeLayout>
+
 
         <FrameLayout
             android:layout_width="56dp"
@@ -38,23 +57,22 @@
                 android:id="@+id/tv_cancel"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
-                android:text="@string/cancel"
-                android:textSize="14sp"
                 android:gravity="center"
                 android:onClick="onSearchCancelClick"
-                android:visibility="@{safeUnbox(viewModel.isSearchable) ? View.GONE : View.VISIBLE}"
+                android:text="@string/cancel"
                 android:textColor="@color/font_black_search_title"
-                />
+                android:textSize="14sp"
+                android:visibility="@{safeUnbox(viewModel.isSearchable) ? View.GONE : View.VISIBLE}" />
 
             <ImageView
                 android:id="@+id/iv_search"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
                 android:background="@drawable/round_bg_search_icon"
-                android:scaleType="center"
                 android:onClick="onSearchClick"
-                android:visibility="@{safeUnbox(viewModel.isSearchable) ? View.VISIBLE : View.GONE}"
-                android:src="@mipmap/icon_home_search" />
+                android:scaleType="center"
+                android:src="@mipmap/icon_home_search"
+                android:visibility="@{safeUnbox(viewModel.isSearchable) ? View.VISIBLE : View.GONE}" />
 
         </FrameLayout>
 

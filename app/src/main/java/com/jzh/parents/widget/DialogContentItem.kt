@@ -401,7 +401,7 @@ class DialogContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
 
         val childRadioBtnArray = arrayOf(TSRegisterRadioButton(context, RoleTypeEnum.ROLE_TYPE_MOTHER.value), TSRegisterRadioButton(context, RoleTypeEnum.ROLE_TYPE_FATHER.value), TSRegisterRadioButton(context, RoleTypeEnum.ROLE_TYPE_OTHER.value))
 
-        for ((index, radioBtn) in childRadioBtnArray.withIndex()) {
+        for (radioBtn in childRadioBtnArray) {
 
             radioBtn.gravity = Gravity.CENTER
             // 设置Radio标记的值
@@ -517,7 +517,7 @@ class DialogContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
     fun setRightViewIsEnable(isEnable: Boolean) {
 
         if (mIsShowVerifyCode!!) {
-            mVerifyCodeTextView.isEnabled = isEnabled
+            mVerifyCodeTextView.isEnabled = isEnable
         }
     }
 
@@ -525,7 +525,7 @@ class DialogContentItem(context: Context, attributeSet: AttributeSet?, defStyle:
      * 获取右侧文本内容
      */
     fun getRightViewText(): String {
-        return Util.getEmptyString(mVerifyCodeTextView?.text.toString())
+        return Util.getEmptyString(mVerifyCodeTextView.text.toString())
     }
 
     /**
