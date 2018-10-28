@@ -83,6 +83,8 @@ class FeedbackActivity : BaseActivity() {
             return
         }
 
+        hiddenKeyboard()
+
         showProgressDialog(getString(R.string.process_doing))
 
         mViewModel?.submitFeedback()
