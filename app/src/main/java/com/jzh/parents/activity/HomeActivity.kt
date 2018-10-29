@@ -28,6 +28,7 @@ import com.jzh.parents.viewmodel.bindadapter.TSDataBindingComponent
 import com.jzh.parents.viewmodel.entity.home.HomeLiveCategoryEntity
 import com.jzh.parents.viewmodel.info.LiveInfo
 import com.jzh.parents.viewmodel.info.ResultInfo
+import com.jzh.parents.widget.TipDialog
 import com.scwang.smartrefresh.header.MaterialHeader
 import com.tencent.mm.opensdk.modelbase.BaseResp
 import com.tencent.mm.opensdk.modelbiz.SubscribeMessage
@@ -296,7 +297,7 @@ class HomeActivity : BaseActivity() {
                     }
                     // 取消收藏成功
                     else if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
-                        showToastFinished(getString(R.string.cancle_favorite_success))
+                        showToastFinished(getString(R.string.cancel_favorite_success))
                     }
                 }
             //刷新token成功

@@ -1,9 +1,12 @@
 package com.jzh.parents.widget
 
 import android.app.Dialog
+import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatDialogFragment
+import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -86,8 +89,7 @@ class UpdateVersionDialog : AppCompatDialogFragment() {
         // 强制更新
         if (isForce) {
             mDataBinding?.tvConfirm?.text = getString(R.string.must_update)
-        }
-        else {
+        } else {
             mDataBinding?.tvConfirm?.text = getString(R.string.confirm_update)
         }
     }
@@ -108,6 +110,18 @@ class UpdateVersionDialog : AppCompatDialogFragment() {
             mListener?.onCancelClick(mVersionRes?.versionInfo?.must ?: false)
 
             this@UpdateVersionDialog.dismiss()
+        }
+
+        // 点击标题
+        mDataBinding?.tvTitle?.setOnClickListener {
+
+            this@UpdateVersionDialog.dismiss()
+
+            if (!TextUtils.isEmpty(mVersionRes?.versionInfo?.url)) {
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse(mVersionRes?.versionInfo?.url)
+                startActivity(intent)
+            }
         }
     }
 

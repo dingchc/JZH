@@ -124,7 +124,7 @@
     <string name="web_title">详情页</string>
     <string name="tip_input_right_phone_or_code">请填写正确的手机号或验证码</string>
     <string name="favorite_success">收藏成功</string>
-    <string name="cancle_favorite_success">取消收藏成功</string>
+    <string name="cancel_favorite_success">取消收藏成功</string>
 
 
 

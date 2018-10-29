@@ -186,7 +186,7 @@ class LivesActivity() : BaseActivity() {
                     // 成功
                     else if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
                         sendBroadcastWhenOperated(resultInfo.obj.toString())
-                        showToastFinished(getString(R.string.cancle_favorite_success))
+                        showToastFinished(getString(R.string.cancel_favorite_success))
                     }
                 }
             // 刷新数据

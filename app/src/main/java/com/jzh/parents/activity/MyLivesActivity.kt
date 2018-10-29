@@ -165,14 +165,13 @@ class MyLivesActivity : BaseActivity() {
                         showEmptyView()
                     }
                     else if (resultInfo.code == ResultInfo.CODE_SUCCESS) {
-                        showToastFinished(getString(R.string.cancle_favorite_success))
+                        showToastFinished(getString(R.string.cancel_favorite_success))
                     }
                     // 错误
                     else {
                         showToastError(resultInfo.tip)
                     }
                 }
-
             }
         })
 
