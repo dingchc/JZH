@@ -20,6 +20,8 @@ import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory
 import com.alibaba.sdk.android.push.CloudPushService
 import com.jzh.parents.utils.*
 import com.tencent.mm.opensdk.modelbase.BaseResp
+import com.umeng.analytics.MobclickAgent
+import com.umeng.commonsdk.UMConfigure
 
 
 /**
@@ -74,6 +76,10 @@ class JZHApplication : Application() {
 
             // 监听异常
             setUncaughtExceptionHandler()
+
+            // 友盟
+            UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, null);
+            MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
         }
 
         // 初始化阿里云推送服务

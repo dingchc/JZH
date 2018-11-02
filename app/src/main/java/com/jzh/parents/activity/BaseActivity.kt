@@ -41,6 +41,7 @@ import com.jzh.parents.widget.TSToolbar.ToolbarClickListener
 import com.tencent.mm.opensdk.modelbase.BaseResp
 import com.tencent.mm.opensdk.modelbiz.SubscribeMessage
 import com.tunes.library.wrapper.network.TSHttpController
+import com.umeng.analytics.MobclickAgent
 import java.io.File
 import java.util.*
 
@@ -105,6 +106,16 @@ abstract class BaseActivity : AppCompatActivity(), SlidingPaneLayout.PanelSlideL
 
         // 设置状态栏模式
         setMiUIStatusBarDarkText(true)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        MobclickAgent.onResume(this@BaseActivity)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        MobclickAgent.onPause(this@BaseActivity)
     }
 
 
