@@ -7,6 +7,7 @@ import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.PreferenceUtil
 import com.jzh.parents.viewmodel.entity.BaseLiveEntity
 import com.jzh.parents.viewmodel.entity.SearchEntity
+import com.jzh.parents.viewmodel.info.LiveInfo
 import com.jzh.parents.viewmodel.info.ResultInfo
 import com.tunes.library.wrapper.network.TSHttpController
 import com.tunes.library.wrapper.network.listener.TSHttpCallback
@@ -67,16 +68,19 @@ class MyLivesRemoteDataSource : BaseRemoteDataSource() {
         paramsMap.put("count", Constants.PAGE_CNT.toString())
         paramsMap.put("page", page.toString())
 
-        var url : String
+        val url : String
+        val targetContentType : LiveInfo.LiveInfoEnum
 
         // 收藏
         if (pageType == Constants.MY_LIVES_PAGE_TYPE_FAVORITE) {
 
             url = Api.URL_API_FAVORITES_LIST
+            targetContentType = LiveInfo.LiveInfoEnum.TYPE_REVIEW
         }
         // 预约
         else {
             url = Api.URL_API_SUBSCRIBE_LIST
+            targetContentType = LiveInfo.LiveInfoEnum.TYPE_WILL
         }
 
         var cmd = ResultInfo.CMD_REFRESH_LIVES
@@ -91,14 +95,13 @@ class MyLivesRemoteDataSource : BaseRemoteDataSource() {
             override fun onSuccess(res: TSBaseResponse?, json: String?) {
 
                 // 处理直播列表结果
-                processLivesResult(page = page, json = json, cmd = cmd, searchEntity = null, operateEntity = operateEntity, isShowItemHeader = false, target = target, resultInfo = resultInfo)
+                processLivesResult(page = page, json = json, cmd = cmd, searchEntity = null, operateEntity = operateEntity, isShowItemHeader = false, targetContentType = targetContentType, target = target, resultInfo = resultInfo)
             }
 
             override fun onException(e: Throwable?) {
                 AppLogger.i(e?.message)
 
                 notifyException(cmd = cmd, code = ResultInfo.CODE_EXCEPTION, resultLiveData = resultInfo, throwable = e)
-
             }
         })
     }

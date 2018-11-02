@@ -431,16 +431,17 @@ abstract class BaseRemoteDataSource {
     /**
      * 处理直播列表结果
      *
-     * @param page             页面
-     * @param json             json返回结果
-     * @param cmd              指令
-     * @param searchEntity     搜索实体
-     * @param operateEntity    操作实体(位于列表末尾)
-     * @param isShowItemHeader 是否显示条目头
+     * @param page               页面
+     * @param json               json返回结果
+     * @param cmd                指令
+     * @param searchEntity      搜索实体
+     * @param operateEntity     操作实体(位于列表末尾)
+     * @param isShowItemHeader  是否显示条目头
+     * @param targetContentType 内容的目标类型
      * @param target           目标
      * @param resultInfo       结果
      */
-    fun processLivesResult(page: Int, json: String?, cmd: Int, searchEntity: SearchEntity? = null, operateEntity: OperateEntity? = null, isShowItemHeader: Boolean = true, target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
+    fun processLivesResult(page: Int, json: String?, cmd: Int, searchEntity: SearchEntity? = null, operateEntity: OperateEntity? = null, isShowItemHeader: Boolean = true, targetContentType: LiveInfo.LiveInfoEnum? = null, target: MutableLiveData<MutableList<BaseLiveEntity>>, resultInfo: MutableLiveData<ResultInfo>) {
 
         val gson = Gson()
 
@@ -477,7 +478,7 @@ abstract class BaseRemoteDataSource {
                     showEntities.removeAt(showEntities.size - 1)
                 }
 
-                showEntities.addAll(composeLiveItemList(page, liveReadyList, liveReadyList?.size ?: 0, liveReadyList?.size ?: 0, isShowItemHeader, false))
+                showEntities.addAll(composeLiveItemList(page, liveReadyList, liveReadyList?.size ?: 0, liveReadyList?.size ?: 0, isShowItemHeader, false, targetContentType))
 
                 // 添加操作实体
                 if (operateEntity != null) {
@@ -488,8 +489,6 @@ abstract class BaseRemoteDataSource {
 
                 // 通知结果，用于关闭加载对话框等
                 if (liveReadyList != null) {
-
-                    AppLogger.i("* liveReadyList.size = ${liveReadyList.size}")
 
                     if (liveReadyList.size == Constants.PAGE_CNT) {
                         notifyResult(cmd = cmd, code = liveListRes.code, resultLiveData = resultInfo)
@@ -542,15 +541,16 @@ abstract class BaseRemoteDataSource {
     /**
      * 根据类型，组装并返回对应的直播列表
      *
-     * @param page             页面
-     * @param liveDataList     返回的直播数据
-     * @param totalCnt         总数
-     * @param countLimit       显示条目限制
-     * @param isShowItemHeader 是否显示条目头
-     * @param isShowMore       是否显示更多
+     * @param page                页面
+     * @param liveDataList       返回的直播数据
+     * @param totalCnt           总数
+     * @param countLimit         显示条目限制
+     * @param isShowItemHeader  是否显示条目头
+     * @param isShowMore         是否显示更多
+     * @param targetContentType 内容类型的目标值
      * @return 对应的直播列表
      */
-    private fun composeLiveItemList(page: Int, liveDataList: List<LiveData>?, totalCnt: Int, countLimit: Int, isShowItemHeader: Boolean = true, isShowMore: Boolean = true): List<LiveItemEntity> {
+    private fun composeLiveItemList(page: Int, liveDataList: List<LiveData>?, totalCnt: Int, countLimit: Int, isShowItemHeader: Boolean = true, isShowMore: Boolean = true, targetContentType: LiveInfo.LiveInfoEnum? = null): List<LiveItemEntity> {
 
         val liveItemList = mutableListOf<LiveItemEntity>()
 
@@ -564,7 +564,11 @@ abstract class BaseRemoteDataSource {
                 }
 
                 // 内容类型
-                val contentType = if (value.status == LiveInfo.LiveInfoEnum.TYPE_REVIEW.value) LiveInfo.LiveInfoEnum.TYPE_REVIEW else LiveInfo.LiveInfoEnum.TYPE_WILL
+                var contentType = if (value.status == LiveInfo.LiveInfoEnum.TYPE_REVIEW.value) LiveInfo.LiveInfoEnum.TYPE_REVIEW else LiveInfo.LiveInfoEnum.TYPE_WILL
+
+                if (targetContentType != null) {
+                    contentType = targetContentType
+                }
 
                 AppLogger.i("* ${value.id}, ${value.isFavorite}, ${value.isSubscribe}")
 

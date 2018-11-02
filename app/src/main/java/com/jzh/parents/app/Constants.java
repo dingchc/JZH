@@ -45,11 +45,6 @@ public interface Constants {
     String ALI_APP_SECRET = "632b6bee8481fcb10c1d5e9b704c46a1";
 
     /**
-     *
-     */
-    String STS_SERVER = "632b6bee8481fcb10c1d5e9b704c46a1";
-
-    /**
      * 入学年份的起始年份
      */
     int MIN_YEAR_OF_LEANING = 1980;
