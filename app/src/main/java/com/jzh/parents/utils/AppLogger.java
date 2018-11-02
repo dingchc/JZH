@@ -219,6 +219,6 @@ public class AppLogger {
 	}
 
 	public static class BuildConfig {
-		public final static boolean DEBUG = true;
+		public final static boolean DEBUG = false;
 	}
 }
