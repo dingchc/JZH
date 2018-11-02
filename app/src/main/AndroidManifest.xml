@@ -203,6 +203,10 @@
                 android:resource="@xml/share_file_config" />
         </provider>
 
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5a4b6748f29d980350000163" />
+
     </application>
 
 </manifest>

@@ -38,7 +38,7 @@
     public static **[] values();
     public static ** valueOf(java.lang.String);
 }
--keep public class com.aspirecn.eplus.R$*{
+-keep public com.jzh.parents.R$*{
 public static final int *;
 }
 -keepclassmembers class * {
@@ -77,6 +77,7 @@ public static final int *;
 }
 
 -keepattributes Signature
+-keep class com.umeng.** {*;}
 
 -dontwarn com.umeng.**
 -dontwarn com.google.gson.**
@@ -218,3 +219,4 @@ public static final int *;
 -dontnote com.jzh.parents.utils.Util$Companion
 -dontnote com.jzh.parents.datamodel.data.RecommendData
 -dontnote com.jzh.parents.db.entry.MessageEntry
+

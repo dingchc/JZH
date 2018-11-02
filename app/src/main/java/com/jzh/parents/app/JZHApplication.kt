@@ -24,6 +24,7 @@ import com.tencent.mm.opensdk.modelbase.BaseResp
 
 /**
  * 主App
+ *
  * @author ding
  * Created by Ding on 2018/8/16.
  */
