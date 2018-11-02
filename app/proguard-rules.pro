@@ -38,7 +38,7 @@
     public static **[] values();
     public static ** valueOf(java.lang.String);
 }
--keep public com.jzh.parents.R$*{
+-keep public class com.jzh.parents.R$*{
 public static final int *;
 }
 -keepclassmembers class * {
