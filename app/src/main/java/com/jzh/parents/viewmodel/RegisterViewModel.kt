@@ -17,14 +17,9 @@ import com.jzh.parents.viewmodel.info.ResultInfo
 class RegisterViewModel(app: Application) : BaseViewModel(app) {
 
     /**
-     * 学段
+     * 入学年级
      */
-    val learningSection: MutableLiveData<String> = MutableLiveData()
-
-    /**
-     * 入学年龄
-     */
-    val learningYear: MutableLiveData<String> = MutableLiveData()
+    val learningGrade: MutableLiveData<String> = MutableLiveData()
 
     /**
      * 学生姓名
@@ -55,9 +50,8 @@ class RegisterViewModel(app: Application) : BaseViewModel(app) {
      * 注册
      *
      * @param openId            开放Id
-     * @param learningSectionId 入学学段
      */
-    fun register(openId: String?, learningSectionId: String) {
-        repo?.register(openId, learningSectionId, learningYear.value.toString(), studentName.value.toString(), selectRole.value.toString(), resultInfo)
+    fun register(openId: String?) {
+        repo?.register(openId, learningGrade.value.toString(), studentName.value.toString(), selectRole.value.toString(), resultInfo)
     }
 }

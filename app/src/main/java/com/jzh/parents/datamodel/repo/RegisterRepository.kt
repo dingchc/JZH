@@ -27,13 +27,12 @@ class RegisterRepository : BaseRepository() {
      * 注册
      *
      * @param openId 开放Id
-     * @param learningSection 学段
-     * @param learningYear 入学年份
+     * @param learningGrade 入学年级
      * @param studentName 学生姓名
      * @param role 角色
      */
-    fun register(openId : String?, learningSection: String, learningYear: String, studentName: String, role: String, resultInfo: MutableLiveData<ResultInfo>) {
+    fun register(openId : String?, learningGrade: String, studentName: String, role: String, resultInfo: MutableLiveData<ResultInfo>) {
 
-        mRemoteDataSource.register(openId, learningSection, learningYear, studentName, role, resultInfo)
+        mRemoteDataSource.register(openId, learningGrade, studentName, role, resultInfo)
     }
 }

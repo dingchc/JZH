@@ -16,7 +16,7 @@ import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.utils.Util
 
 /**
- * 选择年份的底部对话框
+ * 选择年级的底部对话框
  *
  * @author ding
  * Created by Ding on 2018/9/8.
@@ -35,15 +35,9 @@ class PickYearDialog : BottomSheetDialogFragment() {
 
     private var mBehavior: BottomSheetBehavior<View>? = null
 
-    /**
-     * 开始年份
-     */
-    private var mSection: Int = PickSectionDialog.LearningSectionEnum.SECTION_PRESCHOOL.value
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        mSection = arguments?.getInt(Constants.EXTRA_REGISTER_SECTION) ?: PickSectionDialog.LearningSectionEnum.SECTION_PRESCHOOL.value
     }
 
 
@@ -86,13 +80,15 @@ class PickYearDialog : BottomSheetDialogFragment() {
 
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-        val yearList = Util.getLearningYears(mSection).map { it -> it.toString() }
+        var array : Array<String> = resources.getStringArray(R.array.learning_grade_names)
+        val yearList = mutableListOf<String>()
+        yearList.addAll(array)
 
-        // 创建年份适配器
+        // 创建年级适配器
         mAdapter = PickYearAdapter(context!!, yearList, object : PickYearAdapter.OnItemClickListener {
-            override fun onItemClick(pickedYear: String) {
+            override fun onItemClick(pickedGradeId: String) {
 
-                mListener?.onPickedYear(pickedYear)
+                mListener?.onPickedYear(pickedGradeId)
 
                 mBehavior?.state = BottomSheetBehavior.STATE_HIDDEN
             }
@@ -131,16 +127,9 @@ class PickYearDialog : BottomSheetDialogFragment() {
          * @param section 学段
          * @return Fragment
          */
-        fun newInstance(section: Int): PickYearDialog {
+        fun newInstance(): PickYearDialog {
 
-            val fragment = PickYearDialog()
-
-            val bundle = Bundle()
-
-            bundle.putInt(Constants.EXTRA_REGISTER_SECTION, section)
-            fragment.arguments = bundle
-
-            return fragment
+            return PickYearDialog()
         }
     }
 
@@ -155,6 +144,87 @@ class PickYearDialog : BottomSheetDialogFragment() {
          */
         fun onPickedYear(year: String)
 
+    }
+
+    /**
+     * 年级枚举
+     */
+    enum class LearningGradeEnum(val value: Int) {
+
+        /**
+         * 学段：学龄前-小班
+         */
+        SECTION_PRESCHOOL_SMALL(4),
+
+        /**
+         * 学段：学龄前-中班
+         */
+        SECTION_PRESCHOOL_MEDIUM(5),
+
+        /**
+         * 学段：学龄前-大班
+         */
+        SECTION_PRESCHOOL_LARGE(6),
+
+        /**
+         * 学段：小学-一年级
+         */
+        SECTION_PRIMARY_FIRST(7),
+
+        /**
+         * 学段：小学-二年级
+         */
+        SECTION_PRIMARY_SECOND(8),
+
+        /**
+         * 学段：小学-三年级
+         */
+        SECTION_PRIMARY_THIRD(9),
+
+        /**
+         * 学段：小学-四年级
+         */
+        SECTION_PRIMARY_FOURTH(10),
+
+        /**
+         * 学段：小学-五年级
+         */
+        SECTION_PRIMARY_FIFTH(11),
+
+        /**
+         * 学段：小学-六年级
+         */
+        SECTION_PRIMARY_SIXTH(12),
+
+        /**
+         * 学段：初中-一年级
+         */
+        SECTION_JUNIOR_FIRST(13),
+
+        /**
+         * 学段：初中-二年级
+         */
+        SECTION_JUNIOR_SECOND(14),
+
+        /**
+         * 学段：初中-三年级
+         */
+        SECTION_JUNIOR_THIRD(15),
+
+        /**
+         * 学段：高中-一年级
+         */
+        SECTION_SENIOR_FIRST(17),
+
+        /**
+         * 学段：高中-二年级
+         */
+        SECTION_SENIOR_SECOND(18),
+
+        /**
+         * 学段：高中-三年级
+         */
+        SECTION_SENIOR_THIRD(19)
     }
 
 }

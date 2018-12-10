@@ -39,12 +39,7 @@ class RegisterActivity : BaseActivity() {
     /**
      * 注册的OpenId
      */
-    var mOpenId : String? = null
-
-    /**
-     * 入学学段
-     */
-    var mLearningSectionId : String? = null
+    private var mOpenId : String? = null
 
     /**
      * 初始化组件
@@ -65,15 +60,8 @@ class RegisterActivity : BaseActivity() {
      */
     override fun initEvent() {
 
-
-        // 选择学段
-        mDataBinding?.itemLearningSection?.setOnClickListener {
-
-            showPickSectionDialog()
-        }
-
         // 选择入学年份
-        mDataBinding?.itemLearningYear?.setOnClickListener {
+        mDataBinding?.itemLearningGrade?.setOnClickListener {
 
             showPickYearDialog()
         }
@@ -132,14 +120,8 @@ class RegisterActivity : BaseActivity() {
 
         AppLogger.i("view=$view")
 
-        // 入学学段
-        if (TextUtils.isEmpty(mViewModel?.learningSection?.value)) {
-            showToastError(getString(R.string.input_learning_section))
-            return
-        }
-
         // 入学年份
-        if (TextUtils.isEmpty(mViewModel?.learningYear?.value)) {
+        if (TextUtils.isEmpty(mViewModel?.learningGrade?.value)) {
             showToastError(getString(R.string.input_learning_year))
             return
         }
@@ -150,7 +132,7 @@ class RegisterActivity : BaseActivity() {
             return
         }
 
-        mViewModel?.register(mOpenId, mLearningSectionId ?: "")
+        mViewModel?.register(mOpenId)
     }
 
     /**
@@ -158,15 +140,11 @@ class RegisterActivity : BaseActivity() {
      */
     private fun showPickYearDialog() {
 
-        if (TextUtils.isEmpty(mLearningSectionId)) {
-            return
-        }
-
         var dialog = supportFragmentManager.findFragmentByTag(PickYearDialog.TAG_FRAGMENT)
 
         if (dialog == null) {
 
-            dialog = PickYearDialog.newInstance(Util.parseInt(mLearningSectionId))
+            dialog = PickYearDialog.newInstance()
         }
 
         val pickYearDialog = dialog as PickYearDialog
@@ -176,45 +154,10 @@ class RegisterActivity : BaseActivity() {
         pickYearDialog.setPickYearClickListener(object : PickYearDialog.OnPickAYearListener {
             override fun onPickedYear(year: String) {
 
-                mViewModel?.learningYear?.value = year
+                mViewModel?.learningGrade?.value = year
 
             }
         })
-    }
-
-    /**
-     * 显示选择学段对话框
-     */
-    private fun showPickSectionDialog() {
-
-        var dialog = supportFragmentManager.findFragmentByTag(PickSectionDialog.TAG_FRAGMENT)
-
-        if (dialog == null) {
-
-            dialog = PickSectionDialog.newInstance()
-        }
-
-        val pickSectionDialog = dialog as PickSectionDialog
-
-        pickSectionDialog.show(supportFragmentManager, PickSectionDialog.TAG_FRAGMENT)
-
-        pickSectionDialog.setPickDialogClickListener(object : PickSectionDialog.PickDialogClickListener {
-
-            override fun onPickedSection(type: Int, desc: String) {
-
-                mViewModel?.learningSection?.value = desc
-
-                mLearningSectionId = type.toString()
-
-                mViewModel?.learningYear?.value = ""
-            }
-
-            override fun onCancelClick() {
-
-            }
-
-        })
-
     }
 
     override fun isSupportTransitionAnimation(): Boolean {

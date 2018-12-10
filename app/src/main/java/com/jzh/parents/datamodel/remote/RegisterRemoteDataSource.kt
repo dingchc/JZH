@@ -28,18 +28,16 @@ class RegisterRemoteDataSource : BaseRemoteDataSource() {
      * 注册
      *
      * @param openId 开放Id
-     * @param learningSection 学段
-     * @param learningYear 入学年份
+     * @param learningGrade 入学年份
      * @param studentName 学生姓名
      * @param roleId 角色
      * @param resultInfo 返回结果
      */
-    fun register(openId: String?, learningSection: String, learningYear: String, studentName: String, roleId: String, resultInfo: MutableLiveData<ResultInfo>) {
+    fun register(openId: String?, learningGrade: String, studentName: String, roleId: String, resultInfo: MutableLiveData<ResultInfo>) {
 
         val paramsMap = TreeMap<String, String>()
         paramsMap.put("openid", openId ?: "")
-        paramsMap.put("edu_type", learningSection)
-        paramsMap.put("edu_year", learningYear)
+        paramsMap.put("grade", learningGrade)
         paramsMap.put("realname", studentName)
         paramsMap.put("role_id", roleId)
 

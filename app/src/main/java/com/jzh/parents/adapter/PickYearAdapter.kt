@@ -22,12 +22,22 @@ class PickYearAdapter(mContext: Context, private var mYearList: List<String>?, v
      */
     private val mLayoutInflater: LayoutInflater = LayoutInflater.from(mContext)
 
+    /**
+     * 年级对应的ID值
+     */
+    private var mGradeIDArray : IntArray? = null
+
+
+    init {
+        mGradeIDArray = mContext.resources.getIntArray(R.array.learning_grade_values)
+    }
+
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
         holder.yearTextView.text = mYearList?.get(position)
 
         holder.view.setOnClickListener {
-            mListener?.onItemClick(mYearList?.get(position) ?: "")
+            mListener?.onItemClick(mGradeIDArray?.get(position).toString())
         }
     }
 
@@ -58,8 +68,8 @@ class PickYearAdapter(mContext: Context, private var mYearList: List<String>?, v
 
         /**
          * 点击了条目
-         * @param pickedYear 选择的年份
+         * @param pickedGradeId 选择的年级
          */
-        fun onItemClick(pickedYear: String)
+        fun onItemClick(pickedGradeId: String)
     }
 }

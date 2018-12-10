@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">家长会在线</string>
+    <string name="app_name">家长会</string>
     <string name="input_learning_section">请选择学龄段</string>
-    <string name="input_learning_year">请选择入学年份</string>
+    <string name="input_learning_year">请选择年级</string>
     <string name="input_student_name">请输入学生姓名</string>
     <string name="input_select_role">您的身份?</string>
     <string name="login">登 录</string>

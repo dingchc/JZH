@@ -11,8 +11,8 @@ object Api {
     /**
      * 地址：SCHEMAS
      */
-//    private const val URL_API_LIVE_DOMAIN = "https://m.nxdev.cn/api/"
-    private const val URL_API_LIVE_DOMAIN = "https://m.17jzh.com/api/"
+    private const val URL_API_LIVE_DOMAIN = "https://m.nxdev.cn/api/"
+//    private const val URL_API_LIVE_DOMAIN = "https://m.17jzh.com/api/"
 
     /**
      * 地址：获取首页直播列表
@@ -128,7 +128,7 @@ object Api {
     /**
      * 地址：刷新Token
      */
-    const val URL_API_REFRESH_TOKEN = URL_API_LIVE_DOMAIN + "token/refresh"
+    const val URL_API_REFRESH_TOKEN = URL_API_LIVE_DOMAIN + "v2/token/refresh"
 
     /**
      * 地址：意见反馈
