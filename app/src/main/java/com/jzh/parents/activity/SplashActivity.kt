@@ -14,32 +14,29 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
 
-        Handler().postDelayed({
+        // 已登录
+        if (PreferenceUtil.instance.isAlreadyLogin()) {
 
-            // 已登录
-            if (PreferenceUtil.instance.isAlreadyLogin()) {
+            val intent = Intent(this@SplashActivity, HomeActivity::class.java)
 
-                val intent = Intent(this@SplashActivity, HomeActivity::class.java)
+            startActivity(intent)
+        }
+        // 显示引导图
+        else if (PreferenceUtil.instance.isShowGuidePage()) {
 
-                startActivity(intent)
-            }
-            // 显示引导图
-            else if (PreferenceUtil.instance.isShowGuidePage()) {
+            val intent = Intent(this@SplashActivity, GuideActivity::class.java)
 
-                val intent = Intent(this@SplashActivity, GuideActivity::class.java)
+            startActivity(intent)
+        }
+        // 未登录
+        else {
 
-                startActivity(intent)
-            }
-            // 未登录
-            else {
+            val intent = Intent(this@SplashActivity, LoginActivity::class.java)
 
-                val intent = Intent(this@SplashActivity, LoginActivity::class.java)
+            startActivity(intent)
+        }
 
-                startActivity(intent)
-            }
-
-            finish()
-        }, 3000L)
+        finish()
 
     }
 }

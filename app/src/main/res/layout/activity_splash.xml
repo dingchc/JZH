@@ -6,12 +6,5 @@
     android:layout_height="match_parent"
     tools:context="com.jzh.parents.activity.SplashActivity">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/app_name"
-        android:textColor="@color/black"
-        android:textSize="30sp" />
 
 </android.support.constraint.ConstraintLayout>

@@ -76,8 +76,17 @@ class LivesRemoteDataSource : BaseRemoteDataSource() {
         val paramsMap = TreeMap<String, String>()
 
         paramsMap.put("token", PreferenceUtil.instance.getToken())
-        paramsMap.put("status", statusType.toString())
-        paramsMap.put("categoryId", categoryType.toString())
+
+        // statusType小于等于0，不需要添加参数
+        if (statusType > 0) {
+            paramsMap.put("status", statusType.toString())
+        }
+
+        // categoryId小于等于0，不需要添加参数
+        if (categoryType > 0) {
+            paramsMap.put("categoryId", categoryType.toString())
+        }
+
         paramsMap.put("page", page.toString())
 
         var cmd = ResultInfo.CMD_REFRESH_LIVES
