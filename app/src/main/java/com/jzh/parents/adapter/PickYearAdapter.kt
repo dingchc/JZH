@@ -37,7 +37,7 @@ class PickYearAdapter(mContext: Context, private var mYearList: List<String>?, v
         holder.yearTextView.text = mYearList?.get(position)
 
         holder.view.setOnClickListener {
-            mListener?.onItemClick(mGradeIDArray?.get(position).toString())
+            mListener?.onItemClick(mGradeIDArray?.get(position).toString(), position)
         }
     }
 
@@ -68,8 +68,9 @@ class PickYearAdapter(mContext: Context, private var mYearList: List<String>?, v
 
         /**
          * 点击了条目
-         * @param pickedGradeId 选择的年级
+         * @param pickedGradeId 选择的年级Id
+         * @param position 位置
          */
-        fun onItemClick(pickedGradeId: String)
+        fun onItemClick(pickedGradeId: String, position: Int)
     }
 }

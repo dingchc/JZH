@@ -86,9 +86,9 @@ class PickYearDialog : BottomSheetDialogFragment() {
 
         // 创建年级适配器
         mAdapter = PickYearAdapter(context!!, yearList, object : PickYearAdapter.OnItemClickListener {
-            override fun onItemClick(pickedGradeId: String) {
+            override fun onItemClick(pickedGradeId: String, position: Int) {
 
-                mListener?.onPickedYear(pickedGradeId)
+                mListener?.onPickedYear(pickedGradeId, array[position])
 
                 mBehavior?.state = BottomSheetBehavior.STATE_HIDDEN
             }
@@ -141,90 +141,10 @@ class PickYearDialog : BottomSheetDialogFragment() {
         /**
          * 点击年份
          * @param year 年份
+         * @param yearName 年份的名称
          */
-        fun onPickedYear(year: String)
+        fun onPickedYear(year: String, yearName: String)
 
-    }
-
-    /**
-     * 年级枚举
-     */
-    enum class LearningGradeEnum(val value: Int) {
-
-        /**
-         * 学段：学龄前-小班
-         */
-        SECTION_PRESCHOOL_SMALL(4),
-
-        /**
-         * 学段：学龄前-中班
-         */
-        SECTION_PRESCHOOL_MEDIUM(5),
-
-        /**
-         * 学段：学龄前-大班
-         */
-        SECTION_PRESCHOOL_LARGE(6),
-
-        /**
-         * 学段：小学-一年级
-         */
-        SECTION_PRIMARY_FIRST(7),
-
-        /**
-         * 学段：小学-二年级
-         */
-        SECTION_PRIMARY_SECOND(8),
-
-        /**
-         * 学段：小学-三年级
-         */
-        SECTION_PRIMARY_THIRD(9),
-
-        /**
-         * 学段：小学-四年级
-         */
-        SECTION_PRIMARY_FOURTH(10),
-
-        /**
-         * 学段：小学-五年级
-         */
-        SECTION_PRIMARY_FIFTH(11),
-
-        /**
-         * 学段：小学-六年级
-         */
-        SECTION_PRIMARY_SIXTH(12),
-
-        /**
-         * 学段：初中-一年级
-         */
-        SECTION_JUNIOR_FIRST(13),
-
-        /**
-         * 学段：初中-二年级
-         */
-        SECTION_JUNIOR_SECOND(14),
-
-        /**
-         * 学段：初中-三年级
-         */
-        SECTION_JUNIOR_THIRD(15),
-
-        /**
-         * 学段：高中-一年级
-         */
-        SECTION_SENIOR_FIRST(17),
-
-        /**
-         * 学段：高中-二年级
-         */
-        SECTION_SENIOR_SECOND(18),
-
-        /**
-         * 学段：高中-三年级
-         */
-        SECTION_SENIOR_THIRD(19)
     }
 
 }

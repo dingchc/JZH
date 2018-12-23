@@ -33,11 +33,11 @@
             android:background="@drawable/round_bg_white"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="60dp"
             android:textSize="18sp"
             app:rc_hint="@string/input_learning_year"
             app:rc_icon_src="@mipmap/icon_register_learning_section"
-            app:contentText="@={viewModel.learningGrade}"
+            app:contentText="@={viewModel.learningGradeName}"
             />
 
         <!-- 名称 -->

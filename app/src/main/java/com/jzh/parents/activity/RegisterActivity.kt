@@ -152,9 +152,10 @@ class RegisterActivity : BaseActivity() {
         pickYearDialog.show(supportFragmentManager, PickYearDialog.TAG_FRAGMENT)
 
         pickYearDialog.setPickYearClickListener(object : PickYearDialog.OnPickAYearListener {
-            override fun onPickedYear(year: String) {
+            override fun onPickedYear(year: String, yearName : String) {
 
                 mViewModel?.learningGrade?.value = year
+                mViewModel?.learningGradeName?.value = yearName
 
             }
         })

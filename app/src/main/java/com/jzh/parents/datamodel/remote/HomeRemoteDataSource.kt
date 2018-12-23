@@ -201,18 +201,18 @@ class HomeRemoteDataSource : BaseRemoteDataSource() {
         val isLivingNow = makeLiveNowItem(homeShowRes, showEntities)
 
         // 制作Banner
-        if (!isLivingNow) {
-            makeBanner(homeConfigRes, showEntities)
-        }
+//        if (!isLivingNow) {
+//            makeBanner(homeConfigRes, showEntities)
+//        }
 
         // 制作即将直播
         makeLiveWillItems(homeShowRes, showEntities)
 
         // 推荐直播
-        makeLiveRecommendItems(homeConfigRes, showEntities)
+//        makeLiveRecommendItems(homeConfigRes, showEntities)
 
         // 制作直播分类
-        makeLiveCategoryItem(homeConfigRes, showEntities)
+//        makeLiveCategoryItem(homeConfigRes, showEntities)
 
         // 制作精彩回放直播
         makeLiveReviewItems(homeShowRes, showEntities)

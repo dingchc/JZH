@@ -1,10 +1,11 @@
 package com.jzh.parents.viewmodel
 
 import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.Transformations
+import com.jzh.parents.R
 import com.jzh.parents.datamodel.repo.RegisterRepository
-import com.jzh.parents.utils.AppLogger
 import com.jzh.parents.viewmodel.enum.RoleTypeEnum
 import com.jzh.parents.viewmodel.info.ResultInfo
 
@@ -20,6 +21,11 @@ class RegisterViewModel(app: Application) : BaseViewModel(app) {
      * 入学年级
      */
     val learningGrade: MutableLiveData<String> = MutableLiveData()
+
+    /**
+     * 入学年级名称
+     */
+    val learningGradeName: MutableLiveData<String> = MutableLiveData()
 
     /**
      * 学生姓名
